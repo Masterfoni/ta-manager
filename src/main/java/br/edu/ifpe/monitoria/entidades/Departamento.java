@@ -30,6 +30,6 @@ public class Departamento  implements Serializable{
 	@Column (name="TXT_NOME")
 	private String nome;
 	@Column (name="TXT_SIGLA")
-	private String codigo;
+	private String sigla;
 	
 }
