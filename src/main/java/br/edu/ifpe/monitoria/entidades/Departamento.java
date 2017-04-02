@@ -19,7 +19,7 @@ import javax.persistence.Table;
 		allocationSize = 1)
 @Table(name="TB_DEPARTAMENTO")
 @Access(AccessType.FIELD)
-public class Departamento  implements Serializable{
+public class Departamento implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,6 +29,7 @@ public class Departamento  implements Serializable{
 	
 	@Column (name="TXT_NOME")
 	private String nome;
+	
 	@Column (name="TXT_SIGLA")
 	private String sigla;
 	

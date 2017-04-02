@@ -44,6 +44,6 @@ public class Coordenacao implements Serializable{
 	
 	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
-	private Professor coordenador;
+	private Usuario coordenador;
 	
 }
