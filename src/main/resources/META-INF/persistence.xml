@@ -5,7 +5,9 @@
 	
 	<persistence-unit name="monitoria" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>br.edu.ifpe.monitoria.entidades.Departamento</class>
+		<class>br.edu.ifpe.monitoria.entidades.Usuario</class>
+		<class>br.edu.ifpe.monitoria.entidades.Professor</class>
+		<class>br.edu.ifpe.monitoria.entidades.Aluno</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/monitoria"/>
