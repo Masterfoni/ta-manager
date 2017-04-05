@@ -45,5 +45,41 @@ public class Coordenacao implements Serializable{
 	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
 	private Usuario coordenador;
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	public Usuario getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(Usuario coordenador) {
+		this.coordenador = coordenador;
+	}
+
+	public Long getId() {
+		return id;
+	}
 	
 }
