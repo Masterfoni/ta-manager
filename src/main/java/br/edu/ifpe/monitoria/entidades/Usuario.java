@@ -16,19 +16,17 @@ import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@SequenceGenerator (name="SEQUENCIA_USUARIO",
-		sequenceName="SQ_USUARIO",
-		initialValue=1,
-		allocationSize=1)
+@SequenceGenerator (name = "SEQUENCIA_USUARIO",
+					sequenceName = "SQ_USUARIO",
+					initialValue = 1,
+					allocationSize = 1)
 @Table(name="TB_USUARIO")
 @Inheritance (strategy = InheritanceType.JOINED)
-@DiscriminatorColumn (name="DISC_USUARIO",
-		discriminatorType = DiscriminatorType.STRING, length=1)
+@DiscriminatorColumn (name="DISC_USUARIO", discriminatorType = DiscriminatorType.STRING, length=1)
 @Access(AccessType.FIELD)
-public class Usuario implements Serializable{
-
+public class Usuario implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -40,28 +38,34 @@ public class Usuario implements Serializable{
 	
 	@Column (name="TXT_EMAIL")
 	private String email;
-
-	public Long getId() {
+	
+	public Long getId() 
+	{
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Long id) 
+	{
 		this.id = id;
 	}
 
-	public String getNome() {
+	public String getNome() 
+	{
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) 
+	{
 		this.nome = nome;
 	}
 
-	public String getEmail() {
+	public String getEmail() 
+	{
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email) 
+	{
 		this.email = email;
 	}
 }
