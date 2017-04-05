@@ -18,6 +18,13 @@ public class Professor extends Usuario implements Serializable {
 	
 	@Column (name="INT_SIAPE")
 	private Integer siape;
+
+	public Integer getSiape() {
+		return siape;
+	}
+
+	public void setSiape(Integer siape) {
+		this.siape = siape;
+	}
 	
-	//enum funcao
 }
