@@ -7,20 +7,29 @@ import javax.persistence.Persistence;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Professor.TipoProfessor;
+import br.edu.ifpe.monitoria.entidades.Professor.Titulacao;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		Aluno a = new Aluno();
-		Professor p = new Professor();
-//		a.setEmail("a@a.recife.ifpe.edu.br");
-//		a.setMatricula("20132y6-rc0189");
-//		a.setNome("Aluno");
+		a.setEmail("a@a.recife.ifpe.edu.br");
+		a.setMatricula("20132y6-rc0189");
+		a.setNome("Aluno");
+		a.setCelular("81988888888");
+		a.setCpf("000.000.000-00");
+		a.setRg("0.000.000");
+		a.setRgEmissor("SDS-PE");
+		a.setSexo(true);
 		
+		Professor p = new Professor();
 		p.setEmail("p@ifpe.edu.br");
 		p.setNome("Darth");
 		p.setSiape(2981585);
+		p.setTipo(TipoProfessor.NORMAL);
+		p.setTiulacao(Titulacao.GRADUAÇÃO);
 		
 		EntityManagerFactory emf = null;
 		EntityManager em = null;
@@ -31,6 +40,7 @@ public class Main {
 			em = emf.createEntityManager();
 			et = em.getTransaction();
 			et.begin();
+			em.persist(a);
 			em.persist(p);
 			et.commit();
 			

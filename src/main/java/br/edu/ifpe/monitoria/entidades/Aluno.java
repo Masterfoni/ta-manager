@@ -47,4 +47,52 @@ public class Aluno extends Usuario implements Serializable{
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getRgEmissor() {
+		return rgEmissor;
+	}
+
+	public void setRgEmissor(String rgEmissor) {
+		this.rgEmissor = rgEmissor;
+	}
+
+	public boolean isSexo() {
+		return sexo;
+	}
+
+	public void setSexo(boolean sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
 }
