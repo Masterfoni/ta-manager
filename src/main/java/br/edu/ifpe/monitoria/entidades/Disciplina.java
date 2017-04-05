@@ -37,12 +37,26 @@ public class Disciplina implements Serializable{
 	@Column (name="TXT_CODIGO")
 	private String codigo;
 	
+	@Column (name="INT_BOLSAS")
+	private Integer numBolsas;
+	
+	@Column (name="INT_CODIGO")
+	private Integer numMonitores;
+	
 	@Column (name="TXT_TURNO")
 	private String turno;
 	
 	@Column (name="TXT_PERIODO")
 	private String periodo;
 
+	@ManyToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
+	private Coordenacao coordenacao;
+
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID")
+	private Professor professor;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -95,11 +109,20 @@ public class Disciplina implements Serializable{
 		return id;
 	}
 
-	@ManyToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
-	private Coordenacao coordenacao;
+	public Integer getNumBolsas() {
+		return numBolsas;
+	}
 
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID")
-	private Professor professor;
+	public void setNumBolsas(Integer numBolsas) {
+		this.numBolsas = numBolsas;
+	}
+
+	public Integer getNumMonitores() {
+		return numMonitores;
+	}
+
+	public void setNumMonitores(Integer numMonitores) {
+		this.numMonitores = numMonitores;
+	}
+	
 }

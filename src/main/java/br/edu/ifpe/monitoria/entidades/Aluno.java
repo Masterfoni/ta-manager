@@ -22,6 +22,24 @@ public class Aluno extends Usuario implements Serializable{
 	@Column (name="TXT_MATRICULA")
 	private String matricula;
 
+	@Column (name="TXT_CPF")
+	private String cpf;
+	
+	@Column (name="TXT_RG")
+	private String rg;
+	
+	@Column (name="TXT_RGEMISSOR")
+	private String rgEmissor;
+	
+	@Column (name="TXT_SEXO")
+	private boolean sexo;
+	
+	@Column (name="TXT_TELEFONE")
+	private String telefone;
+	
+	@Column (name="TXT_CELULAR")
+	private String celular;
+	
 	public String getMatricula() {
 		return matricula;
 	}
