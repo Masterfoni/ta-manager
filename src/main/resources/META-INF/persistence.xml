@@ -8,12 +8,16 @@
 		<class>br.edu.ifpe.monitoria.entidades.Usuario</class>
 		<class>br.edu.ifpe.monitoria.entidades.Professor</class>
 		<class>br.edu.ifpe.monitoria.entidades.Aluno</class>
+		<class>br.edu.ifpe.monitoria.entidades.Coordenacao</class>
+		<class>br.edu.ifpe.monitoria.entidades.Disciplina</class>
+		<class>br.edu.ifpe.monitoria.entidades.Monitoria</class>
+		<class>br.edu.ifpe.monitoria.entidades.Departamento</class>
 		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/monitoria"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/monitoria"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-			<property name="javax.persistence.jdbc.password" value="postgres"/>
+			<property name="javax.persistence.jdbc.password" value="root"/>
 			<property name="eclipselink.logging.level" value="FINE"/>
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 		</properties>
