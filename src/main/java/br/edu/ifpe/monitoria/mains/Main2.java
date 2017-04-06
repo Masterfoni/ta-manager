@@ -16,61 +16,53 @@ public class Main2 {
 
 	public static void main(String[] args) {
 
-		Professor prof = null;
-		Aluno aluno = null;
+		//Professor prof = null;
+		//Aluno aluno = null;
+		
+		long idProf = 2, idAluno = 1;
 		
 		EntityManagerFactory emf = null;
 		EntityManager em = null;
 		EntityTransaction et = null;
+
 		System.out.println("..");
-		try {
-			emf = Persistence.createEntityManagerFactory("monitoria");
-			em = emf.createEntityManager();
-			et = em.getTransaction();
-			et.begin();
-			prof = em.find(Professor.class, 1);
-			aluno = em.find(Aluno.class, 1);
-			et.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (et != null)
-				et.rollback();
-		} finally {
-			if (em != null)
-				em.close();
-			if(emf != null)
-				emf.close();
-		}
-		
+
 		Departamento dpto = new Departamento();
 		dpto.setNome("Departamento de Ensino");
 		dpto.setSigla("DEN");
 		
-		Coordenacao coord = new Coordenacao();
-		coord.setCoordenador(prof);
-		coord.setDepartamento(dpto);
-		coord.setNome("Coord Sistemas da Informação");
-		coord.setSigla("CSIN");
-		
-		Disciplina disc = new Disciplina();
-		disc.setProfessor(prof);
-		disc.setCoordenacao(coord);
-		disc.setTurno("NOITE");
-		disc.setCodigo("TADS-111");
-		disc.setPeriodo("2017.1");
-		disc.setNome("Soft Corporativo");
-		
-		Monitoria mon = new Monitoria();
-		mon.setAluno(aluno);
-		mon.setDisciplina(disc);
-		mon.setBolsa(false);
-		
 		try {
 			emf = Persistence.createEntityManagerFactory("monitoria");
 			em = emf.createEntityManager();
 			et = em.getTransaction();
 			et.begin();
+
+			Professor prof = em.find(Professor.class, idProf);
+			
+			Coordenacao coord = new Coordenacao();
+			coord.setCoordenador(prof);
+			coord.setDepartamento(dpto);
+			coord.setNome("Coord Sistemas da Informação");
+			coord.setSigla("CSIN");
+			
+			
+			Disciplina disc = new Disciplina();
+			disc.setProfessor(prof);
+			disc.setCoordenacao(coord);
+			disc.setTurno("NOITE");
+			disc.setCodigo("TADS-111");
+			disc.setPeriodo("2017.1");
+			disc.setNome("Soft Corporativo");
+			
+			Aluno al = em.find(Aluno.class, idAluno);
+			
+			Monitoria mon = new Monitoria();
+			mon.setAluno(al);
+			mon.setDisciplina(disc);
+			mon.setBolsa(false);
+			
+			
+			
 			em.persist(dpto);
 			em.persist(coord);
 			em.persist(disc);
@@ -89,5 +81,4 @@ public class Main2 {
 		}
 
 	}
-
 }

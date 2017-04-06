@@ -43,8 +43,8 @@ public class Coordenacao implements Serializable{
 	private Departamento departamento;
 	
 	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
-	private Usuario coordenador;
+	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
+	private Professor coordenador;
 
 	public String getNome() {
 		return nome;
@@ -74,7 +74,7 @@ public class Coordenacao implements Serializable{
 		return coordenador;
 	}
 
-	public void setCoordenador(Usuario coordenador) {
+	public void setCoordenador(Professor coordenador) {
 		this.coordenador = coordenador;
 	}
 

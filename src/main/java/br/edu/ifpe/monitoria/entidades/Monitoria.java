@@ -32,7 +32,7 @@ public class Monitoria implements Serializable{
 	private Long id;
 	
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
+	@JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID")
 	private Aluno aluno;
 	
 	@OneToOne (fetch = FetchType.LAZY, optional = false)

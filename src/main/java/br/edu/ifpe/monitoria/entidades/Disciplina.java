@@ -54,7 +54,7 @@ public class Disciplina implements Serializable{
 	private Coordenacao coordenacao;
 
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID")
+	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
 	private Professor professor;
 	
 	public String getNome() {
