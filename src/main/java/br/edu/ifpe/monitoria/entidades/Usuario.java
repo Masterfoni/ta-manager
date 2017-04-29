@@ -45,7 +45,7 @@ public class Usuario implements Serializable
 	
 	@ElementCollection
 	@CollectionTable(name = "TB_TELEFONE",
-					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = false))
+					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
 	private Collection<String> telefones;
 	
 	public Collection<String> getTelefones() 
