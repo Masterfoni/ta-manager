@@ -46,7 +46,7 @@ public class Professor extends Usuario implements Serializable {
 	
 	public enum TipoProfessor {
 		COORDENADOR,
-		NORMAL,
+		ORIENTADOR,
 		COMISSAO	
 	}
 
