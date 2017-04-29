@@ -1,18 +1,22 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,6 +42,16 @@ public class Usuario implements Serializable
 	
 	@Column (name="TXT_EMAIL")
 	private String email;
+	
+	@ElementCollection
+	@CollectionTable(name = "TB_TELEFONE",
+					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = false))
+	private Collection<String> telefones;
+	
+	public Collection<String> getTelefones() 
+	{
+		return telefones;
+	}
 	
 	public Long getId() 
 	{
