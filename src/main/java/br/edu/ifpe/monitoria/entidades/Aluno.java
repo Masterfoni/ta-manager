@@ -34,12 +34,6 @@ public class Aluno extends Usuario implements Serializable{
 	@Column (name="TXT_SEXO")
 	private boolean sexo;
 	
-	@Column (name="TXT_TELEFONE")
-	private String telefone;
-	
-	@Column (name="TXT_CELULAR")
-	private String celular;
-	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -78,21 +72,5 @@ public class Aluno extends Usuario implements Serializable{
 
 	public void setSexo(boolean sexo) {
 		this.sexo = sexo;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
 	}
 }
