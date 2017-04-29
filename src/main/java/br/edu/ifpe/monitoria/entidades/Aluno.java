@@ -28,11 +28,11 @@ public class Aluno extends Usuario implements Serializable{
 	@Column (name="TXT_RG")
 	private String rg;
 	
-	@Column (name="TXT_RGEMISSOR")
+	@Column (name="TXT_RG_EMISSOR")
 	private String rgEmissor;
 	
 	@Column (name="TXT_SEXO")
-	private boolean sexo;
+	private String sexo;
 	
 	public String getMatricula() {
 		return matricula;
@@ -66,11 +66,12 @@ public class Aluno extends Usuario implements Serializable{
 		this.rgEmissor = rgEmissor;
 	}
 
-	public boolean isSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(boolean sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+
 }

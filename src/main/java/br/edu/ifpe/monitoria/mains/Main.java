@@ -21,7 +21,7 @@ public class Main {
 		a.setCpf("000.000.000-00");
 		a.setRg("0.000.000");
 		a.setRgEmissor("SDS-PE");
-		a.setSexo(true);
+		a.setSexo("Masculino");
 		
 		Professor p = new Professor();
 		p.setEmail("p@ifpe.edu.br");
