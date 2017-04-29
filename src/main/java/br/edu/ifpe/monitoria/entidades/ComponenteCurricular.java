@@ -11,24 +11,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator (name = "SEQUENCIA_DISCIPLINA",
-					sequenceName = "SQ_DISCIPLINA",
+@SequenceGenerator (name = "SEQUENCIA_CC",
+					sequenceName = "SQ_CC",
 					initialValue = 1,
 					allocationSize = 1)
-@Table(name = "TB_DISCIPLINA")
+@Table(name = "TB_COMP_CURRICULAR")
 @Access(AccessType.FIELD)
-public class Disciplina implements Serializable{
+public class ComponenteCurricular implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_DEPARTAMENTO")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CC")
 	private Long id;
 	
 	@Column (name="TXT_NOME")
@@ -37,11 +36,8 @@ public class Disciplina implements Serializable{
 	@Column (name="TXT_CODIGO")
 	private String codigo;
 	
-	@Column (name="INT_BOLSAS")
-	private Integer numBolsas;
-	
-	@Column (name="INT_CODIGO")
-	private Integer numMonitores;
+	@Column (name="INT_CARGA_HORARIA")
+	private String cargaHoraria;
 	
 	@Column (name="TXT_TURNO")
 	private String turno;
@@ -49,14 +45,14 @@ public class Disciplina implements Serializable{
 	@Column (name="TXT_PERIODO")
 	private String periodo;
 
-	@ManyToOne (fetch = FetchType.LAZY, optional = false)
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
 	private Coordenacao coordenacao;
 
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
 	private Professor professor;
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -71,6 +67,14 @@ public class Disciplina implements Serializable{
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public String getCargaHoraria() {
+		return cargaHoraria;
+	}
+
+	public void setCargaHoraria(String cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
 	}
 
 	public String getTurno() {
@@ -108,21 +112,4 @@ public class Disciplina implements Serializable{
 	public Long getId() {
 		return id;
 	}
-
-	public Integer getNumBolsas() {
-		return numBolsas;
-	}
-
-	public void setNumBolsas(Integer numBolsas) {
-		this.numBolsas = numBolsas;
-	}
-
-	public Integer getNumMonitores() {
-		return numMonitores;
-	}
-
-	public void setNumMonitores(Integer numMonitores) {
-		this.numMonitores = numMonitores;
-	}
-	
 }

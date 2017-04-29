@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -36,8 +35,8 @@ public class Monitoria implements Serializable{
 	private Aluno aluno;
 	
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_DISCIPLINA", referencedColumnName = "ID")
-	private Disciplina disciplina;
+	@JoinColumn(name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
+	private ComponenteCurricular componenteCurricular;
 	
 	@Column (name="BOOL_BOLSA")
 	private boolean bolsa;
@@ -50,12 +49,12 @@ public class Monitoria implements Serializable{
 		this.aluno = aluno;
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public ComponenteCurricular getComponenteCurricular() {
+		return componenteCurricular;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
+		this.componenteCurricular = componenteCurricular;
 	}
 
 	public boolean isBolsa() {

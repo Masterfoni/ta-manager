@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Coordenacao;
 import br.edu.ifpe.monitoria.entidades.Departamento;
-import br.edu.ifpe.monitoria.entidades.Disciplina;
+import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.Professor;
 
@@ -46,7 +46,7 @@ public class Main2 {
 			coord.setSigla("CSIN");
 			
 			
-			Disciplina disc = new Disciplina();
+			ComponenteCurricular disc = new ComponenteCurricular();
 			disc.setProfessor(prof);
 			disc.setCoordenacao(coord);
 			disc.setTurno("NOITE");
@@ -58,7 +58,7 @@ public class Main2 {
 			
 			Monitoria mon = new Monitoria();
 			mon.setAluno(al);
-			mon.setDisciplina(disc);
+			mon.setComponenteCurricular(disc);
 			mon.setBolsa(false);
 			
 			

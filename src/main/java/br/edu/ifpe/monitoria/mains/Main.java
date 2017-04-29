@@ -28,7 +28,7 @@ public class Main {
 		p.setEmail("p@ifpe.edu.br");
 		p.setNome("Darth");
 		p.setSiape(2981585);
-		p.setTipo(TipoProfessor.NORMAL);
+		p.setTipo(TipoProfessor.ORIENTADOR);
 		p.setTiulacao(Titulacao.GRADUAÇÃO);
 		
 		EntityManagerFactory emf = null;
