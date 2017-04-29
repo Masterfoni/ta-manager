@@ -73,9 +73,9 @@ public class DepartamentoTest {
     public void t01_nomePorSigla() {
         logger.info("Executando t01: SELECT * FROM TB_DEPARTAMENTO WHERE TXT_SIGLA LIKE :sigla");
         TypedQuery<Departamento> query = em.createQuery(
-                "SELECT * FROM TB_DEPARTAMENTO WHERE TXT_SIGLA LIKE :sigla",
+                "SELECT d FROM Departamento d WHERE d.sigla LIKE '%DASE%'",
                 Departamento.class);
-        query.setParameter("sigla", "DASE%");
+        //query.setParameter("sigla", "DASE%");
         List<Departamento> departamentos = query.getResultList();
 
         for (Departamento departamento : departamentos) {

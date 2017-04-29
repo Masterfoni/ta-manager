@@ -12,6 +12,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
+import org.omg.CORBA.Environment;
 
 public class DbUnitUtil {
 
@@ -22,17 +23,18 @@ public class DbUnitUtil {
 	     IDatabaseConnection db_conn = null;
 	     try {
 	    	 conn = DriverManager.getConnection(
-	                    "jdbc:postgresql://localhost:5433/monitoria", "postgres", "postgres");
-	         db_conn = new DatabaseConnection(conn, "monitoria");
-	         DatabaseConfig dbConfig = db_conn.getConfig();
-	         dbConfig.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());
-	         dbConfig.setProperty(DatabaseConfig.PROPERTY_METADATA_HANDLER, new PostgresqlDataTypeFactory());
+	                    "jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
+	         db_conn = new DatabaseConnection(conn);
+	         
 	         FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
 	         builder.setColumnSensing(true);
+	         
 	         InputStream in = DbUnitUtil.class.getResourceAsStream(XML_FILE);
+	         
 	         IDataSet dataSet = builder.build(in);
+	         
 	         DatabaseOperation.CLEAN_INSERT.execute(db_conn, dataSet);
-	        } catch (Exception ex) {
+	     } catch (Exception ex) {
 	            throw new RuntimeException(ex.getMessage(), ex);
 	        } finally {
 	            try {
