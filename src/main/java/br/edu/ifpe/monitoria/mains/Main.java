@@ -18,7 +18,6 @@ public class Main {
 		a.setEmail("a@a.recife.ifpe.edu.br");
 		a.setMatricula("20132y6-rc0189");
 		a.setNome("Aluno");
-		a.setCelular("81988888888");
 		a.setCpf("000.000.000-00");
 		a.setRg("0.000.000");
 		a.setRgEmissor("SDS-PE");
