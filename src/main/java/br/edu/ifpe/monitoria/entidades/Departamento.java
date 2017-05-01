@@ -9,6 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,6 +22,23 @@ import javax.persistence.Table;
 		initialValue = 1,
 		allocationSize = 1)
 @Table(name="TB_DEPARTAMENTO")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Departamento.PorSigla",
+                    query = "SELECT d FROM Departamento d WHERE d.sigla LIKE :sigla"
+            )
+        }
+)
+@NamedNativeQueries(
+        {
+            @NamedNativeQuery(
+                    name = "Departamento.PorNomeSQL",
+                    query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_DEPARTAMENTO WHERE TXT_NOME LIKE ? ORDER BY ID",
+                    resultClass = Departamento.class
+            )
+        }
+)
 @Access(AccessType.FIELD)
 public class Departamento implements Serializable{
 
