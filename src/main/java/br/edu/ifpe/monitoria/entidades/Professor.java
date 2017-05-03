@@ -9,6 +9,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="TB_PROFESSOR")
@@ -18,9 +22,12 @@ public class Professor extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
+	@Max(999999)
 	@Column (name="INT_SIAPE")
 	private Integer siape;
 	
+	@NotBlank
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TXT_TIPO_PROFESSOR")
 	private TipoProfessor tipo;

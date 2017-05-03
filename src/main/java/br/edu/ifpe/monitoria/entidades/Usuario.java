@@ -19,6 +19,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_USUARIO",
@@ -37,9 +40,12 @@ public class Usuario implements Serializable
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_USUARIO")
 	private Long id;
 	
+	@NotNull
 	@Column (name="TXT_NOME")
 	private String nome;
 	
+	@NotNull
+	@Email
 	@Column (name="TXT_EMAIL")
 	private String email;
 	
