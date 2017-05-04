@@ -48,7 +48,7 @@ public class PlanoMonitoria {
 	private String objetivo;
 	
 	@Column (name="TXT_LISTA_ATIVIDADES")
-	private String periodo;
+	private String listaAtividades;
 
 	public Edital getEdital() {
 		return edital;
@@ -99,11 +99,11 @@ public class PlanoMonitoria {
 	}
 
 	public String getPeriodo() {
-		return periodo;
+		return listaAtividades;
 	}
 
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
+	public void setPeriodo(String listaAtividades) {
+		this.listaAtividades = listaAtividades;
 	}
 
 	public Long getId() {

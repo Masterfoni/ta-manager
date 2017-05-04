@@ -45,8 +45,50 @@ public class Edital {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
-	
-	
+
+	public String getNumeroEdital() {
+		return numeroEdital;
+	}
+
+	public void setNumeroEdital(String numeroEdital) {
+		this.numeroEdital = numeroEdital;
+	}
+
+	public Date getInicioInscricaoComponenteCurricular() {
+		return inicioInscricaoComponenteCurricular;
+	}
+
+	public void setInicioInscricaoComponenteCurricular(Date inicioInscricaoComponenteCurricular) {
+		this.inicioInscricaoComponenteCurricular = inicioInscricaoComponenteCurricular;
+	}
+
+	public Date getFimInscricaoComponenteCurricular() {
+		return fimInscricaoComponenteCurricular;
+	}
+
+	public void setFimInscricaoComponenteCurricular(Date fimInscricaoComponenteCurricular) {
+		this.fimInscricaoComponenteCurricular = fimInscricaoComponenteCurricular;
+	}
+
+	public Date getInicioInscricaoEstudante() {
+		return inicioInscricaoEstudante;
+	}
+
+	public void setInicioInscricaoEstudante(Date inicioInscricaoEstudante) {
+		this.inicioInscricaoEstudante = inicioInscricaoEstudante;
+	}
+
+	public Date getFimInscricaoEstudante() {
+		return fimInscricaoEstudante;
+	}
+
+	public void setFimInscricaoEstudante(Date fimInscricaoEstudante) {
+		this.fimInscricaoEstudante = fimInscricaoEstudante;
+	}
+
+	public Long getId() {
+		return id;
+	}
 }
 
 

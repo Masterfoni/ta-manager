@@ -37,7 +37,7 @@ public class ComponenteCurricular implements Serializable{
 	private String codigo;
 	
 	@Column (name="INT_CARGA_HORARIA")
-	private String cargaHoraria;
+	private int cargaHoraria;
 	
 	@Column (name="TXT_TURNO")
 	private String turno;
@@ -69,14 +69,6 @@ public class ComponenteCurricular implements Serializable{
 		this.codigo = codigo;
 	}
 
-	public String getCargaHoraria() {
-		return cargaHoraria;
-	}
-
-	public void setCargaHoraria(String cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
-	}
-
 	public String getTurno() {
 		return turno;
 	}
@@ -99,6 +91,14 @@ public class ComponenteCurricular implements Serializable{
 
 	public void setCoordenacao(Coordenacao coordenacao) {
 		this.coordenacao = coordenacao;
+	}
+	
+	public int getCargaHoraria() {
+		return cargaHoraria;
+	}
+
+	public void setCargaHoraria(int cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
 	}
 
 	public Professor getProfessor() {
