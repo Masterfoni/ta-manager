@@ -6,6 +6,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_CC",
@@ -30,25 +36,41 @@ public class ComponenteCurricular implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CC")
 	private Long id;
 	
+	@NotNull
 	@Column (name="TXT_NOME")
 	private String nome;
 	
+	@NotNull
 	@Column (name="TXT_CODIGO")
 	private String codigo;
 	
+	@NotBlank
 	@Column (name="INT_CARGA_HORARIA")
 	private int cargaHoraria;
 	
+	@NotBlank
+	@Enumerated(EnumType.STRING)
 	@Column (name="TXT_TURNO")
-	private String turno;
+	private Turno turno;
 	
+	public enum Turno {
+		MATUTINO,
+		VESPERTINO,
+		NOTURNO,
+	}
+		
+	@NotBlank
+	@ValidaPeriodo
+	@Size(max = 6, min = 6)
 	@Column (name="TXT_PERIODO")
 	private String periodo;
 
+	@NotNull
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
 	private Coordenacao coordenacao;
 
+	@NotNull
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
 	private Professor professor;
@@ -67,14 +89,6 @@ public class ComponenteCurricular implements Serializable{
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
-	}
-
-	public String getTurno() {
-		return turno;
-	}
-
-	public void setTurno(String turno) {
-		this.turno = turno;
 	}
 
 	public String getPeriodo() {
@@ -111,5 +125,13 @@ public class ComponenteCurricular implements Serializable{
 
 	public Long getId() {
 		return id;
+	}
+
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
 	}
 }

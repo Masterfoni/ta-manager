@@ -49,7 +49,7 @@ public class Main2 {
 			ComponenteCurricular disc = new ComponenteCurricular();
 			disc.setProfessor(prof);
 			disc.setCoordenacao(coord);
-			disc.setTurno("NOITE");
+			disc.setTurno(ComponenteCurricular.Turno.MATUTINO);
 			disc.setCodigo("TADS-111");
 			disc.setPeriodo("2017.1");
 			disc.setNome("Soft Corporativo");
