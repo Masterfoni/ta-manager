@@ -7,16 +7,21 @@
 	
 	<TB_USUARIO id="1" txt_nome="Felipe Araújo de Lima" txt_email="fal@a.recife.ifpe.edu.br" />
 	
-	<TB_ALUNO id="2" txt_email="jval@a.recife.ifpe.edu.br" txt_matricula="20132Y6-RC0294" txt_nome="João Vitor Almeida de Lima" txt_cpf="107.393.994-46" txt_rg="7.981.528" txt_rg_emissor="SDS-PE" txt_sexo="Masculino" />
+	<TB_USUARIO id="2" txt_nome="João Vitor Almeida de Lima" txt_email="jval@a.recife.ifpe.edu.br"/>
+	
+	<TB_USUARIO id="3" txt_nome="Marcos Andre" txt_email="marcoscosta@recife.ifpe.edu.br"/>
+	
+	<TB_ALUNO id_usuario="2" txt_matricula="20132Y6-RC0294" txt_cpf="107.393.994-46" txt_rg="7.981.528" txt_rg_emissor="SDS-PE" txt_sexo="Masculino" />
 
-	<TB_PROFESSOR id="3" txt_email="marcoscosta@recife.ifpe.edu.br" txt_nome="Marcos André" int_siape="123456" txt_tipo_professor="COORDENADOR" txt_titulacao="GRADUAÇÃO" />
+	<TB_PROFESSOR id_usuario="3" int_siape="123456" txt_tipo_professor="COORDENADOR" txt_titulacao="GRADUAÇÃO" />
 
-	<TB_COORDENACAO id="1" txt_nome="Coordenacao do Dase" id_departamento="1" id_coordenador="3" />
+	<TB_COORDENACAO id="1" txt_nome="Coordenacao do Dase" txt_sigla="CDASE" id_departamento="1" id_coordenador="3" />
 
-	<TB_EDITAL id="1" txt_numero_edital="22AB23" dt_ini_inscricao_cc="01/01/2018" dt_fim_inscricao_cc="01/02/2018" dt_ini_inscricao_estudante="05/02/2018" dt_fim_inscricao_estudante="15/02/2018" />
+	<TB_EDITAL id="1" txt_numero_edital="22AB23" dt_ini_inscricao_cc="2018-01-01 00:00:00" dt_fim_inscricao_cc="2018-02-01 00:00:00" dt_ini_inscricao_estudante="2018-02-05 00:00:00" dt_fim_inscricao_estudante="2018-02-15 00:00:00" />
 	
 	<TB_COMP_CURRICULAR id="1" txt_nome="Engenharia de Software" txt_codigo="TADS_ENG001" int_carga_horaria="52" txt_turno="NOITE" txt_periodo="2018/1" id_coordenacao="1" id_professor="3" />
 
 	<TB_PLANO_MONITORIA id="1" id_edital="1" id_comp_curricular="1" int_bolsas="3" int_voluntarios="1" txt_justificativa="Foi necessário." txt_objetivo="Crescimento do aluno." txt_lista_atividades="Programar java, html" />
 
+	<TB_MONITORIA id="1" bool_bolsa="true" id_aluno="2" id_comp_curricular="1" />
 </dataset>

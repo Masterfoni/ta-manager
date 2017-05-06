@@ -31,11 +31,11 @@ public class Edital {
 	private String numeroEdital;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_INI_INSRICAO_CC")
+	@Column(name = "DT_INI_INCSRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_FIM_INSRICAO_CC")
+	@Column(name = "DT_FIM_INCSRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
 	@Temporal(TemporalType.DATE)
@@ -43,7 +43,7 @@ public class Edital {
 	private Date inicioInscricaoEstudante;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_FIM_INSRICAO_ESTUDANTE")
+	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
 
 	public String getNumeroEdital() {
