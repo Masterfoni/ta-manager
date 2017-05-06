@@ -19,16 +19,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Departamento;
+import br.edu.ifpe.monitoria.entidades.Edital;
 
-public class DepartamentoTest {
+public class JPQLTest {
 
 	private static EntityManagerFactory emf;
     private static Logger logger = Logger.getGlobal();
     private EntityManager em;
     private EntityTransaction et;
 	
-    public DepartamentoTest() {
+    public JPQLTest() {
 	}
 
     @BeforeClass
@@ -141,28 +143,35 @@ public class DepartamentoTest {
 	
 	// UPDATE em QUERY
 	@Test
-    public void t05_update() {
-        logger.info("Executando t05: UPDATE Departamento AS d SET d.txt_nome = ?1 WHERE d.id = ?2");
-        Long id = (long) 5;
-        Query query = em.createQuery("UPDATE Departamento AS d SET d.nome = ?1 WHERE d.id = ?2");
-        query.setParameter(1, "Departamento Acadêmico de Sistemas e Eletrônica");
-        query.setParameter(2, id);
+    public void t05_updateComponenteCurricular() {
+        logger.info("Executando t05: UPDATE ComponenteCurricular SET nome = :PNOME WHERE id = :PID");
+        
+        Query query = em.createQuery("UPDATE ComponenteCurricular SET nome = :PNOME WHERE id = :PID");
+        query.setParameter("PNOME", "Egenharia de Software II");
+        query.setParameter("PID", 1);
         query.executeUpdate();
-        Departamento departamento = em.find(Departamento.class, id);
-        assertEquals("Departamento Acadêmico de Sistemas e Eletrônica", departamento.getNome());
-        logger.info(departamento.getNome());
+        
+        ComponenteCurricular compCurricular = em.find(ComponenteCurricular.class, (long)1);
+        
+        assertEquals("Egenharia de Software II", compCurricular.getNome());
+        
+        logger.info(compCurricular.getNome());
 	}
 	
 	// DELETE em query
     @Test
     public void t06_delete() {
         logger.info("Executando t06: DELETE FROM Departamento AS d WHERE d.id = ?1");
+        
         Long id = (long) 6;
+        
         Query query = em.createQuery("DELETE FROM Departamento AS d WHERE d.id = ?1");
         query.setParameter(1, id);
         query.executeUpdate();
+        
         Departamento departamento = em.find(Departamento.class, id);
         assertNull(departamento);
+        
         logger.log(Level.INFO, "Oferta {0} removida com sucesso.", id);
     }
 
@@ -170,12 +179,16 @@ public class DepartamentoTest {
     @Test
     public void t07_persistirDepartamento() {
         logger.info("Executando t07: persistir Departamento");
+        
         Departamento dpto = new Departamento();
         dpto.setNome("Diretoria de Ensino");
         dpto.setSigla("DEN");        
+        
         em.persist(dpto);
         em.flush();
+        
         assertNotNull(dpto.getId());
+        
         logger.log(Level.INFO, "Categoria {0} incluída com sucesso.", dpto);
     }
     
@@ -183,12 +196,17 @@ public class DepartamentoTest {
     @Test
     public void t08_atualizarSigla() {
         logger.info("Executando t08: atualizar Categoria");
+        
         TypedQuery<Departamento> query = em.createNamedQuery("Departamento.PorSigla", Departamento.class);
         query.setParameter("sigla", "DASE%");
+        
         Departamento dpto = query.getSingleResult();
         assertNotNull(dpto);
+        
         dpto.setSigla("DSE");
+        
         em.flush();
+        
         assertEquals(0, query.getResultList().size());
     }
 
@@ -196,27 +214,35 @@ public class DepartamentoTest {
     @Test
     public void t09_atualizarDepartamentoMerge() {
         logger.info("Executando t09: atualizar Categoria com Merge");
+        
         TypedQuery<Departamento> query = em.createNamedQuery("Departamento.PorSigla", Departamento.class);
         query.setParameter("sigla", "DSE%");
+        
         Departamento departamento = query.getSingleResult();
         assertNotNull(departamento);
+        
         em.clear();
+        
         departamento.setSigla("DASE");
+        
         em.merge(departamento);
         em.flush();
+        
         assertEquals(0, query.getResultList().size());
     }
     
     // EXCLUI via objeto
     @Test
-    public void t10_removerDepartamento() {
-        logger.info("Executando t10: remover Departamento");
-        TypedQuery<Departamento> query = em.createNamedQuery("Departamento.PorSigla", Departamento.class);
-        query.setParameter("sigla", "DASE");
-        Departamento departamento = query.getSingleResult();
-        assertNotNull(departamento);
-        em.remove(departamento);
-        em.flush();
-        assertEquals(0, query.getResultList().size());
+    public void t10_removerEdital() {
+        logger.info("Executando t10: Remover Edital");
+        
+        Query query = em.createQuery("DELETE FROM Edital WHERE d.id = ?1");
+        query.setParameter(1, (long)2);
+        query.executeUpdate();
+        
+        Edital edital = em.find(Edital.class, (long)2);
+        assertNull(edital);
+        
+        logger.log(Level.INFO, "Edital {0} removido com sucesso.", 2);
     }
 }

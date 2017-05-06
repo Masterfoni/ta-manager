@@ -44,11 +44,11 @@ public class ComponenteCurricular implements Serializable{
 	@Column (name="TXT_CODIGO")
 	private String codigo;
 	
-	@NotBlank
+	@NotNull
 	@Column (name="INT_CARGA_HORARIA")
-	private int cargaHoraria;
+	private Integer cargaHoraria;
 	
-	@NotBlank
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column (name="TXT_TURNO")
 	private Turno turno;

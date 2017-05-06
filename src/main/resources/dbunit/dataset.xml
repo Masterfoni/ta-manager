@@ -17,7 +17,9 @@
 
 	<TB_COORDENACAO id="1" txt_nome="Coordenacao do Dase" txt_sigla="CDASE" id_departamento="1" id_coordenador="3" />
 
-	<TB_EDITAL id="1" txt_numero_edital="22AB23" dt_ini_inscricao_cc="2018-01-01 00:00:00" dt_fim_inscricao_cc="2018-02-01 00:00:00" dt_ini_inscricao_estudante="2018-02-05 00:00:00" dt_fim_inscricao_estudante="2018-02-15 00:00:00" />
+	<TB_EDITAL id="1" txt_numero_edital="11AB11" dt_ini_inscricao_cc="2018-01-01 00:00:00" dt_fim_inscricao_cc="2018-02-01 00:00:00" dt_ini_inscricao_estudante="2018-02-05 00:00:00" dt_fim_inscricao_estudante="2018-02-15 00:00:00" />
+	
+	<TB_EDITAL id="2" txt_numero_edital="22AB22" dt_ini_inscricao_cc="2019-01-01 00:00:00" dt_fim_inscricao_cc="2019-02-01 00:00:00" dt_ini_inscricao_estudante="2019-02-05 00:00:00" dt_fim_inscricao_estudante="2019-02-15 00:00:00" />
 	
 	<TB_COMP_CURRICULAR id="1" txt_nome="Engenharia de Software" txt_codigo="TADS_ENG001" int_carga_horaria="52" txt_turno="NOITE" txt_periodo="2018/1" id_coordenacao="1" id_professor="3" />
 

@@ -34,7 +34,7 @@ public class ValidationTestes {
     public static void setUpClass() {
         logger.setLevel(Level.SEVERE);
         emf = Persistence.createEntityManagerFactory("monitoria");
-        //DbUnitUtil.inserirDados();
+        DbUnitUtil.inserirDados();
     }
 	
 	@AfterClass
@@ -78,15 +78,17 @@ public class ValidationTestes {
 		Coordenacao cord = new Coordenacao();
 		cord.setNome("TADS");
 		cord.setSigla("TADS");
-		cc.setCoordenacao(cord);
 		
+		cc.setCoordenacao(cord);
 		cc.setNome("Desenvolvimento de Software Corporativo");
 		cc.setPeriodo("2017/2");
+
 		Professor prof = new Professor();
 		prof.setNome("Marcos Costa");
-		cc.setProfessor(prof);
 		
+		cc.setProfessor(prof);
 		cc.setTurno(ComponenteCurricular.Turno.NOTURNO);
+	
 		em.persist(cc);
         assertNotNull(cc.getId());
 	}
@@ -94,6 +96,7 @@ public class ValidationTestes {
 	@Test
     public void t02_criarCCInvalido() {
 		ComponenteCurricular cc = new ComponenteCurricular();
+		
 		try {
 			cc.setCargaHoraria(46);
 			cc.setCodigo("DSC");
@@ -101,15 +104,17 @@ public class ValidationTestes {
 			Coordenacao cord = new Coordenacao();
 			cord.setNome("TADS");
 			cord.setSigla("TADS");
-			cc.setCoordenacao(cord);
 		
+			cc.setCoordenacao(cord);
 			cc.setNome("Desenvolvimento de Software Corporativo");
 			cc.setPeriodo("dfgdfg");
+
 			Professor prof = new Professor();
 			prof.setNome("Marcos Costa");
+			
 			cc.setProfessor(prof);
-		
 			cc.setTurno(ComponenteCurricular.Turno.NOTURNO);
+
 			em.persist(cc);
 			assertTrue(false);
 		}catch (ConstraintViolationException ex) {
