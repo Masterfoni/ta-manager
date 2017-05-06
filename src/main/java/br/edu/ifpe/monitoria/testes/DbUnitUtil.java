@@ -22,8 +22,7 @@ public class DbUnitUtil {
 		 Connection conn = null;
 	     IDatabaseConnection db_conn = null;
 	     try {
-	    	 conn = DriverManager.getConnection(
-	                    "jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
+	    	 conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
 	         db_conn = new DatabaseConnection(conn);
 	         
 	         FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();

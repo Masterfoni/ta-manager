@@ -35,7 +35,7 @@ public class DepartamentoTest {
     public static void setUpClass() {
         logger.setLevel(Level.SEVERE);
         emf = Persistence.createEntityManagerFactory("monitoria");
-        //DbUnitUtil.inserirDados();
+        DbUnitUtil.inserirDados();
     }
 	
 	@AfterClass
