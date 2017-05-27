@@ -5,11 +5,11 @@
 	
 	<TB_DEPARTAMENTO id="2" txt_nome="Departamento de Turismo e Cultura" txt_sigla="DATC" />
 	
-	<TB_USUARIO id="1" txt_nome="Felipe Araújo de Lima" txt_email="fal@a.recife.ifpe.edu.br" />
+	<TB_USUARIO id="1" txt_nome="Felipe Araújo de Lima" txt_email="fal@a.recife.ifpe.edu.br" txt_senha="fal123" />
 	
-	<TB_USUARIO id="2" txt_nome="João Vitor Almeida de Lima" txt_email="jval@a.recife.ifpe.edu.br"/>
+	<TB_USUARIO id="2" txt_nome="João Vitor Almeida de Lima" txt_email="jval@a.recife.ifpe.edu.br" txt_senha="jval123" />
 	
-	<TB_USUARIO id="3" txt_nome="Marcos Andre" txt_email="marcoscosta@recife.ifpe.edu.br"/>
+	<TB_USUARIO id="3" txt_nome="Marcos Andre" txt_email="marcoscosta@recife.ifpe.edu.br" txt_senha="masc123" />
 	
 	<TB_ALUNO id_usuario="2" txt_matricula="20132Y6-RC0294" txt_cpf="107.393.994-46" txt_rg="7.981.528" txt_rg_emissor="SDS-PE" txt_sexo="Masculino" />
 

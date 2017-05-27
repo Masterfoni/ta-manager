@@ -26,6 +26,13 @@
   		<version>2.5.2</version>
   	</dependency>
   	
+  	<!-- https://mvnrepository.com/artifact/javax.faces/jsf-api -->
+	<dependency>
+	    <groupId>javax.faces</groupId>
+	    <artifactId>jsf-api</artifactId>
+	    <version>2.1</version>
+	</dependency>
+  	
   	<dependency>
   		<groupId>org.eclipse.persistence</groupId>
   		<artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>

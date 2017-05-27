@@ -49,6 +49,10 @@ public class Usuario implements Serializable
 	@Column (name="TXT_EMAIL")
 	private String email;
 	
+	@NotNull
+	@Column (name="TXT_SENHA")
+	private String senha;
+	
 	@ElementCollection
 	@CollectionTable(name = "TB_TELEFONE",
 					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
@@ -87,5 +91,13 @@ public class Usuario implements Serializable
 	public void setEmail(String email) 
 	{
 		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }
