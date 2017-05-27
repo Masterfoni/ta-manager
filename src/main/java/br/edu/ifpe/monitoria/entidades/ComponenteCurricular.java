@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -65,12 +66,12 @@ public class ComponenteCurricular implements Serializable{
 	@Column (name="TXT_PERIODO")
 	private String periodo;
 
-	@NotNull
+	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
 	private Coordenacao coordenacao;
 
-	@NotNull
+	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
 	private Professor professor;

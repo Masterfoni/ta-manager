@@ -31,15 +31,15 @@ public class Edital {
 	private String numeroEdital;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_INI_INCSRICAO_CC")
+	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_FIM_INCSRICAO_CC")
+	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_INI_INSRICAO_ESTUDANTE")
+	@Column(name = "DT_INI_INSCRICAO_ESTUDANTE")
 	private Date inicioInscricaoEstudante;
 	
 	@Temporal(TemporalType.DATE)

@@ -236,7 +236,7 @@ public class JPQLTest {
     public void t10_removerEdital() {
         logger.info("Executando t10: Remover Edital");
         
-        Query query = em.createQuery("DELETE FROM Edital WHERE d.id = ?1");
+        Query query = em.createQuery("DELETE FROM Edital WHERE id = ?1");
         query.setParameter(1, (long)2);
         query.executeUpdate();
         

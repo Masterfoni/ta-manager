@@ -12,7 +12,8 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ValidadorPeriodo.class)
 @Documented
-public @interface ValidaPeriodo {
+public @interface ValidaPeriodo 
+{
 	String message() default "{br.edu.ifpe.monitoria.entidades.CC.periodo}";
 
     Class<?>[] groups() default {};

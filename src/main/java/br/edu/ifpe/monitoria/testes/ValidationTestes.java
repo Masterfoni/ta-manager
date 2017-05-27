@@ -32,7 +32,7 @@ public class ValidationTestes {
 	
 	@BeforeClass
     public static void setUpClass() {
-        logger.setLevel(Level.SEVERE);
+        logger.setLevel(Level.INFO);
         emf = Persistence.createEntityManagerFactory("monitoria");
         DbUnitUtil.inserirDados();
     }
@@ -52,6 +52,8 @@ public class ValidationTestes {
     public void tearDown() {
         commitTransaction();
         em.close();
+        em = null;
+        et = null;
     }
 
 	private void beginTransaction() {
@@ -64,29 +66,22 @@ public class ValidationTestes {
             et.commit();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
-            et.rollback();
-            fail(ex.getMessage());
+           
+            if(et.isActive())
+            	et.rollback();
         }
     }
 	
 	@Test
     public void t01_criarCCValido() {
 		ComponenteCurricular cc = new ComponenteCurricular();
+
 		cc.setCargaHoraria(46);
 		cc.setCodigo("DSC");
-		
-		Coordenacao cord = new Coordenacao();
-		cord.setNome("TADS");
-		cord.setSigla("TADS");
-		
-		cc.setCoordenacao(cord);
+		cc.setCoordenacao(em.find(Coordenacao.class, (long)1));
 		cc.setNome("Desenvolvimento de Software Corporativo");
 		cc.setPeriodo("2017/2");
-
-		Professor prof = new Professor();
-		prof.setNome("Marcos Costa");
-		
-		cc.setProfessor(prof);
+		cc.setProfessor(em.find(Professor.class, (long)1));
 		cc.setTurno(ComponenteCurricular.Turno.NOTURNO);
 	
 		em.persist(cc);
@@ -95,24 +90,16 @@ public class ValidationTestes {
 	
 	@Test
     public void t02_criarCCInvalido() {
-		ComponenteCurricular cc = new ComponenteCurricular();
+		ComponenteCurricular cc = null;
 		
 		try {
+			cc = new ComponenteCurricular();
 			cc.setCargaHoraria(46);
 			cc.setCodigo("DSC");
-		
-			Coordenacao cord = new Coordenacao();
-			cord.setNome("TADS");
-			cord.setSigla("TADS");
-		
-			cc.setCoordenacao(cord);
+			cc.setCoordenacao(em.find(Coordenacao.class, (long)1));
 			cc.setNome("Desenvolvimento de Software Corporativo");
-			cc.setPeriodo("dfgdfg");
-
-			Professor prof = new Professor();
-			prof.setNome("Marcos Costa");
-			
-			cc.setProfessor(prof);
+			cc.setPeriodo("ufdj/2");
+			cc.setProfessor(em.find(Professor.class, (long)1));
 			cc.setTurno(ComponenteCurricular.Turno.NOTURNO);
 
 			em.persist(cc);
@@ -123,13 +110,12 @@ public class ValidationTestes {
             Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
 
             if (logger.isLoggable(Level.INFO)) {
-                for (ConstraintViolation violation : constraintViolations) {
+                for (ConstraintViolation<?> violation : constraintViolations) {
                     Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
                 }
             }
 
-            assertEquals(10, constraintViolations.size());
-            assertNull(cc.getId());
+            assertEquals(1, constraintViolations.size());
 		}
 	}
 	
