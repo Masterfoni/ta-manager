@@ -2,12 +2,8 @@ package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
 
@@ -16,8 +12,8 @@ public class GerLogin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@PersistenceContext(name = "descorp", type = PersistenceContextType.TRANSACTION)
-	private EntityManager em;
+	@EJB
+    private GerUsuarioBean usuarioBean;
 	
 	private Usuario usuario;
 	
@@ -57,14 +53,9 @@ public class GerLogin implements Serializable {
 		usuario.setEmail(email);
 		usuario.setSenha(senha);
 		usuario.setNome(nomeUsuario);
-		
-		return persisteUsuario(usuario);
+		//return true;
+		return usuarioBean.persisteUsuario(usuario);
 	}
 	
-	public boolean persisteUsuario(@NotNull @Valid Usuario usuario)
-	{
-		em.persist(usuario);
-		
-		return true;
-	}
+
 }
