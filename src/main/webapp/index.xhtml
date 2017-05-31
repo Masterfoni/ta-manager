@@ -1,33 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<meta charset="ISO-8859-1"></meta>
-	<title>IFPE - Monitoria</title>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./index.css"></link>
+	<title>Monitoria - IFPE</title>
 </h:head>
-<body>
-	<h:form>            
-	    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-	        <p:graphicImage name="/demo/images/login.png" />
-	    </h:outputLink>
-	 
-	    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-	 
-	    <p:dialog header="Login" widgetVar="dlg" resizable="false">
-	        <h:panelGrid columns="2" cellpadding="5">
-	            <h:outputLabel for="username" value="Username:" />
-	            <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
-	 
-	            <h:outputLabel for="password" value="Password:" />
-	            <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
-	 
-	            <f:facet name="footer">
-	                <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
-	                                 oncomplete="handleLoginRequest(xhr, status, args)" />
-	            </f:facet>  
-	        </h:panelGrid>
-	    </p:dialog>
-	</h:form>
+<h:body>
+	<div class="container">
+		<div class="mpanel">
+			<h:form>
+				<div class="form-group">
+			        <h:inputText id="nome" class="form-control" value="#{gerLogin.nomeUsuario}" required="true" label="nome" />
+					<p:watermark for="nome" value="Digite seu nome" />
+					
+			        <h:inputText id="email" class="form-control" value="#{gerLogin.email}" required="true" label="email" />
+					<p:watermark for="email" value="Digite seu email" />
+					
+			        <h:inputText id="password" class="form-control" value="#{gerLogin.senha}" required="true" label="password" />
+					<p:watermark for="password" value="Digite sua senha" />
+		
+			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerLogin.criaUsuario}"/> 
+				</div>
+			</h:form>
+		</div>
+		
+		<div class="mpanel">
+			<h:form>
+				<div class="form-group">
+					<h:inputText id="nomeBusca" class="form-control" />
+					<p:watermark for="nomeBusca" value="Nome para buscar" />
+					
+					<h:inputText id="emailBusca" class="form-control" />
+					<p:watermark for="emailBusca" value="Email para buscar" />
+					
+					<h:commandButton class="btn btn-primary" value="Buscar" />
+				</div>
+			</h:form>
+		</div>
+	</div>
 	
-</body>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</h:body>
 </html>

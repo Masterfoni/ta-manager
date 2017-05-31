@@ -11,16 +11,16 @@ import br.edu.ifpe.monitoria.entidades.Usuario;
 public class GerLogin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
-    private GerUsuarioBean usuarioBean;
-	
+  private GerUsuarioBean usuarioBean;
+
 	private Usuario usuario;
-	
+
 	private String email;
 
 	private String senha;
-	
+
 	private String nomeUsuario;
 
 	public String getEmail() {
@@ -38,24 +38,24 @@ public class GerLogin implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}
-	
+
 	public void setNomeUsuario(String nomeUsuario) {
 		this.nomeUsuario = nomeUsuario;
 	}
 
 	public boolean criaUsuario() {
 		usuario = new Usuario();
-		
+
 		usuario.setEmail(email);
 		usuario.setSenha(senha);
 		usuario.setNome(nomeUsuario);
 		//return true;
 		return usuarioBean.persisteUsuario(usuario);
 	}
-	
+
 
 }

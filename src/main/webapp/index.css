@@ -1,0 +1,21 @@
+.form-group {
+	text-align: center;
+	/*width: 50%;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form-control {
+	margin-bottom: 2px;	
+}
+
+.container {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.mpanel {
+	flex-grow: 2;
+	padding: 1px;	
+}
