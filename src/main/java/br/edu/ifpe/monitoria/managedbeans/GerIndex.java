@@ -1,19 +1,25 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
 
-@ManagedBean (name="gerLogin")
-public class GerLogin implements Serializable {
+@ManagedBean (name="gerIndex")
+public class GerIndex implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-  private GerUsuarioBean usuarioBean;
+	private GerUsuarioBean usuarioBean;
+	
+	private List<Usuario> usuarios;
 
 	private Usuario usuario;
 
@@ -22,6 +28,10 @@ public class GerLogin implements Serializable {
 	private String senha;
 
 	private String nomeUsuario;
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
 
 	public String getEmail() {
 		return email;
@@ -47,15 +57,31 @@ public class GerLogin implements Serializable {
 		this.nomeUsuario = nomeUsuario;
 	}
 
-	public boolean criaUsuario() {
+	@PostConstruct
+	public void init() 
+	{
+		usuarios = usuarioBean.consultaUsuarios();
+	}
+	
+	public boolean deletarUsuario(Usuario usuario) {
+		usuarios.remove(usuario);
+		
+		return usuarioBean.deletaUsuario(usuario.getId());
+	}
+	
+	public boolean criarUsuario() {
 		usuario = new Usuario();
 
 		usuario.setEmail(email);
 		usuario.setSenha(senha);
 		usuario.setNome(nomeUsuario);
-		//return true;
-		return usuarioBean.persisteUsuario(usuario);
+
+		if(usuarioBean.persisteUsuario(usuario))
+		{
+			usuarios.add(usuario);
+			return true;
+		}
+		else
+			return false;
 	}
-
-
 }

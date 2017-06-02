@@ -10,20 +10,26 @@
 	<title>Monitoria - IFPE</title>
 </h:head>
 <h:body>
+	<nav class="navbar navbar-light bg-success">
+	  <a class="navbar-brand" href="#">
+	    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+	  </a>
+	    <span class="navbar-text">Desenvolvimento de Software Corporativo (TESTE)</span>
+	</nav>
 	<div class="container">
 		<div class="mpanel">
 			<h:form>
 				<div class="form-group">
-			        <h:inputText id="nome" class="form-control" value="#{gerLogin.nomeUsuario}" required="true" label="nome" />
+			        <h:inputText id="nome" class="form-control" value="#{gerIndex.nomeUsuario}" required="true" label="nome" />
 					<p:watermark for="nome" value="Digite seu nome" />
 					
-			        <h:inputText id="email" class="form-control" value="#{gerLogin.email}" required="true" label="email" />
+			        <h:inputText id="email" class="form-control" value="#{gerIndex.email}" required="true" label="email" />
 					<p:watermark for="email" value="Digite seu email" />
 					
-			        <h:inputText id="password" class="form-control" value="#{gerLogin.senha}" required="true" label="password" />
+			        <h:inputText id="password" class="form-control" value="#{gerIndex.senha}" required="true" label="password" />
 					<p:watermark for="password" value="Digite sua senha" />
 		
-			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerLogin.criaUsuario}"/> 
+			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerIndex.criarUsuario}"/> 
 				</div>
 			</h:form>
 		</div>
@@ -39,6 +45,33 @@
 					
 					<h:commandButton class="btn btn-primary" value="Buscar" />
 				</div>
+			</h:form>
+		</div>
+	</div>
+	<div class="container">
+		<div class="mpanel">
+			<h:form id="dataTableForm">
+				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{gerIndex.usuarios}">
+				    <h:column>
+				    	<f:facet name="header">ID</f:facet>
+				        <h:outputText value="#{usuario.id}" />
+				    </h:column>
+				 
+				    <h:column>
+				        <f:facet name="header">Nome</f:facet>
+				        <h:outputText value="#{usuario.nome}" />
+				    </h:column>
+				 
+				    <h:column>
+				    	<f:facet name="header">E-mail</f:facet>
+				        <h:outputText value="#{usuario.email}" />
+				    </h:column>
+				    
+				    <h:column>
+			    		<h:commandButton actionListener="#{gerIndex.deletarUsuario(usuario)}" value="Deletar"
+			    						 update="@form" class="btn btn-danger" />
+				    </h:column>
+				</h:dataTable>
 			</h:form>
 		</div>
 	</div>

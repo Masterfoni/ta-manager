@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,6 +34,10 @@ import org.hibernate.validator.constraints.Email;
 @Inheritance (strategy = InheritanceType.JOINED)
 @DiscriminatorColumn (name="DISC_USUARIO", discriminatorType = DiscriminatorType.STRING, length=1)
 @Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+	@NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
+})
 public class Usuario implements Serializable
 {
 	private static final long serialVersionUID = 1L;
