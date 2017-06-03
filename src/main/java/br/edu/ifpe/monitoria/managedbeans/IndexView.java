@@ -11,14 +11,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
+import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
 
-@ManagedBean (name="gerIndex")
-public class GerIndex implements Serializable {
+@ManagedBean (name="indexView")
+public class IndexView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private GerUsuarioBean usuarioBean;
+	private UsuarioLocalBean usuarioBean;
 	
 	private List<Usuario> usuarios;
 

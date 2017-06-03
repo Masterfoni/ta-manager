@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.managedbeans;
+package br.edu.ifpe.monitoria.localBean;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import br.edu.ifpe.monitoria.entidades.Usuario;
 
 @Stateless
 @LocalBean
-public class GerUsuarioBean 
+public class UsuarioLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;

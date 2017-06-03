@@ -20,16 +20,16 @@
 		<div class="mpanel">
 			<h:form>
 				<div class="form-group">
-			        <h:inputText id="nome" class="form-control" value="#{gerIndex.nomeUsuario}" required="true" label="nome" />
+			        <h:inputText id="nome" class="form-control" value="#{indexView.nomeUsuario}" required="true" label="nome" />
 					<p:watermark for="nome" value="Digite seu nome" />
 					
-			        <h:inputText id="email" class="form-control" value="#{gerIndex.email}" required="true" label="email" />
+			        <h:inputText id="email" class="form-control" value="#{indexView.email}" required="true" label="email" />
 					<p:watermark for="email" value="Digite seu email" />
 					
-			        <h:inputText id="password" class="form-control" value="#{gerIndex.senha}" required="true" label="password" />
+			        <h:inputText id="password" class="form-control" value="#{indexView.senha}" required="true" label="password" />
 					<p:watermark for="password" value="Digite sua senha" />
 		
-			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerIndex.criarUsuario}">
+			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{indexView.criarUsuario}">
 			       		<f:ajax execute="@form" render="dataTableForm"/>
 			       	</h:commandButton> 
 				</div>
@@ -42,7 +42,7 @@
 					<h:inputText id="emailBusca" binding="#{emailInput}" class="form-control" />
 					<p:watermark for="emailBusca" value="Email para buscar" />
 					
-					<h:commandButton action="#{gerIndex.consultarUsuarioEmail(emailInput.value)}" value="Buscar" class="btn btn-primary">
+					<h:commandButton action="#{indexView.consultarUsuarioEmail(emailInput.value)}" value="Buscar" class="btn btn-primary">
 						<f:ajax execute="@form" render="dataTableForm"/>
 					</h:commandButton>
 				</div>
@@ -52,7 +52,7 @@
 	<div class="container">
 		<div class="mpanel">
 			<h:form id="dataTableForm">
-				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{gerIndex.usuarios}" editable="true">
+				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{indexView.usuarios}" editable="true">
 				    <h:column>
 				    	<f:facet name="header">ID</f:facet>
 				        <h:outputText value="#{usuario.id}" />
@@ -69,7 +69,7 @@
 				    </h:column>
 				    
 				    <h:column>
-			    		<h:commandButton actionListener="#{gerIndex.deletarUsuario(usuario)}" value="Deletar"
+			    		<h:commandButton actionListener="#{indexView.deletarUsuario(usuario)}" value="Deletar"
 			    						 class="btn btn-danger">
 			    			<f:ajax execute="@form" render="dataTableForm"/>
 			    		</h:commandButton>

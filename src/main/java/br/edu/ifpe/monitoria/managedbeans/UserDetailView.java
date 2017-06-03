@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
+import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
 
 @ManagedBean(name = "userDetailView")
 public class UserDetailView implements Serializable {
@@ -16,11 +17,11 @@ public class UserDetailView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private GerUsuarioBean usuarioBean;
+	private UsuarioLocalBean usuarioBean;
 	
 	private Long userId;
 
-	private Usuario usuario;
+	private Usuario usuario = new Usuario();
 
 	private String email;
 	
@@ -70,10 +71,10 @@ public class UserDetailView implements Serializable {
 	}
 	
 	public boolean updateUsuario() {
-		usuario = new Usuario();
+		//usuario = new Usuario();
 		
 		usuario.setId(userId);
-		usuario.setNome(nome);
+		//usuario.setNome(nome);
 		usuario.setEmail(email);
 		usuario.setSenha(senha);
 	
