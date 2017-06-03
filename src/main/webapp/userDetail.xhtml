@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./index.css"></link>
+	<title>Alterar Usuario</title>
+</h:head>
+<h:body>
+	<f:metadata>
+	    <f:viewParam name="userId" value="#{userDetailView.userId}" />
+	</f:metadata>
+	 
+	<nav class="navbar navbar-light bg-success">
+	  <a class="navbar-brand" href="#">
+	    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+	  </a>
+	    <span class="navbar-text">Desenvolvimento de Software Corporativo (TESTE)</span>
+	</nav>
+	
+	<div class="container">
+		<div class="mpanel">
+			<h:form>
+				<div class="form-group">
+			        <h:inputText id="nome" class="form-control" value="#{userDetailView.nome}" required="true" label="nome" />
+					
+			        <h:inputText id="email" class="form-control" value="#{userDetailView.email}" required="true" label="email" />
+					
+			        <h:inputText id="password" class="form-control" value="#{userDetailView.senha}" required="true" label="password" />
+		
+			       	<h:commandButton class="btn btn-success" value="Atualizar" action="#{userDetailView.updateUsuario}"/>
+				</div>
+			</h:form>
+		</div>
+	</div>
+	 
+	<p>You've been redirected to this bookmarkable page with button.
+	    ViewParameter you've passed is <strong>"
+	    #{userDetailView.userId}"</strong>
+	</p>
+</h:body>
+</html>

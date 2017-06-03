@@ -29,7 +29,9 @@
 			        <h:inputText id="password" class="form-control" value="#{gerIndex.senha}" required="true" label="password" />
 					<p:watermark for="password" value="Digite sua senha" />
 		
-			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerIndex.criarUsuario}"/> 
+			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{gerIndex.criarUsuario}">
+			       		<f:ajax execute="@form" render="dataTableForm"/>
+			       	</h:commandButton> 
 				</div>
 			</h:form>
 		</div>
@@ -37,13 +39,12 @@
 		<div class="mpanel">
 			<h:form>
 				<div class="form-group">
-					<h:inputText id="nomeBusca" class="form-control" />
-					<p:watermark for="nomeBusca" value="Nome para buscar" />
-					
-					<h:inputText id="emailBusca" class="form-control" />
+					<h:inputText id="emailBusca" binding="#{emailInput}" class="form-control" />
 					<p:watermark for="emailBusca" value="Email para buscar" />
 					
-					<h:commandButton class="btn btn-primary" value="Buscar" />
+					<h:commandButton action="#{gerIndex.consultarUsuarioEmail(emailInput.value)}" value="Buscar" class="btn btn-primary">
+						<f:ajax execute="@form" render="dataTableForm"/>
+					</h:commandButton>
 				</div>
 			</h:form>
 		</div>
@@ -51,7 +52,7 @@
 	<div class="container">
 		<div class="mpanel">
 			<h:form id="dataTableForm">
-				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{gerIndex.usuarios}">
+				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{gerIndex.usuarios}" editable="true">
 				    <h:column>
 				    	<f:facet name="header">ID</f:facet>
 				        <h:outputText value="#{usuario.id}" />
@@ -69,7 +70,12 @@
 				    
 				    <h:column>
 			    		<h:commandButton actionListener="#{gerIndex.deletarUsuario(usuario)}" value="Deletar"
-			    						 update="@form" class="btn btn-danger" />
+			    						 class="btn btn-danger">
+			    			<f:ajax execute="@form" render="dataTableForm"/>
+			    		</h:commandButton>
+			    		<p:link outcome="userDetail" value="Alterar">
+			    			<f:param name="userId" value="#{usuario.id}" />
+			    		</p:link>
 				    </h:column>
 				</h:dataTable>
 			</h:form>

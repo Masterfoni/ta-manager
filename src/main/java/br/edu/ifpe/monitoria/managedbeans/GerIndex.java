@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,10 @@ public class GerIndex implements Serializable {
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
+	
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
 
 	public String getEmail() {
 		return email;
@@ -61,6 +66,22 @@ public class GerIndex implements Serializable {
 	public void init() 
 	{
 		usuarios = usuarioBean.consultaUsuarios();
+	}
+	
+	public void consultarUsuarioEmail(String email)
+	{
+		if(email == null || email.isEmpty())
+			usuarios = usuarioBean.consultaUsuarios();
+		else
+		{
+			if(usuarios != null && !usuarios.isEmpty())
+			{
+				usuarios.clear();
+				usuarios.add(usuarioBean.consultaUsuario(email));
+			}
+			else
+				usuarios.add(usuarioBean.consultaUsuario(email));
+		}
 	}
 	
 	public boolean deletarUsuario(Usuario usuario) {

@@ -21,15 +21,42 @@ public class GerUsuarioBean
 	
 	public List<Usuario> consultaUsuarios()
 	{
-		List<Usuario> resultado = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
+		List<Usuario> usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
 		
-		return resultado;
+		return usuarios;
+	}
+	
+	public boolean atualizaUsuario(Usuario usuario)
+	{
+		Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
+		
+		usuarioAtualizar.setEmail(usuario.getEmail());
+		usuarioAtualizar.setNome(usuario.getNome());
+		usuarioAtualizar.setSenha(usuario.getSenha());
+		
+		em.merge(usuarioAtualizar);
+		
+		return true;
+	}
+	
+	public Usuario consultaUsuario(String email)
+	{
+		Usuario usuarioPorEmail = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
+		
+		return usuarioPorEmail;
+	}
+	
+	public Usuario consultaUsuarioById(Long id)
+	{
+		Usuario usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		
+		return usuarioPorId;
 	}
 	
 	public boolean deletaUsuario(Long id)
 	{
 		Usuario usuarioDeletado = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
-
+		
 		em.remove(usuarioDeletado);
 		
 		return true;
