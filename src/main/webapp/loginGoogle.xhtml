@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./index.css"></link>
+	<title>Login Google</title>
+	<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
+	<script src="./js/loginGoogle.js"></script>
+	<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
+</h:head>
+<h:body>
+	<div class="g-signin2" data-onsuccess="onSignIn"></div> 
+	<a href="#" onclick="signOut();">Sign out</a>
+</h:body>
+</html>
