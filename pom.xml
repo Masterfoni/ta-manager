@@ -20,6 +20,7 @@
   </build>
   
   <dependencies>
+  	
   	<!-- https://mvnrepository.com/artifact/javax.faces/jsf-api -->
 	<dependency>
 		<groupId>org.primefaces</groupId>
@@ -32,5 +33,14 @@
   		<artifactId>postgresql</artifactId>
   		<version>42.1.1.jre7</version>
   	</dependency>
+  	
+  	<!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+	<dependency>
+    	<groupId>com.google.api-client</groupId>
+    	<artifactId>google-api-client</artifactId>
+    	<version>1.22.0</version>
+	</dependency>
+  	
+  	
   </dependencies>
 </project>

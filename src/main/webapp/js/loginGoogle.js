@@ -15,4 +15,24 @@ function onSignIn(googleUser) {
 	  console.log('Image URL: ' + profile.getImageUrl());
 	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 	  console.log(profile);
+	  console.log('HostedDomain: ' + googleUser.getHostedDomain());
+	  
+	  if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br')
+	  {
+		  alert("Utilize seu email instituncional.");
+		  signOut();
+	  }	
+	  
+	  var id_token = googleUser.getAuthResponse().id_token;
+	  
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('POST', 'https://localhost:8181/FALJVAL/services/testService');
+	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	  xhr.onload = function() {
+	    console.log('Signed in as: ' + xhr.responseText);
+	  };
+	  xhr.send(id_token);
+	  
+	  
+	  
 }
