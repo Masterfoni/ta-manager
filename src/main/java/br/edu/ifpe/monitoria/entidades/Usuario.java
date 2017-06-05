@@ -37,7 +37,8 @@ import org.hibernate.validator.constraints.Email;
 @NamedQueries({
 	@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
 	@NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
-	@NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+	@NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
+	@NamedQuery(name = "Usuario.findByNome", query= "SELECT u FROM Usuario u WHERE u.nome = :nome")
 })
 public class Usuario implements Serializable
 {
@@ -53,7 +54,7 @@ public class Usuario implements Serializable
 	
 	@NotNull
 	@Email
-	@Column (name="TXT_EMAIL")
+	@Column (name="TXT_EMAIL", unique=true)
 	private String email;
 	
 	@NotNull

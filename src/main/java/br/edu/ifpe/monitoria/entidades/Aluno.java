@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name="TB_ALUNO")
-@DiscriminatorValue(value="A")
+@DiscriminatorValue(value="Aluno")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @Access(AccessType.FIELD)
 public class Aluno extends Usuario implements Serializable{

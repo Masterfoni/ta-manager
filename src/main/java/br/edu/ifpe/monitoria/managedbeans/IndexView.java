@@ -1,14 +1,10 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
@@ -25,12 +21,14 @@ public class IndexView implements Serializable {
 
 	private Usuario usuario;
 
-	private String email;
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-	private String senha;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-	private String nomeUsuario;
-	
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -39,38 +37,10 @@ public class IndexView implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-
-	@PostConstruct
-	public void init() 
+	public void consultarUsuarioEmail()
 	{
-		usuarios = usuarioBean.consultaUsuarios();
-	}
-	
-	public void consultarUsuarioEmail(String email)
-	{
+		String email = usuario.getEmail();
+		
 		if(email == null || email.isEmpty())
 			usuarios = usuarioBean.consultaUsuarios();
 		else
@@ -83,27 +53,5 @@ public class IndexView implements Serializable {
 			else
 				usuarios.add(usuarioBean.consultaUsuario(email));
 		}
-	}
-	
-	public boolean deletarUsuario(Usuario usuario) {
-		usuarios.remove(usuario);
-		
-		return usuarioBean.deletaUsuario(usuario.getId());
-	}
-	
-	public boolean criarUsuario() {
-		usuario = new Usuario();
-
-		usuario.setEmail(email);
-		usuario.setSenha(senha);
-		usuario.setNome(nomeUsuario);
-
-		if(usuarioBean.persisteUsuario(usuario))
-		{
-			usuarios.add(usuario);
-			return true;
-		}
-		else
-			return false;
 	}
 }

@@ -1,21 +1,30 @@
-.form-group {
-	text-align: center;
-	/*width: 50%;*/
-	margin-left: auto;
-	margin-right: auto;
+.login-panel {
+	margin-top: 100px;
 }
 
-.form-control {
-	margin-bottom: 2px;	
+.login-footer {
+	 border-top: 1px solid#888;
+	 padding-top:15px;
+	 font-size:85%
 }
 
-.container {
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-around;
+.panel {
+	box-shadow: 4px 4px 4px #178425;
 }
 
-.mpanel {
-	flex-grow: 2;
-	padding: 1px;	
+.panel-heading {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.panel-body {
+	padding-top:30px;
+}
+
+.input-group {
+	margin-bottom: 25px;
+}
+
+.rounded {
+	border-radius: 15px;
 }

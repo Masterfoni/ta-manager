@@ -9,9 +9,9 @@
     					  lazy-connection-association="false" lazy-connection-enlistment="false" match-connections="false" 
     					  max-connection-usage-count="0" max-pool-size="32" max-wait-time-in-millis="60000" 
     					  non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1" steady-pool-size="8" validate-atmost-once-period-in-seconds="0" wrap-jdbc-objects="false">
-        <property name="URL" value="jdbc:postgresql://localhost:5433/monitoria"/>
+        <property name="URL" value="jdbc:postgresql://localhost:5432/monitoria"/>
         <property name="User" value="postgres"/>
-        <property name="Password" value="postgres"/>
+        <property name="Password" value="root"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:app/monitoriaDS" object-type="user" pool-name="connectionPool"/>
 </resources>

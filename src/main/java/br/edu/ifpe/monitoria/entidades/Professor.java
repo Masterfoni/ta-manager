@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="TB_PROFESSOR")
-@DiscriminatorValue(value="P")
+@DiscriminatorValue(value="Professor")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 public class Professor extends Usuario implements Serializable {
 

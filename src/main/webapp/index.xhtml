@@ -10,78 +10,49 @@
 	<title>Monitoria - IFPE</title>
 </h:head>
 <h:body>
-	<nav class="navbar navbar-light bg-success">
-	  <a class="navbar-brand" href="#">
-	    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-	  </a>
-	    <span class="navbar-text">Desenvolvimento de Software Corporativo (TESTE)</span>
-	</nav>
-	<div class="container">
-		<div class="mpanel">
-			<h:form>
-				<div class="form-group">
-			        <h:inputText id="nome" class="form-control" value="#{indexView.nomeUsuario}" required="true" label="nome" />
-					<p:watermark for="nome" value="Digite seu nome" />
-					
-			        <h:inputText id="email" class="form-control" value="#{indexView.email}" required="true" label="email" />
-					<p:watermark for="email" value="Digite seu email" />
-					
-			        <h:inputText id="password" class="form-control" value="#{indexView.senha}" required="true" label="password" />
-					<p:watermark for="password" value="Digite sua senha" />
-		
-			       	<h:commandButton class="btn btn-success" value="Cadastrar" action="#{indexView.criarUsuario}">
-			       		<f:ajax execute="@form" render="dataTableForm"/>
-			       	</h:commandButton> 
-				</div>
-			</h:form>
-		</div>
-		
-		<div class="mpanel">
-			<h:form>
-				<div class="form-group">
-					<h:inputText id="emailBusca" binding="#{emailInput}" class="form-control" />
-					<p:watermark for="emailBusca" value="Email para buscar" />
-					
-					<h:commandButton action="#{indexView.consultarUsuarioEmail(emailInput.value)}" value="Buscar" class="btn btn-primary">
-						<f:ajax execute="@form" render="dataTableForm"/>
-					</h:commandButton>
-				</div>
-			</h:form>
-		</div>
-	</div>
-	<div class="container">
-		<div class="mpanel">
-			<h:form id="dataTableForm">
-				<h:dataTable styleClass="table table-striped table-bordered" var="usuario" value="#{indexView.usuarios}" editable="true">
-				    <h:column>
-				    	<f:facet name="header">ID</f:facet>
-				        <h:outputText value="#{usuario.id}" />
-				    </h:column>
-				 
-				    <h:column>
-				        <f:facet name="header">Nome</f:facet>
-				        <h:outputText value="#{usuario.nome}" />
-				    </h:column>
-				 
-				    <h:column>
-				    	<f:facet name="header">E-mail</f:facet>
-				        <h:outputText value="#{usuario.email}" />
-				    </h:column>
-				    
-				    <h:column>
-			    		<h:commandButton actionListener="#{indexView.deletarUsuario(usuario)}" value="Deletar"
-			    						 class="btn btn-danger">
-			    			<f:ajax execute="@form" render="dataTableForm"/>
-			    		</h:commandButton>
-			    		<p:link outcome="userDetail" value="Alterar">
-			    			<f:param name="userId" value="#{usuario.id}" />
-			    		</p:link>
-				    </h:column>
-				</h:dataTable>
-			</h:form>
-		</div>
-	</div>
+ 	<div class="container">    
+       	<div class="login-panel col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+           	<div class="panel panel-success rounded" >
+               	<div class="panel-heading">
+                       <div class="panel-title">Login</div>
+                </div>     
+
+                <div class="panel-body" >
+					<div>
+						<h:messages style="color:red;margin:8px;" />
+					</div>
+                    <h:form id="loginform" class="form-horizontal" role="form">
+                        <div class="input-group">
+                        	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        	<h:inputText id="emailUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" />
+                        </div>
+                            
+                        <div class="input-group">
+            	            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+       	                    <h:inputSecret id="senhaUsuario" class="form-control" value="#{indexView.usuario.senha}" required="true" />
+                        </div>
+                        
+                        <div class="form-group">
+	                        <div class="col-sm-12 controls">
+	                       		<h:commandButton value="Login" action="#{indexView.consultaUsuario}" class="btn btn-success"/>
+                            	<h:commandButton value="Login Professor" action="#{indexView.consultaUsuario}" class="btn btn=success" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-md-12 control">
+                                <div class="login-footer" >
+                                    <span>Algum erro? <a href="#">Contate-nos!</a></span>
+                                </div>
+                            </div>
+                        </div>    
+                    </h:form>     
+      			</div>   	                  
+      		</div>  
+        </div>
+    </div>
 	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </h:body>
 </html>

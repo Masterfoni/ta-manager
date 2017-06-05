@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./index.css"></link>
+	<title>Monitoria - IFPE</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="login-panel col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<h:form>
+			    <p:panel id="panel" header="Login">
+			 
+			        <p:messages id="msgs" />
+			 
+			        <h:panelGrid columns="3" cellpadding="10">
+						<i class="glyphicon glyphicon-user"></i>
+			            
+			            <p:inputText id="firstname" value="#{userView.firstname}" required="true" label="Firstname">
+			                <f:validateLength minimum="2" />
+			            </p:inputText>
+
+			            <p:message for="firstname" display="icon" />
+                        
+            	        <i class="glyphicon glyphicon-lock"></i>
+            	           
+			            <p:inputText id="lastname" value="#{userView.lastname}" label="Lastname" required="true">
+		            	    <f:validateLength minimum="2" />
+		            	    <p:ajax update="msgLastname" event="keyup" />
+		            	</p:inputText>
+
+			            <p:message for="lastname" id="msgLastname" display="icon" />
+			        </h:panelGrid>
+					
+					<h:commandButton value="Login Professor" update="panel" actionListener="#{userView.save}" class="btn btn=success" />
+			        
+				    <h:commandButton value="Login Professor" update="panel" actionListener="#{userView.save}" class="btn btn=success" />
+			    </p:panel>
+			</h:form>
+		</div>
+	</div>
+ 	
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</h:body>
+</html>
