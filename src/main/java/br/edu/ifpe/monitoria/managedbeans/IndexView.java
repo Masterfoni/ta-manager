@@ -1,10 +1,11 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
@@ -17,8 +18,6 @@ public class IndexView implements Serializable {
 	@EJB
 	private UsuarioLocalBean usuarioBean;
 	
-	private List<Usuario> usuarios;
-
 	private Usuario usuario;
 
 	public Usuario getUsuario() {
@@ -28,30 +27,26 @@ public class IndexView implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
 	
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public IndexView() {
+		usuario = new Usuario();
 	}
 
-	public void consultarUsuarioEmail()
+	public void loginUsuario()
 	{
-		String email = usuario.getEmail();
+		Usuario usuarioLogado = usuarioBean.consultaUsuarioPorEmailSenha(usuario.getEmail(), usuario.getSenha());
 		
-		if(email == null || email.isEmpty())
-			usuarios = usuarioBean.consultaUsuarios();
+		if(usuarioLogado.getId() == null)
+		{
+			System.out.println("USUARIO NÃO ACHADO, EMAIL OU SENHA INCORRETOS");
+		}
 		else
 		{
-			if(usuarios != null && !usuarios.isEmpty())
-			{
-				usuarios.clear();
-				usuarios.add(usuarioBean.consultaUsuario(email));
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/indexP.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			else
-				usuarios.add(usuarioBean.consultaUsuario(email));
 		}
 	}
 }

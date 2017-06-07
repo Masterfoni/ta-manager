@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
@@ -39,11 +40,19 @@ public class UsuarioLocalBean
 		return true;
 	}
 	
-	public Usuario consultaUsuario(String email)
+	public Usuario consultaUsuarioPorEmailSenha(String email, String senha)
 	{
-		Usuario usuarioPorEmail = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
+		Usuario userResult = new Usuario();
 		
-		return usuarioPorEmail;
+		try {
+			userResult = em.createNamedQuery("Usuario.findByEmailSenha", Usuario.class).setParameter("email", email)
+																					   .setParameter("senha", senha)
+																					   .getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
 	}
 	
 	public Usuario consultaUsuarioById(Long id)
