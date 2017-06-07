@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
@@ -38,7 +39,8 @@ public class IndexView implements Serializable {
 		
 		if(usuarioLogado.getId() == null)
 		{
-			System.out.println("USUARIO NÃO ACHADO, EMAIL OU SENHA INCORRETOS");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+																				"Usuario ou senha incorretos.", null));
 		}
 		else
 		{
