@@ -45,7 +45,7 @@ public class IndexView implements Serializable {
 		else
 		{
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/indexP.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/homepage.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
