@@ -64,7 +64,9 @@ public class TestService {
 				String locale = (String) payload.get("locale");
 				String familyName = (String) payload.get("family_name");
 				String givenName = (String) payload.get("given_name");
-
+				
+				System.out.println(payload.getHostedDomain());
+				
 				// Use or store profile information
 				// ...
 			
