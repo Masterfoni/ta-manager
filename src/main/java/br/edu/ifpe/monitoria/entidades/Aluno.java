@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="TB_ALUNO")
-@DiscriminatorValue(value="Aluno")
+@DiscriminatorValue(value="ALUNO")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @Access(AccessType.FIELD)
 public class Aluno extends Usuario implements Serializable{

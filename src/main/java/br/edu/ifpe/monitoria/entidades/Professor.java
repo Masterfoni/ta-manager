@@ -14,11 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="TB_PROFESSOR")
-<<<<<<< HEAD
-@DiscriminatorValue(value="Professor")
-=======
 @DiscriminatorValue(value="PROFESSOR")
->>>>>>> 003
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 public class Professor extends Usuario implements Serializable {
 

@@ -10,14 +10,6 @@
     <param-name>javax.faces.webapp.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
-  
-
-  <context-param>
-	<param-name>primefaces.THEME</param-name>
-	<param-value>bootstrap</param-value>
-  </context-param>
-  
-  
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -27,8 +19,6 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-<<<<<<< HEAD
-=======
   
   <servlet> 
     <servlet-name>Jersey REST Service</servlet-name> 
@@ -44,5 +34,4 @@
      <url-pattern>/services/*</url-pattern> 
    </servlet-mapping>
   
->>>>>>> 003
 </web-app>
