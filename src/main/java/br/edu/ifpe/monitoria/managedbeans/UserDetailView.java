@@ -6,7 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
-import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean(name = "userDetailView")
 public class UserDetailView implements Serializable {

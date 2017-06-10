@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
-import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean (name="indexView")
 public class IndexView implements Serializable {

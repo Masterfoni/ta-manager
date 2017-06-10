@@ -25,7 +25,7 @@ public class PerfilGoogle {
 	private Long id;
 	
 	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
 	private Usuario usuario;
 		
 	@Column (name="TXT_SUBJECT")
