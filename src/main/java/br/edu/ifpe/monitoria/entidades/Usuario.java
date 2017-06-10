@@ -34,7 +34,7 @@ import org.hibernate.validator.constraints.br.CPF;
 					allocationSize = 1)
 @Table(name="TB_USUARIO")
 @Inheritance (strategy = InheritanceType.JOINED)
-@DiscriminatorColumn (name="DISC_USUARIO", discriminatorType = DiscriminatorType.STRING, length=1)
+@DiscriminatorColumn (name="DISC_USUARIO", discriminatorType = DiscriminatorType.STRING, length=20)
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
