@@ -73,7 +73,7 @@ public class UserDetailView implements Serializable {
 	public boolean updateUsuario() {
 		//usuario = new Usuario();
 		
-		usuario.setId(userId);
+		//usuario.setId(userId);
 		//usuario.setNome(nome);
 		usuario.setEmail(email);
 		usuario.setSenha(senha);

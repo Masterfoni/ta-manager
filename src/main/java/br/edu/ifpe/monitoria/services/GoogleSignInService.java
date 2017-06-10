@@ -19,8 +19,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
-@Path("/testService")
-public class TestService {
+@Path("/googleSignInService")
+public class GoogleSignInService {
 
 	private static final JacksonFactory jacksonFactory = new JacksonFactory();
 	
