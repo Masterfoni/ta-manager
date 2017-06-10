@@ -24,6 +24,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_USUARIO",
@@ -62,6 +64,23 @@ public class Usuario implements Serializable
 	@Column (name="TXT_SENHA")
 	private String senha;
 	
+	@NotBlank
+	@CPF
+	@Column (name="TXT_CPF")
+	private String cpf;
+	
+	@NotBlank
+	@Column (name="TXT_RG")
+	private String rg;
+	
+	@NotBlank
+	@Column (name="TXT_RG_EMISSOR")
+	private String rgEmissor;
+	
+	@NotBlank
+	@Column (name="TXT_SEXO")
+	private String sexo;
+	
 	@ElementCollection
 	@CollectionTable(name = "TB_TELEFONE",
 					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
@@ -71,34 +90,24 @@ public class Usuario implements Serializable
 	{
 		return telefones;
 	}
-	
-	public Long getId() 
-	{
-		return id;
+
+	public void setTelefones(Collection<String> telefones) {
+		this.telefones = telefones;
 	}
 
-	public void setId(Long id) 
-	{
-		this.id = id;
-	}
-
-	public String getNome() 
-	{
+	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) 
-	{
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public String getEmail() 
-	{
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) 
-	{
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -108,5 +117,41 @@ public class Usuario implements Serializable
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getRgEmissor() {
+		return rgEmissor;
+	}
+
+	public void setRgEmissor(String rgEmissor) {
+		this.rgEmissor = rgEmissor;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

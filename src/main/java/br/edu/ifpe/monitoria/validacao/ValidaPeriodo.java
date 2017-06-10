@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.entidades;
+package br.edu.ifpe.monitoria.validacao;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -16,9 +16,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.br.CPF;
-
 @Entity
 @Table(name="TB_ALUNO")
 @DiscriminatorValue(value="Aluno")
@@ -34,23 +31,6 @@ public class Aluno extends Usuario implements Serializable{
 	@Column (name="TXT_MATRICULA")
 	private String matricula;
 
-	@NotBlank
-	@CPF
-	@Column (name="TXT_CPF")
-	private String cpf;
-	
-	@NotBlank
-	@Column (name="TXT_RG")
-	private String rg;
-	
-	@NotBlank
-	@Column (name="TXT_RG_EMISSOR")
-	private String rgEmissor;
-	
-	@NotBlank
-	@Column (name="TXT_SEXO")
-	private String sexo;
-	
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_CURSO", referencedColumnName = "ID")
 	private Coordenacao curso;
@@ -61,38 +41,6 @@ public class Aluno extends Usuario implements Serializable{
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getRgEmissor() {
-		return rgEmissor;
-	}
-
-	public void setRgEmissor(String rgEmissor) {
-		this.rgEmissor = rgEmissor;
-	}
-
-	public String getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
 	}
 
 	public Coordenacao getCurso() {

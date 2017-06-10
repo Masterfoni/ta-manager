@@ -5,40 +5,23 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="TB_PROFESSOR")
-<<<<<<< HEAD
-@DiscriminatorValue(value="Professor")
-=======
-@DiscriminatorValue(value="PROFESSOR")
->>>>>>> 003
+@Table(name="TB_ADMINISTRATIVO")
+@DiscriminatorValue(value="ADMINISTRATIVO")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
-public class Professor extends Usuario implements Serializable {
+public class Administrativo extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotNull
 	@Max(999999)
 	@Column (name="INT_SIAPE")
 	private Integer siape;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "TXT_TITULACAO")
-	private Titulacao titulacao;
-	
-	public enum Titulacao {
-		GRADUAÇÃO,
-		ESPECIALIZAÇÃO,
-		MESTRADO,
-		DOUTORADO
-	}
 
 	public Integer getSiape() {
 		return siape;
@@ -47,12 +30,5 @@ public class Professor extends Usuario implements Serializable {
 	public void setSiape(Integer siape) {
 		this.siape = siape;
 	}
-
-	public Titulacao getTitulacao() {
-		return titulacao;
-	}
-
-	public void setTitulacao(Titulacao titulacao) {
-		this.titulacao = titulacao;
-	}
+	
 }
