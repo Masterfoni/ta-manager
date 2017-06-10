@@ -89,6 +89,10 @@ public class Usuario implements Serializable
 		return telefones;
 	}
 
+	public void setTelefones(Collection<String> telefones) {
+		this.telefones = telefones;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -147,9 +151,5 @@ public class Usuario implements Serializable
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setTelefones(Collection<String> telefones) {
-		this.telefones = telefones;
 	}
 }

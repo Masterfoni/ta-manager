@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="TB_PROFESSOR")
-@DiscriminatorValue(value="P")
+@DiscriminatorValue(value="PROFESSOR")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 public class Professor extends Usuario implements Serializable {
 

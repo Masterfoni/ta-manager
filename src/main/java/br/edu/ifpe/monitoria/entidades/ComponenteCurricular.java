@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import validacao.ValidaPeriodo;
+
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_CC",
 					sequenceName = "SQ_CC",

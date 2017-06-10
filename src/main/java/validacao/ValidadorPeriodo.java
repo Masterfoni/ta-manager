@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.entidades;
+package validacao;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
