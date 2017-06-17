@@ -49,16 +49,16 @@ public class Usuario implements Serializable
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_USUARIO")
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.email}")
 	@Email(message = "E-mail inválido.")
-	@Column (name="TXT_EMAIL", unique=true)
+	@Column(name="TXT_EMAIL", unique = true)
 	private String email;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.senha}")
 	@Column (name="TXT_SENHA")
 	private String senha;
 	

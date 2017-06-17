@@ -24,30 +24,30 @@ import org.hibernate.validator.constraints.br.CPF;
 @DiscriminatorValue(value="Aluno")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @Access(AccessType.FIELD)
-public class Aluno extends Usuario implements Serializable{
+public class Aluno extends Usuario implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
-	@NotNull
-	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "Matrícula fora do padrão.")
+	@NotNull(message = "{mensagem.notnull}{tipo.matricula}")
+	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "{mensagem.matricula}")
 	@Size (max=14)
-	@Column (name="TXT_MATRICULA")
+	@Column (name="TXT_MATRICULA", unique=true)
 	private String matricula;
 
-	@NotBlank
-	@CPF(message = "CPF Inválido.")
-	@Column (name="TXT_CPF")
+	@NotBlank(message = "{mensagem.notnull}{tipo.cpf}")
+	@CPF(message = "{mensagem.cpf}")
+	@Column (name="TXT_CPF", unique=true)
 	private String cpf;
 	
-	@NotBlank
-	@Column (name="TXT_RG")
+	@NotBlank(message = "{mensagem.notnull}{tipo.rg}")
+	@Column (name="TXT_RG", unique=true)
 	private String rg;
 	
-	@NotBlank
+	@NotBlank(message = "{mensagem.notnull}{tipo.emissor}")
 	@Column (name="TXT_RG_EMISSOR")
 	private String rgEmissor;
 	
-	@NotBlank
+	@NotBlank(message = "{mensagem.notnull}{tipo.sexo}")
 	@Column (name="TXT_SEXO")
 	private String sexo;
 	

@@ -15,6 +15,7 @@
  		<!-- MODAL PRINCIPAL DE CADASTRO -->
 		<div id="cadastro" class="modalDialog">
 			<div class="container">
+				<a href="#fechar" title="Fechar" class="fechar">X</a>
 				<h:form class="dialogSignup">
 					<div class="form-group">
 						<label for="nomeCadastro">Nome</label>
@@ -65,8 +66,9 @@
 						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
 					</div>
 					
-					<h:commandButton value="Cadastrar" action="#{indexView.cadastrarAluno}" class="btn btn-info ind-button" />
-					<a href="#fechar" title="Fechar" class="fechar">X</a>			
+					<h:commandButton value="Cadastrar" class="btn btn-info ind-button">
+						<f:ajax listener="#{indexView.cadastrarAluno}" render="loginform:messagesGlobalComponent"/>
+					</h:commandButton>
 				</h:form>
 			</div>
 		</div>
@@ -81,10 +83,17 @@
                 </div>     
 
                 <div class="panel-body" >
-					<div>
-						<h:messages style="color:red;margin:8px;" />
-					</div>
                     <h:form id="loginform" class="form-horizontal" role="form">
+	                	
+		               	<h:panelGroup id="messagesGlobalComponent" layout="block">
+						 	<h:panelGroup rendered="#{indexView.erroCadastro}" layout="block">
+							 	<div class="alert alert-danger alert-dismissable fade in">
+							   		<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+									<h:messages/>
+							 	</div>
+						 	</h:panelGroup>
+					 	</h:panelGroup>
+					 	
                         <div class="input-group">
                         	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         	<h:inputText id="emailUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" />
