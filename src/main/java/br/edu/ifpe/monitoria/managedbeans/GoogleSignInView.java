@@ -71,7 +71,7 @@ public class GoogleSignInView implements Serializable{
 			else
 			{
 				try {
-					ec.redirect("cadastroServidor.xhmtl");
+					ec.redirect("cadastroServidor.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -13,24 +13,77 @@
 <body>
 	<div class="container">
 		<h:form id="cadastroform" class="form-group" role="form">
-        	
-        	<h:outputLabel value="Email:" for="emailUsuario" ></h:outputLabel>
-            <h:inputText id="emailUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
-            
-            <h:outputLabel value="Nome:" for="nomeUsuario" ></h:outputLabel>
-            <h:inputText id="nomeUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
-            
-            <h:outputLabel value="CPF:" for="cpfUsuario" ></h:outputLabel>
-            <h:inputText id="cpfUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
-            
-            <h:outputLabel value="RG:" for="rgUsuario" ></h:outputLabel>
-            <h:inputText id="rgUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
-            
-            <h:outputLabel value="Sexo:" for="sexoUsuario" ></h:outputLabel>
-            <h:inputText id="sexoUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
-            
-            
-            
+			
+			<div class="form-group">
+				<label for="email">Email</label>
+				<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
+			</div>
+			
+			<div class="form-group">
+				<label for="nome">Nome</label>
+				<h:inputText id="nome" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
+			</div>
+			
+			<div class="form-group">
+				<label for="primeiroNome">Primeiro Nome</label>
+				<h:inputText id="primeiroNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.givenName}" disabled="true"></h:inputText>
+			</div>
+			
+			<div class="form-group">
+				<label for="familiaNome">Segundo Nome</label>
+				<h:inputText id="familiaNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.familyName}" disabled="true"></h:inputText>
+			</div>
+	
+			<div class="form-group">
+				<h:selectOneMenu value="#{cadastroServidorView.professor.sexo}">
+				   	<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
+				   	<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
+				   	<f:selectItem itemValue="Outros" itemLabel="Outros" />
+				</h:selectOneMenu>
+			</div>
+			
+			<div class="form-group">
+				<label for="cpfCadastro">CPF</label>
+				<h:inputText id="cpfCadastro" class="form-control" value="#{cadastroServidorView.professor.cpf}"
+							 aria-describedby="cpfDesc"></h:inputText>
+				<small id="cpfDesc" class="form-text text-muted">Utilize apenas numeros</small>
+			</div>
+			
+			<div class="form-group">
+				<label for="rgCadastro">RG</label>
+				<h:inputText id="rgCadastro" class="form-control" value="#{cadastroServidorView.professor.rg}"></h:inputText>
+				<h:inputText id="emissorCadastro" class="form-control" value="#{cadastroServidorView.professor.rgEmissor}"
+							 aria-describedby="emissorDesc"></h:inputText>
+				<small id="emissorDesc" class="form-text text-muted">Utilize o formato INSITUICAO SIGLA DO ESTADO</small>
+			</div>
+			
+			<div class="form-group">
+				<label for="siape">SIAPE</label>
+				<h:inputText id="siape" class="form-control" value="#{cadastroServidorView.professor.siape}"
+							 aria-describedby="cpfDesc"></h:inputText>
+				<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
+			</div>
+			
+			<!-- 
+			<div class="form-group">
+				<h:selectOneMenu value="#{cadastroServidorView.professor.titulacao}">
+				   	<f:selectItem itemValue="GRADUACAO" itemLabel="GRADUACAO" />
+				   	<f:selectItem itemValue="ESPECIALIZACAO" itemLabel="ESPECIALIZACAO" />
+				   	<f:selectItem itemValue="MESTRADO" itemLabel="MESTRADO" />
+				   	<f:selectItem itemValue="DOUTORADO" itemLabel="DOUTORADO" />
+				</h:selectOneMenu>
+			</div>
+			 -->
+			
+			
+			<div class="form-group">
+				<label for="senhaCadastro">Senha</label>
+				<h:inputSecret id="senhaCadastro" class="form-control" value="#{cadastroServidorView.professor.senha}"
+								aria-describedby="senhaDesc"></h:inputSecret>
+				<small id="senhaDesc" class="form-text text-muted">Eh recomendado utilizar uma senha com numeros e letras</small>
+			</div>
+			
+			<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvar}" class="btn btn-info ind-button" />
 		</h:form>
 	</div> 
 </body>
