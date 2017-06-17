@@ -56,7 +56,7 @@ public class Usuario implements Serializable
 	private String nome;
 
 	@NotNull(message = "{mensagem.notnull}{tipo.email}")
-	@Email(message = "E-mail invï¿½lido.")
+	@Email(message = "E-mail inválido.")
 	@Column(name="TXT_EMAIL", unique = true)
 	private String email;
 

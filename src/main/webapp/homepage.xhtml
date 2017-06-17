@@ -5,6 +5,7 @@
     xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="ISO-8859-1" />
+	<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<link rel="stylesheet" href="./homepage.css"></link>
@@ -20,7 +21,7 @@
 	    <ul class="nav navbar-nav">
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+	      <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
 	    </ul>
 	  </div>
 	</nav>
@@ -63,6 +64,8 @@
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
+	<script src="./js/loginGoogle.js"></script>
 
 	<script>
 	   $("#menu-toggle").click(function(e) {
