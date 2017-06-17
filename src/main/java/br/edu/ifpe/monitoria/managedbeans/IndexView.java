@@ -8,7 +8,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Usuario;
+import br.edu.ifpe.monitoria.localBean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
 
 @ManagedBean (name="indexView")
@@ -19,8 +21,21 @@ public class IndexView implements Serializable {
 	@EJB
 	private UsuarioLocalBean usuarioBean;
 	
+	@EJB
+	private AlunoLocalBean alunoBean;
+	
 	private Usuario usuario;
+	
+	private Aluno aluno;
 
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -31,6 +46,12 @@ public class IndexView implements Serializable {
 	
 	public IndexView() {
 		usuario = new Usuario();
+		aluno = new Aluno();
+	}
+	
+	public void cadastrarAluno()
+	{
+		alunoBean.persisteAluno(aluno);
 	}
 
 	public void loginUsuario()

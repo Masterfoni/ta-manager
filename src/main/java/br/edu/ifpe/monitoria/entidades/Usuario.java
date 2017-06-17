@@ -54,7 +54,7 @@ public class Usuario implements Serializable
 	private String nome;
 	
 	@NotNull
-	@Email
+	@Email(message = "E-mail inválido.")
 	@Column (name="TXT_EMAIL", unique=true)
 	private String email;
 	

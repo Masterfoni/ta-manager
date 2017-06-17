@@ -29,13 +29,13 @@ public class Aluno extends Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull
-	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "{br.edu.ifpe.monitoria.entidades.Aluno.matricula}")
-	@Size (max=13)
+	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "Matrícula fora do padrão.")
+	@Size (max=14)
 	@Column (name="TXT_MATRICULA")
 	private String matricula;
 
 	@NotBlank
-	@CPF
+	@CPF(message = "CPF Inválido.")
 	@Column (name="TXT_CPF")
 	private String cpf;
 	
