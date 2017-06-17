@@ -10,12 +10,6 @@ function signOut() {
 
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-	  console.log(profile);
-	  console.log('HostedDomain: ' + googleUser.getHostedDomain());
 	  
 	  if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br')
 	  {
@@ -25,14 +19,29 @@ function onSignIn(googleUser) {
 	  
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  
-	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', 'https://localhost:8181/FALJVAL/services/googleSignInService');
-	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	  xhr.onload = function() {
-	    console.log('Signed in as: ' + xhr.responseText);
-	  };
-	  xhr.send(id_token);
+//	  var xhr = new XMLHttpRequest();
+//	  xhr.open('POST', 'http://localhost:8080/FALJVAL/services/googleSignInService');
+//	  //text/plain
+//	  //application/x-www-form-urlencoded
+//	  xhr.setRequestHeader('Content-Type', 'text/plain');
+//	  
+//	  xhr.onload = function() {
+//	    console.log('Signed in as: ' + xhr.responseText);
+//	  };
+//	  
+//	  xhr.onreadystatechange = function (){
+//			if(xhr.readyState == 4)
+//				alert(xhr.responseText);
+//	  };
 	  
+//	  xhr.send(id_token);
 	  
-	  
+	  login([{name:'idToken', value:id_token}]);
+}
+
+function handleComplete(xhr, status, args) {
+    var nomeDoAtributo = args.logou;
+
+    // Atualizar UI
+    alert(nomeDoAtributo);
 }
