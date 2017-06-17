@@ -5,17 +5,22 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 import javax.ejb.Stateless;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.gson.Gson;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Professor;
@@ -40,9 +45,9 @@ public class GoogleSignInService {
 	PerfilGoogle perfilGoogle;
 	
 	@POST 
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
+	@Consumes(MediaType.TEXT_PLAIN) 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public PerfilGoogle onSignIn(String resposta){
+	public String onSignIn(String resposta){
 		
 		Payload payload = verificarIntegridade(resposta);
 		perfilGoogle = null;
@@ -88,7 +93,8 @@ public class GoogleSignInService {
 			//ou houve um problema de autenticação, favor informar ao administrador
 		}
 		
-		return perfilGoogle;
+		Gson gson = new Gson();
+		return gson.toJson(perfilGoogle);
 	}
 	
 	private Payload verificarIntegridade(String resposta) {

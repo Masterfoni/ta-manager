@@ -55,6 +55,20 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
+	public Usuario consultaUsuarioPorEmail(String email)
+	{
+		Usuario userResult = null;
+		
+		try {
+			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email)
+																					   .getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
+	}
+	
 	public Usuario consultaUsuarioById(Long id)
 	{
 		Usuario usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();

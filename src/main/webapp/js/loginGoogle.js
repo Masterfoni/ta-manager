@@ -19,16 +19,29 @@ function onSignIn(googleUser) {
 	  
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  
-	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', 'https://localhost:8181/FALJVAL/services/googleSignInService');
-	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	  xhr.onload = function() {
-	    console.log('Signed in as: ' + xhr.responseText);
-	  };
-	  xhr.onreadystatechange = function (){
-			if(xhr.readyState == 4)
-				alert(xhr.responseText);
-	  };
-	  xhr.send(id_token);
+//	  var xhr = new XMLHttpRequest();
+//	  xhr.open('POST', 'http://localhost:8080/FALJVAL/services/googleSignInService');
+//	  //text/plain
+//	  //application/x-www-form-urlencoded
+//	  xhr.setRequestHeader('Content-Type', 'text/plain');
+//	  
+//	  xhr.onload = function() {
+//	    console.log('Signed in as: ' + xhr.responseText);
+//	  };
+//	  
+//	  xhr.onreadystatechange = function (){
+//			if(xhr.readyState == 4)
+//				alert(xhr.responseText);
+//	  };
 	  
+//	  xhr.send(id_token);
+	  
+	  login([{name:'idToken', value:id_token}]);
+}
+
+function handleComplete(xhr, status, args) {
+    var nomeDoAtributo = args.logou;
+
+    // Atualizar UI
+    alert(nomeDoAtributo);
 }

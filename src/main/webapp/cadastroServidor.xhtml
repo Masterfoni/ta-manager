@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./index.css"></link>
+	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+	<title>Cadastro Servidor</title>
+</h:head>
+<body>
+	<div class="container">
+		<h:form id="cadastroform" class="form-group" role="form">
+        	
+        	<h:outputLabel value="Email:" for="emailUsuario" ></h:outputLabel>
+            <h:inputText id="emailUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
+            
+            <h:outputLabel value="Nome:" for="nomeUsuario" ></h:outputLabel>
+            <h:inputText id="nomeUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
+            
+            <h:outputLabel value="CPF:" for="cpfUsuario" ></h:outputLabel>
+            <h:inputText id="cpfUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
+            
+            <h:outputLabel value="RG:" for="rgUsuario" ></h:outputLabel>
+            <h:inputText id="rgUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
+            
+            <h:outputLabel value="Sexo:" for="sexoUsuario" ></h:outputLabel>
+            <h:inputText id="sexoUsuario" class="form-control" value="#{indexView.usuario.email}" required="true" disabled="true"/>
+            
+            
+            
+		</h:form>
+	</div> 
+</body>
+</html>

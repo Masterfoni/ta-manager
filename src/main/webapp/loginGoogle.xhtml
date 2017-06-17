@@ -15,5 +15,10 @@
 <h:body>
 	<div class="g-signin2" data-onsuccess="onSignIn"></div> 
 	<a href="#" onclick="signOut();">Sign out</a>
+	<h:form>
+		<p:remoteCommand name="login" actionListener="#{googleSignInView.loginGoogle}" />
+		<h:commandButton class="btn btn-default" value ="Entrar" action ="#{googleSignInView.verificaSessao}"/> 
+	</h:form>
+	
 </h:body>
 </html>
