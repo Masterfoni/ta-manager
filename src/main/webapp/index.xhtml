@@ -66,9 +66,7 @@
 						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
 					</div>
 					
-					<h:commandButton value="Cadastrar" class="btn btn-info ind-button">
-						<f:ajax listener="#{indexView.cadastrarAluno}" render="loginform:messagesGlobalComponent"/>
-					</h:commandButton>
+					<h:commandButton value="Cadastrar" action="#{indexView.cadastrarAluno}" class="btn btn-info ind-button"/>
 				</h:form>
 			</div>
 		</div>
@@ -85,13 +83,11 @@
                 <div class="panel-body" >
                     <h:form id="loginform" class="form-horizontal" role="form">
 	                	
-		               	<h:panelGroup id="messagesGlobalComponent" layout="block">
-						 	<h:panelGroup rendered="#{indexView.erroCadastro}" layout="block">
-							 	<div class="alert alert-danger alert-dismissable fade in">
-							   		<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-									<h:messages/>
-							 	</div>
-						 	</h:panelGroup>
+					 	<h:panelGroup layout="block">
+						 	<div class="alert alert-danger alert-dismissable fade in">
+						   		<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+								<h:messages/>
+						 	</div>
 					 	</h:panelGroup>
 					 	
                         <div class="input-group">

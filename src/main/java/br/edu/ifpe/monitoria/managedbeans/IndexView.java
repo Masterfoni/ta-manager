@@ -27,16 +27,6 @@ public class IndexView implements Serializable {
 	private Usuario usuario;
 	
 	private Aluno aluno;
-	
-	private boolean erroCadastro;
-
-	public boolean isErroCadastro() {
-		return erroCadastro;
-	}
-
-	public void setErroCadastro(boolean erroCadastro) {
-		this.erroCadastro = erroCadastro;
-	}
 
 	public Aluno getAluno() {
 		return aluno;
@@ -57,19 +47,14 @@ public class IndexView implements Serializable {
 	public IndexView() {
 		usuario = new Usuario();
 		aluno = new Aluno();
-		erroCadastro = false;
 	}
 	
 	public void cadastrarAluno()
 	{
-		try {
-			if(alunoBean.persisteAluno(aluno))
-			{
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));			
-			}
-		} catch (Exception e) {
-			erroCadastro = true;
+		if(alunoBean.persisteAluno(aluno))
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));			
 		}
 	}
 
