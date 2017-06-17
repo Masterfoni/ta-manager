@@ -46,47 +46,47 @@ import org.hibernate.validator.constraints.br.CPF;
 public class Usuario implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_USUARIO")
 	private Long id;
-	
+
 	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
-	
+
 	@NotNull(message = "{mensagem.notnull}{tipo.email}")
-	@Email(message = "E-mail inválido.")
+	@Email(message = "E-mail invï¿½lido.")
 	@Column(name="TXT_EMAIL", unique = true)
 	private String email;
-	
+
 	@NotNull(message = "{mensagem.notnull}{tipo.senha}")
 	@Column (name="TXT_SENHA")
 	private String senha;
-	
-	@NotBlank
-	@CPF
-	@Column (name="TXT_CPF")
+
+	@NotBlank(message = "{mensagem.notnull}{tipo.cpf}")
+	@CPF(message = "{mensagem.cpf}")
+	@Column (name="TXT_CPF", unique=true)
 	private String cpf;
-	
-	@NotBlank
-	@Column (name="TXT_RG")
+
+	@NotBlank(message = "{mensagem.notnull}{tipo.rg}")
+	@Column (name="TXT_RG", unique=true)
 	private String rg;
-	
-	@NotBlank
+
+	@NotBlank(message = "{mensagem.notnull}{tipo.emissor}")
 	@Column (name="TXT_RG_EMISSOR")
 	private String rgEmissor;
-	
-	@NotBlank
+
+	@NotBlank(message = "{mensagem.notnull}{tipo.sexo}")
 	@Column (name="TXT_SEXO")
 	private String sexo;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "TB_TELEFONE",
 					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
 	private Collection<String> telefones;
-	
-	public Collection<String> getTelefones() 
+
+	public Collection<String> getTelefones()
 	{
 		return telefones;
 	}
