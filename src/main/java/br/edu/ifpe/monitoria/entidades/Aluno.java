@@ -21,20 +21,20 @@ import javax.validation.constraints.Size;
 @DiscriminatorValue(value="ALUNO")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @Access(AccessType.FIELD)
-public class Aluno extends Usuario implements Serializable{
+public class Aluno extends Usuario implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@NotNull
-	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "{br.edu.ifpe.monitoria.entidades.Aluno.matricula}")
-	@Size (max=13)
-	@Column (name="TXT_MATRICULA")
+	private static final long serialVersionUID = 2L;
+
+	@NotNull(message = "{mensagem.notnull}{tipo.matricula}")
+	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "{mensagem.matricula}")
+	@Size (max=14)
+	@Column (name="TXT_MATRICULA", unique=true)
 	private String matricula;
 
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_CURSO", referencedColumnName = "ID")
 	private Coordenacao curso;
-	
+
 	public String getMatricula() {
 		return matricula;
 	}
