@@ -10,8 +10,8 @@ import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Usuario;
-import br.edu.ifpe.monitoria.localBean.AlunoLocalBean;
-import br.edu.ifpe.monitoria.localBean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
+import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean (name="indexView")
 public class IndexView implements Serializable {

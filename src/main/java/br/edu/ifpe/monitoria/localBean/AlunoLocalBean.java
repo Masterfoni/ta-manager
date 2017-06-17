@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.localBean;
+package br.edu.ifpe.monitoria.localbean;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

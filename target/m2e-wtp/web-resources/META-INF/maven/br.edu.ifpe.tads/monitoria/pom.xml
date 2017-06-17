@@ -42,10 +42,11 @@
   		<version>42.1.1.jre7</version>
   	</dependency>
   	
+  	<!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
 	<dependency>
-		<groupId>org.primefaces.themes</groupId>
-		<artifactId>all-themes</artifactId>
-		<version>1.0.10</version>
+    	<groupId>com.google.api-client</groupId>
+    	<artifactId>google-api-client</artifactId>
+    	<version>1.22.0</version>
 	</dependency>
   </dependencies>
 </project>
