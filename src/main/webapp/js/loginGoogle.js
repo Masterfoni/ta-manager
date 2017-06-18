@@ -1,8 +1,3 @@
-/**
- * 
- */
-
-
 jQuery(function(){
 	jQuery.noConflict();
 });
@@ -28,8 +23,6 @@ function attachSignin(element) {
   console.log(element.id);
   auth2.attachClickHandler(element, {},
       function(googleUser) {
-        document.getElementById('name').innerText = "Signed in: " +
-            googleUser.getBasicProfile().getName();
         onSignIn(googleUser);
       }, 
       function(error) {
