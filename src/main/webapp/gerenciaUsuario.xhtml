@@ -5,12 +5,11 @@
     xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="ISO-8859-1" />
-	<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<link rel="stylesheet" href="./homepage.css"></link>
 	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
-	<title>Monitoria - IFPE</title>
+	<title>Gerenciamento de Usuarios</title>
 </h:head>
 <h:body>
 	<nav class="navbar navbar-inverse">
@@ -21,7 +20,7 @@
 	    <ul class="nav navbar-nav">
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+	      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
 	    </ul>
 	  </div>
 	</nav>
@@ -31,10 +30,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <!-- <li class="sidebar-brand"><a href="#"></a></li> -->
-                
-                <li>
-               		<h:link href="#" outcome="gerenciaUsuario"><span class="glyphicon glyphicon-user"></span>  Usuário</h:link>
-                </li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>  Usuario</a></li>
                 <li><a href="#"><span class="fa fa-users"></span>  Orientador</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-education"></span>  Inscrição de Candidato</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-align-center"></span>  Plano de Monitoria</a></li>
@@ -47,27 +43,39 @@
             </ul>
         </div>
 		
-		<!-- Início conteúdo de página -->
 		<div id="page-content-wrapper">
 			<div class="container-fluid">
             	<div class="row">
                 	<div class="col-lg-12">
-                        <h1>Teste de conteúdo de página</h1>
-                        <p>Teste de responsividade de conteúdo de página, ao se ativar o menu da esquerda. Mussum Ipsum, cacilds vidis litro abertis. Cevadis im ampola pa arma uma pindureta. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Si num tem leite então bota uma pinga aí cumpadi! Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.</p>
-                        <p>Código desenvolvido por: <code>#JVAL</code> e <code>#FAL</code>.</p>
+                        <h:dataTable value="#{gerenciaUsuarioView.listagemUsuarios()}" var="usuario" class="table">
+                        	<h:column>
+                        		<f:facet name="header">Nome</f:facet>
+                        		#{usuario.nome}
+                        	</h:column>
+                        	<h:column>
+                        		<f:facet name="header">CPF</f:facet>
+                        		#{usuario.cpf}
+                        	</h:column>
+                        	<h:column>
+                        		<f:facet name="header">E-mail</f:facet>
+                        		#{usuario.email}
+                        	</h:column>
+                        	<h:column>
+                        		<f:facet name="header">RG</f:facet>
+                        		#{usuario.rg} #{usuario.rgEmissor}
+                        	</h:column>
+                        </h:dataTable>
+                        <a class="btn btn-default" id="menu-toggle">Ativar/Desativar</a>
                     </div>
                 </div>
             </div>
 		</div>
-		<!-- FIM conteúdo de página -->
 	</div>
-	
-	
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
-	<script src="./js/logoutGoogle.js"></script>
 
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
 	<script>
 	   $("#menu-toggle").click(function(e) {
 	        e.preventDefault();
