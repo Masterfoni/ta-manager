@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import br.edu.ifpe.monitoria.entidades.Administrativo;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Professor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 
 @ManagedBean  (name="cadastroServidorView")
@@ -22,18 +23,27 @@ public class CadastroServidorView implements Serializable{
 	private Administrativo administrativo;
 	private PerfilGoogle perfilGoogle;
 	private String tipo;
-	String email;
-	String nome;
+	private String email;
+	private String nome;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
 	
-	public String salvar(){
+	public String salvarAdministrativo(){
+
+		administrativo.setEmail(email);
+		administrativo.setNome(nome);
+		perfilGoogle.setUsuario(administrativo);
+		pglBean.persistePerfilGoogle(perfilGoogle);
+		return "homepage";
+	}
+	
+	public String salvarProfessor(){
 		professor.setEmail(email);
 		professor.setNome(nome);
 		perfilGoogle.setUsuario(professor);
 		pglBean.persistePerfilGoogle(perfilGoogle);
-		return "home";
+		return "homepage";
 	}
 	
 	@PostConstruct
@@ -94,5 +104,9 @@ public class CadastroServidorView implements Serializable{
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	public Titulacao[] getTitulacoes() {
+		return Titulacao.values();
 	}
 }

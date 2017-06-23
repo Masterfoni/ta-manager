@@ -8,8 +8,6 @@ function initClient () {
             client_id: '835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com'
         });
 
-        // Attach the click handler to the sign-in button
-        //auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
     });
 };
 

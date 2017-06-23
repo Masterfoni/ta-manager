@@ -19,7 +19,7 @@ public class Administrativo extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Max(999999)
+	@Max(9999999)
 	@Column (name="INT_SIAPE")
 	private Integer siape;
 

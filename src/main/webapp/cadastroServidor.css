@@ -7,3 +7,7 @@ body {
 .navbar {
 	border-radius: 0px;
 }
+
+td {
+	padding: 10px;
+}
