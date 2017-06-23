@@ -9,6 +9,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import br.edu.ifpe.monitoria.entidades.Administrativo;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Professor;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
@@ -18,7 +19,9 @@ public class CadastroServidorView implements Serializable{
 
 	private static final long serialVersionUID = 5746606365793540925L;
 	private Professor professor;
+	private Administrativo administrativo;
 	private PerfilGoogle perfilGoogle;
+	private String tipo;
 	String email;
 	String nome;
 	
@@ -43,6 +46,7 @@ public class CadastroServidorView implements Serializable{
 		email= (String)session.getAttribute("email");
 		nome = (String)session.getAttribute("nome");
 		professor = new Professor();
+		administrativo = new Administrativo();
 	}
 	
 	public Professor getProfessor() {
@@ -50,6 +54,14 @@ public class CadastroServidorView implements Serializable{
 	}
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+	
+	public Administrativo getAdministrativo() {
+		return administrativo;
+	}
+
+	public void setAdministrativo(Administrativo administrativo) {
+		this.administrativo = administrativo;
 	}
 
 	public PerfilGoogle getPerfilGoogle() {
@@ -74,5 +86,13 @@ public class CadastroServidorView implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

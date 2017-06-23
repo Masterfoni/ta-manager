@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+
+body {
+   overflow-x: hidden;
+}
+
+.navbar {
+	border-radius: 0px;
+}
