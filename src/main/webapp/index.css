@@ -40,6 +40,11 @@ html, body {
 	width: 100%;
 }
 
+.ind-button-a {
+	width: 100%;
+	padding-top: 12px;
+}
+
 .modalDialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
@@ -100,7 +105,7 @@ img {
 	height: 100px;
 }
 
-.btn-success {
+.btn-success, .btn-info {
 	height: 46px;
 }
 
