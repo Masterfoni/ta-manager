@@ -98,14 +98,13 @@
 					<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
 				</div>
 			
-				<!-- 
 				<div class="form-group">
 					<label for="titulo">Especialização</label>
 					<h:selectOneMenu id="titulo" class="form-control" value="#{cadastroServidorView.professor.titulacao}">
-				   		<f:selectItem value="cadastroServidorView.titulacoes" />
+				   		<f:selectItems value="#{cadastroServidorView.titulos}" var="titu" itemValue="#{titu}" 
+				   					   itemLabel="#{titu.label}"/>
 					</h:selectOneMenu>
 				</div>
-				 -->
 			
 				<div class="form-group">
 					<label for="senhaCadastro">Senha</label>

@@ -30,10 +30,20 @@ public class Professor extends Usuario implements Serializable {
 	private Titulacao titulacao;
 	
 	public enum Titulacao {
-		GRADUA플O,
-		ESPECIALIZA플O,
-		MESTRADO,
-		DOUTORADO
+		GRADUA플O("Graduado"),
+		ESPECIALIZA플O("Especialista"),
+		MESTRADO("Mestre"),
+		DOUTORADO("Doutor");
+		
+		private String label;
+		
+		private Titulacao(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel() {
+			return label;
+		}
 	}
 
 	public Integer getSiape() {

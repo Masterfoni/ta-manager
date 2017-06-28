@@ -19,12 +19,15 @@ import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 public class CadastroServidorView implements Serializable{
 
 	private static final long serialVersionUID = 5746606365793540925L;
+	
 	private Professor professor;
 	private Administrativo administrativo;
 	private PerfilGoogle perfilGoogle;
 	private String tipo;
 	private String email;
 	private String nome;
+	
+	private String jackson;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
@@ -105,8 +108,17 @@ public class CadastroServidorView implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	public Titulacao[] getTitulacoes() {
+
+	public Titulacao[] getTitulos() {
 		return Titulacao.values();
 	}
+
+	public String getJackson() {
+		return jackson;
+	}
+
+	public void setJackson(String jackson) {
+		this.jackson = jackson;
+	}
+	
 }
