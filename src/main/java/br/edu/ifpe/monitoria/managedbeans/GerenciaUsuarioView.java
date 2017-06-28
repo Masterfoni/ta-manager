@@ -30,6 +30,10 @@ public class GerenciaUsuarioView implements Serializable {
 	public GerenciaUsuarioView() {
 	}
 	
+	public void buscaUsuario(String email, String nome) {
+		
+	}
+	
 	public List<Usuario> listagemUsuarios() {
 		usuarios = usuariobean.consultaUsuarios();
 		return usuarios;
