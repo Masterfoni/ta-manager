@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Administrativo;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
@@ -27,25 +29,47 @@ public class CadastroServidorView implements Serializable{
 	private String email;
 	private String nome;
 	
+	private String senha;
+	private String cpf;
+	private String rg;
+	private String rgEmissor;
+	private String sexo;
+
+	private Integer siape; 
+	private Titulacao titulo;
+	
 	private String jackson;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
 	
-	public String salvarAdministrativo(){
-
-		administrativo.setEmail(email);
-		administrativo.setNome(nome);
-		perfilGoogle.setUsuario(administrativo);
-		pglBean.persistePerfilGoogle(perfilGoogle);
-		return "homepage";
-	}
-	
-	public String salvarProfessor(){
-		professor.setEmail(email);
-		professor.setNome(nome);
-		perfilGoogle.setUsuario(professor);
-		pglBean.persistePerfilGoogle(perfilGoogle);
+	public String cadastrar(){
+		
+		if(tipo.equals("prof")){
+			professor.setEmail(email);
+			professor.setCpf(cpf);
+			professor.setNome(nome);
+			professor.setRg(rg);
+			professor.setRgEmissor(rgEmissor);
+			professor.setSenha(senha);
+			professor.setSexo(sexo);
+			professor.setSiape(siape);
+			professor.setTitulacao(titulo);
+			perfilGoogle.setUsuario(professor);
+			pglBean.persistePerfilGoogle(perfilGoogle);
+		}
+		else {
+			administrativo.setCpf(cpf);
+			administrativo.setEmail(email);
+			administrativo.setNome(nome);
+			administrativo.setRg(rg);
+			administrativo.setRgEmissor(rgEmissor);
+			administrativo.setSenha(senha);
+			administrativo.setSexo(sexo);
+			administrativo.setSiape(siape);
+			perfilGoogle.setUsuario(administrativo);
+			pglBean.persistePerfilGoogle(perfilGoogle);
+		}
 		return "homepage";
 	}
 	
@@ -60,6 +84,7 @@ public class CadastroServidorView implements Serializable{
 		nome = (String)session.getAttribute("nome");
 		professor = new Professor();
 		administrativo = new Administrativo();
+		tipo = "prof";
 	}
 	
 	public Professor getProfessor() {
@@ -85,6 +110,34 @@ public class CadastroServidorView implements Serializable{
 		this.perfilGoogle = perfilGoogle;
 	}
 
+	public Titulacao[] getTitulos() {
+		return Titulacao.values();
+	}
+
+	public String getJackson() {
+		return jackson;
+	}
+
+	public void setJackson(String jackson) {
+		this.jackson = jackson;
+	}
+
+	public Titulacao getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(Titulacao titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -101,24 +154,51 @@ public class CadastroServidorView implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
-	public Titulacao[] getTitulos() {
-		return Titulacao.values();
+	public String getCpf() {
+		return cpf;
 	}
 
-	public String getJackson() {
-		return jackson;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public void setJackson(String jackson) {
-		this.jackson = jackson;
+	public String getRg() {
+		return rg;
 	}
-	
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getRgEmissor() {
+		return rgEmissor;
+	}
+
+	public void setRgEmissor(String rgEmissor) {
+		this.rgEmissor = rgEmissor;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public Integer getSiape() {
+		return siape;
+	}
+
+	public void setSiape(Integer siape) {
+		this.siape = siape;
+	}
 }

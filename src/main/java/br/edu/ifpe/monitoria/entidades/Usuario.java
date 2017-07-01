@@ -52,6 +52,7 @@ public class Usuario implements Serializable
 	private Long id;
 
 	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 
