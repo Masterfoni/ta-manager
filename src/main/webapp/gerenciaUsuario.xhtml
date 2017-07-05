@@ -32,14 +32,14 @@
                 <!-- <li class="sidebar-brand"><a href="#"></a></li> -->
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>  Usuario</a></li>
                 <li><a href="#"><span class="fa fa-users"></span>  Orientador</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-education"></span>  Inscrição de Candidato</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-education"></span>  InscriÃ§Ã£o de Candidato</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-align-center"></span>  Plano de Monitoria</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span>  Edital</a></li>
                 <li><a href="#"><span class="fa fa-leanpub"></span>  Disciplina</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-book"></span>  Curso</a></li>
-                <li><a href="#"><span class="fa fa-bookmark-o"></span>  Coordenação</a></li>
+                <li><a href="#"><span class="fa fa-bookmark-o"></span>  CoordenaÃ§Ã£o</a></li>
                 <li><a href="#"><span class="fa fa-bookmark"></span>  Departamento</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span>  Logs de Ação</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span>  Logs de AÃ§Ã£o</a></li>
             </ul>
         </div>
 		
@@ -47,45 +47,45 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-8 col-xs-offset-2">
-						<div class="input-group">
-			                <div class="input-group-btn search-panel">
-			                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			                    	<span id="search_concept">Procurar por</span> <span class="caret"></span>
-			                    </button>
-			                    <ul class="dropdown-menu" role="menu">
-			                      <li><a href="#contains">Nome</a></li>
-			                      <li><a href="#its_equal">E-mail</a></li>
-			                    </ul>
-			                </div>
-			                <input type="hidden" name="search_param" value="all" id="search_param"></input>       
-			                <input type="text" class="form-control" name="x" placeholder="Search term..."></input>
-			                    <span class="input-group-btn">
-			                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-			                    </span>
-			            </div>
+	                    <h:form>
+							<div class="input-group">
+			                	<h:inputText styleClass="form-control" placeholder="Digite o parametro..." value="#{gerenciaUsuarioView.nomeBusca}"></h:inputText>
+		                    	<span class="input-group-btn">
+		                    	    <h:commandButton value="Buscar" action="#{gerenciaUsuarioView.buscaUsuario()}" update="tabelaUsuarios"
+		                    	    				 styleClass="btn btn-default">
+		                    	    </h:commandButton>
+		                    	</span>
+				            </div>
+						</h:form>
 					</div>
 				</div>
             	<div class="row">
                 	<div class="col-lg-12">
-                        <h:dataTable value="#{gerenciaUsuarioView.listagemUsuarios()}" var="usuario" class="table">
-                        	<h:column>
-                        		<f:facet name="header">Nome</f:facet>
-                        		#{usuario.nome}
-                        	</h:column>
-                        	<h:column>
-                        		<f:facet name="header">CPF</f:facet>
-                        		#{usuario.cpf}
-                        	</h:column>
-                        	<h:column>
-                        		<f:facet name="header">E-mail</f:facet>
-                        		#{usuario.email}
-                        	</h:column>
-                        	<h:column>
-                        		<f:facet name="header">RG</f:facet>
-                        		#{usuario.rg} #{usuario.rgEmissor}
-                        	</h:column>
-                        </h:dataTable>
-                        <a class="btn btn-default" id="menu-toggle">Ativar/Desativar</a>
+                		<h:form>
+	                        <h:dataTable id="tabelaUsuarios" value="#{gerenciaUsuarioView.usuarios}" var="usuario" class="table">
+	                        	<h:column>
+	                        		<f:facet name="header">Nome</f:facet>
+	                        		#{usuario.nome}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<f:facet name="header">CPF</f:facet>
+	                        		#{usuario.cpf}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<f:facet name="header">RG</f:facet>
+	                        		#{usuario.rg} #{usuario.rgEmissor}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<f:facet name="header">E-mail</f:facet>
+	                        		#{usuario.email}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<f:facet name="header">Deletar</f:facet>
+	                        		<h:commandButton actionListener="#{gerenciaUsuarioView.deletaUsuario(usuario)}" value="Deletar"
+	                        						 update="@form" class="btn btn-danger" />
+	                        	</h:column>
+	                        </h:dataTable>
+	                	</h:form>
                     </div>
                 </div>
             </div>
