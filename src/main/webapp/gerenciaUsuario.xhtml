@@ -5,7 +5,7 @@
     xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="ISO-8859-1" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<link rel="stylesheet" href="./homepage.css"></link>
 	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
@@ -44,7 +44,7 @@
         </div>
 		
 		<div id="page-content-wrapper">
-			<div class="container-fluid">
+			<div class="container-fluid"> 
 				<div class="row">
 					<div class="col-xs-8 col-xs-offset-2">
 	                    <h:form>
@@ -82,6 +82,7 @@
 	                        	<h:column>
 	                        		<h:commandButton actionListener="#{gerenciaUsuarioView.deletaUsuario(usuario)}" value="Deletar"
 	                        						 update="@form" class="btn btn-danger" />
+	                        		<span>   </span>
 	                        		<h:commandButton id="botaoUpdate" actionListener="#{gerenciaUsuarioView.alteraUsuario(usuario)}" 
 	                        						 value="Alterar" class="btn btn-info">
 	                        			<f:ajax execute="@form" render="atualizaUser" />
@@ -91,56 +92,80 @@
 	                	</h:form>
                     </div>
                 </div>
+                <h:panelGroup layout="block">
+					<div class="alert alert-danger alert-dismissable fade in">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+						<h:messages/>
+					</div>
+				</h:panelGroup>
                 
-                <div id="atualizaUser" style="display: none">
-	                <h:form class="dialogSignup">
-						<div class="form-group">
-							<label for="nomeCadastro">Nome</label>
-							<h:inputText id="nomeCadastro" class="form-control" value="#{gerenciaUsuarioView.usuarioAtualizado.nome}"></h:inputText>
-						</div>
-						
-						<div class="form-group">
-							<h:selectOneMenu value="#{gerenciaUsuarioView.usuarioAtualizado.sexo}">
-							   	<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
-							   	<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-							   	<f:selectItem itemValue="Outros" itemLabel="Outros" />
-							</h:selectOneMenu>
-						</div>
-						
-						<div class="form-group">
-							<label for="cpfCadastro">CPF</label>
-							<h:inputText id="cpfCadastro" class="form-control" value="#{gerenciaUsuarioView.usuarioAtualizado.cpf}"
-										 aria-describedby="cpfDesc"></h:inputText>
-							<small id="cpfDesc" class="form-text text-muted">Utilize apenas números</small>
-						</div>
-						
-						<div class="form-group">
-							<label for="emailCadastro">Email</label>
-							<h:inputText id="emailCadastro" class="form-control" value="#{gerenciaUsuarioView.usuarioAtualizado.email}"
-										 aria-describedby="emailDesc"></h:inputText>
-							<small id="emailDesc" class="form-text text-muted">Utilize o formato EMAIL@DOMINIO</small>
-						</div>
-						
-						<div class="form-group">
-							<label for="senhaCadastro">Senha</label>
-							<h:inputSecret id="senhaCadastro" class="form-control" value="#{gerenciaUsuarioView.usuarioAtualizado.senha}"
-										   aria-describedby="senhaDesc"></h:inputSecret>
-							<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
-						</div>
-						
-						<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaUsuarioView.persisteAlteracao()}" 
-									 	 update="@form" class="btn btn-info" />
-						<span>  </span>
-						<button id="cancelaUpdate" class="btn btn-danger">Cancelar</button>
-					</h:form>
+				<!-- MODAL DE ATUALIZA��O DE USU�RIO -->
+				<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+	    					<h:form class="dialogSignup">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">x</button>
+										<h4 class="modal-title">Atualize o Usuario</h4>
+								</div>
+								<div class="modal-body">
+									<div id="atualizaUser" style="display: none">
+										<div class="form-group">
+											<label for="nomeCadastro">Nome</label>
+											<h:inputText id="nomeCadastro" class="form-control" 
+														 value="#{gerenciaUsuarioView.usuarioAtualizado.nome}">
+											</h:inputText>
+										</div>
+										<div class="form-group">
+	            							<h:selectOneMenu value="#{gerenciaUsuarioView.usuarioAtualizado.sexo}">
+	   											<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
+	   											<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
+									   			<f:selectItem itemValue="Outros" itemLabel="Outros" />
+			 								</h:selectOneMenu>
+										</div>
+			    						<div class="form-group">
+											<label for="cpfCadastro">CPF</label>
+											<h:inputText id="cpfCadastro" class="form-control" 
+														 value="#{gerenciaUsuarioView.usuarioAtualizado.cpf}"
+					           							 aria-describedby="cpfDesc">
+					           				</h:inputText>
+											<small id="cpfDesc" class="form-text text-muted">Utilize apenas números</small>
+										</div>
+										<div class="form-group">
+											<label for="emailCadastro">Email</label>
+											<h:inputText id="emailCadastro" class="form-control" 
+														 value="#{gerenciaUsuarioView.usuarioAtualizado.email}"
+					     	   							 aria-describedby="emailDesc">
+					     	   				</h:inputText>
+											<small id="emailDesc" class="form-text text-muted">Utilize o formato EMAIL@DOMINIO</small>
+										</div>
+			 							<div class="form-group">
+											<label for="senhaCadastro">Senha</label>
+											<h:inputSecret id="senhaCadastro" class="form-control" 
+														   value="#{gerenciaUsuarioView.usuarioAtualizado.senha}"
+								 						   aria-describedby="senhaDesc">
+								 			</h:inputSecret>
+											<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
+										</div>
+				    				</div>
+				    			</div>
+				    			<div class="modal-footer">
+									<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaUsuarioView.persisteAlteracao()}" 
+			   	 	   								 update="@form" class="btn btn-info" />
+									<span>  </span>
+				    				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				    			</div>
+							</h:form>
+			    		</div>
+					</div>
 				</div>
             </div>
 		</div>
 	</div>
 
 	
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="./resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script> 
+	<script src="./resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	
 	<script>
 	   $("#menu-toggle").click(function(e) {
@@ -148,11 +173,17 @@
 	        $("#wrapper").toggleClass("toggled");
 	    });
 	   
+	   $("#btnTrigger").on("click", function(){
+		   $($(this).attr("data-target")).modal("show");
+		});
+	   
 	   $("#j_idt13\\:tabelaUsuarios\\:0\\:botaoUpdate").click(function(e) {
 		   $("#atualizaUser").css({
 	   		   visibility: "visible",
 	   		   display: ""
 	   	   });
+		   console.log("jackson");
+		   $("#myModal").modal();
 	   });
 	   
 	   $("#cancelaUpdate").click(function(e) {
