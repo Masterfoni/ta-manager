@@ -21,6 +21,8 @@ public class GerenciaUsuarioView implements Serializable {
 
 	public List<Usuario> usuarios;
 	
+	public Usuario usuarioAtualizado;
+	
 	public String nomeBusca;
 	
 	public List<Usuario> getUsuarios() {
@@ -39,14 +41,26 @@ public class GerenciaUsuarioView implements Serializable {
 		this.nomeBusca = nomeBusca;
 	}
 
+	public Usuario getUsuarioAtualizado() {
+		return usuarioAtualizado;
+	}
+
+	public void setUsuarioAtualizado(Usuario usuarioAtualizado) {
+		this.usuarioAtualizado = usuarioAtualizado;
+	}
+
 	public GerenciaUsuarioView() {
 		nomeBusca = "";
 		usuarios = new ArrayList<Usuario>();
+		usuarioAtualizado = new Usuario();
 	}
 	
 	@PostConstruct
 	public void init() {
 		usuarios = usuariobean.consultaUsuarios();
+		
+		if(!usuarios.isEmpty())
+			usuarioAtualizado = usuarios.get(0);
 	}
 	
 	public void buscaUsuario() {
@@ -62,5 +76,13 @@ public class GerenciaUsuarioView implements Serializable {
 		usuariobean.deletaUsuario(usuario.getId());
 		
 		return "";
+	}
+	
+	public void alteraUsuario(Usuario usuario) {
+		usuarioAtualizado = usuario;
+	}
+	
+	public void persisteAlteracao() {
+		usuariobean.atualizaUsuario(usuarioAtualizado);
 	}
 }
