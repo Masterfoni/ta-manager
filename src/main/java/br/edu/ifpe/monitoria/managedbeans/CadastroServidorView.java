@@ -41,12 +41,12 @@ public class CadastroServidorView implements Serializable{
 		return "homepage";
 	}
 	
-	public String salvarProfessor(){
+	public void salvarProfessor(){
+		System.out.println("chegou aki essa mizera");
 		professor.setEmail(email);
 		professor.setNome(nome);
 		perfilGoogle.setUsuario(professor);
 		pglBean.persistePerfilGoogle(perfilGoogle);
-		return "homepage";
 	}
 	
 	@PostConstruct
