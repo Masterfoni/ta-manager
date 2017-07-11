@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+	<link rel="stylesheet" href="./homepage.css"></link>
+	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+	<title>TITULO AQUI</title>
+</h:head>
+<h:body>
+	<ui:include src="navbar-top.xhtml" />
+	<div id="wrapper">
+		<ui:include src="navbar-left.xhtml" />
+	</div>
+	
+	<script src="./resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+	<script src="./resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	
+	<script>
+	   $("#menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("toggled");
+	    });
+	</script>
+</h:body>
+</html>
