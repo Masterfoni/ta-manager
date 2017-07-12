@@ -7,11 +7,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean (name="gerenciaUsuarioView")
+@ViewScoped
 public class GerenciaUsuarioView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -58,9 +60,6 @@ public class GerenciaUsuarioView implements Serializable {
 	@PostConstruct
 	public void init() {
 		usuarios = usuariobean.consultaUsuarios();
-		
-		if(!usuarios.isEmpty())
-			usuarioAtualizado = usuarios.get(0);
 	}
 	
 	public void buscaUsuario() {

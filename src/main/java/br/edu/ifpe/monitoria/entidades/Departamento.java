@@ -15,7 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_DEPARTAMENTO",
@@ -41,11 +42,11 @@ public class Departamento implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_DEPARTAMENTO")
 	private Long id;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.sigla}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
 	@Column (name="TXT_SIGLA", unique = true)
 	private String sigla;
 
@@ -69,5 +70,7 @@ public class Departamento implements Serializable{
 		return id;
 	}
 	
-	
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

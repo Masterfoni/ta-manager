@@ -6,12 +6,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Departamento;
 import br.edu.ifpe.monitoria.localbean.DepartamentoLocalBean;
 
 @ManagedBean (name="gerenciaDepartamentoView")
+@ViewScoped
 public class GerenciaDepartamentoView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +26,8 @@ public class GerenciaDepartamentoView implements Serializable {
 	public List<Departamento> departamentos;
 	
 	public Departamento departamentoAtualizado;
+	
+	public Departamento departamentoPersistido;
 	
 	public String nomeBusca;
 	
@@ -49,18 +55,33 @@ public class GerenciaDepartamentoView implements Serializable {
 		this.departamentoAtualizado = departamentoAtualizado;
 	}
 
+	public Departamento getDepartamentoPersistido() {
+		return departamentoPersistido;
+	}
+
+	public void setDepartamentoPersistido(Departamento departamentoPersistido) {
+		this.departamentoPersistido = departamentoPersistido;
+	}
+
 	public GerenciaDepartamentoView() {
 		nomeBusca = "";
 		departamentos = new ArrayList<Departamento>();
 		departamentoAtualizado = new Departamento();
+		departamentoPersistido = new Departamento();
 	}
 	
 	@PostConstruct
 	public void init() {
 		departamentos = departamentobean.consultaDepartamentos();
-		
-		if(!departamentos.isEmpty())
-			departamentoAtualizado = departamentos.get(0);
+	}
+	
+	public void cadastrarDepartamento()
+	{
+		if(departamentobean.persisteDepartamento(departamentoPersistido))
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+		}
 	}
 	
 	public void buscaDepartamento() {
@@ -80,6 +101,7 @@ public class GerenciaDepartamentoView implements Serializable {
 	
 	public void alteraDepartamento(Departamento departamento) {
 		departamentoAtualizado = departamento;
+		System.out.println(departamentoAtualizado);
 	}
 	
 	public void persisteAlteracao() {
