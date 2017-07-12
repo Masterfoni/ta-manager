@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
@@ -12,37 +13,10 @@
 	<title>Administração de Usuarios</title>
 </h:head>
 <h:body>
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-		    <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-	    </div>
-	    <ul class="nav navbar-nav">
-	    </ul>
-	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-	    </ul>
-	  </div>
-	</nav>
+	<ui:include src="navbar-top.xhtml" />
 	
 	<div id="wrapper">
-		<!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <!-- <li class="sidebar-brand"><a href="#"></a></li> -->
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>  Usuario</a></li>
-                <li><a href="#"><span class="fa fa-users"></span>  Orientador</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-education"></span>  InscriÃÂ§ÃÂ£o de Candidato</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-align-center"></span>  Plano de Monitoria</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span>  Edital</a></li>
-                <li><a href="#"><span class="fa fa-leanpub"></span>  Disciplina</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-book"></span>  Curso</a></li>
-                <li><a href="#"><span class="fa fa-bookmark-o"></span>  CoordenaÃÂ§ÃÂ£o</a></li>
-                <li><a href="#"><span class="fa fa-bookmark"></span>  Departamento</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span>  Logs de AÃÂ§ÃÂ£o</a></li>
-            </ul>
-        </div>
-		
+		<ui:include src="navbar-left.xhtml" />
 		<div id="page-content-wrapper">
 			<div class="container-fluid"> 
 				<div class="row">
