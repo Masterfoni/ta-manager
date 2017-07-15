@@ -12,4 +12,13 @@ public class HomePageView implements Serializable {
 	public HomePageView() {
 		
 	}
+	
+	public String gotoGerUsuarios() {
+		return "gerenciaUsuario";
+		//		try {
+		//			FacesContext.getCurrentInstance().getExternalContext().dispatch("/gerenciaUsuario.xhtml");
+		//		} catch (IOException e) {
+		//			e.printStackTrace();
+		//		}
+	}
 }

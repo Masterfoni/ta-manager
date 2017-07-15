@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+	<link rel="stylesheet" href="./homepage.css"></link>
+	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+	<title>Administração de Departamentos</title>
+</h:head>
+<h:body>
+	<ui:include src="navbar-top.xhtml" />
+	<div id="wrapper">
+		<ui:include src="navbar-left.xhtml" />
+		<div id="page-content-wrapper">
+			<div class="container-fluid"> 
+				<div class="row">
+					<div class="col-xs-8 col-xs-offset-2">
+	                    <h:form>
+							<div class="input-group">
+			                	<h:inputText styleClass="form-control" placeholder="Digite o parametro..." value="#{gerenciaDepartamentoView.nomeBusca}"></h:inputText>
+		                    	<span class="input-group-btn">
+		                    	    <h:commandButton value="Buscar" action="#{gerenciaDepartamentoView.buscaDepartamento()}" update="tabelaDptos"
+		                    	    				 styleClass="btn btn-default">
+		                    	    </h:commandButton>
+		                    	    <h:commandButton value="Cadastrar" class="btn btn-default cadastrador">
+	                        			<f:ajax execute="@none" render="cadastraDpto" />
+		                    	    </h:commandButton>
+		                    	</span>
+				            </div>
+						</h:form>
+					</div>
+				</div>
+            	<div class="row">
+                	<div class="col-lg-12">
+                		<h:form>
+	                        <h:dataTable id="tabelaDptos" value="#{gerenciaDepartamentoView.departamentos}" var="departamento" class="table">
+	                        	<h:column>
+	                        		<f:facet name="header">Nome</f:facet>
+	                        		#{departamento.nome}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<f:facet name="header">Sigla</f:facet>
+	                        		#{departamento.sigla}
+	                        	</h:column>
+	                        	<h:column>
+	                        		<h:commandButton actionListener="#{gerenciaDepartamentoView.deletaDepartamento(departamento)}"
+	                        						 value="Deletar" update="@form" class="btn btn-danger" />
+	                        		<span>   </span>
+	                        		<h:commandButton id="botaoUpdate" actionListener="#{gerenciaDepartamentoView.alteraDepartamento(departamento)}" 
+	                        						 value="Alterar" class="btn btn-info alterador">
+	                        			<f:ajax execute="@form" render=":formAtualizador :atualizaDpto" />
+	                        		</h:commandButton>
+	                        	</h:column>
+	                        </h:dataTable>
+	                	</h:form>
+                    </div>
+                </div>
+                
+                <h:panelGroup layout="block">
+					<div class="alert alert-danger alert-dismissable fade in">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+						<h:messages/>
+					</div>
+				</h:panelGroup>
+                
+				<!-- MODAL DE ATUALIZAÇÃO -->
+				<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+	    					<h:form id="formAtualizador" class="dialogSignup">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">x</button>
+										<h4 class="modal-title">Atualize o Departamento</h4>
+								</div>
+								<div class="modal-body">
+									<div id="atualizaDpto">
+										<div class="form-group">
+											<label for="nomeCadastro">Nome</label>
+											<h:inputText id="nomeCadastro" class="form-control" 
+														 value="#{gerenciaDepartamentoView.departamentoAtualizado.nome}">
+											</h:inputText>
+										</div>
+			    						<div class="form-group">
+											<label for="siglaCadastro">Sigla</label>
+											<h:inputText id="siglaCadastro" class="form-control" 
+														 value="#{gerenciaDepartamentoView.departamentoAtualizado.sigla}">
+					           				</h:inputText>
+										</div>
+				    				</div>
+				    			</div>
+				    			<div class="modal-footer">
+									<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaDepartamentoView.persisteAlteracao()}" 
+			   	 	   								 update="@form" class="btn btn-info" />
+									<span>  </span>
+				    				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				    			</div>
+							</h:form>
+			    		</div>
+					</div>
+				</div>
+				
+				<!-- MODAL DE CADASTRO -->
+				<div id="myModal2" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+	    					<h:form class="dialogSignup">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">x</button>
+										<h4 class="modal-title">Cadastre um Departamento</h4>
+								</div>
+								<div class="modal-body">
+									<div id="cadastraDpto">
+										<div class="form-group">
+											<label for="nomeCadastroD">Nome</label>
+											<h:inputText id="nomeCadastroD" class="form-control" 
+														 value="#{gerenciaDepartamentoView.departamentoPersistido.nome}">
+											</h:inputText>
+										</div>
+			    						<div class="form-group">
+											<label for="siglaCadastroD">Sigla</label>
+											<h:inputText id="siglaCadastroD" class="form-control" 
+														 value="#{gerenciaDepartamentoView.departamentoPersistido.sigla}">
+					           				</h:inputText>
+										</div>
+				    				</div>
+				    			</div>
+				    			<div class="modal-footer">
+									<h:commandButton value="Cadastrar" actionListener="#{gerenciaDepartamentoView.cadastrarDepartamento()}" 
+			   	 	   								 update="@form" class="btn btn-info" />
+									<span>  </span>
+				    				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				    			</div>
+							</h:form>
+			    		</div>
+					</div>
+				</div>
+            </div>
+		</div>
+	</div>
+	
+	<script src="./resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+	<script src="./resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	
+	<script>
+	   $("#menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("toggled");
+	    });
+
+	   $(".cadastrador").click(function(e){
+		   $("#myModal2").modal();
+	   });
+	   
+	   $(".alterador").click(function(e) {
+		   $("#myModal").modal();
+	   });
+	</script>
+</h:body>
+</html>

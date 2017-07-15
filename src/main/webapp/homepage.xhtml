@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta charset="ISO-8859-1" />
 	<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
@@ -12,39 +14,9 @@
 	<title>Monitoria - IFPE</title>
 </h:head>
 <h:body>
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	    	<a class="navbar-brand" href="#">Gerenciamento de Monitoria</a>
-	    </div>
-	    <ul class="nav navbar-nav">
-	    </ul>
-	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-	    </ul>
-	  </div>
-	</nav>
-	
+	<ui:include src="navbar-top.xhtml" />	
 	<div id="wrapper">
-		<!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <!-- <li class="sidebar-brand"><a href="#"></a></li> -->
-                
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>  Usuário</a></li>
-                <li><a href="#"><span class="fa fa-users"></span>  Orientador</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-education"></span>  Inscrição de Candidato</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-align-center"></span>  Plano de Monitoria</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span>  Edital</a></li>
-                <li><a href="#"><span class="fa fa-leanpub"></span>  Disciplina</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-book"></span>  Curso</a></li>
-                <li><a href="#"><span class="fa fa-bookmark-o"></span>  Coordenação</a></li>
-                <li><a href="#"><span class="fa fa-bookmark"></span>  Departamento</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span>  Logs de Ação</a></li>
-            </ul>
-        </div>
-		
-		<!-- Início conteúdo de página -->
+		<ui:include src="navbar-left.xhtml" />		
 		<div id="page-content-wrapper">
 			<div class="container-fluid">
             	<div class="row">
@@ -52,12 +24,10 @@
                         <h1>Teste de conteúdo de página</h1>
                         <p>Teste de responsividade de conteúdo de página, ao se ativar o menu da esquerda. Mussum Ipsum, cacilds vidis litro abertis. Cevadis im ampola pa arma uma pindureta. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Si num tem leite então bota uma pinga aí cumpadi! Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.</p>
                         <p>Código desenvolvido por: <code>#JVAL</code> e <code>#FAL</code>.</p>
-                        <a class="btn btn-default" id="menu-toggle">Ativar/Desativar</a>
                     </div>
                 </div>
             </div>
 		</div>
-		<!-- FIM conteúdo de página -->
 	</div>
 	
 	

@@ -16,29 +16,23 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_DEPARTAMENTO",
 		sequenceName = "SQ_DEPARTAMENTO",
 		initialValue = 1,
 		allocationSize = 1)
 @Table(name="TB_DEPARTAMENTO")
-@NamedQueries(
-        {
-            @NamedQuery(
-                    name = "Departamento.PorSigla",
-                    query = "SELECT d FROM Departamento d WHERE d.sigla LIKE :sigla"
-            )
-        }
-)
-@NamedNativeQueries(
-        {
-            @NamedNativeQuery(
-                    name = "Departamento.PorNomeSQL",
-                    query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_DEPARTAMENTO WHERE TXT_NOME LIKE ? ORDER BY ID",
-                    resultClass = Departamento.class
-            )
-        }
-)
+@NamedQueries({
+	@NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
+	@NamedQuery(name = "Departamento.findById", query = "SELECT d FROM Departamento d WHERE d.id = :id"),
+    @NamedQuery(name = "Departamento.findBySigla", query = "SELECT d FROM Departamento d WHERE d.sigla LIKE :sigla"),
+    @NamedQuery(name = "Departamento.findByNome", query = "SELECT d FROM Departamento d WHERE d.nome LIKE :nome")
+})
+@NamedNativeQueries({
+     @NamedNativeQuery(name = "Departamento.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_DEPARTAMENTO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Departamento.class)
+})
 @Access(AccessType.FIELD)
 public class Departamento implements Serializable{
 
@@ -48,10 +42,12 @@ public class Departamento implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_DEPARTAMENTO")
 	private Long id;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 	
-	@Column (name="TXT_SIGLA")
+	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
+	@Column (name="TXT_SIGLA", unique = true)
 	private String sigla;
 
 	public String getNome() {
@@ -74,5 +70,7 @@ public class Departamento implements Serializable{
 		return id;
 	}
 	
-	
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

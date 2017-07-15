@@ -76,6 +76,13 @@ public class UsuarioLocalBean
 		return usuarioPorId;
 	}
 	
+	public List<Usuario> consultaUsuarioByName(String nome)
+	{
+		List<Usuario> usuarios = em.createNamedQuery("Usuario.findByNome", Usuario.class).setParameter("nome", nome).getResultList();
+		
+		return usuarios;
+	}
+	
 	public boolean deletaUsuario(Long id)
 	{
 		Usuario usuarioDeletado = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
