@@ -66,4 +66,23 @@ public class Professor extends Usuario implements Serializable {
 	public void setTitulacao(Titulacao titulacao) {
 		this.titulacao = titulacao;
 	}
+	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Professor) && (id != null) 
+             ? id.equals(((Professor) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Professor[ id=" + id + ":" + nome + " ]";
+    }
 }

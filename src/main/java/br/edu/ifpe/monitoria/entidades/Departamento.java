@@ -73,4 +73,23 @@ public class Departamento implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Professor) && (id != null) 
+             ? id.equals(((Professor) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Departamento[ id=" + id + ":" + nome + " ]";
+    }
 }

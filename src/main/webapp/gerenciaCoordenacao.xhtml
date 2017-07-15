@@ -48,6 +48,10 @@
 	                        		#{coordenacao.sigla}
 	                        	</h:column>
 	                        	<h:column>
+	                        		<f:facet name="header">Coordenador</f:facet>
+	                        		#{coordenacao.coordenador.nome}
+	                        	</h:column>
+	                        	<h:column>
 	                        		<h:commandButton actionListener="#{gerenciaCoordenacaoView.deletaCoordenacao(coordenacao)}"
 	                        						 value="Deletar" update="@form" class="btn btn-danger" />
 	                        		<span>   </span>
@@ -94,13 +98,13 @@
 										<div class="form-group">
 											<label>Departamento</label>
 											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.departamento}">
-												<f:selectItems value="#{gerenciaCoordenacaoView.departamentos}" var="dpto" itemLabel="#{dpto.nome}"/>
+												<f:selectItems value="#{gerenciaCoordenacaoView.departamentos}" var="dpto" itemValue="#{dpto}" itemLabel="#{dpto.nome}"/>
 											</h:selectOneMenu>
 										</div>
 										<div class="form-group">
 											<label>Coordenador</label>
-											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.coordenador}">
-												<f:selectItems value="#{gerenciaCoordenacaoView.professores}" var="prof" itemLabel="#{prof.nome}"/>
+											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.coordenador}" converter="professorConverter">
+												<f:selectItems value="#{gerenciaCoordenacaoView.professores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
 											</h:selectOneMenu>
 										</div>
 				    				</div>
@@ -141,14 +145,14 @@
 										</div>
 										<div class="form-group">
 											<label>Departamento</label>
-											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoPersistida.departamento}">
+											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoPersistida.departamento}" converter="departamentoConverter">
 												<f:selectItems value="#{gerenciaCoordenacaoView.departamentos}" var="dpto" itemLabel="#{dpto.nome}"/>
 											</h:selectOneMenu>
 										</div>
 										<div class="form-group">
 											<label>Coordenador</label>
-											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoPersistida.coordenador}">
-												<f:selectItems value="#{gerenciaCoordenacaoView.professores}" var="prof" itemLabel="#{prof.nome}"/>
+											<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoPersistida.coordenador}" converter="professorConverter">
+												<f:selectItems value="#{gerenciaCoordenacaoView.professores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
 											</h:selectOneMenu>
 										</div>
 				    				</div>

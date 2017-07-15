@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +41,7 @@ public class Coordenacao implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_DEPARTAMENTO")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_COORDENACAO")
 	private Long id;
 	
 	@Column (name="TXT_NOME")
@@ -55,8 +54,8 @@ public class Coordenacao implements Serializable{
 	@JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
 	private Departamento departamento;
 	
-	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
 	private Professor coordenador;
 
 	public String getNome() {
@@ -93,6 +92,10 @@ public class Coordenacao implements Serializable{
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

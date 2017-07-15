@@ -85,7 +85,6 @@ public class GerenciaCoordenacaoView implements Serializable {
 		this.departamentos = departamentos;
 	}
 	
-
 	public List<Professor> getProfessores() {
 		return professores;
 	}
@@ -94,18 +93,15 @@ public class GerenciaCoordenacaoView implements Serializable {
 		this.professores = professores;
 	}
 
-	public GerenciaCoordenacaoView() {
-		nomeBusca = "";
-		coordenacoes = new ArrayList<Coordenacao>();
-		coordenacaoAtualizada = new Coordenacao();
-		coordenacaoPersistida = new Coordenacao();
-	}
-	
 	@PostConstruct
 	public void init() {
+		nomeBusca = "";
 		coordenacoes = coordenacaobean.consultaCoordenacoes();
 		departamentos = departamentobean.consultaDepartamentos();
 		professores = professorbean.consultaProfessores();
+		coordenacaoAtualizada = new Coordenacao();
+		coordenacaoPersistida = new Coordenacao();
+		coordenacoes = new ArrayList<Coordenacao>();
 	}
 	
 	public void cadastrarCoordenacao()

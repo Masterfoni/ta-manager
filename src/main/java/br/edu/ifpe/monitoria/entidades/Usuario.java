@@ -49,11 +49,11 @@ public class Usuario implements Serializable
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_USUARIO")
-	private Long id;
+	protected Long id;
 
 	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
-	private String nome;
+	protected String nome;
 
 	@NotNull(message = "{mensagem.notnull}{tipo.email}")
 	@Email(message = "E-mail inválido.")
@@ -154,4 +154,9 @@ public class Usuario implements Serializable
 	public Long getId() {
 		return id;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 }

@@ -32,4 +32,11 @@ public class ProfessorLocalBean
 		
 		return professores;
 	}
+	
+	public Professor consultaProfessorById(Long id)
+	{
+		Professor professorPorId = em.createNamedQuery("Professor.findById", Professor.class).setParameter("id", id).getSingleResult();
+		
+		return professorPorId;
+	}
 }
