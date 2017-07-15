@@ -13,6 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,6 +27,15 @@ import javax.persistence.Table;
 		initialValue = 1,
 		allocationSize = 1)
 @Table(name="TB_COORDENACAO")
+@NamedQueries({
+	@NamedQuery(name = "Coordenacao.findAll", query = "SELECT d FROM Coordenacao d"),
+	@NamedQuery(name = "Coordenacao.findById", query = "SELECT d FROM Coordenacao d WHERE d.id = :id"),
+    @NamedQuery(name = "Coordenacao.findBySigla", query = "SELECT d FROM Coordenacao d WHERE d.sigla LIKE :sigla"),
+    @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT d FROM Coordenacao d WHERE d.nome LIKE :nome")
+})
+@NamedNativeQueries({
+     @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Departamento.class)
+})
 @Access(AccessType.FIELD)
 public class Coordenacao implements Serializable{
 
@@ -70,7 +83,7 @@ public class Coordenacao implements Serializable{
 		this.departamento = departamento;
 	}
 
-	public Usuario getCoordenador() {
+	public Professor getCoordenador() {
 		return coordenador;
 	}
 

@@ -7,6 +7,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -16,6 +18,9 @@ import javax.validation.constraints.NotNull;
 @Table(name="TB_PROFESSOR")
 @DiscriminatorValue(value="PROFESSOR")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
+@NamedQueries({
+	@NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p")
+})
 public class Professor extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
