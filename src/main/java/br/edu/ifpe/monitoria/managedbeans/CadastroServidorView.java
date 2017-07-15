@@ -33,20 +33,22 @@ public class CadastroServidorView implements Serializable{
 	private PerfilGoogleLocalBean pglBean;
 	
 	public String salvarAdministrativo(){
-
 		administrativo.setEmail(email);
 		administrativo.setNome(nome);
 		perfilGoogle.setUsuario(administrativo);
 		pglBean.persistePerfilGoogle(perfilGoogle);
+		tipo="a";
 		return "homepage";
 	}
 	
-	public void salvarProfessor(){
+	public String salvarProfessor(){
 		System.out.println("chegou aki essa mizera");
 		professor.setEmail(email);
 		professor.setNome(nome);
 		perfilGoogle.setUsuario(professor);
 		pglBean.persistePerfilGoogle(perfilGoogle);
+		tipo="p";
+		return "homepage";
 	}
 	
 	@PostConstruct

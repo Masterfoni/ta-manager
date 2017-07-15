@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 function ativarProfessor() {
 	if(document.getElementById("dadosProfessor").style.display == "none")
 		document.getElementById("dadosProfessor").style.display = 'block';

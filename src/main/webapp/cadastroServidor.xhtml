@@ -43,6 +43,10 @@
 			<h:form id="cadastroformProfessor" class="form-group" role="form">
 				<p:growl id="growlProfessor" showDetail="true" sticky="true" />  
 				
+				<h:inputHidden id="tipoP"  value="#{cadastroServidorView.tipo}" />
+				
+				<h4>Professor</h4>
+				
 				<div class="form-group">
 					<label for="email">Email</label>
 					<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
@@ -59,8 +63,10 @@
 				</div>
 			
 				<div class="form-group">
-					<label for="nome">Nome</label>
-					<h:inputText id="nome" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
+					<label for="nomeP">Nome</label>
+					<span>   </span>
+					<h:message for="nomeP" styleClass="mensagem alert-danger"/>
+					<h:inputText id="nomeP" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
 				</div>
 			
 				<div class="form-group">
@@ -84,10 +90,14 @@
 				<div class="form-group row">
 					<div class="col-sm-5" >
 						<label for="rgCadastro">RG</label>
+						<span>   </span>
+						<h:message for="rgCadastro" styleClass="mensagem alert-danger"/>
 						<h:inputText id="rgCadastro" class="form-control" value="#{cadastroServidorView.professor.rg}"></h:inputText>
 					</div>
 					<div class="col-sm-5" >
 						<label for="emissorCadastro">Orgão expedidor:</label>
+						<span>   </span>
+						<h:message for="emissorCadastro" styleClass="mensagem alert-danger"/>
 						<h:inputText id="emissorCadastro" class="form-control" value="#{cadastroServidorView.professor.rgEmissor}"
 							aria-describedby="emissorDesc"></h:inputText>
 						<small id="emissorDesc" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
@@ -96,6 +106,8 @@
 			
 				<div class="form-group">
 					<label for="siape">SIAPE</label>
+					<span>   </span>
+					<h:message for="siape" styleClass="mensagem alert-danger"/>
 					<h:inputText id="siape" class="form-control" value="#{cadastroServidorView.professor.siape}"
 						aria-describedby="cpfDesc"></h:inputText>
 					<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
@@ -111,6 +123,8 @@
 			
 				<div class="form-group">
 					<label for="senhaCadastro">Senha</label>
+					<span>   </span>
+					<h:message for="senhaCadastro" styleClass="mensagem alert-danger"/>
 					<h:inputSecret id="senhaCadastro" class="form-control" value="#{cadastroServidorView.professor.senha}"
 						aria-describedby="senhaDesc"></h:inputSecret>
 					<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
@@ -128,6 +142,10 @@
 			
 				<p:growl id="growlAdministrativo" showDetail="true" sticky="true" />  
 			
+				<h:inputHidden id="tipoA" value="#{cadastroServidorView.tipo}" />
+			
+				<h4>Administrativo</h4>
+			
 				<div class="form-group">
 					<label for="email">Email</label>
 					<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
@@ -144,8 +162,10 @@
 				</div>
 			
 				<div class="form-group">
-					<label for="nome">Nome</label>
-					<h:inputText id="nome" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
+					<label for="nomeA">Nome</label>
+					<span>   </span>
+					<h:message for="nomeA" styleClass="mensagem alert-danger"/>
+					<h:inputText id="nomeA" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
 				</div>
 			
 				<div class="form-group">
@@ -159,6 +179,8 @@
 			
 				<div class="form-group">
 					<label for="cpfA">CPF</label>
+					<span>   </span>
+					<h:message for="cpfA" styleClass="mensagem alert-danger"/>
 					<h:inputText id="cpfA" class="form-control" value="#{cadastroServidorView.administrativo.cpf}"
 						aria-describedby="cpfDescA"></h:inputText>
 					<small id="cpfDescA" class="form-text text-muted">Utilize apenas numeros</small>
@@ -167,10 +189,14 @@
 				<div class="form-group row">
 					<div class="col-sm-5" >
 						<label for="rgA">RG</label>
+						<span>   </span>
+						<h:message for="rgA" styleClass="mensagem alert-danger"/>
 						<h:inputText id="rgA" class="form-control" value="#{cadastroServidorView.administrativo.rg}"></h:inputText>
 					</div>
 					<div class="col-sm-5" >
 						<label for="emissorA">Orgão expedidor:</label>
+						<span>   </span>
+						<h:message for="emissorA" styleClass="mensagem alert-danger"/>
 						<h:inputText id="emissorA" class="form-control" value="#{cadastroServidorView.administrativo.rgEmissor}"
 							aria-describedby="emissorDescA"></h:inputText>
 						<small id="emissorDescA" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
@@ -179,6 +205,8 @@
 			
 				<div class="form-group">
 					<label for="siapeA">SIAPE</label>
+					<span>   </span>
+					<h:message for="siapeA" styleClass="mensagem alert-danger"/>
 					<h:inputText id="siapeA" class="form-control" value="#{cadastroServidorView.administrativo.siape}"
 						aria-describedby="siapeDescA"></h:inputText>
 					<small id="siapeDescA" class="form-text text-muted">Utilize apenas numeros</small>
@@ -186,6 +214,8 @@
 				
 				<div class="form-group">
 					<label for="senhaA">Senha</label>
+					<span>   </span>
+					<h:message for="senhaA" styleClass="mensagem alert-danger"/>
 					<h:inputSecret id="senhaA" class="form-control" value="#{cadastroServidorView.administrativo.senha}"
 						aria-describedby="senhaDescA"></h:inputSecret>
 					<small id="senhaDescA" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>

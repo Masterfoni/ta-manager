@@ -3,12 +3,14 @@ var auth2;
 onload = initClient;
 
 function initClient () {
+	
     gapi.load('auth2', function(){
         auth2 = gapi.auth2.init({
             client_id: '835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com'
         });
 
     });
+    
 };
 
 /**
