@@ -1,3 +1,4 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" >
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -6,7 +7,15 @@
     <ul class="nav navbar-nav">
     </ul>
     <ul class="nav navbar-nav navbar-right">
+	  <li><a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a></li>
       <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
     </ul>
   </div>
 </nav>
+
+<script>
+	function goToProfile() {
+		window.location.href = "gerenciaPerfil.xhtml";
+	}
+</script>
+</html>
