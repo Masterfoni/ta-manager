@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,6 +22,11 @@ import javax.persistence.TemporalType;
 					initialValue = 1,
 					allocationSize = 1)
 @Table(name = "TB_EDITAL")
+@NamedQueries({
+	@NamedQuery(name = "Edital.findAll", query = "SELECT e FROM Edital e"),
+	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id"),
+    @NamedQuery(name = "Edital.findByNumeroEdital", query = "SELECT e FROM Edital e WHERE e.numeroEdital = :numeroEdital")
+})
 @Access(AccessType.FIELD)
 public class Edital {
 	
