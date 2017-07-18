@@ -83,21 +83,17 @@
 												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 											</h:selectOneMenu>
 										</div>
-<!-- 			    						<div class="form-group">
-											<label>Componente Curricular</label>
-											<h:inputText class="form-control" 
-														 value="#{gerenciaPlanoMonitoriaView.departamentoAtualizado.sigla}">
-					           				</h:inputText>
-										</div> -->
 										<div class="form-group">
 											<label>Bolsas</label>
-											<h:inputNumber class="form-control"
-											  			   value="#{gerenciaPlanoMonitoriaView.planoAtualizado.bolsas}"></h:inputNumber>
+											<h:inputText class="form-control"
+											  			   value="#{gerenciaPlanoMonitoriaView.planoAtualizado.bolsas}">
+											</h:inputText>
 										</div>
 										<div class="form-group">
 											<label>Voluntários</label>
-											<h:inputNumber class="form-control"
-														   value="#{gerenciaPlanoMonitoriaView.planoAtualizado.voluntarios}"></h:inputNumber>
+											<h:inputText class="form-control"
+														   value="#{gerenciaPlanoMonitoriaView.planoAtualizado.voluntarios}">
+											</h:inputText>
 										</div>
 										<div class="form-group">
 											<label>Justificativa</label>
@@ -147,21 +143,15 @@
 												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 											</h:selectOneMenu>
 										</div>
-<!-- 			    						<div class="form-group">
-											<label>Componente Curricular</label>
-											<h:inputText class="form-control" 
-														 value="#{gerenciaPlanoMonitoriaView.departamentoAtualizado.sigla}">
-					           				</h:inputText>
-										</div> -->
 										<div class="form-group">
 											<label>Bolsas</label>
-											<h:inputNumber class="form-control"
-											  			   value="#{gerenciaPlanoMonitoriaView.planoPersistido.bolsas}"></h:inputNumber>
+											<h:inputText class="form-control"
+											  			   value="#{gerenciaPlanoMonitoriaView.planoPersistido.bolsas}"></h:inputText>
 										</div>
 										<div class="form-group">
 											<label>Voluntários</label>
-											<h:inputNumber class="form-control"
-														   value="#{gerenciaPlanoMonitoriaView.planoPersistido.voluntarios}"></h:inputNumber>
+											<h:inputText class="form-control"
+														   value="#{gerenciaPlanoMonitoriaView.planoPersistido.voluntarios}"></h:inputText>
 										</div>
 										<div class="form-group">
 											<label>Justificativa</label>

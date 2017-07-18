@@ -90,6 +90,38 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.professores = professores;
 	}
 
+	public List<PlanoMonitoria> getPlanos() {
+		return planos;
+	}
+
+	public void setPlanos(List<PlanoMonitoria> planos) {
+		this.planos = planos;
+	}
+
+	public List<Edital> getEditais() {
+		return editais;
+	}
+
+	public void setEditais(List<Edital> editais) {
+		this.editais = editais;
+	}
+
+	public PlanoMonitoria getPlanoPersistido() {
+		return planoPersistido;
+	}
+
+	public void setPlanoPersistido(PlanoMonitoria planoPersistido) {
+		this.planoPersistido = planoPersistido;
+	}
+
+	public PlanoMonitoria getPlanoAtualizado() {
+		return planoAtualizado;
+	}
+
+	public void setPlanoAtualizado(PlanoMonitoria planoAtualizado) {
+		this.planoAtualizado = planoAtualizado;
+	}
+
 	@PostConstruct
 	public void init() {
 		nomeBusca = "";
@@ -123,10 +155,10 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 	
 	public void buscaPlanoMonitoria() {
-		if(nomeBusca.isEmpty())
-			System.out.println(this.coordenacoes);
-		else
-			this.planos = planobean.consultaPlanosByName("%"+nomeBusca+"%");
+//		if(nomeBusca.isEmpty())
+//			System.out.println(this.coordenacoes);
+//		else
+//			this.planos = planobean.consultaPlanosByName("%"+nomeBusca+"%");
 	}
 	
 	public void alteraPlano(PlanoMonitoria plano) {
