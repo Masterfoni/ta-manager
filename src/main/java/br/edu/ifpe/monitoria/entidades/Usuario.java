@@ -1,7 +1,13 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -19,6 +25,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -63,6 +70,9 @@ public class Usuario implements Serializable
 	@NotNull(message = "{mensagem.notnull}{tipo.senha}")
 	@Column (name="TXT_SENHA")
 	private String senha;
+	
+	@Column (name="TXT_SAL")
+	private String sal;
 
 	@NotBlank(message = "{mensagem.notnull}{tipo.cpf}")
 	@CPF(message = "{mensagem.cpf}")
@@ -86,6 +96,27 @@ public class Usuario implements Serializable
 					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
 	private Collection<String> telefones;
 
+	 @PrePersist
+	 public void gerarHash() {
+		 try {
+			 gerarSal();
+	         MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	         setSenha(sal + senha);
+	         digest.update(senha.getBytes(Charset.forName("UTF-8")));
+	         setSenha(Base64.getEncoder().encodeToString(digest.digest()));
+	    } catch (NoSuchAlgorithmException ex) {
+	    	throw new RuntimeException(ex);
+	    }
+	}
+
+	 private void gerarSal() throws NoSuchAlgorithmException {
+		 SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+		 byte[] randomBytes = new byte[32];
+		 secureRandom.nextBytes(randomBytes);
+		 setSal(Base64.getEncoder().encodeToString(randomBytes));
+		 Logger.getGlobal().info("Sal: " + getSal());
+	 }
+	
 	public Collection<String> getTelefones()
 	{
 		return telefones;
@@ -158,5 +189,12 @@ public class Usuario implements Serializable
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public String getSal() {
+		return sal;
+	}
+
+	public void setSal(String sal) {
+		this.sal = sal;
+	}
 }
