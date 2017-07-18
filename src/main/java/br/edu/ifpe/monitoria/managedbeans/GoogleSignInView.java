@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
@@ -60,19 +62,16 @@ public class GoogleSignInView implements Serializable{
 			session.setAttribute("nome", nome);
 			session.setAttribute("email", email);
 			
-			if(usuarioBean.consultaUsuarioPorEmail(email) != null)
-			{
-				try {
-					ec.redirect("homepage.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			else
-			{
+			try {
+				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+				request.login(email, perfilGoogle.getSubject());
+				//session.setAttribute("usuario", usuarioBean.consultaUsuarioPorEmail(email));
+				ec.redirect("homepage.xhtml");
+			} catch (IOException | ServletException e) {
+				e.printStackTrace();
 				try {
 					ec.redirect("cadastroServidor.xhtml");
-				} catch (IOException e) {
+				} catch (IOException ioe) {
 					e.printStackTrace();
 				}
 			}

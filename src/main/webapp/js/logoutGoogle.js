@@ -1,5 +1,9 @@
 var auth2;
 
+jQuery(function(){
+	jQuery.noConflict();
+});
+
 onload = initClient;
 
 function initClient () {
