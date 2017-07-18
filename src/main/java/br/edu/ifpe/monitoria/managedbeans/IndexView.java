@@ -7,6 +7,8 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Usuario;
@@ -28,6 +30,8 @@ public class IndexView implements Serializable {
 
 	private Aluno aluno;
 
+	FacesContext facesContext;
+	
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -58,22 +62,21 @@ public class IndexView implements Serializable {
 		}
 	}
 
-	public void loginUsuario()
+	public String loginUsuario()
 	{
-		Usuario usuarioLogado = usuarioBean.consultaUsuarioPorEmailSenha(usuario.getEmail(), usuario.getSenha());
-
-		if(usuarioLogado.getId() == null)
-		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-																				"Usuario ou senha incorretos.", null));
-		}
-		else
-		{
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/homepage.xhtml");
-			} catch (IOException e) {
+				facesContext = FacesContext.getCurrentInstance();
+				HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+				request.login(usuario.getEmail(), usuario.getSenha());
+				facesContext.getExternalContext().getSession(true);
+			} 
+			catch (ServletException e) {
 				e.printStackTrace();
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
+		        facesContext.addMessage(null, message);
+		        return "index";
 			}
-		}
+			
+			return "homepage";
 	}
 }

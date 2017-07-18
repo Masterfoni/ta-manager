@@ -80,7 +80,6 @@ public class GoogleSignInView implements Serializable{
 		else {
 			context.addCallbackParam("logou", "Utilize seu email instituncional");
 		}
-		
 	}
 
 	public String verificaSessao(){
