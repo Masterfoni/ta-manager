@@ -15,17 +15,17 @@
   </login-config>
   
   <security-constraint>
-  	<display-name>Páginas Administrativas</display-name>
+  	<display-name>Páginas Alunos</display-name>
   	<web-resource-collection>
-  		<web-resource-name>Área Protegida</web-resource-name>
-  		<description>Área Protegida</description>
-  		<url-pattern>*.xhtml</url-pattern>
+  		<web-resource-name>Área do Aluno</web-resource-name>
+  		<description>Área do Aluno</description>
+  		<url-pattern>/home.xhtml</url-pattern>
   		<http-method>GET</http-method>
   		<http-method>POST</http-method>
   	</web-resource-collection>
   	<auth-constraint>
-  		<description/><!-- Apenas admin -->
-  		<role-name>ALUNO</role-name>
+  		<description/>
+  		<role-name>aluno</role-name>
   	</auth-constraint>
   </security-constraint>
   

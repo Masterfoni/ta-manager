@@ -4,7 +4,7 @@
     <context-root>/FALJVAL</context-root>
     
      <security-role-mapping>
-    	<role-name>aluno</role-name>
+    	<role-name>ALUNO</role-name>
     	<group-name>aluno</group-name>
     </security-role-mapping>
     

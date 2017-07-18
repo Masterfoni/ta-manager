@@ -77,6 +77,6 @@ public class IndexView implements Serializable {
 		        return "index";
 			}
 			
-			return "home";
+			return "homepage";
 	}
 }
