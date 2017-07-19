@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -31,6 +33,10 @@ import br.edu.ifpe.monitoria.validacao.ValidaPeriodo;
 					allocationSize = 1)
 @Table(name = "TB_COMP_CURRICULAR")
 @Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c"),
+	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id"),
+})
 public class ComponenteCurricular implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -110,11 +116,11 @@ public class ComponenteCurricular implements Serializable{
 		this.coordenacao = coordenacao;
 	}
 	
-	public int getCargaHoraria() {
+	public Integer getCargaHoraria() {
 		return cargaHoraria;
 	}
 
-	public void setCargaHoraria(int cargaHoraria) {
+	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
 
@@ -137,4 +143,5 @@ public class ComponenteCurricular implements Serializable{
 	public void setTurno(Turno turno) {
 		this.turno = turno;
 	}
+	
 }

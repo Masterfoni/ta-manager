@@ -42,9 +42,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	@EJB
 	private ProfessorLocalBean professorbean;
 	
-	public List<PlanoMonitoria> planos;
+	public List<ComponenteCurricular> componentes;
 	
 	public List<Coordenacao> coordenacoes;
+	
+	public List<PlanoMonitoria> planos;
 	
 	public List<Professor> professores;
 	
@@ -122,11 +124,20 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.planoAtualizado = planoAtualizado;
 	}
 
+	public List<ComponenteCurricular> getComponentes() {
+		return componentes;
+	}
+
+	public void setComponentes(List<ComponenteCurricular> componentes) {
+		this.componentes = componentes;
+	}
+
 	@PostConstruct
 	public void init() {
 		nomeBusca = "";
 		
 		coordenacoes = coordenacaobean.consultaCoordenacoes();
+		componentes = componentebean.consultaComponentesCurriculares();
 		professores = professorbean.consultaProfessores();
 		planos = planobean.consultaPlanos();
 		editais = editalbean.consultaEditais();
