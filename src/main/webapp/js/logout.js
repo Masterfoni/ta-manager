@@ -1,5 +1,9 @@
 var auth2;
 
+jQuery(function(){
+	jQuery.noConflict();
+});
+
 onload = initClient;
 
 function initClient () {
@@ -30,8 +34,13 @@ var onFailure = function(error) {
 
 function signOut() {
 	auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-    window.location.href = "index.xhtml";
+	if(auth2 != null)
+	{
+		auth2.signOut().then(function () {
+    	console.log('User signed out.');
+    	});
+	}
+    
+    logout();
+    //window.location.href = "index.xhtml";
 }

@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +8,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Administrativo;
@@ -23,7 +26,6 @@ public class CadastroServidorView implements Serializable{
 	private Professor professor;
 	private Administrativo administrativo;
 	private PerfilGoogle perfilGoogle;
-	private String tipo;
 	private String email;
 	private String nome;
 	
@@ -33,21 +35,48 @@ public class CadastroServidorView implements Serializable{
 	private PerfilGoogleLocalBean pglBean;
 	
 	public String salvarAdministrativo(){
+		
 		administrativo.setEmail(email);
 		administrativo.setNome(nome);
 		perfilGoogle.setUsuario(administrativo);
 		pglBean.persistePerfilGoogle(perfilGoogle);
-		tipo="a";
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		HttpSession session = (HttpSession)ec.getSession(true);
+		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		try {
+			request.login(email, perfilGoogle.getSubject());
+			session.setAttribute("usuario", professor);
+			ec.redirect("homepage.xhtml");
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "homepage";
 	}
 	
 	public String salvarProfessor(){
-		System.out.println("chegou aki essa mizera");
+		
 		professor.setEmail(email);
 		professor.setNome(nome);
 		perfilGoogle.setUsuario(professor);
 		pglBean.persistePerfilGoogle(perfilGoogle);
-		tipo="p";
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		HttpSession session = (HttpSession)ec.getSession(true);
+		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		try {
+			request.login(email, perfilGoogle.getSubject());
+			session.setAttribute("usuario", professor);
+			ec.redirect("homepage.xhtml");
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "homepage";
 	}
 	
@@ -101,14 +130,6 @@ public class CadastroServidorView implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public Titulacao[] getTitulos() {

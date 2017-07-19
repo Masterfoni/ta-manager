@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Usuario;
@@ -64,19 +65,32 @@ public class IndexView implements Serializable {
 
 	public String loginUsuario()
 	{
+		String email = usuario.getEmail();
+		facesContext = FacesContext.getCurrentInstance();
+		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
+		{
+			System.out.println(email.substring(email.indexOf("@")));
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
+			facesContext.addMessage(null, message);
+			return "index";
+		}
+		else
+		{
 			try {
-				facesContext = FacesContext.getCurrentInstance();
 				HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 				request.login(usuario.getEmail(), usuario.getSenha());
-				facesContext.getExternalContext().getSession(true);
+				HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
+				session.setAttribute("usuario", usuario);
+				session.setAttribute("email", usuario.getEmail());
+				session.setAttribute("nome", usuario.getNome());
 			} 
 			catch (ServletException e) {
 				e.printStackTrace();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
-		        facesContext.addMessage(null, message);
-		        return "index";
+				facesContext.addMessage(null, message);
+				return "index";
 			}
-			
-			return "homepage";
+		}
+		return "homepage";
 	}
 }
