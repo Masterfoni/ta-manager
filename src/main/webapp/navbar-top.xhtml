@@ -1,4 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" 
+ xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:remoteCommand name="logout" actionListener="#{logoutView.logout}" />
+</h:form>
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -18,4 +24,6 @@
 		window.location.href = "gerenciaPerfil.xhtml";
 	}
 </script>
+<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
+<script src="./js/logout.js"></script>
 </html>
