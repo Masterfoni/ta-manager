@@ -21,7 +21,9 @@ public class LogoutView implements Serializable{
         HttpSession session = (HttpSession) ec.getSession(false);
         if (session != null) {
             session.invalidate();
+            System.out.println("Invalidando a sessão!");
         }
+        
         
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        
         try {
@@ -30,7 +32,7 @@ public class LogoutView implements Serializable{
 			e1.printStackTrace();
 		}
         try {
-        	ec.redirect("index.xhtml");
+        	ec.redirect("logout.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

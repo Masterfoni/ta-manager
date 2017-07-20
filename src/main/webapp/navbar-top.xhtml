@@ -1,9 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" 
- xmlns:p="http://primefaces.org/ui">
-
-<h:form>
-	<p:remoteCommand name="logout" actionListener="#{logoutView.logout}" />
-</h:form>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -12,10 +7,12 @@
     </div>
     <ul class="nav navbar-nav">
     </ul>
+    <h:form>
     <ul class="nav navbar-nav navbar-right">
 	  <li><a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a></li>
-      <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+	  <li><h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink></li>
     </ul>
+    </h:form>
   </div>
 </nav>
 
@@ -24,6 +21,5 @@
 		window.location.href = "gerenciaPerfil.xhtml";
 	}
 </script>
-<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
-<script src="./js/logout.js"></script>
+
 </html>
