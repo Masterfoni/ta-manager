@@ -27,10 +27,10 @@ import javax.persistence.Table;
 		allocationSize = 1)
 @Table(name="TB_COORDENACAO")
 @NamedQueries({
-	@NamedQuery(name = "Coordenacao.findAll", query = "SELECT d FROM Coordenacao d"),
-	@NamedQuery(name = "Coordenacao.findById", query = "SELECT d FROM Coordenacao d WHERE d.id = :id"),
-    @NamedQuery(name = "Coordenacao.findBySigla", query = "SELECT d FROM Coordenacao d WHERE d.sigla LIKE :sigla"),
-    @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT d FROM Coordenacao d WHERE d.nome LIKE :nome")
+	@NamedQuery(name = "Coordenacao.findAll", query = "SELECT c FROM Coordenacao c"),
+	@NamedQuery(name = "Coordenacao.findById", query = "SELECT c FROM Coordenacao c WHERE c.id = :id"),
+    @NamedQuery(name = "Coordenacao.findBySigla", query = "SELECT c FROM Coordenacao c WHERE c.sigla LIKE :sigla"),
+    @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT c FROM Coordenacao c WHERE c.nome LIKE :nome")
 })
 @NamedNativeQueries({
      @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Departamento.class)
@@ -98,4 +98,22 @@ public class Coordenacao implements Serializable{
 		this.id = id;
 	}
 	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Coordenacao) && (id != null) 
+             ? id.equals(((Coordenacao) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Coordenacao[ id=" + id + ":" + nome + " ]";
+    }
 }

@@ -1,6 +1,5 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
