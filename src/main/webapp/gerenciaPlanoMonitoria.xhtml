@@ -79,9 +79,19 @@
 									<div id="atualizaPlano">
 										<div class="form-group">
 											<label>Edital</label>
-											<h:selectOneMenu styleClass="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}">
-												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+											<h:selectOneMenu styleClass="form-control" value="#{gerenciaPlanoMonitoriaView.editalId}">
+												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital.id}" itemLabel="#{edital.numeroEdital}"/>
 											</h:selectOneMenu>
+										</div>
+										<div class="form-group row">
+											<div class="col-sm-3">
+												<label>Componente Curricular</label>
+											</div>
+											<div class="col-sm-9">
+												<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc}" converter="componenteConverter">
+													<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+												</h:selectOneMenu>
+											</div>										
 										</div>
 										<div class="form-group">
 											<label>Bolsas</label>
@@ -139,8 +149,8 @@
 									<div id="cadastraPlano">
 										<div class="form-group">
 											<label>Edital</label>
-											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}">
-												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+ 											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalId}">
+												<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital.id}" itemLabel="#{edital.numeroEdital}"/>
 											</h:selectOneMenu>
 										</div>
 										<div class="form-group row">
@@ -148,8 +158,8 @@
 												<label>Componente Curricular</label>
 											</div>
 											<div class="col-sm-5">
-												<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}">
-													<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="plano" itemValue="#{plano}"  itemLabel="#{plano.cc}"/>
+												<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
+													<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}"  itemLabel="#{comp.nome}"/>
 												</h:selectOneMenu>
 											</div>
 											<div class="col-sm-4">
@@ -225,12 +235,14 @@
 														 value="#{gerenciaPlanoMonitoriaView.componentePersistido.cargaHoraria}">
 					           				</h:inputText>
 										</div>
-										<div class="form-group">
+					 					<div class="form-group">
 											<label>Turno</label>
-											<h:inputText class="form-control" 
-														 value="#{gerenciaPlanoMonitoriaView.componentePersistido.turno}">
-					           				</h:inputText>
+											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.turno}">
+										 			<f:selectItems value="#{gerenciaPlanoMonitoriaView.turns}" 
+																   var="tur" itemValue="#{tur}" itemLabel="#{tur.label}"/>
+											</h:selectOneMenu>
 										</div>
+										
 										<div class="form-group">
 											<label>Período</label>
 											<h:inputText class="form-control" 
@@ -239,13 +251,13 @@
 										</div>
 										<div class="form-group">
 											<label>Coordenacao</label>
-											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.coordenacao}">
-												<f:selectItems value="#{gerenciaPlanoMonitoriaView.coordenacoes}" var="coord" itemValue="#{coord}" itemLabel="#{edital.nome}"/>
+											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.coordenacao}" converter="coordenacaoConverter">
+												<f:selectItems value="#{gerenciaPlanoMonitoriaView.coordenacoes}" var="coord" itemValue="#{coord}" itemLabel="#{coord.nome}"/>
 											</h:selectOneMenu>
 										</div>
 										<div class="form-group">
 											<label>Professor</label>
-											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.professor}">
+											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.professor}" converter="professorConverter">
 												<f:selectItems value="#{gerenciaPlanoMonitoriaView.professores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
 											</h:selectOneMenu>
 										</div>

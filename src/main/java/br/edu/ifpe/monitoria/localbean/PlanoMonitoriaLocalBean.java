@@ -19,7 +19,7 @@ public class PlanoMonitoriaLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	public boolean persistePlanoMonitoria (@NotNull @Valid PlanoMonitoria plano)
+	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
 		em.persist(plano);
 		
@@ -40,23 +40,12 @@ public class PlanoMonitoriaLocalBean
 		return planoPorId;
 	}
 	
-	public List<PlanoMonitoria> consultaPlanosByName(String nome)
-	{
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByNome", PlanoMonitoria.class).setParameter("nome", nome).getResultList();
-		
-		return planos;
-	}
-	
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
-//		Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
-//		
-//		usuarioAtualizar.setEmail(usuario.getEmail());
-//		usuarioAtualizar.setNome(usuario.getNome());
-//		usuarioAtualizar.setSenha(usuario.getSenha());
-//		
-//		em.merge(usuarioAtualizar);
-//		
+		PlanoMonitoria planoAtualizar = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", plano.getId()).getSingleResult();
+
+		em.merge(planoAtualizar);
+
 		return true;
 	}
 }

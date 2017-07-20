@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_EDITAL",
@@ -37,18 +38,22 @@ public class Edital {
 	@Column(name = "TXT_NUMERO_EDITAL")
 	private String numeroEdital;
 	
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
-	
+
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_ESTUDANTE")
 	private Date inicioInscricaoEstudante;
 	
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
@@ -96,6 +101,25 @@ public class Edital {
 	public Long getId() {
 		return id;
 	}
+	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Edital) && (id != null) 
+             ? id.equals(((Edital) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Edital[ id=" + id + ":" + numeroEdital + " ]";
+    }
 }
 
 

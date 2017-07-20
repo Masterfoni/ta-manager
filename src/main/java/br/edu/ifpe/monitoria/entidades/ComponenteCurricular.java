@@ -63,9 +63,19 @@ public class ComponenteCurricular implements Serializable{
 	private Turno turno;
 	
 	public enum Turno {
-		MATUTINO,
-		VESPERTINO,
-		NOTURNO,
+		MATUTINO("Matutino"),
+		VESPERTINO("Vespertino"),
+		NOTURNO("Noturno");
+		
+		private String label;
+		
+		private Turno(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel() {
+			return label;
+		}
 	}
 		
 	@NotBlank
@@ -144,4 +154,22 @@ public class ComponenteCurricular implements Serializable{
 		this.turno = turno;
 	}
 	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof ComponenteCurricular) && (id != null) 
+             ? id.equals(((ComponenteCurricular) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.ComponenteCurricular[ id=" + id + ":" + nome + " ]";
+    }
 }

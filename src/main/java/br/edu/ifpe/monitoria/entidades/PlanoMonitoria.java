@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "PlanoMonitoria.findAll", query = "SELECT p FROM PlanoMonitoria p"),
-	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id")
 })
 public class PlanoMonitoria {
 
@@ -122,5 +122,9 @@ public class PlanoMonitoria {
 
 	public void setListaAtividades(String listaAtividades) {
 		this.listaAtividades = listaAtividades;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -98,4 +98,22 @@ public class Coordenacao implements Serializable{
 		this.id = id;
 	}
 	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Coordenacao) && (id != null) 
+             ? id.equals(((Coordenacao) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Coordenacao[ id=" + id + ":" + nome + " ]";
+    }
 }

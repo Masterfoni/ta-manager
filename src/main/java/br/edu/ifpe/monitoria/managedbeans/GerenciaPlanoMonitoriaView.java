@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Coordenacao;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
@@ -59,6 +60,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public PlanoMonitoria planoAtualizado;
 	
 	public String nomeBusca;
+	
+	public long editalId;
 	
 	public List<Coordenacao> getCoordenacoes() {
 		return coordenacoes;
@@ -131,6 +134,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void setComponentes(List<ComponenteCurricular> componentes) {
 		this.componentes = componentes;
 	}
+	
+	public long getEditalId() {
+		return editalId;
+	}
+
+	public void setEditalId(long editalId) {
+		this.editalId = editalId;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -145,6 +156,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
 		componentePersistido = new ComponenteCurricular();
+		
+		editalId = 0;
 	}
 	
 	public void cadastrarComponente()
@@ -158,6 +171,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public void cadastrarPlano()
 	{
+		planoPersistido.setEdital(editalbean.consultaEditalById(editalId));
+		
 		if(planobean.persistePlanoMonitoria(planoPersistido))
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -166,18 +181,19 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 	
 	public void buscaPlanoMonitoria() {
-//		if(nomeBusca.isEmpty())
-//			System.out.println(this.coordenacoes);
-//		else
-//			this.planos = planobean.consultaPlanosByName("%"+nomeBusca+"%");
+			this.planos = planobean.consultaPlanos();
 	}
 	
 	public void alteraPlano(PlanoMonitoria plano) {
 		planoAtualizado = plano;
-		System.out.println(planoAtualizado);
+		planoAtualizado.setEdital(editalbean.consultaEditalById(editalId));
 	}
 	
 	public void persisteAlteracao() {
 		planobean.atualizaPlanoMonitoria(planoAtualizado);
+	}
+	
+	public Turno[] getTurns() {
+		return Turno.values();
 	}
 }
