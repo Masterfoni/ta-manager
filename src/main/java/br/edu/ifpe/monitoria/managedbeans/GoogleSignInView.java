@@ -66,11 +66,11 @@ public class GoogleSignInView implements Serializable{
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(email, perfilGoogle.getSubject());
 				//session.setAttribute("usuario", usuarioBean.consultaUsuarioPorEmail(email));
-				ec.redirect("homepage.xhtml");
+				ec.redirect("comum/homepage.xhtml");
 			} catch (IOException | ServletException e) {
 				e.printStackTrace();
 				try {
-					ec.redirect("cadastroServidor.xhtml");
+					ec.redirect("publico/cadastroServidor.xhtml");
 				} catch (IOException ioe) {
 					e.printStackTrace();
 				}
@@ -80,16 +80,6 @@ public class GoogleSignInView implements Serializable{
 			context.addCallbackParam("logou", "Utilize seu email instituncional");
 		}
 	}
-
-	public String verificaSessao(){
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
-		PerfilGoogle pg = (PerfilGoogle)session.getAttribute("perfilGoogle");
-		System.out.println(pg.getGivenName());
-		return "index";
-	}
-	
 	
 	private Payload verificarIntegridade(String idToken) {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), jacksonFactory)

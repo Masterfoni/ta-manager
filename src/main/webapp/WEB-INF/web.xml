@@ -2,33 +2,99 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>monitoria</display-name>
   <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>publico/index.xhtml</welcome-file>
   </welcome-file-list>
   
   <login-config>
   	<auth-method>FORM</auth-method>
     <realm-name>saltRealm</realm-name>
     <form-login-config>
-    	<form-login-page>/index.xhtml</form-login-page>
-  		<form-error-page>/index.xhtml</form-error-page>
+    	<form-login-page>/</form-login-page>
+  		<form-error-page>/</form-error-page>
   	</form-login-config>
   </login-config>
   
-  <security-constraint>
-  	<display-name>Páginas Alunos</display-name>
-  	<web-resource-collection>
-  		<web-resource-name>Área do Aluno</web-resource-name>
-  		<description>Área do Aluno</description>
-  		<url-pattern>/home.xhtml</url-pattern>
-  		<http-method>GET</http-method>
-  		<http-method>POST</http-method>
-  	</web-resource-collection>
-  	<auth-constraint>
-  		<description/>
-  		<role-name>aluno</role-name>
-  	</auth-constraint>
-  </security-constraint>
+	<security-constraint>
+        <display-name>Pg Administrativas</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Admin Area</web-resource-name>
+            <description>Protected Admin Area</description>
+            <url-pattern>/admin/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>            
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>administrativo</role-name>
+        </auth-constraint>     
+    </security-constraint>
   
+  	<security-constraint>
+        <display-name>Pg Aluno</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Aluno Area</web-resource-name>
+            <description>Protected Aluno Area</description>
+            <url-pattern>/aluno/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>            
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>aluno</role-name>
+        </auth-constraint>     
+    </security-constraint>
+  
+    <security-constraint>
+        <display-name>Pg Professor</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Professor Area</web-resource-name>
+            <description>Protected Professor Area</description>
+            <url-pattern>/aluno/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>            
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>professor</role-name>
+        </auth-constraint>     
+    </security-constraint>
+  
+	<security-constraint>
+        <display-name>Pg Comum</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Comum Area</web-resource-name>
+            <description>Protected Comum Area</description>
+            <url-pattern>/comum/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>            
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>aluno</role-name>
+            <role-name>professor</role-name>
+            <role-name>administrativo</role-name>
+        </auth-constraint>     
+    </security-constraint>
   
   
   <context-param>

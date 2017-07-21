@@ -1,10 +1,12 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -62,21 +64,26 @@ public class IndexView implements Serializable {
 		}
 	}
 
-	public String loginUsuario()
+	public void loginUsuario()
 	{
 		String email = usuario.getEmail();
 		facesContext = FacesContext.getCurrentInstance();
+		ExternalContext ec = facesContext.getExternalContext();
 		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
 		{
 			System.out.println(email.substring(email.indexOf("@")));
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
 			facesContext.addMessage(null, message);
-			return "index";
+			try {
+				ec.redirect(" ");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		else
 		{
 			try {
-				HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(usuario.getEmail(), usuario.getSenha());
 				HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
 				session.setAttribute("usuario", usuario);
@@ -87,9 +94,19 @@ public class IndexView implements Serializable {
 				e.printStackTrace();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
 				facesContext.addMessage(null, message);
-				return "index";
+				try {
+					ec.redirect("publico/logout.xhtml");
+				} catch (IOException ioe) {
+					e.printStackTrace();
+				}
 			}
 		}
-		return "homepage";
+		try {
+			facesContext = FacesContext.getCurrentInstance();
+			ExternalContext ec2 = facesContext.getExternalContext();
+			ec2.redirect("comum/homepage.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

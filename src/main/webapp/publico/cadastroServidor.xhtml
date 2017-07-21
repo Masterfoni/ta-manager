@@ -6,7 +6,7 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
   <meta charset="ISO-8859-1" />
-  <ui:include src="header-libs.xhtml"/>
+  <ui:include src="/comum/header-libs.xhtml"/>
   <meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
 	<title>Cadastro Servidor</title>
 </h:head>
@@ -18,9 +18,11 @@
 	    </div>
 	    <ul class="nav navbar-nav">
 	    </ul>
+	    <h:form>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+	      <li><h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink></li>
 	    </ul>
+	    </h:form>
 	  </div>
 	</nav>
 
@@ -219,8 +221,6 @@
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
-	<script src="./js/logout.js"></script>
-	<script src="./js/cadastroServidor.js"></script>
+	<script src="../js/cadastroServidor.js"></script>
 </h:body>
 </html>

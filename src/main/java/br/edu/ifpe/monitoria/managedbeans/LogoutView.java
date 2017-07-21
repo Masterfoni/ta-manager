@@ -25,14 +25,14 @@ public class LogoutView implements Serializable{
         }
         
         
-        HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        
+        HttpServletRequest request = (HttpServletRequest) ec.getRequest();        
         try {
 			request.logout();
 		} catch (ServletException e1) {
 			e1.printStackTrace();
 		}
-        try {
-        	ec.redirect("logout.xhtml");
+        try { 
+        	ec.redirect("/dsc1/publico/logout.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

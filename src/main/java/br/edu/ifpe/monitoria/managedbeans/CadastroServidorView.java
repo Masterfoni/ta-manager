@@ -34,7 +34,7 @@ public class CadastroServidorView implements Serializable{
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
 	
-	public String salvarAdministrativo(){
+	public void salvarAdministrativo(){
 		
 		administrativo.setEmail(email);
 		administrativo.setNome(nome);
@@ -48,16 +48,14 @@ public class CadastroServidorView implements Serializable{
 		try {
 			request.login(email, perfilGoogle.getSubject());
 			session.setAttribute("usuario", professor);
-			ec.redirect("homepage.xhtml");
+			ec.redirect("comum/homepage.xhtml");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return "homepage";
 	}
 	
-	public String salvarProfessor(){
+	public void salvarProfessor(){
 		
 		professor.setEmail(email);
 		professor.setNome(nome);
@@ -71,13 +69,11 @@ public class CadastroServidorView implements Serializable{
 		try {
 			request.login(email, perfilGoogle.getSubject());
 			session.setAttribute("usuario", professor);
-			ec.redirect("homepage.xhtml");
+			ec.redirect("comum/homepage.xhtml");
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return "homepage";
 	}
 	
 	@PostConstruct

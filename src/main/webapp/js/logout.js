@@ -37,5 +37,5 @@ function signOut() {
     	});
 	}
     
-    window.location.href = "index.xhtml";
+    window.location.href = "..";
 }
