@@ -79,7 +79,7 @@
 					<label for="cpfCadastro">CPF</label>
 					<span>   </span>
 					<h:message for="cpfCadastro" styleClass="mensagem alert-danger"/>
-						<h:inputText id="cpfCadastro" class="form-control" value="#{cadastroServidorView.professor.cpf}"
+						<h:inputText id="cpfCadastro" class="form-control cpf" value="#{cadastroServidorView.professor.cpf}"
 							aria-describedby="cpfDesc"></h:inputText>
 					<small id="cpfDesc" class="form-text text-muted">Utilize apenas numeros</small>
 				</div>
@@ -95,7 +95,7 @@
 						<label for="emissorCadastro">Orgão expedidor:</label>
 						<span>   </span>
 						<h:message for="emissorCadastro" styleClass="mensagem alert-danger"/>
-						<h:inputText id="emissorCadastro" class="form-control" value="#{cadastroServidorView.professor.rgEmissor}"
+						<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{cadastroServidorView.professor.rgEmissor}"
 							aria-describedby="emissorDesc"></h:inputText>
 						<small id="emissorDesc" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
 					</div>
@@ -105,7 +105,7 @@
 					<label for="siape">SIAPE</label>
 					<span>   </span>
 					<h:message for="siape" styleClass="mensagem alert-danger"/>
-					<h:inputText id="siape" class="form-control" value="#{cadastroServidorView.professor.siape}"
+					<h:inputText id="siape" class="form-control siape" value="#{cadastroServidorView.professor.siape}"
 						aria-describedby="cpfDesc"></h:inputText>
 					<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
 				</div>
@@ -173,7 +173,7 @@
 					<label for="cpfA">CPF</label>
 					<span>   </span>
 					<h:message for="cpfA" styleClass="mensagem alert-danger"/>
-					<h:inputText id="cpfA" class="form-control" value="#{cadastroServidorView.administrativo.cpf}"
+					<h:inputText id="cpfA" class="form-control cpf" value="#{cadastroServidorView.administrativo.cpf}"
 						aria-describedby="cpfDescA"></h:inputText>
 					<small id="cpfDescA" class="form-text text-muted">Utilize apenas numeros</small>
 				</div>
@@ -188,7 +188,7 @@
 					<div class="col-sm-5" >
 						<label for="emissorA">Orgão expedidor:</label>
 						<span>   </span>
-						<h:message for="emissorA" styleClass="mensagem alert-danger"/>
+						<h:message for="emissorA" styleClass="mensagem alert-danger expedidor"/>
 						<h:inputText id="emissorA" class="form-control" value="#{cadastroServidorView.administrativo.rgEmissor}"
 							aria-describedby="emissorDescA"></h:inputText>
 						<small id="emissorDescA" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
@@ -199,7 +199,7 @@
 					<label for="siapeA">SIAPE</label>
 					<span>   </span>
 					<h:message for="siapeA" styleClass="mensagem alert-danger"/>
-					<h:inputText id="siapeA" class="form-control" value="#{cadastroServidorView.administrativo.siape}"
+					<h:inputText id="siapeA" class="form-control siape" value="#{cadastroServidorView.administrativo.siape}"
 						aria-describedby="siapeDescA"></h:inputText>
 					<small id="siapeDescA" class="form-text text-muted">Utilize apenas numeros</small>
 				</div>
@@ -219,8 +219,15 @@
 		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<script src="../js/cadastroServidor.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+	
+	<script>
+		$(".cpf").mask("999.999.999-99");
+		$(".expedidor").mask("AAA/AA");
+		$(".siape").mask("9999999");
+	</script>
 </h:body>
 </html>

@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_EDITAL",
 					sequenceName = "SQ_EDITAL",
@@ -35,25 +37,26 @@ public class Edital {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_EDITAL")
 	private Long id;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
 	@Column(name = "TXT_NUMERO_EDITAL")
 	private String numeroEdital;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
 
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.iniestudante}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_ESTUDANTE")
 	private Date inicioInscricaoEstudante;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.fimestudante}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;

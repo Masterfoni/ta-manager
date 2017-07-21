@@ -86,7 +86,7 @@ public class GerenciaDepartamentoView implements Serializable {
 	
 	public void buscaDepartamento() {
 		if(nomeBusca.isEmpty())
-			System.out.println(this.departamentos);
+			this.departamentos = departamentobean.consultaDepartamentos();
 		else
 			this.departamentos = departamentobean.consultaDepartamentoByName("%"+nomeBusca+"%");
 	}

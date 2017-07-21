@@ -19,6 +19,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_COORDENACAO",
@@ -44,16 +47,20 @@ public class Coordenacao implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_COORDENACAO")
 	private Long id;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
 	@Column (name="TXT_SIGLA")
 	private String sigla;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.departamento}")
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
 	private Departamento departamento;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.coordenador}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
 	private Professor coordenador;

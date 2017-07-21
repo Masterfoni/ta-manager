@@ -86,7 +86,7 @@ public class GerenciaEditalView implements Serializable {
 	
 	public void buscaEdital() {
 		if(numeroBusca.isEmpty())
-			System.out.println(this.editais);
+			this.editais = editalbean.consultaEditais();
 		else
 			this.editais = editalbean.consultaEditalByNumeroEdital(numeroBusca);
 	}

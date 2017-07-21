@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_PM",
@@ -33,17 +34,21 @@ public class PlanoMonitoria {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_PM")
 	private Long id;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.edital}")
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_EDITAL", referencedColumnName = "ID")
 	private Edital edital;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.cc}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular cc;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.bolsas}")
 	@Column (name="INT_BOLSAS")
 	private Integer bolsas;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.voluntarios}")
 	@Column (name="INT_VOLUNTARIOS")
 	private Integer voluntarios;
 	

@@ -45,19 +45,19 @@ public class ComponenteCurricular implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CC")
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
 	private String nome;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.codigo}")
 	@Column (name="TXT_CODIGO")
 	private String codigo;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.cargahoraria}")
 	@Column (name="INT_CARGA_HORARIA")
 	private Integer cargaHoraria;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.turno}")
 	@Enumerated(EnumType.STRING)
 	@Column (name="TXT_TURNO")
 	private Turno turno;

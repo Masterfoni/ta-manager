@@ -81,14 +81,14 @@
 										<div class="form-group row">
 											<div class="col-sm-5">
 												<label for="iniAlunoE">Início de inscrições de alunos</label>
-		        								<h:inputText id="iniAlunoE" class="form-control" 
+		        								<h:inputText id="iniAlunoE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalAtualizado.inicioInscricaoEstudante}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
 											</div>
 											<div class="col-sm-5">
 												<label for="fimAlunoE">Fim de inscrições de alunos</label>
-		        								<h:inputText id="fimAlunoE" class="form-control" 
+		        								<h:inputText id="fimAlunoE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalAtualizado.fimInscricaoEstudante}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/>
 												</h:inputText>
@@ -97,14 +97,14 @@
 										<div class="form-group row">
 											<div class="col-sm-5">
 												<label for="iniCompE">Início de inscrições de Componentes</label>
-		        								<h:inputText id="iniCompE" class="form-control" 
+		        								<h:inputText id="iniCompE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalAtualizado.inicioInscricaoComponenteCurricular}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/>
 												</h:inputText>
 											</div>
 											<div class="col-sm-5">
 												<label for="fimCompE">Fim de inscrições de Componentes</label>
-		        								<h:inputText id="fimCompE" class="form-control" 
+		        								<h:inputText id="fimCompE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalAtualizado.fimInscricaoComponenteCurricular}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
@@ -143,14 +143,14 @@
 										<div class="form-group row">
 											<div class="col-sm-5">
 												<label for="iniAlunoE">Início de inscrições de alunos</label>
-		        								<h:inputText id="iniAlunoE" class="form-control" 
+		        								<h:inputText id="iniAlunoE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalPersistido.inicioInscricaoEstudante}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
 											</div>
 											<div class="col-sm-5">
 												<label for="fimAlunoE">Fim de inscrições de alunos</label>
-		        								<h:inputText id="fimAlunoE" class="form-control" 
+		        								<h:inputText id="fimAlunoE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalPersistido.fimInscricaoEstudante}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
@@ -159,14 +159,14 @@
 										<div class="form-group row">
 											<div class="col-sm-5">
 												<label for="iniCompE">Início de inscrições de Componentes</label>
-		        								<h:inputText id="iniCompE" class="form-control" 
+		        								<h:inputText id="iniCompE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalPersistido.inicioInscricaoComponenteCurricular}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
 											</div>
 											<div class="col-sm-5">
 												<label for="fimCompE">Fim de inscrições de Componentes</label>
-		        								<h:inputText id="fimCompE" class="form-control" 
+		        								<h:inputText id="fimCompE" class="form-control datamask" 
 															 value="#{gerenciaEditalView.editalPersistido.fimInscricaoComponenteCurricular}">
 															 <f:convertDateTime pattern="dd-MM-yyyy"/> 
 												</h:inputText>
@@ -190,6 +190,7 @@
 	
 	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
 	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 	
 	<script>
 	   $("#menu-toggle").click(function(e) {
@@ -204,6 +205,9 @@
 	   $(".alterador").click(function(e) {
 		   $("#myModal").modal();
 	   });
+	   
+	   //mascaras
+	   $(".datamask").mask("99-99-9999");
 	</script>
 </h:body>
 </html>
