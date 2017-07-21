@@ -46,7 +46,10 @@ public class GoogleSignInView implements Serializable{
 		
 		Payload payload = verificarIntegridade(idToken);
 		
-		if(payload != null){
+		if(payload != null)
+			System.out.println(payload.getHostedDomain());
+		
+		if(payload != null && payload.getHostedDomain().equals("a.recife.ifpe.edu.br") ){
 			perfilGoogle = new PerfilGoogle();
 			perfilGoogle.setFamilyName((String) payload.get("family_name"));
 			perfilGoogle.setGivenName((String) payload.get("given_name"));
@@ -65,12 +68,12 @@ public class GoogleSignInView implements Serializable{
 			try {
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(email, perfilGoogle.getSubject());
-				//session.setAttribute("usuario", usuarioBean.consultaUsuarioPorEmail(email));
-				ec.redirect("comum/homepage.xhtml");
-			} catch (IOException | ServletException e) {
+
+				ec.redirect("../comum/homepage.xhtml");
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 				try {
-					ec.redirect("publico/cadastroServidor.xhtml");
+					ec.redirect("../publico/cadastroServidor.xhtml");
 				} catch (IOException ioe) {
 					e.printStackTrace();
 				}

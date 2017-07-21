@@ -6,8 +6,10 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
   <meta charset="ISO-8859-1" />
-  <ui:include src="/comum/header-libs.xhtml"/>
-  <meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
+  <link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+  <link rel="stylesheet" href="./homepage.css"></link>
+  <link href="../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
 	<title>Cadastro Servidor</title>
 </h:head>
 <h:body>
@@ -128,9 +130,14 @@
 				</div>
 
 				<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info ind-button" update="growlProfessor" />
-				<button type="button" onclick="signOut();" class="btn btn-danger">Cancelar</button>
-
 			</h:form>
+			<h:form>
+				<h:commandLink action="#{logoutView.logout}" type="button" class="btn btn-danger">Cancelar</h:commandLink>
+			</h:form>
+			<br />
+			<br />
+			<br />
+			<br />
 		</div>
 
 
@@ -214,8 +221,14 @@
 				</div>
 
 				<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvarAdministrativo}" class="btn btn-info ind-button" update="growlAdministrativo" />
-				<button type="button" onclick="signOut();" class="btn btn-danger">Cancelar</button>
 			</h:form>
+			<h:form>
+				<h:commandLink action="#{logoutView.logout}" type="button" class="btn btn-danger">Cancelar</h:commandLink>
+			</h:form>
+			<br />
+			<br />
+			<br />
+			<br />
 		</div>
 	</div>
 

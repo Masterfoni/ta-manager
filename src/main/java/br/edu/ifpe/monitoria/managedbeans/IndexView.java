@@ -1,6 +1,5 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
@@ -64,7 +63,7 @@ public class IndexView implements Serializable {
 		}
 	}
 
-	public void loginUsuario()
+	public String loginUsuario()
 	{
 		String email = usuario.getEmail();
 		facesContext = FacesContext.getCurrentInstance();
@@ -74,11 +73,7 @@ public class IndexView implements Serializable {
 			System.out.println(email.substring(email.indexOf("@")));
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
 			facesContext.addMessage(null, message);
-			try {
-				ec.redirect(" ");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			return "falha";
 		}
 		else
 		{
@@ -94,19 +89,10 @@ public class IndexView implements Serializable {
 				e.printStackTrace();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
 				facesContext.addMessage(null, message);
-				try {
-					ec.redirect("publico/logout.xhtml");
-				} catch (IOException ioe) {
-					e.printStackTrace();
-				}
+				return "falha";
 			}
 		}
-		try {
-			facesContext = FacesContext.getCurrentInstance();
-			ExternalContext ec2 = facesContext.getExternalContext();
-			ec2.redirect("comum/homepage.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		return "sucesso";
 	}
 }
