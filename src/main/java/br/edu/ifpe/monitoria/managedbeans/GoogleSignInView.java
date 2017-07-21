@@ -46,7 +46,10 @@ public class GoogleSignInView implements Serializable{
 		
 		Payload payload = verificarIntegridade(idToken);
 		
-		if(payload != null){
+		if(payload != null)
+			System.out.println(payload.getHostedDomain());
+		
+		if(payload != null && payload.getHostedDomain().equals("a.recife.ifpe.edu.br") ){
 			perfilGoogle = new PerfilGoogle();
 			perfilGoogle.setFamilyName((String) payload.get("family_name"));
 			perfilGoogle.setGivenName((String) payload.get("given_name"));
@@ -65,12 +68,12 @@ public class GoogleSignInView implements Serializable{
 			try {
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(email, perfilGoogle.getSubject());
-				//session.setAttribute("usuario", usuarioBean.consultaUsuarioPorEmail(email));
-				ec.redirect("homepage.xhtml");
-			} catch (IOException | ServletException e) {
+
+				ec.redirect("../comum/homepage.xhtml");
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 				try {
-					ec.redirect("cadastroServidor.xhtml");
+					ec.redirect("../publico/cadastroServidor.xhtml");
 				} catch (IOException ioe) {
 					e.printStackTrace();
 				}
@@ -80,16 +83,6 @@ public class GoogleSignInView implements Serializable{
 			context.addCallbackParam("logou", "Utilize seu email instituncional");
 		}
 	}
-
-	public String verificaSessao(){
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
-		PerfilGoogle pg = (PerfilGoogle)session.getAttribute("perfilGoogle");
-		System.out.println(pg.getGivenName());
-		return "index";
-	}
-	
 	
 	private Payload verificarIntegridade(String idToken) {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), jacksonFactory)

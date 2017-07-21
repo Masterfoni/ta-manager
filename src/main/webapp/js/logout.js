@@ -1,9 +1,5 @@
 var auth2;
 
-jQuery(function(){
-	jQuery.noConflict();
-});
-
 onload = initClient;
 
 function initClient () {
@@ -14,7 +10,7 @@ function initClient () {
         });
 
     });
-    
+    signOut();
 };
 
 /**
@@ -33,7 +29,7 @@ var onFailure = function(error) {
 
 
 function signOut() {
-	auth2 = gapi.auth2.getAuthInstance();
+	//auth2 = gapi.auth2.getAuthInstance();
 	if(auth2 != null)
 	{
 		auth2.signOut().then(function () {
@@ -41,6 +37,5 @@ function signOut() {
     	});
 	}
     
-    logout();
-    //window.location.href = "index.xhtml";
+    window.location.href = "..";
 }

@@ -137,7 +137,7 @@ img {
    color:  #444;
  }
  span.icon {
-   background: url('./resources/images/g-normal.png') transparent 5px 50% no-repeat;
+   background: url('../resources/images/g-normal.png') transparent 5px 50% no-repeat;
    display: inline-block;
    vertical-align: middle;
    width: 32px;

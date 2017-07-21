@@ -1,6 +1,5 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -45,16 +44,16 @@ public class CadastroServidorView implements Serializable{
 		ExternalContext ec = fc.getExternalContext();
 		HttpSession session = (HttpSession)ec.getSession(true);
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		
 		try {
 			request.login(email, perfilGoogle.getSubject());
 			session.setAttribute("usuario", professor);
-			ec.redirect("homepage.xhtml");
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
+			return "sucesso";
+//			ec.redirect("comum/homepage.xhtml");
+		} catch (ServletException  e) {
 			e.printStackTrace();
+			return "falha";
 		}
-		
-		return "homepage";
 	}
 	
 	public String salvarProfessor(){
@@ -68,16 +67,16 @@ public class CadastroServidorView implements Serializable{
 		ExternalContext ec = fc.getExternalContext();
 		HttpSession session = (HttpSession)ec.getSession(true);
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		
 		try {
 			request.login(email, perfilGoogle.getSubject());
 			session.setAttribute("usuario", professor);
-			ec.redirect("homepage.xhtml");
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
+			return "sucesso";
+//			ec.redirect("comum/homepage.xhtml");
+		} catch (ServletException e) {
 			e.printStackTrace();
+			return "falha";
 		}
-		
-		return "homepage";
 	}
 	
 	@PostConstruct

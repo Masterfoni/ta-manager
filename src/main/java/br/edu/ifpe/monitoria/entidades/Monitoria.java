@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_MONITORIA",
@@ -30,10 +31,12 @@ public class Monitoria implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_MONITORIA")
 	private Long id;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.aluno}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID_USUARIO")
 	private Aluno aluno;
 	
+	@NotNull(message = "{mensagem.associacao}{tipo.cc}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular componenteCurricular;

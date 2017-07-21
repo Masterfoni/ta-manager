@@ -115,7 +115,7 @@ public class GerenciaCoordenacaoView implements Serializable {
 	
 	public void buscaCoordenacao() {
 		if(nomeBusca.isEmpty())
-			System.out.println(this.coordenacoes);
+			this.coordenacoes = coordenacaobean.consultaCoordenacoes();
 		else
 			this.coordenacoes = coordenacaobean.consultaCoordenacaoByName("%"+nomeBusca+"%");
 	}

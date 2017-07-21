@@ -64,7 +64,7 @@ public class GerenciaUsuarioView implements Serializable {
 	
 	public void buscaUsuario() {
 		if(nomeBusca.isEmpty())
-			System.out.println(this.usuarios);
+			this.usuarios = usuariobean.consultaUsuarios();
 		else
 			this.usuarios = usuariobean.consultaUsuarioByName("%"+nomeBusca+"%");
 	}

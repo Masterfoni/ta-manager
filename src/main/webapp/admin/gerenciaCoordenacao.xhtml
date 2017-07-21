@@ -6,16 +6,16 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta charset="UTF-8" />
-	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-	<link rel="stylesheet" href="./homepage.css"></link>
-	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+	<link rel="stylesheet" href="../comum/homepage.css"></link>
+	<link href="../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
 	<title>Administração de Coordenações</title>
 </h:head>
 <h:body>
-	<ui:include src="navbar-top.xhtml" />
+	<ui:include src="/comum/navbar-top.xhtml" />
 	<div id="wrapper">
-		<ui:include src="navbar-left.xhtml" />
+		<ui:include src="/comum/navbar-left.xhtml" />
 		<div id="page-content-wrapper">
 			<div class="container-fluid"> 
 				<div class="row">
@@ -79,7 +79,7 @@
 	    					<h:form id="formAtualizador" class="dialogSignup">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">x</button>
-										<h4 class="modal-title">Atualize a Coordenacao</h4>
+									<h4 class="modal-title">Atualize a Coordenacao</h4>
 								</div>
 								<div class="modal-body">
 									<div id="atualizaCoord">
@@ -171,8 +171,8 @@
 		</div>
 	</div>
 	
-	<script src="./resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
-	<script src="./resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	
 	<script>
 	   $("#menu-toggle").click(function(e) {
@@ -186,7 +186,6 @@
 	   
 	   $(".alterador").click(function(e) {
 		   $("#myModal").modal();
-	   });
 	</script>
 </h:body>
 </html>

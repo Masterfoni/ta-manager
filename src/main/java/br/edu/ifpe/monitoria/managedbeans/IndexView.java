@@ -1,11 +1,11 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,17 +67,18 @@ public class IndexView implements Serializable {
 	{
 		String email = usuario.getEmail();
 		facesContext = FacesContext.getCurrentInstance();
+		ExternalContext ec = facesContext.getExternalContext();
 		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
 		{
 			System.out.println(email.substring(email.indexOf("@")));
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
 			facesContext.addMessage(null, message);
-			return "index";
+			return "falha";
 		}
 		else
 		{
 			try {
-				HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(usuario.getEmail(), usuario.getSenha());
 				HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
 				session.setAttribute("usuario", usuario);
@@ -88,9 +89,10 @@ public class IndexView implements Serializable {
 				e.printStackTrace();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
 				facesContext.addMessage(null, message);
-				return "index";
+				return "falha";
 			}
 		}
-		return "homepage";
+		
+		return "sucesso";
 	}
 }

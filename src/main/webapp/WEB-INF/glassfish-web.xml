@@ -4,18 +4,18 @@
     <context-root>/FALJVAL</context-root>
     
      <security-role-mapping>
-    	<role-name>ALUNO</role-name>
-    	<group-name>aluno</group-name>
+    	<role-name>aluno</role-name>
+    	<group-name>ALUNO</group-name>
     </security-role-mapping>
     
     <security-role-mapping>
-    	<role-name> professor</role-name>
-    	<group-name>professor</group-name>
+    	<role-name>professor</role-name>
+    	<group-name>PROFESSOR</group-name>
     </security-role-mapping>
     
     <security-role-mapping>
-    	<role-name> administrativo</role-name>
-    	<group-name>administrativo</group-name>
+    	<role-name>administrativo</role-name>
+    	<group-name>ADMINISTRATIVO</group-name>
     </security-role-mapping>
     
     

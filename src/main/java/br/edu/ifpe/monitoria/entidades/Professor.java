@@ -25,7 +25,7 @@ public class Professor extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull
+	@NotNull(message = "{mensagem.notnull}{tipo.siape}")
 	@Max(9999999)
 	@Column (name="INT_SIAPE")
 	private Integer siape;
