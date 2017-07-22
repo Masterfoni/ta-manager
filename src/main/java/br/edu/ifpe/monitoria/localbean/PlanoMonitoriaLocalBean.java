@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"ADMINISTRATIVO", "PROFESSOR"})
+@DeclareRoles({"administrativo", "professor"})
 public class PlanoMonitoriaLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"PROFESSOR"})
+	@RolesAllowed({"professor"})
 	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
 		em.persist(plano);
@@ -30,7 +30,7 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
+	@RolesAllowed({"professor", "administrativo"})
 	public List<PlanoMonitoria> consultaPlanos()
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findAll", PlanoMonitoria.class).getResultList();
@@ -38,7 +38,7 @@ public class PlanoMonitoriaLocalBean
 		return planos;
 	}
 	
-	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
+	@RolesAllowed({"professor", "administrativo"})
 	public PlanoMonitoria consultaPlanosById(Long id)
 	{
 		PlanoMonitoria planoPorId = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();
@@ -46,7 +46,7 @@ public class PlanoMonitoriaLocalBean
 		return planoPorId;
 	}
 	
-	@RolesAllowed({"PROFESSOR"})
+	@RolesAllowed({"professor"})
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
 		PlanoMonitoria planoAtualizar = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", plano.getId()).getSingleResult();

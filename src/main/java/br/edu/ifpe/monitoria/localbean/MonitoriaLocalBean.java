@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Monitoria;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"ADMINISTRATIVO", "PROFESSOR"})
+@DeclareRoles({"administrativo", "professor"})
 public class MonitoriaLocalBean
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 
-	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
+	@RolesAllowed({"professor", "administrativo"})
 	public List<Monitoria> consultaMonitorias()
 	{
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findAll", Monitoria.class).getResultList();
@@ -30,7 +30,7 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 
-	@RolesAllowed({"PROFESSOR"})
+	@RolesAllowed({"professor"})
 	public boolean aprovaMonitoria(Monitoria monitoria)
 	{
 		Monitoria monitoriaAprovada = em.createNamedQuery("Monitoria.findById", Monitoria.class)
@@ -49,7 +49,7 @@ public class MonitoriaLocalBean
 		return true;
 	}
 
-	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
+	@RolesAllowed({"professor", "administrativo"})
 	public List<Monitoria> consultaMonitoriaByProfessor(Long idProfessor)
 	{
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByProfessor", Monitoria.class)
@@ -58,7 +58,7 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 	
-	@RolesAllowed({"PROFESSOR"})
+	@RolesAllowed({"professor"})
 	public boolean defereMonitoria(Monitoria monitoria)
 	{
 		Monitoria monitoriaDeferida = em.createNamedQuery("Monitoria.findById", Monitoria.class)

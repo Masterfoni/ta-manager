@@ -59,7 +59,7 @@
         <web-resource-collection>
             <web-resource-name>Protected Professor Area</web-resource-name>
             <description>Protected Professor Area</description>
-            <url-pattern>/aluno/*</url-pattern>
+            <url-pattern>/professor/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>
