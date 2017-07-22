@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,9 @@ import javax.validation.constraints.Size;
 @DiscriminatorValue(value="ALUNO")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id")
+})
 public class Aluno extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 2L;

@@ -83,6 +83,13 @@ public class UsuarioLocalBean
 		return usuarios;
 	}
 	
+	public Long consultarIbByEmail(String email)
+	{
+		Long id = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
+		
+		return id;
+	}
+	
 	public boolean deletaUsuario(Long id)
 	{
 		Usuario usuarioDeletado = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();

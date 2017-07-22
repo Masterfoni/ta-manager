@@ -34,26 +34,29 @@ import javax.validation.constraints.NotNull;
 public class Monitoria implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	 @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_MONITORIA")
-	 private Long id;
-	 
-	 @NotNull(message = "{mensagem.associacao}{tipo.aluno}")
-	 @OneToOne (fetch = FetchType.LAZY, optional = false)
-	 @JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID_USUARIO")
-	 private Aluno aluno;
-	 
-	 @NotNull(message = "{mensagem.associacao}{tipo.plano}")
-	 @OneToOne (fetch = FetchType.LAZY, optional = false)
-	 @JoinColumn(name = "ID_PLANO_MONITORIA", referencedColumnName = "ID")
-	 private PlanoMonitoria planoMonitoria;
-	 
-	 @Column (name="BOOL_BOLSA")
-	 private boolean bolsa;
 
-	 @Column (name="BOOL_SELECIONADO")
-	 private boolean selecionado;
+	@Id
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_MONITORIA")
+	private Long id;
+
+	@NotNull(message = "{mensagem.associacao}{tipo.aluno}")
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID_USUARIO")
+	private Aluno aluno;
+
+	@NotNull(message = "{mensagem.associacao}{tipo.plano}")
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "ID_PLANO_MONITORIA", referencedColumnName = "ID")
+	private PlanoMonitoria planoMonitoria;
+
+	@Column (name="BOOL_BOLSA")
+	private boolean bolsa;
+
+	@Column (name="BOOL_SELECIONADO")
+  private boolean selecionado;
+
+	@Column (name="BOOL_AVALIADO")
+	private boolean avaliado;
 
 	public Aluno getAluno() {
 		return aluno;
@@ -61,6 +64,14 @@ public class Monitoria implements Serializable{
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
+	}
+
+	public PlanoMonitoria getPlanoMonitoria() {
+		return planoMonitoria;
+	}
+
+	public void setPlanoMonitoria(PlanoMonitoria planoMonitoria) {
+		this.planoMonitoria = planoMonitoria;
 	}
 
 	public boolean isBolsa() {
@@ -75,19 +86,19 @@ public class Monitoria implements Serializable{
 		return id;
 	}
 
-	public PlanoMonitoria getPlanoMonitoria() {
-		return planoMonitoria;
-	}
-
-	public void setPlanoMonitoria(PlanoMonitoria planoMonitoria) {
-		this.planoMonitoria = planoMonitoria;
-	}
-
 	public boolean isSelecionado() {
 		return selecionado;
 	}
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+	}
+
+	public boolean isAvaliado() {
+		return avaliado;
+	}
+
+	public void setAvaliado(boolean avaliado) {
+		this.avaliado = avaliado;
 	}
 }

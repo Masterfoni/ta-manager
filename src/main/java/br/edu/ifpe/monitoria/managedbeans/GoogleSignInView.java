@@ -61,9 +61,13 @@ public class GoogleSignInView implements Serializable{
 			
 			ExternalContext ec = fc.getExternalContext();
 			HttpSession session = (HttpSession)ec.getSession(true);
+			
+			Long id = usuarioBean.consultarIbByEmail(email);
+			
 			session.setAttribute("perfilGoogle", perfilGoogle);
 			session.setAttribute("nome", nome);
 			session.setAttribute("email", email);
+			session.setAttribute("id", id);
 			
 			try {
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();

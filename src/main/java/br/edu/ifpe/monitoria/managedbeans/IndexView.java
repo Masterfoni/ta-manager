@@ -66,6 +66,8 @@ public class IndexView implements Serializable {
 	public String loginUsuario()
 	{
 		String email = usuario.getEmail();
+		Long id = usuarioBean.consultarIbByEmail(email);
+		
 		facesContext = FacesContext.getCurrentInstance();
 		ExternalContext ec = facesContext.getExternalContext();
 		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
@@ -81,9 +83,8 @@ public class IndexView implements Serializable {
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(usuario.getEmail(), usuario.getSenha());
 				HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
-				session.setAttribute("usuario", usuario);
+				session.setAttribute("id", id);
 				session.setAttribute("email", usuario.getEmail());
-				session.setAttribute("nome", usuario.getNome());
 			} 
 			catch (ServletException e) {
 				e.printStackTrace();
