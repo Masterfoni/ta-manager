@@ -63,7 +63,7 @@ public class Usuario implements Serializable
 	@Column (name="TXT_NOME")
 	protected String nome;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.email}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.email}")
 	@Email(message = "E-mail inválido.")
 	@Column(name="TXT_EMAIL", unique = true)
 	private String email;
