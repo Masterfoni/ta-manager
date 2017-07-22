@@ -29,4 +29,60 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/comum/homepage.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>  
+    
+     <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>usuarios</from-outcome>
+            <to-view-id>/admin/gerenciaUsuario.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>coordenacoes</from-outcome>
+            <to-view-id>/admin/gerenciaCoordenacao.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+       
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>departamentos</from-outcome>
+            <to-view-id>/admin/gerenciaDepartamento.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+       
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>edital</from-outcome>
+            <to-view-id>/admin/gerenciaEdital.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>   
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>inscricao</from-outcome>
+            <to-view-id>/aluno/inscricaoMonitoria.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>planos</from-outcome>
+            <to-view-id>/professor/gerenciaPlanoMonitoria.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>  
+    
 </faces-config>
