@@ -68,6 +68,8 @@ public class IndexView implements Serializable {
 		String email = usuario.getEmail();
 		Long id = usuarioBean.consultarIbByEmail(email);
 		
+		System.out.println(id);
+		
 		facesContext = FacesContext.getCurrentInstance();
 		ExternalContext ec = facesContext.getExternalContext();
 		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))

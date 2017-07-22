@@ -27,8 +27,9 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
 	@NamedQuery(name = "Monitoria.findAll", query = "SELECT m FROM Monitoria m"),
 	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
-	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT pm FROM PlanoMonitoria pm WHERE pm.cc = ("
-			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor = :id)")
+	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
+			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("
+			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
@@ -53,7 +54,7 @@ public class Monitoria implements Serializable{
 	private boolean bolsa;
 
 	@Column (name="BOOL_SELECIONADO")
-  private boolean selecionado;
+	private boolean selecionado;
 
 	@Column (name="BOOL_AVALIADO")
 	private boolean avaliado;

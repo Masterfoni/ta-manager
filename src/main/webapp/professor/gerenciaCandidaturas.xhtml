@@ -28,19 +28,21 @@
 	                        		#{monitoria.aluno.nome}
 	                        	</h:column>
 	                        	<h:column>
+	                        		<f:facet name="header">Disciplina</f:facet>
+	                        		#{monitoria.planoMonitoria.cc.nome}
+	                        	</h:column>
+	                        	<h:column>
 	                        		<f:facet name="header">Bolsista?</f:facet>
 	                        		#{monitoria.bolsa}
 	                        	</h:column>
 	                        	<h:column>
-	                        		<h:commandButton actionListener="#{gerenciaCandidaturaView.aprovaMonitoria(monitoria)}"
-	                        						 value="Aprovar" class="btn btn-success">
-                						<f:ajax execute="@form" />
-                					</h:commandButton>
+	                        		<h:commandButton action="#{gerenciaCandidaturaView.aprovaMonitoria(monitoria)}"
+	                        						 value="Aprovar" class="btn btn-success"/>
                 					
-                					<h:commandButton actionListener="#{gerenciaCandidaturaView.defereMonitoria(monitoria)}"
-	                        						 value="Deferir" class="btn btn-danger">
-                						<f:ajax execute="@form" />
-                					</h:commandButton>
+                					<span></span>
+                					
+                					<h:commandButton action="#{gerenciaCandidaturaView.defereMonitoria(monitoria)}"
+	                        						 value="Deferir" class="btn btn-danger"/>
 	                        	</h:column>
 	                        </h:dataTable>
 	                	</h:form>

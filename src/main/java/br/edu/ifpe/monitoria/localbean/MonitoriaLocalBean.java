@@ -1,11 +1,9 @@
 package br.edu.ifpe.monitoria.localbean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -30,13 +28,16 @@ public class MonitoriaLocalBean
 
 	public boolean aprovaMonitoria(Monitoria monitoria)
 	{
-		Monitoria monitoriaAprovada = em.createNamedQuery("monitorias.findById", Monitoria.class)
+		Monitoria monitoriaAprovada = em.createNamedQuery("Monitoria.findById", Monitoria.class)
 											   .setParameter("id", monitoria.getId()).getSingleResult();
 
 		monitoriaAprovada.setAluno(monitoria.getAluno());
 		monitoriaAprovada.setBolsa(monitoria.isBolsa());
 		monitoriaAprovada.setPlanoMonitoria(monitoria.getPlanoMonitoria());
+		monitoriaAprovada.setAvaliado(true);
 		monitoriaAprovada.setSelecionado(true);
+		
+		System.out.println(monitoriaAprovada.isAvaliado());
 
 		em.merge(monitoriaAprovada);
 
@@ -59,7 +60,10 @@ public class MonitoriaLocalBean
 		monitoriaDeferida.setAluno(monitoria.getAluno());
 		monitoriaDeferida.setBolsa(monitoria.isBolsa());
 		monitoriaDeferida.setPlanoMonitoria(monitoria.getPlanoMonitoria());
+		monitoriaDeferida.setAvaliado(true);
 		monitoriaDeferida.setSelecionado(false);
+		
+		System.out.println(monitoriaDeferida.isAvaliado());
 
 		em.merge(monitoriaDeferida);
 
