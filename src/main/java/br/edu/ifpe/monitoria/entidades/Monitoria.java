@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "TB_MONITORIA")
 @NamedQueries({
 	@NamedQuery(name = "Monitoria.findAll", query = "SELECT m FROM Monitoria m"),
+	@NamedQuery(name = "Monitoria.findAvaliadas", query = "SELECT m FROM Monitoria m WHERE m.avaliado = TRUE"),
 	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
 	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
 			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("

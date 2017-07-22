@@ -16,12 +16,20 @@ import br.edu.ifpe.monitoria.entidades.Monitoria;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor"})
+@DeclareRoles({"administrativo", "professor", "aluno"})
 public class MonitoriaLocalBean
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 
+	@RolesAllowed({"professor", "administrativo", "aluno"})
+	public List<Monitoria> consultaMonitoriasAvaliadas(){
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findAvaliadas", Monitoria.class).getResultList();
+
+		return monitorias;
+	}
+	
+	
 	@RolesAllowed({"professor", "administrativo"})
 	public List<Monitoria> consultaMonitorias()
 	{
