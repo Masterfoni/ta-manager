@@ -2,6 +2,8 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,11 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Coordenacao;
 
 @Stateless
 @LocalBean
+@DeclareRoles({"administrativo"})
 public class CoordenacaoLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
+	@RolesAllowed({"administrativo"})
 	public List<Coordenacao> consultaCoordenacoes()
 	{
 		List<Coordenacao> coordenacoes = em.createNamedQuery("Coordenacao.findAll", Coordenacao.class).getResultList();
@@ -26,6 +30,7 @@ public class CoordenacaoLocalBean
 		return coordenacoes;
 	}
 	
+	@RolesAllowed({"administrativo"})
 	public boolean atualizaCoordenacao(Coordenacao coordenacao)
 	{
 		Coordenacao coordAtualizar = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", coordenacao.getId()).getSingleResult();
@@ -40,6 +45,7 @@ public class CoordenacaoLocalBean
 		return true;
 	}
 	
+	@RolesAllowed({"administrativo"})
 	public Coordenacao consultaCoordenacaoById(Long id)
 	{
 		Coordenacao coordPorId = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", id).getSingleResult();
@@ -47,6 +53,7 @@ public class CoordenacaoLocalBean
 		return coordPorId;
 	}
 	
+	@RolesAllowed({"administrativo"})
 	public List<Coordenacao> consultaCoordenacaoByName(String nome)
 	{
 		List<Coordenacao> coords = em.createNamedQuery("Coordenacao.findByNome", Coordenacao.class).setParameter("nome", nome).getResultList();
@@ -54,6 +61,7 @@ public class CoordenacaoLocalBean
 		return coords;
 	}
 	
+	@RolesAllowed({"administrativo"})
 	public boolean deletaCoordenacao(Long id)
 	{
 		Coordenacao coordDeletado = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", id).getSingleResult();
@@ -63,6 +71,7 @@ public class CoordenacaoLocalBean
 		return true;
 	}
 	
+	@RolesAllowed({"administrativo"})
 	public boolean persisteCoordenacao(@NotNull @Valid Coordenacao coordenacao)
 	{
 		em.persist(coordenacao);

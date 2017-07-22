@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,34 +24,41 @@ import javax.validation.constraints.NotNull;
 					initialValue = 1,
 					allocationSize = 1)
 @Table(name = "TB_MONITORIA")
+@NamedQueries({
+	@NamedQuery(name = "Monitoria.findAll", query = "SELECT m FROM Monitoria m"),
+	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
+	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
+			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("
+			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))")
+})
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_MONITORIA")
 	private Long id;
-	
+
 	@NotNull(message = "{mensagem.associacao}{tipo.aluno}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID_USUARIO")
 	private Aluno aluno;
-	
+
 	@NotNull(message = "{mensagem.associacao}{tipo.plano}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_PLANO_MONITORIA", referencedColumnName = "ID")
 	private PlanoMonitoria planoMonitoria;
-	
+
 	@Column (name="BOOL_BOLSA")
 	private boolean bolsa;
 
 	@Column (name="BOOL_SELECIONADO")
 	private boolean selecionado;
-	
+
 	@Column (name="BOOL_AVALIADO")
 	private boolean avaliado;
-	
+
 	public Aluno getAluno() {
 		return aluno;
 	}

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
-import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;

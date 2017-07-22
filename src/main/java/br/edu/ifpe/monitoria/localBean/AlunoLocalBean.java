@@ -9,8 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
-import br.edu.ifpe.monitoria.entidades.Coordenacao;
-import br.edu.ifpe.monitoria.entidades.Usuario;
 
 @Stateless
 @LocalBean
