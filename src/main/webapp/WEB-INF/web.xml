@@ -99,6 +99,10 @@
         </auth-constraint>     
     </security-constraint>
   
+  <error-page>
+        <error-code>403</error-code>
+        <location>/publico/nao_autorizado.xhtml</location>
+    </error-page>  
   
   <context-param>
     <param-name>javax.faces.webapp.PROJECT_STAGE</param-name>

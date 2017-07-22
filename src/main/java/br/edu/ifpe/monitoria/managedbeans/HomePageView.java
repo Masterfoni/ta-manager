@@ -7,6 +7,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
@@ -30,6 +33,17 @@ public class HomePageView implements Serializable {
 		monitorias = monitoriaBean.consultaMonitoriasAvaliadas();
 	}
 
+	public String back() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext(); 
+		HttpSession session = (HttpSession) ec.getSession(false);
+		
+		if(session != null)
+			return "homepage";
+		else
+			return "";
+	}
+	
 	public List<Monitoria> getMonitorias() {
 		return monitorias;
 	}
