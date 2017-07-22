@@ -47,6 +47,9 @@ public class Monitoria implements Serializable{
 	@Column (name="BOOL_SELECIONADO")
 	private boolean selecionado;
 	
+	@Column (name="BOOL_AVALIADO")
+	private boolean avaliado;
+	
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -81,5 +84,13 @@ public class Monitoria implements Serializable{
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+	}
+
+	public boolean isAvaliado() {
+		return avaliado;
+	}
+
+	public void setAvaliado(boolean avaliado) {
+		this.avaliado = avaliado;
 	}
 }

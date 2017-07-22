@@ -28,8 +28,7 @@ public class AlunoLocalBean
 	
 	public Aluno consultaAlunoById(Long id)
 	{
-		Usuario usuario = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
-		Aluno alunoPorId = em.createNamedQuery("Aluno.findById", Aluno.class).setParameter("id", usuario.getId()).getSingleResult();
+		Aluno alunoPorId = em.createNamedQuery("Aluno.findById", Aluno.class).setParameter("id", id).getSingleResult();
 		
 		return alunoPorId;
 	}
