@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
+import br.edu.ifpe.monitoria.entidades.Coordenacao;
+import br.edu.ifpe.monitoria.entidades.Usuario;
 
 @Stateless
 @LocalBean
@@ -22,5 +24,13 @@ public class AlunoLocalBean
 		em.persist(aluno);
 		
 		return true;
+	}
+	
+	public Aluno consultaAlunoById(Long id)
+	{
+		Usuario usuario = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		Aluno alunoPorId = em.createNamedQuery("Aluno.findById", Aluno.class).setParameter("id", usuario.getId()).getSingleResult();
+		
+		return alunoPorId;
 	}
 }

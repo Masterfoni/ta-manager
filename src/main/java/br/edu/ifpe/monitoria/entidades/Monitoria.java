@@ -36,14 +36,17 @@ public class Monitoria implements Serializable{
 	@JoinColumn(name = "ID_ALUNO", referencedColumnName = "ID_USUARIO")
 	private Aluno aluno;
 	
-	@NotNull(message = "{mensagem.associacao}{tipo.cc}")
+	@NotNull(message = "{mensagem.associacao}{tipo.plano}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
-	private ComponenteCurricular componenteCurricular;
+	@JoinColumn(name = "ID_PLANO_MONITORIA", referencedColumnName = "ID")
+	private PlanoMonitoria planoMonitoria;
 	
 	@Column (name="BOOL_BOLSA")
 	private boolean bolsa;
 
+	@Column (name="BOOL_SELECIONADO")
+	private boolean selecionado;
+	
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -52,12 +55,12 @@ public class Monitoria implements Serializable{
 		this.aluno = aluno;
 	}
 
-	public ComponenteCurricular getComponenteCurricular() {
-		return componenteCurricular;
+	public PlanoMonitoria getPlanoMonitoria() {
+		return planoMonitoria;
 	}
 
-	public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
-		this.componenteCurricular = componenteCurricular;
+	public void setPlanoMonitoria(PlanoMonitoria planoMonitoria) {
+		this.planoMonitoria = planoMonitoria;
 	}
 
 	public boolean isBolsa() {
@@ -70,5 +73,13 @@ public class Monitoria implements Serializable{
 
 	public Long getId() {
 		return id;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 }
