@@ -2,6 +2,8 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,11 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 
 @Stateless
 @LocalBean
+@DeclareRoles({"ADMINISTRATIVO"})
 public class EditalLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public List<Edital> consultaEditais()
 	{
 		List<Edital> editais = em.createNamedQuery("Edital.findAll", Edital.class).getResultList();
@@ -26,6 +30,7 @@ public class EditalLocalBean
 		return editais;
 	}
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public boolean atualizaEdital(Edital edital)
 	{
 		Edital editalAtualizar = em.createNamedQuery("Edital.findById", Edital.class)
@@ -38,6 +43,7 @@ public class EditalLocalBean
 		return true;
 	}
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public Edital consultaEditalById(Long id)
 	{
 		Edital editalPorId = em.createNamedQuery("Edital.findById", Edital.class)
@@ -46,6 +52,7 @@ public class EditalLocalBean
 		return editalPorId;
 	}
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public List<Edital> consultaEditalByNumeroEdital(String numeroEdital)
 	{
 		List<Edital> editais = em.createNamedQuery("Edital.findByNumeroEdital", Edital.class)
@@ -54,6 +61,7 @@ public class EditalLocalBean
 		return editais;
 	}
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public boolean deletaEdital(Long id)
 	{
 		Edital editalDeletado = em.createNamedQuery("Edital.findById", Edital.class)
@@ -64,6 +72,7 @@ public class EditalLocalBean
 		return true;
 	}
 	
+	@RolesAllowed("{ADMINISTRATIVO}")
 	public boolean persisteEdital(@NotNull @Valid Edital edital)
 	{
 		em.persist(edital);

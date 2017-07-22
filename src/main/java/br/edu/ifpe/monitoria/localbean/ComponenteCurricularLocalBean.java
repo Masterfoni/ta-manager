@@ -2,6 +2,8 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,11 +16,13 @@ import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 
 @Stateless
 @LocalBean
+@DeclareRoles({"ADMINISTRATIVO", "PROFESSOR"})
 public class ComponenteCurricularLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
+	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
 	public List<ComponenteCurricular> consultaComponentesCurriculares()
 	{
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findAll", ComponenteCurricular.class).getResultList();
@@ -26,6 +30,7 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
+	@RolesAllowed({"PROFESSOR"})
 	public boolean atualizaComponenteCurricular(ComponenteCurricular componenteCurricular)
 	{
 		ComponenteCurricular componenteAtualizar = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -37,6 +42,7 @@ public class ComponenteCurricularLocalBean
 		return true;
 	}
 	
+	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
 	public ComponenteCurricular consultaComponenteById(Long id)
 	{
 		ComponenteCurricular componentePorId = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -45,6 +51,7 @@ public class ComponenteCurricularLocalBean
 		return componentePorId;
 	}
 	
+	@RolesAllowed({"PROFESSOR", "ADMINISTRATIVO"})
 	public List<ComponenteCurricular> consultaComponentesByName(String nome)
 	{
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)
@@ -53,6 +60,7 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
+	@RolesAllowed({"PROFESSOR"})
 	public boolean deletaComponenteCurricular(Long id)
 	{
 		ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -63,6 +71,7 @@ public class ComponenteCurricularLocalBean
 		return true;
 	}
 	
+	@RolesAllowed({"PROFESSOR"})
 	public boolean persisteComponenteCurricular(@NotNull @Valid ComponenteCurricular componente)
 	{
 		em.persist(componente);
