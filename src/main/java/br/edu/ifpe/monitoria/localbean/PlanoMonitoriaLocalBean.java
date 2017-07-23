@@ -16,7 +16,7 @@ import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor"})
+@DeclareRoles({"administrativo", "professor", "aluno"})
 public class PlanoMonitoriaLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
