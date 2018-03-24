@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
@@ -62,19 +63,21 @@ public class GoogleSignInView implements Serializable{
 			ExternalContext ec = fc.getExternalContext();
 			HttpSession session = (HttpSession)ec.getSession(true);
 			
-			Long id = usuarioBean.consultarIbByEmail(email);
 			
-			session.setAttribute("perfilGoogle", perfilGoogle);
-			session.setAttribute("nome", nome);
-			session.setAttribute("email", email);
-			session.setAttribute("id", id);
 			
 			try {
+				session.setAttribute("perfilGoogle", perfilGoogle);
+				session.setAttribute("nome", nome);
+				session.setAttribute("email", email);
+
+				Long id = usuarioBean.consultarIbByEmail(email);
+				session.setAttribute("id", id);
+
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(email, perfilGoogle.getSubject());
 
 				ec.redirect("../comum/homepage.xhtml");
-			} catch (ServletException | IOException e) {
+			} catch (ServletException | IOException | EJBException e) {
 				e.printStackTrace();
 				try {
 					ec.redirect("../publico/cadastroServidor.xhtml");

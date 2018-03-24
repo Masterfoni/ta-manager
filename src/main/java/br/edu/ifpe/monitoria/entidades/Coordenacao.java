@@ -62,7 +62,7 @@ public class Coordenacao implements Serializable{
 	
 	@NotNull(message = "{mensagem.associacao}{tipo.coordenador}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID")
+	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
 	private Professor coordenador;
 
 	public String getNome() {

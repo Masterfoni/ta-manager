@@ -32,7 +32,7 @@ public class LogoutView implements Serializable{
 			e1.printStackTrace();
 		}
         try { 
-        	ec.redirect("/dsc1/publico/logout.xhtml");
+        	ec.redirect("/FALJVAL/publico/logout.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
