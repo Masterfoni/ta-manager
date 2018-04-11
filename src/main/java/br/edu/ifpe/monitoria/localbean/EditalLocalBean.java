@@ -22,7 +22,7 @@ public class EditalLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"administrativo", "professor"})
 	public List<Edital> consultaEditais()
 	{
 		List<Edital> editais = em.createNamedQuery("Edital.findAll", Edital.class).getResultList();

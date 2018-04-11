@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Coordenacao;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo"})
+@DeclareRoles({"administrativo","professor"})
 public class CoordenacaoLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"administrativo", "professor"})
 	public List<Coordenacao> consultaCoordenacoes()
 	{
 		List<Coordenacao> coordenacoes = em.createNamedQuery("Coordenacao.findAll", Coordenacao.class).getResultList();
