@@ -30,7 +30,7 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
+	@RolesAllowed({"professor", "administrativo", "aluno"})
 	public List<PlanoMonitoria> consultaPlanos()
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findAll", PlanoMonitoria.class).getResultList();

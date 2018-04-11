@@ -43,7 +43,7 @@ public class EditalLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"administrativo", "professor"})
 	public Edital consultaEditalById(Long id)
 	{
 		Edital editalPorId = em.createNamedQuery("Edital.findById", Edital.class)
