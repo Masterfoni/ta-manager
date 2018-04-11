@@ -1,8 +1,11 @@
-package br.edu.ifpe.monitoria.testesdbunit;
+package br.edu.ifpe.monitoria.junittests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import br.edu.ifpe.monitoria.testutils.Dataset;
+import br.edu.ifpe.monitoria.testutils.DbUnitUtil;
 
 public class JuDepartamento {
 	

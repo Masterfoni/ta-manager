@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.testesdbunit;
+package br.edu.ifpe.monitoria.testutils;
 
 public enum Dataset
 {

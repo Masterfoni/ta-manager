@@ -1,4 +1,4 @@
-package br.edu.ifpe.monitoria.testesdbunit;
+package br.edu.ifpe.monitoria.testutils;
 
 import java.io.File;
 import java.sql.Connection;
@@ -48,6 +48,7 @@ public class DbUnitUtil
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
+        	
         }
     }
 
