@@ -22,7 +22,7 @@ public class ProfessorLocalBean
 	public boolean persisteProfessor (@NotNull @Valid Professor professor)
 	{
 		em.persist(professor);
-		
+	
 		return true;
 	}
 	

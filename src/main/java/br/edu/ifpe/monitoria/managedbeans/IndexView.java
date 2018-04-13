@@ -72,15 +72,15 @@ public class IndexView implements Serializable {
 		
 		facesContext = FacesContext.getCurrentInstance();
 		ExternalContext ec = facesContext.getExternalContext();
-		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
-		{
-			System.out.println(email.substring(email.indexOf("@")));
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
-			facesContext.addMessage(null, message);
-			return "falha";
-		}
-		else
-		{
+//		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
+//		{
+//			System.out.println(email.substring(email.indexOf("@")));
+//			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
+//			facesContext.addMessage(null, message);
+//			return "falha";
+//		}
+//		else
+//		{
 			try {
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 				request.login(usuario.getEmail(), usuario.getSenha());
@@ -94,7 +94,7 @@ public class IndexView implements Serializable {
 				facesContext.addMessage(null, message);
 				return "falha";
 			}
-		}
+//		}
 		
 		return "sucesso";
 	}
