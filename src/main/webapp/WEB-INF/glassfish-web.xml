@@ -14,8 +14,8 @@
     </security-role-mapping>
     
     <security-role-mapping>
-    	<role-name>administrativo</role-name>
-    	<group-name>ADMINISTRATIVO</group-name>
+    	<role-name>comissao</role-name>
+    	<group-name>COMISSAO</group-name>
     </security-role-mapping>
     
     

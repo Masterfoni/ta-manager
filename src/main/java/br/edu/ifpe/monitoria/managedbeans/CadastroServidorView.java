@@ -11,10 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import br.edu.ifpe.monitoria.entidades.Administrativo;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
-import br.edu.ifpe.monitoria.entidades.Professor;
-import br.edu.ifpe.monitoria.entidades.Professor.Titulacao;
+import br.edu.ifpe.monitoria.entidades.Servidor;
+import br.edu.ifpe.monitoria.entidades.Servidor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 
 @ManagedBean  (name="cadastroServidorView")
@@ -22,8 +21,7 @@ public class CadastroServidorView implements Serializable{
 
 	private static final long serialVersionUID = 5746606365793540925L;
 	
-	private Professor professor;
-	private Administrativo administrativo;
+	private Servidor servidor;
 	private PerfilGoogle perfilGoogle;
 	private String email;
 	private String nome;
@@ -33,34 +31,11 @@ public class CadastroServidorView implements Serializable{
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
 	
-	public String salvarAdministrativo(){
-		
-		administrativo.setEmail(email);
-		administrativo.setNome(nome);
-		perfilGoogle.setUsuario(administrativo);
-		pglBean.persistePerfilGoogle(perfilGoogle);
-		
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
-		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-		
-		try {
-			request.login(email, perfilGoogle.getSubject());
-			session.setAttribute("usuario", professor);
-			return "sucesso";
-//			ec.redirect("comum/homepage.xhtml");
-		} catch (ServletException  e) {
-			e.printStackTrace();
-			return "falha";
-		}
-	}
-	
 	public String salvarProfessor(){
 		
-		professor.setEmail(email);
-		professor.setNome(nome);
-		perfilGoogle.setUsuario(professor);
+		servidor.setEmail(email);
+		servidor.setNome(nome);
+		perfilGoogle.setUsuario(servidor);
 		pglBean.persistePerfilGoogle(perfilGoogle);
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -70,7 +45,7 @@ public class CadastroServidorView implements Serializable{
 		
 		try {
 			request.login(email, perfilGoogle.getSubject());
-			session.setAttribute("usuario", professor);
+			session.setAttribute("usuario", servidor);
 			return "sucesso";
 //			ec.redirect("comum/homepage.xhtml");
 		} catch (ServletException e) {
@@ -88,23 +63,14 @@ public class CadastroServidorView implements Serializable{
 		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
 		email= (String)session.getAttribute("email");
 		nome = (String)session.getAttribute("nome");
-		professor = new Professor();
-		administrativo = new Administrativo();
+		servidor = new Servidor();
 	}
 	
-	public Professor getProfessor() {
-		return professor;
+	public Servidor getServidor() {
+		return servidor;
 	}
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-	
-	public Administrativo getAdministrativo() {
-		return administrativo;
-	}
-
-	public void setAdministrativo(Administrativo administrativo) {
-		this.administrativo = administrativo;
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
 	}
 
 	public PerfilGoogle getPerfilGoogle() {

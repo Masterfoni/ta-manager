@@ -63,7 +63,7 @@ public class Coordenacao implements Serializable{
 	@NotNull(message = "{mensagem.associacao}{tipo.coordenador}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
-	private Professor coordenador;
+	private Servidor coordenador;
 
 	public String getNome() {
 		return nome;
@@ -89,11 +89,11 @@ public class Coordenacao implements Serializable{
 		this.departamento = departamento;
 	}
 
-	public Professor getCoordenador() {
+	public Servidor getCoordenador() {
 		return coordenador;
 	}
 
-	public void setCoordenador(Professor coordenador) {
+	public void setCoordenador(Servidor coordenador) {
 		this.coordenador = coordenador;
 	}
 

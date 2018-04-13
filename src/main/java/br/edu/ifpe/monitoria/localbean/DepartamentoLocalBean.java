@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Departamento;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo"})
+@DeclareRoles({"comissao"})
 public class DepartamentoLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public List<Departamento> consultaDepartamentos()
 	{
 		List<Departamento> departamentos = em.createNamedQuery("Departamento.findAll", Departamento.class).getResultList();
@@ -30,7 +30,7 @@ public class DepartamentoLocalBean
 		return departamentos;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean atualizaDepartamento(Departamento departamento)
 	{
 		Departamento departamentoAtualizar = em.createNamedQuery("Departamento.findById", Departamento.class)
@@ -44,7 +44,7 @@ public class DepartamentoLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public Departamento consultaDepartamentoById(Long id)
 	{
 		Departamento departamentoPorId = em.createNamedQuery("Departamento.findById", Departamento.class)
@@ -53,7 +53,7 @@ public class DepartamentoLocalBean
 		return departamentoPorId;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public List<Departamento> consultaDepartamentoByName(String nome)
 	{
 		List<Departamento> departamentos = em.createNamedQuery("Departamento.findByNome", Departamento.class)
@@ -62,7 +62,7 @@ public class DepartamentoLocalBean
 		return departamentos;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean deletaDepartamento(Long id)
 	{
 		Departamento departamentoDeletado = em.createNamedQuery("Departamento.findById", Departamento.class)
@@ -73,7 +73,7 @@ public class DepartamentoLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean persisteDepartamento(@NotNull @Valid Departamento departamento)
 	{
 		em.persist(departamento);

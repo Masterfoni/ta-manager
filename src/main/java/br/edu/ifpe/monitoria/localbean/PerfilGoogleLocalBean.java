@@ -23,18 +23,6 @@ public class PerfilGoogleLocalBean
 	{
 		em.persist(perfilGoogle);
 		
-		Grupo gp = new Grupo();
-		gp.setGrupo(Grupo.Grupos.COMISSAO);
-		gp.setUsuario(perfilGoogle.getUsuario());
-		gp.setEmail(perfilGoogle.getUsuario().getEmail());
-		em.persist(gp);
-		
-		Grupo gp1 = new Grupo();
-		gp1.setGrupo(Grupo.Grupos.COORDENADOR);
-		gp1.setUsuario(perfilGoogle.getUsuario());
-		gp1.setEmail(perfilGoogle.getUsuario().getEmail());
-		em.persist(gp1);
-		
 		Grupo gp2 = new Grupo();
 		gp2.setGrupo(Grupo.Grupos.PROFESSOR);
 		gp2.setUsuario(perfilGoogle.getUsuario());

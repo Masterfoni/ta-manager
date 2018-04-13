@@ -83,8 +83,8 @@ public class Departamento implements Serializable{
 
     @Override
     public boolean equals(Object object) {
-        return (object instanceof Professor) && (id != null) 
-             ? id.equals(((Professor) object).getId()) 
+        return (object instanceof Servidor) && (id != null) 
+             ? id.equals(((Servidor) object).getId()) 
              : (object == this);
     }
     

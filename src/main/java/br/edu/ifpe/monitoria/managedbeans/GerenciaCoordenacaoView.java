@@ -13,10 +13,10 @@ import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Coordenacao;
 import br.edu.ifpe.monitoria.entidades.Departamento;
-import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.CoordenacaoLocalBean;
 import br.edu.ifpe.monitoria.localbean.DepartamentoLocalBean;
-import br.edu.ifpe.monitoria.localbean.ProfessorLocalBean;
+import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 
 @ManagedBean (name="gerenciaCoordenacaoView")
 @ViewScoped
@@ -31,13 +31,13 @@ public class GerenciaCoordenacaoView implements Serializable {
 	private DepartamentoLocalBean departamentobean;
 
 	@EJB
-	private ProfessorLocalBean professorbean;
+	private ServidorLocalBean servidorbean;
 	
 	public List<Coordenacao> coordenacoes;
 	
 	public List<Departamento> departamentos;
 	
-	public List<Professor> professores;
+	public List<Servidor> servidores;
 	
 	public Coordenacao coordenacaoAtualizada;
 	
@@ -85,12 +85,12 @@ public class GerenciaCoordenacaoView implements Serializable {
 		this.departamentos = departamentos;
 	}
 	
-	public List<Professor> getProfessores() {
-		return professores;
+	public List<Servidor> getServidores() {
+		return servidores;
 	}
 
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
+	public void setServidores(List<Servidor> servidores) {
+		this.servidores = servidores;
 	}
 
 	@PostConstruct
@@ -98,7 +98,7 @@ public class GerenciaCoordenacaoView implements Serializable {
 		nomeBusca = "";
 		coordenacoes = coordenacaobean.consultaCoordenacoes();
 		departamentos = departamentobean.consultaDepartamentos();
-		professores = professorbean.consultaProfessores();
+		servidores = servidorbean.consultaServidores();
 		coordenacaoAtualizada = new Coordenacao();
 		coordenacaoPersistida = new Coordenacao();
 		coordenacoes = new ArrayList<Coordenacao>();

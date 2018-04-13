@@ -1,18 +1,18 @@
 package br.edu.ifpe.monitoria.conversores;
 
-import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Servidor;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "professorConverter")
-public class ProfessorConverter implements Converter{
+@FacesConverter(value = "servidorConverter")
+public class ServidorConverter implements Converter{
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.isEmpty()) {
-            return (Professor) component.getAttributes().get(value);
+            return (Servidor) component.getAttributes().get(value);
         }
 
         return null;
@@ -20,9 +20,9 @@ public class ProfessorConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object entity) {
-        if (entity != null && entity instanceof Professor) {
-            component.getAttributes().put(((Professor) entity).getId().toString(), entity);
-            return ((Professor) entity).getId().toString();
+        if (entity != null && entity instanceof Servidor) {
+            component.getAttributes().put(((Servidor) entity).getId().toString(), entity);
+            return ((Servidor) entity).getId().toString();
         }
 
         return null;

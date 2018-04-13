@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.Coordenacao;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo","professor"})
+@DeclareRoles({"comissao","professor"})
 public class CoordenacaoLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"administrativo", "professor"})
+	@RolesAllowed({"comissao", "professor"})
 	public List<Coordenacao> consultaCoordenacoes()
 	{
 		List<Coordenacao> coordenacoes = em.createNamedQuery("Coordenacao.findAll", Coordenacao.class).getResultList();
@@ -30,7 +30,7 @@ public class CoordenacaoLocalBean
 		return coordenacoes;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean atualizaCoordenacao(Coordenacao coordenacao)
 	{
 		Coordenacao coordAtualizar = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", coordenacao.getId()).getSingleResult();
@@ -45,7 +45,7 @@ public class CoordenacaoLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public Coordenacao consultaCoordenacaoById(Long id)
 	{
 		Coordenacao coordPorId = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", id).getSingleResult();
@@ -53,7 +53,7 @@ public class CoordenacaoLocalBean
 		return coordPorId;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public List<Coordenacao> consultaCoordenacaoByName(String nome)
 	{
 		List<Coordenacao> coords = em.createNamedQuery("Coordenacao.findByNome", Coordenacao.class).setParameter("nome", nome).getResultList();
@@ -61,7 +61,7 @@ public class CoordenacaoLocalBean
 		return coords;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean deletaCoordenacao(Long id)
 	{
 		Coordenacao coordDeletado = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", id).getSingleResult();
@@ -71,7 +71,7 @@ public class CoordenacaoLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"administrativo"})
+	@RolesAllowed({"comissao"})
 	public boolean persisteCoordenacao(@NotNull @Valid Coordenacao coordenacao)
 	{
 		em.persist(coordenacao);

@@ -15,13 +15,13 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="TB_PROFESSOR")
-@DiscriminatorValue(value="PROFESSOR")
+@Table(name="TB_SERVIDOR")
+@DiscriminatorValue(value="SERVIDOR")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @NamedQueries({
-	@NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p")
+	@NamedQuery(name = "Servidor.findAll", query = "SELECT s FROM Servidor s")
 })
-public class Professor extends Usuario implements Serializable {
+public class Servidor extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -76,13 +76,13 @@ public class Professor extends Usuario implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        return (object instanceof Professor) && (id != null) 
-             ? id.equals(((Professor) object).getId()) 
+        return (object instanceof Servidor) && (id != null) 
+             ? id.equals(((Servidor) object).getId()) 
              : (object == this);
     }
     
     @Override
     public String toString() {
-        return "br.edu.ifpe.monitoria.entidades.Professor[ id=" + id + ":" + nome + " ]";
+        return "br.edu.ifpe.monitoria.entidades.Servidor[ id=" + id + ":" + nome + " ]";
     }
 }

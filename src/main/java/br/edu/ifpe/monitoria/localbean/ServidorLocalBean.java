@@ -10,33 +10,33 @@ import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Servidor;
 
 @Stateless
 @LocalBean
-public class ProfessorLocalBean 
+public class ServidorLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	public boolean persisteProfessor (@NotNull @Valid Professor professor)
+	public boolean persisteProfessor (@NotNull @Valid Servidor servidor)
 	{
-		em.persist(professor);
+		em.persist(servidor);
 	
 		return true;
 	}
 	
-	public List<Professor> consultaProfessores()
+	public List<Servidor> consultaServidores()
 	{
-		List<Professor> professores = em.createNamedQuery("Professor.findAll", Professor.class).getResultList();
+		List<Servidor> professores = em.createNamedQuery("Servidor.findAll", Servidor.class).getResultList();
 		
 		return professores;
 	}
 	
-	public Professor consultaProfessorById(Long id)
+	public Servidor consultaServidorById(Long id)
 	{
-		Professor professorPorId = em.createNamedQuery("Professor.findById", Professor.class).setParameter("id", id).getSingleResult();
+		Servidor servidorPorId = em.createNamedQuery("Servidor.findById", Servidor.class).setParameter("id", id).getSingleResult();
 		
-		return professorPorId;
+		return servidorPorId;
 	}
 }

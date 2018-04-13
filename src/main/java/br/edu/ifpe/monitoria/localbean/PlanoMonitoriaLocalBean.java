@@ -16,7 +16,7 @@ import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor", "aluno"})
+@DeclareRoles({"comissao", "professor", "aluno"})
 public class PlanoMonitoriaLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
@@ -30,7 +30,7 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public List<PlanoMonitoria> consultaPlanos()
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findAll", PlanoMonitoria.class).getResultList();
@@ -38,7 +38,7 @@ public class PlanoMonitoriaLocalBean
 		return planos;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
+	@RolesAllowed({"professor", "comissao"})
 	public PlanoMonitoria consultaPlanosById(Long id)
 	{
 		PlanoMonitoria planoPorId = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();

@@ -16,13 +16,13 @@ import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor"})
+@DeclareRoles({"comissao", "professor"})
 public class ComponenteCurricularLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"professor", "administrativo"})
+	@RolesAllowed({"professor", "comissao"})
 	public List<ComponenteCurricular> consultaComponentesCurriculares()
 	{
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findAll", ComponenteCurricular.class).getResultList();
@@ -42,7 +42,7 @@ public class ComponenteCurricularLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
+	@RolesAllowed({"professor", "comissao"})
 	public ComponenteCurricular consultaComponenteById(Long id)
 	{
 		ComponenteCurricular componentePorId = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -51,7 +51,7 @@ public class ComponenteCurricularLocalBean
 		return componentePorId;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
+	@RolesAllowed({"professor", "comissao"})
 	public List<ComponenteCurricular> consultaComponentesByName(String nome)
 	{
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)

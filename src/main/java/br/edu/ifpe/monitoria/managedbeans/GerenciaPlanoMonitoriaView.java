@@ -15,12 +15,12 @@ import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Coordenacao;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
-import br.edu.ifpe.monitoria.entidades.Professor;
+import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.CoordenacaoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
-import br.edu.ifpe.monitoria.localbean.ProfessorLocalBean;
+import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 
 @ManagedBean (name="gerenciaPlanoMonitoriaView")
 @ViewScoped
@@ -41,7 +41,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	private CoordenacaoLocalBean coordenacaobean;
 	
 	@EJB
-	private ProfessorLocalBean professorbean;
+	private ServidorLocalBean servidorbean;
 	
 	public List<ComponenteCurricular> componentes;
 	
@@ -49,7 +49,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public List<PlanoMonitoria> planos;
 	
-	public List<Professor> professores;
+	public List<Servidor> servidores;
 	
 	public List<Edital> editais;
 	
@@ -87,12 +87,12 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.componentePersistido = componentePersistido;
 	}
 
-	public List<Professor> getProfessores() {
-		return professores;
+	public List<Servidor> getProfessores() {
+		return servidores;
 	}
 
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
+	public void setServidores(List<Servidor> servidores) {
+		this.servidores = servidores;
 	}
 
 	public List<PlanoMonitoria> getPlanos() {
@@ -149,7 +149,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		coordenacoes = coordenacaobean.consultaCoordenacoes();
 		componentes = componentebean.consultaComponentesCurriculares();
-		professores = professorbean.consultaProfessores();
+		servidores = servidorbean.consultaServidores();
 		planos = planobean.consultaPlanos();
 		editais = editalbean.consultaEditais();
 		

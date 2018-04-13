@@ -91,8 +91,8 @@ public class ComponenteCurricular implements Serializable{
 
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
-	private Professor professor;
+	@JoinColumn (name = "ID_SERVIDOR", referencedColumnName = "ID_USUARIO")
+	private Servidor professor;
 
 	public String getNome() {
 		return nome;
@@ -134,11 +134,11 @@ public class ComponenteCurricular implements Serializable{
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	public Professor getProfessor() {
+	public Servidor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(Professor professor) {
+	public void setProfessor(Servidor professor) {
 		this.professor = professor;
 	}
 

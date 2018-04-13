@@ -19,7 +19,7 @@ import br.edu.ifpe.monitoria.entidades.Usuario;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor", "aluno"})
+@DeclareRoles({"comissao", "professor", "aluno"})
 public class UsuarioLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
@@ -33,7 +33,7 @@ public class UsuarioLocalBean
 		return usuarios;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public boolean atualizaUsuario(Usuario usuario)
 	{
 		Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
@@ -63,7 +63,7 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public Usuario consultaUsuarioPorEmail(String email)
 	{
 		Usuario userResult = null;
@@ -78,7 +78,7 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public Usuario consultaUsuarioById(Long id)
 	{
 		Usuario usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
@@ -86,7 +86,7 @@ public class UsuarioLocalBean
 		return usuarioPorId;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public List<Usuario> consultaUsuarioByName(String nome)
 	{
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findByNome", Usuario.class).setParameter("nome", nome).getResultList();
@@ -112,7 +112,7 @@ public class UsuarioLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public boolean persisteUsuario(@NotNull @Valid Usuario usuario)
 	{
 		em.persist(usuario);
