@@ -70,7 +70,7 @@ public class GoogleSignInView implements Serializable{
 				session.setAttribute("nome", nome);
 				session.setAttribute("email", email);
 
-				Long id = usuarioBean.consultarIbByEmail(email);
+				Long id = usuarioBean.consultarIdByEmail(email);
 				session.setAttribute("id", id);
 
 				HttpServletRequest request = (HttpServletRequest) ec.getRequest();

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -15,6 +16,8 @@ import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.entidades.Servidor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
+import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean  (name="cadastroServidorView")
 public class CadastroServidorView implements Serializable{
@@ -26,32 +29,52 @@ public class CadastroServidorView implements Serializable{
 	private String email;
 	private String nome;
 	
-	private String jackson;
+	FacesContext facesContext;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
 	
-	public String salvarProfessor(){
+	@EJB
+	private UsuarioLocalBean usuarioBean;
+	
+	@EJB
+	private ServidorLocalBean servidorBean;
+	
+	public String salvarProfessor()
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
 		
-		servidor.setEmail(email);
-		servidor.setNome(nome);
-		perfilGoogle.setUsuario(servidor);
-		pglBean.persistePerfilGoogle(perfilGoogle);
-		
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
-		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-		
-		try {
-			request.login(email, perfilGoogle.getSubject());
-			session.setAttribute("usuario", servidor);
-			return "sucesso";
-//			ec.redirect("comum/homepage.xhtml");
-		} catch (ServletException e) {
-			e.printStackTrace();
-			return "falha";
+		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null)
+		{
+			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
 		}
+		else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null)
+		{
+			context.addMessage(null, new FacesMessage("SIAPE já cadastrado!"));
+		}
+		else 
+		{
+			servidor.setEmail(email);
+			servidor.setNome(nome);
+			perfilGoogle.setUsuario(servidor);
+			pglBean.persistePerfilGoogle(perfilGoogle);
+			
+			FacesContext fc = FacesContext.getCurrentInstance();
+			ExternalContext ec = fc.getExternalContext();
+			HttpSession session = (HttpSession)ec.getSession(true);
+			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+			
+			try {
+				request.login(email, perfilGoogle.getSubject());
+				session.setAttribute("usuario", servidor);
+				return "sucesso";
+			} catch (ServletException e) {
+				e.printStackTrace();
+				return "falha";
+			}
+		}
+		
+		return "falha";
 	}
 	
 	@PostConstruct
@@ -69,6 +92,7 @@ public class CadastroServidorView implements Serializable{
 	public Servidor getServidor() {
 		return servidor;
 	}
+	
 	public void setServidor(Servidor servidor) {
 		this.servidor = servidor;
 	}
@@ -99,14 +123,5 @@ public class CadastroServidorView implements Serializable{
 
 	public Titulacao[] getTitulos() {
 		return Titulacao.values();
-	}
-
-	public String getJackson() {
-		return jackson;
-	}
-
-	public void setJackson(String jackson) {
-		this.jackson = jackson;
-	}
-	
+	}	
 }

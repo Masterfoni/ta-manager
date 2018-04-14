@@ -63,14 +63,27 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
-	@RolesAllowed({"professor", "comissao", "aluno"})
+	@PermitAll
 	public Usuario consultaUsuarioPorEmail(String email)
 	{
 		Usuario userResult = null;
 		
 		try {
-			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email)
-																					   .getSingleResult();
+			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
+	}
+	
+	@PermitAll
+	public Usuario consultaUsuarioPorCpf(String cpf)
+	{
+		Usuario userResult = null;
+		
+		try {
+			userResult = em.createNamedQuery("Usuario.findByCpf", Usuario.class).setParameter("cpf", cpf).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
 		}
@@ -81,7 +94,13 @@ public class UsuarioLocalBean
 	@RolesAllowed({"professor", "comissao", "aluno"})
 	public Usuario consultaUsuarioById(Long id)
 	{
-		Usuario usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		Usuario usuarioPorId = null;
+
+		try {
+			usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
 		
 		return usuarioPorId;
 	}
@@ -95,7 +114,7 @@ public class UsuarioLocalBean
 	}
 	
 	@PermitAll
-	public Long consultarIbByEmail(String email)
+	public Long consultarIdByEmail(String email)
 	{
 		Long id = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
 		

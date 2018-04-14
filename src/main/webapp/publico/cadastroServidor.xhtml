@@ -32,15 +32,8 @@
 
 		<h2>Cadastro Servidor</h2>
 
-		<br />
-		<br />
-
-
 		<div id="dadosProfessor">
-
 			<h:form id="cadastroformProfessor" class="form-group" role="form">
-				<h4>Professor</h4>
-
 				<div class="form-group">
 					<label for="email">Email</label>
 					<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
@@ -126,13 +119,10 @@
 
 				<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info ind-button" update="growlProfessor" />
 			</h:form>
+			
 			<h:form>
 				<h:commandLink action="#{logoutView.logout}" type="button" class="btn btn-danger">Cancelar</h:commandLink>
 			</h:form>
-			<br />
-			<br />
-			<br />
-			<br />
 		</div>
 	</div>
 

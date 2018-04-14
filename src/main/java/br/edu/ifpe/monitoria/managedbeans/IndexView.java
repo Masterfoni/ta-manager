@@ -56,9 +56,22 @@ public class IndexView implements Serializable {
 
 	public void cadastrarAluno()
 	{
-		if(alunoBean.persisteAluno(aluno))
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(usuarioBean.consultaUsuarioPorEmail(aluno.getEmail()) != null)
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("E-mail já cadastrado!"));
+		}
+		else if(usuarioBean.consultaUsuarioPorCpf(aluno.getCpf()) != null)
+		{
+			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
+		}
+		else if(alunoBean.consultaAlunoByMatricula(aluno.getMatricula()) != null)
+		{
+			context.addMessage(null, new FacesMessage("Matricula já cadastrada!"));
+		}
+		else if(alunoBean.persisteAluno(aluno))
+		{
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 		}
 	}
@@ -66,7 +79,7 @@ public class IndexView implements Serializable {
 	public String loginUsuario()
 	{
 		String email = usuario.getEmail();
-		Long id = usuarioBean.consultarIbByEmail(email);
+		Long id = usuarioBean.consultarIdByEmail(email);
 		
 		System.out.println(id);
 		

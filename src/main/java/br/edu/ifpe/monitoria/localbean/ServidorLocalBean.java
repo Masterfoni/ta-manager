@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
@@ -38,5 +39,18 @@ public class ServidorLocalBean
 		Servidor servidorPorId = em.createNamedQuery("Servidor.findById", Servidor.class).setParameter("id", id).getSingleResult();
 		
 		return servidorPorId;
+	}
+	
+	public Servidor findServidorBySiape(Integer siape)
+	{
+		Servidor servidorPorSiape = null;
+		
+		try {
+			servidorPorSiape = em.createNamedQuery("Servidor.findBySiape", Servidor.class).setParameter("siape", siape).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return servidorPorSiape;
 	}
 }
