@@ -1,166 +1,161 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta charset="ISO-8859-1" />
-	<link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
-	<link rel="stylesheet" href="../publico/index.css"></link>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"></link>
-	<link href="../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
-	<title>Monitoria - IFPE</title>
-</h:head>
-<h:body>
-	<h:form>
-		  <p:remoteCommand name="login" actionListener="#{googleSignInView.loginGoogle}" />
-	</h:form>
-
- 	<div class="container">    	
- 		<!-- MODAL PRINCIPAL DE CADASTRO -->
-		<div id="cadastro" class="modalDialog">
-			<div class="container">
-				<a href="#fechar" title="Fechar" class="fechar">X</a>
-				<h:form class="dialogSignup">
-					<div class="form-group row">
-						<div class="col-sm-6">
-							<label for="nomeCadastro">Nome</label>
-							<h:inputText id="nomeCadastro" class="form-control" value="#{indexView.aluno.nome}"></h:inputText>
-						</div>
-						<div class="col-sm-6">
-							<label for="sexoCadastro">Sexo</label>
-							<h:selectOneMenu id="sexoCadastro" class="form-control" value="#{indexView.aluno.sexo}">
-								<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
-								<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-								<f:selectItem itemValue="Outros" itemLabel="Outros" />
-							</h:selectOneMenu>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="matriculaCadastro">Matricula</label>
-						<h:inputText id="matriculaCadastro" class="form-control" value="#{indexView.aluno.matricula}" 
-									 aria-describedby="matriculaDesc">
-						</h:inputText>
-						<small id="matriculaDesc" class="form-text text-muted">Utilize o formato 99999A9-AA9999</small>
-					</div>
-					
-					<div class="form-group">
-						<label for="cpfCadastro">CPF</label>
-						<h:inputText id="cpfCadastro" class="form-control cpf" value="#{indexView.aluno.cpf}"
-									 aria-describedby="cpfDesc">
-						</h:inputText>
-						<small id="cpfDesc" class="form-text text-muted">Utilize apenas números</small>
-					</div>
-					
-					<div class="form-group row">
-						<div class="col-sm-6">
-							<label for="rgCadastro">RG</label>
-							<h:inputText id="rgCadastro" class="form-control" value="#{indexView.aluno.rg}"></h:inputText>
-						</div>
-						<div class="col-sm-6">
-							<label for="emissorCadastro">Orgao expedidor</label>
-							<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{indexView.aluno.rgEmissor}"
-										 aria-describedby="emissorDesc">
-							</h:inputText>
-							<small id="emissorDesc" class="form-text text-muted">Formato seguindo o ex.: SDS/PE</small>
-						</div>
-					</div>
 	
-					<div class="form-group">
-						<label for="emailCadastro">Email</label>
-						<h:inputText id="emailCadastro" class="form-control" value="#{indexView.aluno.email}"
-									 aria-describedby="emailDesc">
-						</h:inputText>
-						<small id="emailDesc" class="form-text text-muted">Utilize o formato EMAIL@DOMINIO</small>
-					</div>
-					
-					<div class="form-group">
-						<label for="senhaCadastro">Senha</label>
-						<h:inputSecret id="senhaCadastro" class="form-control" value="#{indexView.aluno.senha}"
-									   aria-describedby="senhaDesc">
-						</h:inputSecret>
-						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
-					</div>
-					
-					<h:commandButton value="Cadastrar" action="#{indexView.cadastrarAluno}" class="btn btn-info ind-button"/>
-				</h:form>
+	<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<link rel="stylesheet" href="../publico/index.css"></link>
+		<title>Monitoria - IFPE</title>
+	</h:head>
+	
+	<h:body>
+		<h:form>
+			<p:remoteCommand name="login" actionListener="#{googleSignInView.loginGoogle}" />
+		</h:form>
+
+		<div class="container">    	
+			<!-- MODAL PRINCIPAL DE CADASTRO -->
+			<div id="cadastro" class="modalDialog">
+				<div class="container">
+					<a href="#fechar" title="Fechar" class="fechar">X</a>
+					<h:form class="dialogSignup">
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="nomeCadastro">Nome</label>
+								<h:inputText id="nomeCadastro" class="form-control" value="#{indexView.aluno.nome}"></h:inputText>
+							</div>
+							<div class="col-sm-6">
+								<label for="sexoCadastro">Sexo</label>
+								<h:selectOneMenu id="sexoCadastro" class="form-control" value="#{indexView.aluno.sexo}">
+									<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
+									<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
+									<f:selectItem itemValue="Outros" itemLabel="Outros" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="matriculaCadastro">Matricula</label>
+							<h:inputText id="matriculaCadastro" class="form-control" value="#{indexView.aluno.matricula}" 
+										aria-describedby="matriculaDesc">
+							</h:inputText>
+							<small id="matriculaDesc" class="form-text text-muted">Utilize o formato 99999A9-AA9999</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="cpfCadastro">CPF</label>
+							<h:inputText id="cpfCadastro" class="form-control cpf" value="#{indexView.aluno.cpf}"
+										aria-describedby="cpfDesc">
+							</h:inputText>
+							<small id="cpfDesc" class="form-text text-muted">Utilize apenas números</small>
+						</div>
+						
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="rgCadastro">RG</label>
+								<h:inputText id="rgCadastro" class="form-control" value="#{indexView.aluno.rg}"></h:inputText>
+							</div>
+							<div class="col-sm-6">
+								<label for="emissorCadastro">Orgao expedidor</label>
+								<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{indexView.aluno.rgEmissor}"
+											aria-describedby="emissorDesc">
+								</h:inputText>
+								<small id="emissorDesc" class="form-text text-muted">Formato seguindo o ex.: SDS/PE</small>
+							</div>
+						</div>
+		
+						<div class="form-group">
+							<label for="emailCadastro">Email</label>
+							<h:inputText id="emailCadastro" class="form-control" value="#{indexView.aluno.email}"
+										aria-describedby="emailDesc">
+							</h:inputText>
+							<small id="emailDesc" class="form-text text-muted">Utilize o formato EMAIL@DOMINIO</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="senhaCadastro">Senha</label>
+							<h:inputSecret id="senhaCadastro" class="form-control" value="#{indexView.aluno.senha}"
+										aria-describedby="senhaDesc">
+							</h:inputSecret>
+							<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
+						</div>
+						
+						<h:commandButton value="Cadastrar" action="#{indexView.cadastrarAluno}" class="btn btn-info ind-button"/>
+					</h:form>
+				</div>
+			</div>
+			
+			<!-- PANEL PRINCIPAL DE LOGIN -->
+			<div class="login-panel col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+				<div class="panel" >
+					<div class="panel-heading">
+						<div class="avatar">
+							<img src="../resources/images/ifpe-logo.jpg"></img>
+						</div>
+						<h3 class="text-center">Instituto Federal de Pernambuco</h3>
+						<p class="text-center"><i>Campus</i> Recife</p>
+						<h4 class="text-center">Programa de Monitoria</h4>
+					</div>     
+
+					<div class="panel-body" >
+						<h:form id="loginform" class="form-horizontal" role="form">
+							<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+								<div class="alert alert-warning alert-dismissable fade in">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+									<h:messages/>
+								</div>
+							</h:panelGroup>
+							
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="glyphicon glyphicon-user"></i>
+								</span>
+								<h:inputText id="emailUsuario" class="#{component.valid ? 'form-control' : 'form-control invalid-component'}" 
+											 value="#{indexView.usuario.email}" required="true" requiredMessage="E-mail é obrigatório" />
+							</div>
+								
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="glyphicon glyphicon-lock"></i>
+								</span>
+								<h:inputSecret id="senhaUsuario" class="#{component.valid ? 'form-control' : 'form-control invalid-component'}"
+											   value="#{indexView.usuario.senha}" required="true" requiredMessage="Senha é obrigatória" />
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-6 controls">
+									<a href="#cadastro" class="btn btn-info ind-button-a">Cadastre-se</a>
+								</div>
+								<div class="col-sm-6 controls">
+									<h:commandButton value="Login" action="#{indexView.loginUsuario}" class="btn btn-success ind-button"/>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-12 controls">
+									<div id="customBtn" class="customGPlusSignIn btn btn-default">
+										<span class="icon"></span>
+										<span class="buttonText">Login Servidor</span>
+									</div>
+								</div>
+							</div>
+		
+							<div class="login-footer" >
+								<span>Algum erro? <a href="#">Contate-nos!</a></span><br></br>
+							</div>
+						</h:form>     
+					</div>   	                  
+				</div>  
 			</div>
 		</div>
+
 		
-		<!-- PANEL PRINCIPAL DE LOGIN -->
-       	<div class="login-panel col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-           	<div class="panel" >
-               	<div class="panel-heading">
-                	<div class="avatar">
-						<img src="../resources/images/ifpe-logo.jpg"></img>
-                    </div>
-                    <h3 class="text-center">Instituto Federal de Pernambuco</h3>
-                    <p class="text-center"><i>Campus</i> Recife</p>
-                    <h4 class="text-center">Programa de Monitoria</h4>
-                </div>     
-
-                <div class="panel-body" >
-                    <h:form id="loginform" class="form-horizontal" role="form">
-	                	
-					 	<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-						 	<div class="alert alert-warning alert-dismissable fade in">
-						   		<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-								<h:messages/>
-						 	</div>
-					 	</h:panelGroup>
-					 	
-                        <div class="input-group">
-                        	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<h:inputText id="emailUsuario" class="#{component.valid ? 'form-control' : 'form-control invalid-component'}" 
-										 value="#{indexView.usuario.email}" 
-										 required="true" requiredMessage="E-mail é obrigatório" />
-                        </div>
-                            
-                        <div class="input-group">
-            	            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<h:inputSecret id="senhaUsuario" class="#{component.valid ? 'form-control' : 'form-control invalid-component'}"
-										   value="#{indexView.usuario.senha}" 
-										   required="true" requiredMessage="Senha é obrigatória" />
-                        </div>
-                        
-                        <div class="form-group">
-	                        <div class="col-sm-6 controls">
-	                       		<a href="#cadastro" class="btn btn-info ind-button-a">Cadastre-se</a>
-                            </div>
-                            <div class="col-sm-6 controls">
-	                       		<h:commandButton value="Login" action="#{indexView.loginUsuario}" class="btn btn-success ind-button"/>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<div class="col-sm-12 controls">
-	    						<div id="customBtn" class="customGPlusSignIn btn btn-default">
-	      							<span class="icon"></span>
-	      							<span class="buttonText">Login Servidor</span>
-	    						</div>
-                        	</div>
-                        </div>
-    
-                        <div class="login-footer" >
-                            <span>Algum erro? <a href="#">Contate-nos!</a></span><br></br>
-                        </div>
-                    </h:form>     
-      			</div>   	                  
-      		</div>  
-        </div>
-    </div>
-
-	
-	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script> 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="https://apis.google.com/js/api:client.js"></script>
-	<script src="../js/loginGoogle.js"></script>
-
-	<script>
-		$(".cpf").mask("999.999.999-99");
-		$(".expedidor").mask("AAA/AA");
-	</script>
-</h:body>
+		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="https://apis.google.com/js/api:client.js"></script>
+		<script src="../js/loginGoogle.js"></script>
+		<script src="./index.js"></script>
+	</h:body>
 </html>

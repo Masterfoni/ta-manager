@@ -1,25 +1,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-	    <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img src="../resources/images/gem-logo.png" width="30" height="20" alt="Logo do GEM"></img>
+        </a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li>
+          <h:link href="#" outcome="home">Home</h:link>
+        </li>
+        <li>
+          <h:link href="#" outcome="inscricao">Inscrição de Candidato</h:link>
+        </li>
+        <li>
+          <h:link href="#" outcome="planos">Plano de Monitoria</h:link>
+        </li>
+        <li>
+          <h:link href="#" outcome="edital">Edital</h:link>
+        </li>
+        <li>
+          <h:link href="#" outcome="coordenacoes">Coordenação</h:link>
+        </li>
+        <li>
+          <h:link href="#" outcome="departamentos">Departamento</h:link>
+        </li>
+        <li>
+          <a href="#">Logs de Ação</a>
+        </li> 
+      </ul>
+      <h:form>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a>
+          </li>
+          <li>
+            <h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
+          </li>
+        </ul>
+      </h:form>
     </div>
-    <ul class="nav navbar-nav">
-    </ul>
-    <h:form>
-    <ul class="nav navbar-nav navbar-right">
-	  <li><a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a></li>
-	  <li><h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink></li>
-    </ul>
-    </h:form>
-  </div>
-</nav>
-
-<script>
-	function goToProfile() {
-		window.location.href = "gerenciaPerfil.xhtml";
-	}
-</script>
-
+  </nav>
 </html>
