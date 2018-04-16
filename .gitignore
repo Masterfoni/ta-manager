@@ -5,3 +5,4 @@
 .metadata/
 .settings/
 .classpath
+target/
