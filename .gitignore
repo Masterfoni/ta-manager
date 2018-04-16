@@ -2,3 +2,7 @@
 *.prefs
 .properties
 *.settings*
+.metadata/
+.settings/
+.classpath
+target/
