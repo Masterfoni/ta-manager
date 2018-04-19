@@ -50,7 +50,8 @@ import org.hibernate.validator.constraints.br.CPF;
 	@NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome LIKE :nome"),
 	@NamedQuery(name = "Usuario.findByEmailSenha", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha"),
 	@NamedQuery(name = "Usuario.findIdByEmail", query = "SELECT u.id FROM Usuario u WHERE u.email = :email"),
-	@NamedQuery(name = "Usuario.findByCpf", query = "SELECT u FROM Usuario u WHERE u.cpf = :cpf")
+	@NamedQuery(name = "Usuario.findByCpf", query = "SELECT u FROM Usuario u WHERE u.cpf = :cpf"),
+	@NamedQuery(name = "Usuario.findByRg", query = "SELECT u FROM Usuario u WHERE u.rg = :rg")
 })
 public class Usuario implements Serializable
 {

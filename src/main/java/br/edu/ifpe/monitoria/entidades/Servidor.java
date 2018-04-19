@@ -19,7 +19,8 @@ import javax.validation.constraints.NotNull;
 @DiscriminatorValue(value="SERVIDOR")
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @NamedQueries({
-	@NamedQuery(name = "Servidor.findAll", query = "SELECT s FROM Servidor s")
+	@NamedQuery(name = "Servidor.findAll", query = "SELECT s FROM Servidor s"),
+	@NamedQuery(name = "Servidor.findBySiape", query = "SELECT s FROM Servidor s WHERE s.siape = :siape")
 })
 public class Servidor extends Usuario implements Serializable {
 

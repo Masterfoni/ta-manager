@@ -39,12 +39,11 @@ function signOut() {
 
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
-	  
-	  if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br')
-	  {
-		  alert("Utilize seu email instituncional.");
-		  signOut();
-	  }	
+    
+    if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br') {
+      document.getElementById("loginErrorButton").click();
+      signOut();
+    }
 	  
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
+import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @Stateless
 @LocalBean
@@ -77,6 +78,19 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
+	public Usuario consultaUsuarioPorRg(String rg)
+	{
+		Usuario userResult = null;
+		
+		try {
+			userResult = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
+	}
+	
 	@PermitAll
 	public Usuario consultaUsuarioPorCpf(String cpf)
 	{
@@ -114,11 +128,17 @@ public class UsuarioLocalBean
 	}
 	
 	@PermitAll
-	public Long consultarIdByEmail(String email)
+	public LongRequestResult consultarIdByEmail(String email)
 	{
-		Long id = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
+		LongRequestResult result = new LongRequestResult();
 		
-		return id;
+		try {
+			result.data = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
+		} catch (NoResultException e) {
+			result.errors.add("E-mail inexistente!");
+		}
+
+		return result;
 	}
 	
 	@DenyAll

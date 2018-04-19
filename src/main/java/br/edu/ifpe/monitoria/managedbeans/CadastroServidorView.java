@@ -42,11 +42,17 @@ public class CadastroServidorView implements Serializable{
 	
 	public String salvarProfessor()
 	{
+		String result = "falha";
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null)
 		{
 			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
+		}
+		else if(usuarioBean.consultaUsuarioPorRg(servidor.getRg()) != null)
+		{
+			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
 		}
 		else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null)
 		{
@@ -67,14 +73,15 @@ public class CadastroServidorView implements Serializable{
 			try {
 				request.login(email, perfilGoogle.getSubject());
 				session.setAttribute("usuario", servidor);
-				return "sucesso";
+				session.setAttribute("id", servidor.getId());
+				
+				result = "sucesso";
 			} catch (ServletException e) {
 				e.printStackTrace();
-				return "falha";
 			}
 		}
 		
-		return "falha";
+		return result;
 	}
 	
 	@PostConstruct

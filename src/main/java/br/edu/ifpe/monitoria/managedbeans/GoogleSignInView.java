@@ -6,7 +6,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
@@ -14,8 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.context.RequestContext;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -25,6 +23,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @ManagedBean (name="googleSignInView")
 public class GoogleSignInView implements Serializable{
@@ -39,56 +38,63 @@ public class GoogleSignInView implements Serializable{
 	@EJB
 	private UsuarioLocalBean usuarioBean;
 	
-	public void loginGoogle() {
-		
-		RequestContext context = RequestContext.getCurrentInstance();
+	public void loginGoogle() 
+	{
 		FacesContext fc = FacesContext.getCurrentInstance();
-		PerfilGoogle perfilGoogle;
 		
 		Payload payload = verificarIntegridade(idToken);
 		
-		if(payload != null)
-			System.out.println(payload.getHostedDomain());
-		
-		if(payload != null && payload.getHostedDomain().equals("a.recife.ifpe.edu.br") ){
-			perfilGoogle = new PerfilGoogle();
-			perfilGoogle.setFamilyName((String) payload.get("family_name"));
-			perfilGoogle.setGivenName((String) payload.get("given_name"));
-			perfilGoogle.setHostedDomain(payload.getHostedDomain());
-			perfilGoogle.setPicture((String) payload.get("picture"));
-			perfilGoogle.setSubject(payload.getSubject());
-			String email = payload.getEmail();
-			String nome = (String) payload.get("name");
+		if(payload != null && payload.getHostedDomain() != null && payload.getHostedDomain().equals("a.recife.ifpe.edu.br"))
+		{
+			LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
 			
 			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession)ec.getSession(true);
+			HttpSession session = (HttpSession) ec.getSession(true);
 			
-			
+			PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
+			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 			
 			try {
-				session.setAttribute("perfilGoogle", perfilGoogle);
-				session.setAttribute("nome", nome);
-				session.setAttribute("email", email);
-
-				Long id = usuarioBean.consultarIdByEmail(email);
-				session.setAttribute("id", id);
-
-				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-				request.login(email, perfilGoogle.getSubject());
-
+				request.login(payload.getEmail(), perfilMontado.getSubject());
+			
 				ec.redirect("../comum/homepage.xhtml");
-			} catch (ServletException | IOException | EJBException e) {
-				e.printStackTrace();
+				
+			} catch (ServletException e) {
+				
 				try {
 					ec.redirect("../publico/cadastroServidor.xhtml");
-				} catch (IOException ioe) {
-					e.printStackTrace();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
 				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		else {
-			context.addCallbackParam("logou", "Utilize seu email instituncional");
+		else 
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Por favor, utilize seu e-mail institucional."));
 		}
+	}
+	
+	private PerfilGoogle prepareSessionForLoginServidor(Payload payload, HttpSession session, Long userId)
+	{
+		PerfilGoogle perfilGoogle = new PerfilGoogle();
+		perfilGoogle.setFamilyName((String) payload.get("family_name"));
+		perfilGoogle.setGivenName((String) payload.get("given_name"));
+		perfilGoogle.setPicture((String) payload.get("picture"));
+		perfilGoogle.setHostedDomain(payload.getHostedDomain());
+		perfilGoogle.setSubject(payload.getSubject());
+		
+		String email = payload.getEmail();
+		String nome = (String) payload.get("name");
+		
+		session.setAttribute("perfilGoogle", perfilGoogle);
+		session.setAttribute("nome", nome);
+		session.setAttribute("email", email);
+		session.setAttribute("id", userId);
+		
+		return perfilGoogle;
 	}
 	
 	private Payload verificarIntegridade(String idToken) {
@@ -98,12 +104,11 @@ public class GoogleSignInView implements Serializable{
 		
 		Payload payload = null;
 		
-		// (Receive idTokenString by HTTPS POST)
 		try {
 			GoogleIdToken googleIdToken = verifier.verify(idToken);
 			if (idToken != null) {
 				payload = googleIdToken.getPayload();
-				// Print user identifier
+
 				System.out.println("User ID: " + payload.getSubject());
 			} else {
 				System.out.println("Invalid ID token.");
