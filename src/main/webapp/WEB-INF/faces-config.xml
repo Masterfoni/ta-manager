@@ -52,15 +52,7 @@
             <to-view-id>/admin/gerenciaCoordenacao.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
-       
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>departamentos</from-outcome>
-            <to-view-id>/admin/gerenciaDepartamento.xhtml</to-view-id>
-        </navigation-case>        
-    </navigation-rule>
-       
+              
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>

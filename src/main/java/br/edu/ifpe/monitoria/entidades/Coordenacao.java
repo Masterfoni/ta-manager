@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -36,7 +35,7 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT c FROM Coordenacao c WHERE c.nome LIKE :nome")
 })
 @NamedNativeQueries({
-     @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Departamento.class)
+     @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Coordenacao.class)
 })
 @Access(AccessType.FIELD)
 public class Coordenacao implements Serializable{
@@ -55,13 +54,14 @@ public class Coordenacao implements Serializable{
 	@Column (name="TXT_SIGLA")
 	private String sigla;
 	
-	@NotNull(message = "{mensagem.associacao}{tipo.departamento}")
-	@ManyToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
-	private Departamento departamento;
+	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
+	@Column (name="TXT_CURSO")
+	private String curso;
 	
-	@NotNull(message = "{mensagem.associacao}{tipo.coordenador}")
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@Column (name="TXT_DEPARTAMENTO")
+	private String departamento;
+	
+	@OneToOne (fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
 	private Servidor coordenador;
 
@@ -81,14 +81,6 @@ public class Coordenacao implements Serializable{
 		this.sigla = sigla;
 	}
 
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
-
 	public Servidor getCoordenador() {
 		return coordenador;
 	}
@@ -105,7 +97,23 @@ public class Coordenacao implements Serializable{
 		this.id = id;
 	}
 	
-    @Override
+    public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);

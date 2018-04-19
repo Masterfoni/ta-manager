@@ -35,7 +35,6 @@ public class CoordenacaoLocalBean
 	{
 		Coordenacao coordAtualizar = em.createNamedQuery("Coordenacao.findById", Coordenacao.class).setParameter("id", coordenacao.getId()).getSingleResult();
 		
-		coordAtualizar.setDepartamento(coordenacao.getDepartamento());
 		coordAtualizar.setCoordenador(coordenacao.getCoordenador());
 		coordAtualizar.setSigla(coordenacao.getSigla());
 		coordAtualizar.setNome(coordenacao.getNome());
