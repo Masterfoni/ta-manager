@@ -39,7 +39,7 @@ public class Aluno extends Usuario implements Serializable {
 
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_CURSO", referencedColumnName = "ID")
-	private Coordenacao curso;
+	private Curso curso;
 
 	public String getMatricula() {
 		return matricula;
@@ -49,11 +49,11 @@ public class Aluno extends Usuario implements Serializable {
 		this.matricula = matricula;
 	}
 
-	public Coordenacao getCurso() {
+	public Curso getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Coordenacao curso) {
+	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
 }

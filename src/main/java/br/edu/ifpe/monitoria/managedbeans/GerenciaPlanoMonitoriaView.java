@@ -12,12 +12,12 @@ import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
-import br.edu.ifpe.monitoria.entidades.Coordenacao;
+import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
-import br.edu.ifpe.monitoria.localbean.CoordenacaoLocalBean;
+import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
@@ -38,14 +38,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	private EditalLocalBean editalbean;
 	
 	@EJB
-	private CoordenacaoLocalBean coordenacaobean;
+	private CursoLocalBean cursobean;
 	
 	@EJB
 	private ServidorLocalBean servidorbean;
 	
 	public List<ComponenteCurricular> componentes;
 	
-	public List<Coordenacao> coordenacoes;
+	public List<Curso> cursos;
 	
 	public List<PlanoMonitoria> planos;
 	
@@ -63,12 +63,12 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public long editalId;
 	
-	public List<Coordenacao> getCoordenacoes() {
-		return coordenacoes;
+	public List<Curso> getCursos() {
+		return cursos;
 	}
 
-	public void setCoordenacoes(List<Coordenacao> coordenacoes) {
-		this.coordenacoes = coordenacoes;
+	public void setCoordenacoes(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 
 	public String getNomeBusca() {
@@ -147,7 +147,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void init() {
 		nomeBusca = "";
 		
-		coordenacoes = coordenacaobean.consultaCoordenacoes();
+		cursos = cursobean.consultaCursos();
 		componentes = componentebean.consultaComponentesCurriculares();
 		servidores = servidorbean.consultaServidores();
 		planos = planobean.consultaPlanos();

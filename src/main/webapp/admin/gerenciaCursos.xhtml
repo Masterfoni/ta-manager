@@ -5,7 +5,7 @@
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
-		<link rel="stylesheet" href="gerenciaCoordenacao.css"></link>
+		<link rel="stylesheet" href="gerenciaCursos.css"></link>
 		<title>Administração de Coordenações</title>
 	</h:head>
 	
@@ -26,18 +26,18 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h:form>
-						<h:dataTable id="tabelaCoords" value="#{gerenciaCoordenacaoView.coordenacoes}" var="coordenacao" styleClass="table">
+						<h:dataTable id="tabelaCoords" value="#{gerenciaCursoView.cursos}" var="curso" styleClass="table">
 												
 							<h:column>
-								<strong>#{coordenacao.curso}</strong><br />
-								Coordenação: #{coordenacao.sigla}<br />
-								Coordenador: #{coordenacao.coordenador.nome}
+								<strong>#{curso.nome}</strong><br />
+								Coordenação: #{curso.coordenação}<br />
+								Coordenador: #{curso.coordenador.nome}
 							</h:column>
 							<h:column>
-								<h:commandButton actionListener="#{gerenciaCoordenacaoView.deletaCoordenacao(coordenacao)}"
+								<h:commandButton actionListener="#{gerenciaCursoView.deletaCurso(curso)}"
 													value="Deletar" update="@form" class="btn btn-danger" />
 								<span>   </span>
-								<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCoordenacaoView.alteraCoordenacao(coordenacao)}" 
+								<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
 													value="Alterar" class="btn btn-info alterador">
 									<f:ajax execute="@form" render=":formAtualizador :atualizaCoord" />
 								</h:commandButton>
@@ -68,37 +68,37 @@
 									<div class="form-group">
 										<label for="cursoCadastro">Curso</label>
 										<h:inputText id="cursoCadastro" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.curso}">
+														value="#{gerenciaCursoView.cursoAtualizado.nome}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="siglaCadastro">Sigla</label>
 										<h:inputText id="siglaCadastro" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.sigla}">
+														value="#{gerenciaCursoView.cursoAtualizado.sigla}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="nomeCadastro">Cordenação (sigla)</label>
 										<h:inputText id="nomeCadastro" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.nome}">
+														value="#{gerenciaCursoView.cursoAtualizado.coordenação}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="departamentoCadastro">Departamento (sigla)</label>
 										<h:inputText id="departamentoCadastro" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.departamento}">
+														value="#{gerenciaCursoView.cursoAtualizado.departamento}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Coordenador</label>
-										<h:selectOneMenu value="#{gerenciaCoordenacaoView.coordenacaoAtualizada.coordenador}" converter="servidorConverter">
-											<f:selectItems value="#{gerenciaCoordenacaoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
+										<h:selectOneMenu value="#{gerenciaCursoView.cursoAtualizado.coordenador}" converter="servidorConverter">
+											<f:selectItems value="#{gerenciaCursoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
 										</h:selectOneMenu>
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaCoordenacaoView.persisteAlteracao()}" 
+								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaCursoView.persisteAlteracao()}" 
 													update="@form" class="btn btn-info" />
 								<span>  </span>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -122,37 +122,37 @@
 									<div class="form-group">
 										<label for="cursoCadastroC">Curso</label>
 										<h:inputText id="cursoCadastroC" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoPersistida.curso}">
+														value="#{gerenciaCursoView.cursoPersistido.nome}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="siglaCadastroC">Sigla</label>
 										<h:inputText id="siglaCadastroC" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoPersistida.sigla}">
+														value="#{gerenciaCursoView.cursoPersistido.sigla}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="nomeCadastroC">Cordenação (sigla)</label>
 										<h:inputText id="nomeCadastroC" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoPersistida.nome}">
+														value="#{gerenciaCursoView.cursoPersistido.coordenação}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="departamentoCadastroC">Departamento (sigla)</label>
 										<h:inputText id="departamentoCadastroC" class="form-control" 
-														value="#{gerenciaCoordenacaoView.coordenacaoPersistida.departamento}">
+														value="#{gerenciaCursoView.cursoPersistido.departamento}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Coordenador</label>
-										<h:selectOneMenu styleClass="form-control" value="#{gerenciaCoordenacaoView.coordenacaoPersistida.coordenador}" converter="servidorConverter">
-											<f:selectItems value="#{gerenciaCoordenacaoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
+										<h:selectOneMenu styleClass="form-control" value="#{gerenciaCursoView.cursoPersistido.coordenador}" converter="servidorConverter">
+											<f:selectItems value="#{gerenciaCursoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
 										</h:selectOneMenu>
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<h:commandButton value="Cadastrar" actionListener="#{gerenciaCoordenacaoView.cadastrarCoordenacao()}" 
+								<h:commandButton value="Cadastrar" actionListener="#{gerenciaCursoView.cadastrarCurso()}" 
 													update="@form" class="btn btn-info" />
 								<span>  </span>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -165,6 +165,6 @@
 		
 		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
 		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="./gerenciaCoordenacao.js"></script>
+		<script src="./gerenciaCursos.js"></script>
 	</h:body>
 </html>

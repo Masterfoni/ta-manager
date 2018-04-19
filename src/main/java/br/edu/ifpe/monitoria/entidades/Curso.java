@@ -18,32 +18,31 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@SequenceGenerator (name = "SEQUENCIA_COORDENACAO",
-		sequenceName = "SQ_COORDENACAO",
+@SequenceGenerator (name = "SEQUENCIA_CURSO",
+		sequenceName = "SQ_CURSO",
 		initialValue = 1,
 		allocationSize = 1)
-@Table(name="TB_COORDENACAO")
+@Table(name="TB_CURSO")
 @NamedQueries({
-	@NamedQuery(name = "Coordenacao.findAll", query = "SELECT c FROM Coordenacao c"),
-	@NamedQuery(name = "Coordenacao.findById", query = "SELECT c FROM Coordenacao c WHERE c.id = :id"),
-    @NamedQuery(name = "Coordenacao.findBySigla", query = "SELECT c FROM Coordenacao c WHERE c.sigla LIKE :sigla"),
-    @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT c FROM Coordenacao c WHERE c.nome LIKE :nome")
+	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
+	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
+    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla"),
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome")
 })
 @NamedNativeQueries({
-     @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Coordenacao.class)
+     @NamedNativeQuery(name = "Curso.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Curso.class)
 })
 @Access(AccessType.FIELD)
-public class Coordenacao implements Serializable{
+public class Curso implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_COORDENACAO")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CURSO")
 	private Long id;
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
@@ -55,8 +54,8 @@ public class Coordenacao implements Serializable{
 	private String sigla;
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
-	@Column (name="TXT_CURSO")
-	private String curso;
+	@Column (name="TXT_COORDENACAO")
+	private String coordenação;
 	
 	@Column (name="TXT_DEPARTAMENTO")
 	private String departamento;
@@ -97,12 +96,12 @@ public class Coordenacao implements Serializable{
 		this.id = id;
 	}
 	
-    public String getCurso() {
-		return curso;
+	public String getCoordenação() {
+		return coordenação;
 	}
 
-	public void setCurso(String curso) {
-		this.curso = curso;
+	public void setCoordenação(String coordenação) {
+		this.coordenação = coordenação;
 	}
 
 	public String getDepartamento() {
@@ -122,13 +121,13 @@ public class Coordenacao implements Serializable{
 
     @Override
     public boolean equals(Object object) {
-        return (object instanceof Coordenacao) && (id != null) 
-             ? id.equals(((Coordenacao) object).getId()) 
+        return (object instanceof Curso) && (id != null) 
+             ? id.equals(((Curso) object).getId()) 
              : (object == this);
     }
     
     @Override
     public String toString() {
-        return "br.edu.ifpe.monitoria.entidades.Coordenacao[ id=" + id + ":" + nome + " ]";
+        return "br.edu.ifpe.monitoria.entidades.Curso[ id=" + id + ":" + nome + " ]";
     }
 }
