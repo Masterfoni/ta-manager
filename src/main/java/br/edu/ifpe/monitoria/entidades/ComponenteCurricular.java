@@ -86,8 +86,8 @@ public class ComponenteCurricular implements Serializable{
 
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
-	private Coordenacao coordenacao;
+	@JoinColumn (name = "ID_CURSO", referencedColumnName = "ID")
+	private Curso curso;
 
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
@@ -118,12 +118,12 @@ public class ComponenteCurricular implements Serializable{
 		this.periodo = periodo;
 	}
 
-	public Coordenacao getCoordenacao() {
-		return coordenacao;
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setCoordenacao(Coordenacao coordenacao) {
-		this.coordenacao = coordenacao;
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 	
 	public Integer getCargaHoraria() {

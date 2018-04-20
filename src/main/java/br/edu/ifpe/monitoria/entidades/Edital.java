@@ -41,6 +41,14 @@ public class Edital {
 	@Column(name = "TXT_NUMERO_EDITAL")
 	private String numeroEdital;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
+	@Column(name = "TXT_NUMERO")
+	private int numero;
+	
+	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
+	@Column(name = "TXT_ANO")
+	private int ano;
+	
 	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
@@ -50,6 +58,16 @@ public class Edital {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_INI_INSERCAO_PM")
+	private Date inicioInsercaoPlano;
+
+	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_FIM_INSCERCAO_PM")
+	private Date fimInsercaoPlano;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.iniestudante}")
 	@Temporal(TemporalType.DATE)
@@ -61,6 +79,22 @@ public class Edital {
 	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
 
+	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_INI_INSERCAO_NT")
+	private Date inicioInsercaoNota;
+
+	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_FIM_INSCERCAO_NT")
+	private Date fimInsercaoNota;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_FIM_EDITAL")
+	private Date fimEdital;
+	
+	
 	public String getNumeroEdital() {
 		return numeroEdital;
 	}

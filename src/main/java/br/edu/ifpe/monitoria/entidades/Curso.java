@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -19,32 +18,31 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@SequenceGenerator (name = "SEQUENCIA_COORDENACAO",
-		sequenceName = "SQ_COORDENACAO",
+@SequenceGenerator (name = "SEQUENCIA_CURSO",
+		sequenceName = "SQ_CURSO",
 		initialValue = 1,
 		allocationSize = 1)
-@Table(name="TB_COORDENACAO")
+@Table(name="TB_CURSO")
 @NamedQueries({
-	@NamedQuery(name = "Coordenacao.findAll", query = "SELECT c FROM Coordenacao c"),
-	@NamedQuery(name = "Coordenacao.findById", query = "SELECT c FROM Coordenacao c WHERE c.id = :id"),
-    @NamedQuery(name = "Coordenacao.findBySigla", query = "SELECT c FROM Coordenacao c WHERE c.sigla LIKE :sigla"),
-    @NamedQuery(name = "Coordenacao.findByNome", query = "SELECT c FROM Coordenacao c WHERE c.nome LIKE :nome")
+	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
+	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
+    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla"),
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome")
 })
 @NamedNativeQueries({
-     @NamedNativeQuery(name = "Coordenacao.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Departamento.class)
+     @NamedNativeQuery(name = "Curso.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Curso.class)
 })
 @Access(AccessType.FIELD)
-public class Coordenacao implements Serializable{
+public class Curso implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_COORDENACAO")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CURSO")
 	private Long id;
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
@@ -55,13 +53,14 @@ public class Coordenacao implements Serializable{
 	@Column (name="TXT_SIGLA")
 	private String sigla;
 	
-	@NotNull(message = "{mensagem.associacao}{tipo.departamento}")
-	@ManyToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
-	private Departamento departamento;
+	@NotBlank(message = "{mensagem.notnull}{tipo.coordenacao}")
+	@Column (name="TXT_COORDENACAO")
+	private String coordenação;
 	
-	@NotNull(message = "{mensagem.associacao}{tipo.coordenador}")
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@Column (name="TXT_DEPARTAMENTO")
+	private String departamento;
+	
+	@OneToOne (fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "ID_COORDENADOR", referencedColumnName = "ID_USUARIO")
 	private Servidor coordenador;
 
@@ -81,14 +80,6 @@ public class Coordenacao implements Serializable{
 		this.sigla = sigla;
 	}
 
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
-
 	public Servidor getCoordenador() {
 		return coordenador;
 	}
@@ -105,7 +96,23 @@ public class Coordenacao implements Serializable{
 		this.id = id;
 	}
 	
-    @Override
+	public String getCoordenação() {
+		return coordenação;
+	}
+
+	public void setCoordenação(String coordenação) {
+		this.coordenação = coordenação;
+	}
+
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -114,13 +121,13 @@ public class Coordenacao implements Serializable{
 
     @Override
     public boolean equals(Object object) {
-        return (object instanceof Coordenacao) && (id != null) 
-             ? id.equals(((Coordenacao) object).getId()) 
+        return (object instanceof Curso) && (id != null) 
+             ? id.equals(((Curso) object).getId()) 
              : (object == this);
     }
     
     @Override
     public String toString() {
-        return "br.edu.ifpe.monitoria.entidades.Coordenacao[ id=" + id + ":" + nome + " ]";
+        return "br.edu.ifpe.monitoria.entidades.Curso[ id=" + id + ":" + nome + " ]";
     }
 }
