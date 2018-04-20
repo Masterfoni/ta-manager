@@ -53,7 +53,7 @@ public class Curso implements Serializable{
 	@Column (name="TXT_SIGLA")
 	private String sigla;
 	
-	@NotBlank(message = "{mensagem.notnull}{tipo.sigla}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.coordenacao}")
 	@Column (name="TXT_COORDENACAO")
 	private String coordenação;
 	

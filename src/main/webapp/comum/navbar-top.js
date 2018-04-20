@@ -1,3 +1,3 @@
 function goToProfile() {
-    window.location.href = "gerenciaPerfil.xhtml";
+    window.location.href = "/gem/comum/gerenciaPerfil.xhtml";
 }
