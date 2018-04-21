@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -37,67 +39,69 @@ public class Edital {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_EDITAL")
 	private Long id;
 	
-	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
+	@NotBlank
 	@Column(name = "TXT_NUMERO_EDITAL")
 	private String numeroEdital;
 	
-	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
+	@NotNull(message = "{mensagem.notnull}{tipo.numeroedital}")
 	@Column(name = "TXT_NUMERO")
 	private Integer numero;
 	
-	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
+	@NotNull(message = "{mensagem.notnull}{tipo.anoedital}")
+	@Max(2100) 
+	@Min(2010)
 	@Column(name = "TXT_ANO")
 	private Integer ano;
 	
 	@Column(name = "BOOL_VIGENTE")
 	private boolean vigente;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@NotNull(message = "{mensagem.todos}{tipo.periodocc}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodocc}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodopm}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSERCAO_PM")
 	private Date inicioInsercaoPlano;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodopm}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCERCAO_PM")
 	private Date fimInsercaoPlano;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.iniestudante}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodoie}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_ESTUDANTE")
 	private Date inicioInscricaoEstudante;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.fimestudante}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodoie}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodoin}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSERCAO_NT")
 	private Date inicioInsercaoNota;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodoin}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCERCAO_NT")
 	private Date fimInsercaoNota;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodom}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_MONITORIA")
 	private Date inicioMonitoria;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodom}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_MONITORIA")
 	private Date fimMonitoria;

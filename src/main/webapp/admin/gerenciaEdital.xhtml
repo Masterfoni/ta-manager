@@ -67,14 +67,14 @@
 									<div class="form-group row">
 										<div class="col-sm-5">
 											<label for="numeroCadastro">Numero</label>
-											<h:inputText id="numeroCadastro" class="form-control" 
+											<h:inputText type="number" id="numeroCadastro" class="form-control" 
 														value="#{gerenciaEditalView.editalAtualizado.numero}">
 														<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-5">
-											<label for="anoCadastro">Ano</label>
-											<h:inputText id="anoCadastro" class="form-control" 
+											<label  for="anoCadastro">Ano</label>
+											<h:inputText type="number" min="2010" max="2100" id="anoCadastro" class="form-control" 
 														value="#{gerenciaEditalView.editalAtualizado.ano}">
 														<f:convertNumber integerOnly="true"/>
 											</h:inputText>
@@ -217,14 +217,14 @@
 									<div class="form-group row">
 										<div class="col-sm-5">
 											<label for="numeroCadastroE">Numero</label>
-											<h:inputText id="numeroCadastroE" class="form-control" 
+											<h:inputText type="number" id="numeroCadastroE" class="form-control" 
 														value="#{gerenciaEditalView.editalPersistido.numero}">
 														<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-5">
 											<label for="anoCadastroE">Ano</label>
-											<h:inputText id="anoCadastroE" class="form-control" 
+											<h:inputText type="number" min="2010" max="2100" id="anoCadastroE" class="form-control" 
 														value="#{gerenciaEditalView.editalPersistido.ano}">
 														<f:convertNumber integerOnly="true"/>
 											</h:inputText>

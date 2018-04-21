@@ -73,19 +73,42 @@ public class GerenciaEditalView implements Serializable {
 	
 	public void cadastrarEdital()
 	{
-		editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
-		if(editalbean.persisteEdital(editalPersistido))
-		{
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+		if(validarDatas(editalPersistido)) {		
+			editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
+			if(editalbean.persisteEdital(editalPersistido))
+			{
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+				editalPersistido = new Edital();
+			}
 		}
 	}
 	
+	private boolean validarDatas(Edital edital) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		boolean flag = true;
+		if (edital.getInicioInscricaoComponenteCurricular().after(edital.getFimInscricaoComponenteCurricular())) {
+			context.addMessage(null, new FacesMessage("A data para o fim de Inserção do Componente Curricular deve ser depois da data de início."));
+			flag = false;
+		}  if (edital.getInicioInscricaoEstudante().after(edital.getFimInscricaoEstudante())) {
+			context.addMessage(null, new FacesMessage("A data para o fim de Inscrição dos Alunos deve ser depois da data de início."));
+			flag = false;
+		}  if (edital.getInicioInsercaoNota().after(edital.getFimInsercaoNota())) {
+			context.addMessage(null, new FacesMessage("A data para o fim de Inserção das Notas deve ser depois da data de início."));
+			flag = false;
+		}  if (edital.getInicioInsercaoPlano().after(edital.getFimInsercaoPlano())) {
+			context.addMessage(null, new FacesMessage("A data para o fim de Inserção dos Planos de Monitoria deve ser depois da data de início."));
+			flag = false;
+		}  if (edital.getInicioMonitoria().after(edital.getFimMonitoria())) {
+			context.addMessage(null, new FacesMessage("A data para o fim da Monitoria deve ser depois da data de início."));
+			flag = false;
+		}
+		return flag;
+	}
+
 	public String deletaEdital(Edital edital) {
 		editais.remove(edital);
-		
 		editalbean.deletaEdital(edital.getId());
-		
 		return "";
 	}
 	
@@ -95,7 +118,9 @@ public class GerenciaEditalView implements Serializable {
 	}
 	
 	public void persisteAlteracao() {
-		editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
-		editalbean.atualizaEdital(editalAtualizado);
+		if(validarDatas(editalAtualizado)) {	
+			editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
+			editalbean.atualizaEdital(editalAtualizado);
+		}
 	}
 }
