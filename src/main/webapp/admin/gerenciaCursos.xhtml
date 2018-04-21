@@ -5,7 +5,7 @@
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
-		<link rel="stylesheet" href="gerenciaCursos.css"></link>
+		<link rel="stylesheet" href="gerencia.css"></link>
 		<title>Administração de Coordenações</title>
 	</h:head>
 	
@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-xs-6  text-right">		
 					<h:commandButton value="Adicionar novo Curso" class="btn btn-default cadastrador">
-						<f:ajax execute="@none" render="cadastraCoord" />
+						<f:ajax execute="@none" render="cadastraCurso" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -117,7 +117,7 @@
 									<h4 class="modal-title">Cadastre um Curso</h4>
 							</div>
 							<div class="modal-body">
-								<div id="cadastraCoord">
+								<div id="cadastraCurso">
 									<div class="form-group">
 										<label for="cursoCadastroC">Curso</label>
 										<h:inputText id="cursoCadastroC" class="form-control" 

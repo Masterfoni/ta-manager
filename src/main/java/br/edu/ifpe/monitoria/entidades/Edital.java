@@ -43,11 +43,14 @@ public class Edital {
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
 	@Column(name = "TXT_NUMERO")
-	private int numero;
+	private Integer numero;
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.numeroedital}")
 	@Column(name = "TXT_ANO")
-	private int ano;
+	private Integer ano;
+	
+	@Column(name = "BOOL_VIGENTE")
+	private boolean vigente;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
 	@Temporal(TemporalType.DATE)
@@ -89,18 +92,46 @@ public class Edital {
 	@Column(name = "DT_FIM_INSCERCAO_NT")
 	private Date fimInsercaoNota;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.inicc}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_INI_MONITORIA")
+	private Date inicioMonitoria;
+
 	@NotNull(message = "{mensagem.notnull}{tipo.fimcc}")
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DT_FIM_EDITAL")
-	private Date fimEdital;
-	
-	
-	public String getNumeroEdital() {
+	@Column(name = "DT_FIM_MONITORIA")
+	private Date fimMonitoria;
+
+    public String getNumeroEdital() {
 		return numeroEdital;
 	}
 
 	public void setNumeroEdital(String numeroEdital) {
 		this.numeroEdital = numeroEdital;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public Integer getAno() {
+		return ano;
+	}
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+	public boolean isVigente() {
+		return vigente;
+	}
+
+	public void setVigente(boolean vigente) {
+		this.vigente = vigente;
 	}
 
 	public Date getInicioInscricaoComponenteCurricular() {
@@ -119,6 +150,22 @@ public class Edital {
 		this.fimInscricaoComponenteCurricular = fimInscricaoComponenteCurricular;
 	}
 
+	public Date getInicioInsercaoPlano() {
+		return inicioInsercaoPlano;
+	}
+
+	public void setInicioInsercaoPlano(Date inicioInsercaoPlano) {
+		this.inicioInsercaoPlano = inicioInsercaoPlano;
+	}
+
+	public Date getFimInsercaoPlano() {
+		return fimInsercaoPlano;
+	}
+
+	public void setFimInsercaoPlano(Date fimInsercaoPlano) {
+		this.fimInsercaoPlano = fimInsercaoPlano;
+	}
+
 	public Date getInicioInscricaoEstudante() {
 		return inicioInscricaoEstudante;
 	}
@@ -135,11 +182,43 @@ public class Edital {
 		this.fimInscricaoEstudante = fimInscricaoEstudante;
 	}
 
+	public Date getInicioInsercaoNota() {
+		return inicioInsercaoNota;
+	}
+
+	public void setInicioInsercaoNota(Date inicioInsercaoNota) {
+		this.inicioInsercaoNota = inicioInsercaoNota;
+	}
+
+	public Date getFimInsercaoNota() {
+		return fimInsercaoNota;
+	}
+
+	public void setFimInsercaoNota(Date fimInsercaoNota) {
+		this.fimInsercaoNota = fimInsercaoNota;
+	}
+
+	public Date getInicioMonitoria() {
+		return inicioMonitoria;
+	}
+
+	public void setInicioMonitoria(Date inicioMonitoria) {
+		this.inicioMonitoria = inicioMonitoria;
+	}
+
+	public Date getFimMonitoria() {
+		return fimMonitoria;
+	}
+
+	public void setFimMonitoria(Date fimMonitoria) {
+		this.fimMonitoria = fimMonitoria;
+	}
+
 	public Long getId() {
 		return id;
 	}
-	
-    @Override
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);

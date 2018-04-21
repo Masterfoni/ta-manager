@@ -32,6 +32,7 @@ public class GerenciaEditalView implements Serializable {
 	public String numeroBusca;
 	
 	public List<Edital> getEditais() {
+		editais = editalbean.consultaEditais();
 		return editais;
 	}
 
@@ -70,25 +71,14 @@ public class GerenciaEditalView implements Serializable {
 		editalPersistido = new Edital();
 	}
 	
-	@PostConstruct
-	public void init() {
-		editais = editalbean.consultaEditais();
-	}
-	
 	public void cadastrarEdital()
 	{
+		editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
 		if(editalbean.persisteEdital(editalPersistido))
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 		}
-	}
-	
-	public void buscaEdital() {
-		if(numeroBusca.isEmpty())
-			this.editais = editalbean.consultaEditais();
-		else
-			this.editais = editalbean.consultaEditalByNumeroEdital(numeroBusca);
 	}
 	
 	public String deletaEdital(Edital edital) {
@@ -105,6 +95,7 @@ public class GerenciaEditalView implements Serializable {
 	}
 	
 	public void persisteAlteracao() {
+		editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
 		editalbean.atualizaEdital(editalAtualizado);
 	}
 }
