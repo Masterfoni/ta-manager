@@ -74,6 +74,7 @@
         <auth-constraint>
             <description/>
             <role-name>professor</role-name>
+            <role-name>comissao</role-name>
         </auth-constraint>     
     </security-constraint>
   
@@ -95,7 +96,7 @@
             <description/>
             <role-name>aluno</role-name>
             <role-name>professor</role-name>
-            <role-name>administrativo</role-name>
+            <role-name>comissao</role-name>
         </auth-constraint>     
     </security-constraint>
   

@@ -19,12 +19,13 @@
         <li>
           <h:link href="#" outcome="edital">Edital</h:link>
         </li>
-        <li>
-          <h:link href="#" outcome="cursos">Cursos</h:link>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cursos<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><h:link href="#" outcome="cursos">Gerenciar Cursos</h:link></li>
+              <li><h:link href="#" outcome="cursos">Gerenciar Componentes Curriculares</h:link></li>
+            </ul>
         </li>
-        <li>
-          <a href="#">Logs de Ação</a>
-        </li> 
       </ul>
       <h:form>
         <ul class="nav navbar-nav navbar-right">
@@ -32,7 +33,7 @@
             <a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a>
           </li>
           <li>
-            <h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
+            <h:commandLink action="#{logoutView.logout}" value="Sair  "><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
           </li>
         </ul>
       </h:form>

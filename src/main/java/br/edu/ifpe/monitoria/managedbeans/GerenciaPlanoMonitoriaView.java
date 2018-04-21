@@ -1,7 +1,10 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -9,6 +12,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
@@ -96,6 +101,33 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public List<PlanoMonitoria> getPlanos() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		
+		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		
+		if(request.isUserInRole("comissao"))
+		{
+			planos = planobean.consultaPlanos();
+		} 
+		else
+		{
+			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
+			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(loggedServidor.getId());;
+			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(loggedServidor.getId());
+
+			if(!planosByServidor.isEmpty())
+			{
+				planosNaoRepetidos.addAll(planosByServidor);
+			}
+			if(!planosByCoordenador.isEmpty())
+			{
+				planosNaoRepetidos.addAll(planosByCoordenador);
+			}
+			
+			planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+		}
+		
 		return planos;
 	}
 
@@ -150,8 +182,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		cursos = cursobean.consultaCursos();
 		componentes = componentebean.consultaComponentesCurriculares();
 		servidores = servidorbean.consultaServidores();
-		planos = planobean.consultaPlanos();
 		editais = editalbean.consultaEditais();
+		planos = new ArrayList<PlanoMonitoria>();
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
@@ -186,7 +218,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public void alteraPlano(PlanoMonitoria plano) {
 		planoAtualizado = plano;
-		planoAtualizado.setEdital(editalbean.consultaEditalById(editalId));
 	}
 	
 	public void persisteAlteracao() {

@@ -22,7 +22,13 @@ public class PlanoMonitoriaLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"professor"})
+	/**
+	 * Método responsável por inserir no banco um novo plano de monitoria
+	 *
+	 * @param PlanoMonitoria uma instância de PlanoMonitoria que representa o plano à ser persistido
+	 * @return true no caso de sucesso 
+	 */
+	@RolesAllowed({"professor", "comissao"})
 	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
 		em.persist(plano);
@@ -30,6 +36,25 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
+	public List<PlanoMonitoria> consultaPlanosByServidor(Long id)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByProfessor", PlanoMonitoria.class).setParameter("id", id).getResultList();
+		
+		return planos;
+	}
+	
+	public List<PlanoMonitoria> consultaPlanosByCoordenador(Long id)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByCoordenador", PlanoMonitoria.class).setParameter("id", id).getResultList();
+		
+		return planos;
+	}
+	
+	/**
+	 * Método responsável por listar todos os planos cadastrados no sistema
+	 *
+	 * @return {@code List<PlanoMonitoria>} Uma lista de planos de monitoria, que pode estar vazia ou não. 
+	 */
 	@RolesAllowed({"professor", "comissao", "aluno"})
 	public List<PlanoMonitoria> consultaPlanos()
 	{
@@ -46,12 +71,10 @@ public class PlanoMonitoriaLocalBean
 		return planoPorId;
 	}
 	
-	@RolesAllowed({"professor"})
+	@RolesAllowed({"professor, caomissao"})
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
-		PlanoMonitoria planoAtualizar = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", plano.getId()).getSingleResult();
-
-		em.merge(planoAtualizar);
+		em.merge(plano);
 
 		return true;
 	}

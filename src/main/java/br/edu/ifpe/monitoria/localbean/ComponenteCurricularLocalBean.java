@@ -30,11 +30,17 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
+	/**
+	 * Método responsável por atualizar um componente curricular.
+	 *
+	 * @param componenteCurricular Um objeto ComponenteCurricular que representa o estado atualizado.
+	 * @return true no caso de sucesso 
+	 */
 	@RolesAllowed({"professor"})
 	public boolean atualizaComponenteCurricular(ComponenteCurricular componenteCurricular)
 	{
 		ComponenteCurricular componenteAtualizar = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
-											   .setParameter("id", componenteCurricular.getId()).getSingleResult();
+											   		.setParameter("id", componenteCurricular.getId()).getSingleResult();
 		
 		
 		em.merge(componenteAtualizar);
@@ -60,7 +66,7 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
-	@RolesAllowed({"professor"})
+	@RolesAllowed({"professor", "comissao"})
 	public boolean deletaComponenteCurricular(Long id)
 	{
 		ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -71,7 +77,7 @@ public class ComponenteCurricularLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor"})
+	@RolesAllowed({"professor", "comissao"})
 	public boolean persisteComponenteCurricular(@NotNull @Valid ComponenteCurricular componente)
 	{
 		em.persist(componente);
