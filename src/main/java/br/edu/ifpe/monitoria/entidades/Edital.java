@@ -29,8 +29,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "TB_EDITAL")
 @NamedQueries({
 	@NamedQuery(name = "Edital.findAll", query = "SELECT e FROM Edital e"),
-	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id"),
-    @NamedQuery(name = "Edital.findByNumeroEdital", query = "SELECT e FROM Edital e WHERE e.numeroEdital = :numeroEdital")
+	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id")
 })
 @Access(AccessType.FIELD)
 public class Edital {

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,48 +28,62 @@ public class GerenciaEditalView implements Serializable {
 	
 	public Edital editalPersistido;
 	
-	public String numeroBusca;
-	
+	/** Retorna todos os editais criados no sistema
+     * @return List<Edital> - Lista de editais
+     */
 	public List<Edital> getEditais() {
 		editais = editalbean.consultaEditais();
 		return editais;
 	}
-
+	
+	/** Atribui uma lista de editas 
+     * @param editais List<Edital>
+     */
 	public void setEditais(List<Edital> editais) {
 		this.editais = editais;
 	}
-
+	
+	/** Retorna um Edital gerado que será atualizado
+     * @return Edital - Edital atualizado
+     */
 	public Edital getEditalAtualizado() {
 		return editalAtualizado;
 	}
 
+	/** Atribui um edital para ser atualizado 
+     * @param editalAtualizado Edital
+     */
 	public void setEditalAtualizado(Edital editalAtualizado) {
 		this.editalAtualizado = editalAtualizado;
 	}
-
+	
+	/** Retorna um Edital que será criado
+     * @return Edital - Edital salvo
+     */
 	public Edital getEditalPersistido() {
 		return editalPersistido;
 	}
 
+	/** Atribui um edital para ser criado 
+     * @param editalPersistido Edital
+     */
 	public void setEditalPersistido(Edital editalPersistido) {
 		this.editalPersistido = editalPersistido;
 	}
 
-	public String getnumeroBusca() {
-		return numeroBusca;
-	}
-
-	public void setnumeroBusca(String numeroBusca) {
-		this.numeroBusca = numeroBusca;
-	}
-
+	
+	/** Construtor
+	 *  Inicializa as propriedades: editais, editalAtualizado e editalPersistido
+	 */
 	public GerenciaEditalView() {
-		numeroBusca = "";
 		editais = new ArrayList<Edital>();
 		editalAtualizado = new Edital();
 		editalPersistido = new Edital();
 	}
 	
+	/** Persiste no banco de dados um edital criado na propriedade editalPersistido 
+	 * Exibe uma mensagem ao usuário quando ocorre o sucesso na transação
+     */
 	public void cadastrarEdital()
 	{
 		if(validarDatas(editalPersistido)) {		
@@ -84,6 +97,11 @@ public class GerenciaEditalView implements Serializable {
 		}
 	}
 	
+	/** Valida as datas dos periodos de um edital 
+	 * As datas são validadas se a data de inicio de periodo for antes da data de término
+	 * @param editalPersistido Edital
+	 * @return boolean - Se as datas são válidos
+     */
 	private boolean validarDatas(Edital edital) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		boolean flag = true;
@@ -105,18 +123,27 @@ public class GerenciaEditalView implements Serializable {
 		}
 		return flag;
 	}
-
-	public String deletaEdital(Edital edital) {
+	
+	/** Exclui o edital informado do sistema 
+	 * @param edital Edital
+     */
+	public void deletaEdital(Edital edital) {
 		editais.remove(edital);
 		editalbean.deletaEdital(edital.getId());
-		return "";
 	}
 	
+	/** Seleciona o edital para exibir informaçoes de alteração 
+	 * @param edital Edital
+     */
 	public void alteraEdital(Edital edital) {
 		editalAtualizado = edital;
 		System.out.println(editalAtualizado);
 	}
 	
+	/** Altera um edital existente
+	 * O edital alterado esta na propriedade editalAtualizado 
+	 * @param edital Edital
+     */
 	public void persisteAlteracao() {
 		if(validarDatas(editalAtualizado)) {	
 			editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
