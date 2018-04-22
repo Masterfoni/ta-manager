@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
-import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
@@ -58,8 +57,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public List<Edital> editais;
 	
-	public ComponenteCurricular componentePersistido;
-	
 	public PlanoMonitoria planoPersistido;
 	
 	public PlanoMonitoria planoAtualizado;
@@ -84,14 +81,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.nomeBusca = nomeBusca;
 	}
 
-	public ComponenteCurricular getComponentePersistido() {
-		return componentePersistido;
-	}
-
-	public void setComponentePersistido(ComponenteCurricular componentePersistido) {
-		this.componentePersistido = componentePersistido;
-	}
-
 	public List<Servidor> getProfessores() {
 		return servidores;
 	}
@@ -100,6 +89,13 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.servidores = servidores;
 	}
 
+	/**
+	 * Método responsável por atualizar um componente curricular.
+	 * Este método verifica o papel atual do usuário logado, caso o papel seja de comissão, ele tem liberdade para filtrar todos os planos
+	 * caso não, ele filtra baseado nos privilégios de coordenador e, em última instância, professor (não coordenador).
+	 *
+	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria 
+	 */
 	public List<PlanoMonitoria> getPlanos() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -187,20 +183,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
-		componentePersistido = new ComponenteCurricular();
 		
 		editalId = 0;
 	}
 	
-	public void cadastrarComponente()
-	{
-		if(componentebean.persisteComponenteCurricular(componentePersistido))
-		{
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
-		}
-	}
-	
+	/**
+	 * Método cadastrar um novo plano de monitoria no sistema.
+	 *
+	 * @return {@code void}, no caso de sucesso ou erro, {@code FacesMessage} será adicionada no contexto atual. 
+	 */
 	public void cadastrarPlano()
 	{
 		planoPersistido.setEdital(editalbean.consultaEditalById(editalId));
@@ -222,9 +213,5 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public void persisteAlteracao() {
 		planobean.atualizaPlanoMonitoria(planoAtualizado);
-	}
-	
-	public Turno[] getTurns() {
-		return Turno.values();
 	}
 }

@@ -151,17 +151,10 @@
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group row">
-										<div class="col-sm-3">
-											<label>Componente Curricular</label>
-										</div>
-										<div class="col-sm-5">
-											<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
-												<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}"  itemLabel="#{comp.nome}"/>
-											</h:selectOneMenu>
-										</div>
-										<div class="col-sm-4">
-											<button type="button" class="form-control btn btn-primary cadastradorComponente">Cadastrar Componente</button>
-										</div>											
+										<label>Componente Curricular</label>
+										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}"  itemLabel="#{comp.nome}"/>
+										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
 										<label>Bolsistas</label>
@@ -196,73 +189,6 @@
 							<div class="modal-footer">
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarPlano()}" 
 												 update="@all" class="btn btn-info" />
-								<span>  </span>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							</div>
-						</h:form>
-					</div>
-				</div>
-			</div>
-			<!-- MODAL DE CADASTRO COMPONENTE CURRICULAR -->
-			<div id="myModal3" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<h:form class="dialogSignup">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">x</button>
-									<h4 class="modal-title">Cadastre um Componente Curricular</h4>
-							</div>
-							<div class="modal-body">
-								<div id="cadastraComponente">
-									<div class="form-group">
-										<label>Nome</label>
-										<h:inputText class="form-control" 
-														value="#{gerenciaPlanoMonitoriaView.componentePersistido.nome}">
-										</h:inputText>
-									</div>
-									<div class="form-group">
-										<label>Código</label>
-										<h:inputText class="form-control" 
-														value="#{gerenciaPlanoMonitoriaView.componentePersistido.codigo}">
-										</h:inputText>
-									</div>
-									<div class="form-group">
-										<label>Carga Horaria</label>
-										<h:inputText class="form-control numero2" 
-														value="#{gerenciaPlanoMonitoriaView.componentePersistido.cargaHoraria}">
-										</h:inputText>
-									</div>
-									<div class="form-group">
-										<label>Turno</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.turno}">
-												<f:selectItems value="#{gerenciaPlanoMonitoriaView.turns}" 
-																var="tur" itemValue="#{tur}" itemLabel="#{tur.label}"/>
-										</h:selectOneMenu>
-									</div>
-									
-									<div class="form-group">
-										<label>Período</label>
-										<h:inputText class="form-control periodo" 
-														value="#{gerenciaPlanoMonitoriaView.componentePersistido.periodo}">
-										</h:inputText>
-									</div>
-									<div class="form-group">
-										<label>Curso</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.curso}" converter="cursoConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
-										</h:selectOneMenu>
-									</div>
-									<div class="form-group">
-										<label>Professor</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.componentePersistido.professor}" converter="servidorConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.professores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
-										</h:selectOneMenu>
-									</div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<h:commandButton value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarComponente()}" 
-													update="@form" class="btn btn-info" />
 								<span>  </span>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 							</div>
