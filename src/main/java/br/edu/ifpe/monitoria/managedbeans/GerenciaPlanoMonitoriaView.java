@@ -156,6 +156,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		componentes = componentebean.consultaComponentesByProfessor(loggedServidor);
 		return componentes;
 	}
 
@@ -176,7 +179,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		nomeBusca = "";
 		
 		cursos = cursobean.consultaCursos();
-		componentes = componentebean.consultaComponentesCurriculares();
 		servidores = servidorbean.consultaServidores();
 		editais = editalbean.consultaEditais();
 		planos = new ArrayList<PlanoMonitoria>();

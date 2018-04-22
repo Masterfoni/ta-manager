@@ -36,6 +36,7 @@ import br.edu.ifpe.monitoria.validacao.ValidaPeriodo;
 @NamedQueries({
 	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c"),
 	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id"),
+	@NamedQuery(name = "ComponenteCurricular.findByProfessor", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor = :professor")
 })
 public class ComponenteCurricular implements Serializable{
 

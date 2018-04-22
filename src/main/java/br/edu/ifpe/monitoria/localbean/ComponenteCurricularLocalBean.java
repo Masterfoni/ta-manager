@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
@@ -99,5 +100,20 @@ public class ComponenteCurricularLocalBean
 		em.persist(componente);
 		
 		return true;
+	}
+
+	/**
+	 * Método responsável por procurar os componentes curriculares de um professor especifico.
+	 *
+	 * @param {@code Long} id Identificador único do professor
+	 * @return {@code List<ComponenteCurricular>} Lista de componentes curriculares de um professor
+	 */
+	@RolesAllowed({"professor"})
+	public List<ComponenteCurricular> consultaComponentesByProfessor(Servidor servidor) {
+		
+		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByProfessor", ComponenteCurricular.class)
+				 .setParameter("professor", servidor).getResultList();
+		
+		return componentes;
 	}
 }

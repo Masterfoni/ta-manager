@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,8 +21,9 @@ import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaComponenteCurricularView")
 @ViewScoped
-public class GerenciaComponenteCurricularView {
-	private static final long serialVersionUID = 1L;
+public class GerenciaComponenteCurricularView implements Serializable {
+
+	private static final long serialVersionUID = -7661212971462467078L;
 
 	@EJB
 	private ComponenteCurricularLocalBean componentebean;
