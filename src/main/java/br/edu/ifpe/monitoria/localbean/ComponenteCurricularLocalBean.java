@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
 @LocalBean
@@ -36,14 +38,10 @@ public class ComponenteCurricularLocalBean
 	 * @param componenteCurricular Um objeto ComponenteCurricular que representa o estado atualizado.
 	 * @return true no caso de sucesso 
 	 */
-	@RolesAllowed({"professor"})
+	@RolesAllowed({"professor", "comissao"})
 	public boolean atualizaComponenteCurricular(ComponenteCurricular componenteCurricular)
 	{
-		ComponenteCurricular componenteAtualizar = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
-											   		.setParameter("id", componenteCurricular.getId()).getSingleResult();
-		
-		
-		em.merge(componenteAtualizar);
+		em.merge(componenteCurricular);
 		
 		return true;
 	}
@@ -67,14 +65,25 @@ public class ComponenteCurricularLocalBean
 	}
 	
 	@RolesAllowed({"professor", "comissao"})
-	public boolean deletaComponenteCurricular(Long id)
+	public DelecaoRequestResult deletaComponenteCurricular(Long id)
 	{
-		ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
-										 		  .setParameter("id", id).getSingleResult();
+		DelecaoRequestResult result = new DelecaoRequestResult();
+		result.result = false;
 		
-		em.remove(componenteDeletado);
+		if(!em.createNamedQuery("PlanoMonitoria.findByComponente", PlanoMonitoria.class).setParameter("id", id).getResultList().isEmpty())
+		{
+			result.errors.add("Existem planos vinculados à este componente, não é possível deletá-lo!");
+		}
+		else 
+		{
+			ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
+														.setParameter("id", id).getSingleResult();
+			em.remove(componenteDeletado);
+			
+			result.result = true;
+		}
 		
-		return true;
+		return result;
 	}
 	
 	@RolesAllowed({"professor", "comissao"})
