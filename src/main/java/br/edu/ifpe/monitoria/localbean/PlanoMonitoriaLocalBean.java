@@ -71,7 +71,12 @@ public class PlanoMonitoriaLocalBean
 		return planoPorId;
 	}
 	
-	@RolesAllowed({"professor, caomissao"})
+	/**
+	 * Método responsável por persistir as atualizações de um plano de monitoria já cadastrado.
+	 *
+	 * @return {@code true} ou {@code false} dependendo do sucesso, ou não da operação.
+	 */
+	@RolesAllowed({"professor", "comissao"})
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
 		em.merge(plano);

@@ -64,6 +64,13 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
+	/**
+	 * Método responsável por remover um componente curricular do banco de dados.
+	 *
+	 * @param {@code Long} id Identificador ùnico do componente curricular
+	 * @return {@code DelecaoRequestResult} Objeto que engloba uma lista de erros e o resultado da operação, que caso seja bem sucedida,
+	 * será {@code true} e a lista de erros estará vazia.
+	 */
 	@RolesAllowed({"professor", "comissao"})
 	public DelecaoRequestResult deletaComponenteCurricular(Long id)
 	{
