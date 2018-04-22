@@ -5,7 +5,7 @@
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
-		<link rel="stylesheet" href="gerencia.css"></link>
+		<link rel="stylesheet" href="../admin/gerenciaEdital.css"></link>
 		<title>Administração de Editais</title>
 	</h:head>
 	
@@ -22,14 +22,22 @@
 					</h:commandButton>
 				</div>
 			</div>
+
+			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+				<div class="alert alert-warning alert-dismissable fade in err-m-10">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+					<h:messages/>
+				</div>
+			</h:panelGroup>
+
 			<div class="row">
 				<div class="col-lg-12">
 					<h:form>
-						<h:dataTable id="tabelaEditais" value="#{gerenciaEditalView.editais}" var="edital" styleClass="table">
+						<h:dataTable id="tabelaEditais" value="#{gerenciaEditalView.editais}" var="edital" styleClass="table"
+									 columnClasses="left,right">
 							<h:column>
-								<strong>#{edital.numeroEdital}</strong><br />
-								<h:panelGroup rendered="#{not edital.vigente}">Não esta vigente.</h:panelGroup>
-								<h:panelGroup rendered="#{edital.vigente}">Edital vigente.</h:panelGroup>
+								<strong>#{edital.numeroEdital}</strong><br/>
+								<span>#{not edital.vigente ? 'Não está vigente' : 'Edital vigente'}</span>
 							</h:column>
 							<h:column>
 								<h:commandButton actionListener="#{gerenciaEditalView.deletaEdital(edital)}"
@@ -44,13 +52,6 @@
 					</h:form>
 				</div>
 			</div>
-			
-			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-				<div class="alert alert-warning alert-dismissable fade in">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-					<h:messages/>
-				</div>
-			</h:panelGroup>
 			
 			<!-- MODAL DE ATUALIZAÇÃO -->
 			<div id="myModal" class="modal fade" role="dialog">

@@ -55,52 +55,52 @@ public class Edital {
 	@Column(name = "BOOL_VIGENTE")
 	private boolean vigente;
 	
-	@NotNull(message = "{mensagem.todos}{tipo.periodocc}")
+	@NotNull(message = "{mensagem.todos}{tipo.periodo.componente}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.periodocc}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.componente}{data.final}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_CC")
 	private Date fimInscricaoComponenteCurricular;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.periodopm}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.plano}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSERCAO_PM")
 	private Date inicioInsercaoPlano;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.periodopm}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.plano}{data.final}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCERCAO_PM")
 	private Date fimInsercaoPlano;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.periodoie}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.estudante}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_ESTUDANTE")
 	private Date inicioInscricaoEstudante;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.periodoie}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.estudante}{data.final}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCRICAO_ESTUDANTE")
 	private Date fimInscricaoEstudante;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.periodoin}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.notas}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSERCAO_NT")
 	private Date inicioInsercaoNota;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.periodoin}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.notas}{data.final}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCERCAO_NT")
 	private Date fimInsercaoNota;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.periodom}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.monitoria}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_MONITORIA")
 	private Date inicioMonitoria;
 
-	@NotNull(message = "{mensagem.notnull}{tipo.periodom}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.monitoria}{data.final}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_MONITORIA")
 	private Date fimMonitoria;
