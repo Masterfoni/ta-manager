@@ -1,9 +1,9 @@
 $(".cadastrador").click(function(e){
-    $("#myModal2").modal();
+    $("#myModal").modal();
 });
 
 $(".alterador").click(function(e) {
-    $("#myModal").modal();
+    $("#myModal2").modal();
 });
 
 $(".numero2").mask("99");

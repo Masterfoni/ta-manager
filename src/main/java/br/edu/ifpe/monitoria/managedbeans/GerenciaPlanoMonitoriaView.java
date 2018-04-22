@@ -1,7 +1,10 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -9,9 +12,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
-import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
@@ -53,8 +57,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public List<Edital> editais;
 	
-	public ComponenteCurricular componentePersistido;
-	
 	public PlanoMonitoria planoPersistido;
 	
 	public PlanoMonitoria planoAtualizado;
@@ -79,14 +81,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.nomeBusca = nomeBusca;
 	}
 
-	public ComponenteCurricular getComponentePersistido() {
-		return componentePersistido;
-	}
-
-	public void setComponentePersistido(ComponenteCurricular componentePersistido) {
-		this.componentePersistido = componentePersistido;
-	}
-
 	public List<Servidor> getProfessores() {
 		return servidores;
 	}
@@ -95,7 +89,41 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.servidores = servidores;
 	}
 
+	/**
+	 * Método responsável por atualizar um componente curricular.
+	 * Este método verifica o papel atual do usuário logado, caso o papel seja de comissão, ele tem liberdade para filtrar todos os planos
+	 * caso não, ele filtra baseado nos privilégios de coordenador e, em última instância, professor (não coordenador).
+	 *
+	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria 
+	 */
 	public List<PlanoMonitoria> getPlanos() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		
+		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		
+		if(request.isUserInRole("comissao"))
+		{
+			planos = planobean.consultaPlanos();
+		} 
+		else
+		{
+			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
+			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(loggedServidor.getId());;
+			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(loggedServidor.getId());
+
+			if(!planosByServidor.isEmpty())
+			{
+				planosNaoRepetidos.addAll(planosByServidor);
+			}
+			if(!planosByCoordenador.isEmpty())
+			{
+				planosNaoRepetidos.addAll(planosByCoordenador);
+			}
+			
+			planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+		}
+		
 		return planos;
 	}
 
@@ -128,6 +156,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		componentes = componentebean.consultaComponentesByProfessor(loggedServidor);
 		return componentes;
 	}
 
@@ -148,27 +179,21 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		nomeBusca = "";
 		
 		cursos = cursobean.consultaCursos();
-		componentes = componentebean.consultaComponentesCurriculares();
 		servidores = servidorbean.consultaServidores();
-		planos = planobean.consultaPlanos();
 		editais = editalbean.consultaEditais();
+		planos = new ArrayList<PlanoMonitoria>();
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
-		componentePersistido = new ComponenteCurricular();
 		
 		editalId = 0;
 	}
 	
-	public void cadastrarComponente()
-	{
-		if(componentebean.persisteComponenteCurricular(componentePersistido))
-		{
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
-		}
-	}
-	
+	/**
+	 * Método cadastrar um novo plano de monitoria no sistema.
+	 *
+	 * @return {@code void}, no caso de sucesso ou erro, {@code FacesMessage} será adicionada no contexto atual. 
+	 */
 	public void cadastrarPlano()
 	{
 		planoPersistido.setEdital(editalbean.consultaEditalById(editalId));
@@ -186,14 +211,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public void alteraPlano(PlanoMonitoria plano) {
 		planoAtualizado = plano;
-		planoAtualizado.setEdital(editalbean.consultaEditalById(editalId));
 	}
 	
 	public void persisteAlteracao() {
 		planobean.atualizaPlanoMonitoria(planoAtualizado);
-	}
-	
-	public Turno[] getTurns() {
-		return Turno.values();
 	}
 }

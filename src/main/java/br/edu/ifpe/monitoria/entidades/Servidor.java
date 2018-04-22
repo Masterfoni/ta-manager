@@ -20,7 +20,8 @@ import javax.validation.constraints.NotNull;
 @PrimaryKeyJoinColumn(name="ID_USUARIO", referencedColumnName="ID")
 @NamedQueries({
 	@NamedQuery(name = "Servidor.findAll", query = "SELECT s FROM Servidor s"),
-	@NamedQuery(name = "Servidor.findBySiape", query = "SELECT s FROM Servidor s WHERE s.siape = :siape")
+	@NamedQuery(name = "Servidor.findBySiape", query = "SELECT s FROM Servidor s WHERE s.siape = :siape"),
+	@NamedQuery(name = "Servidor.findById", query = "SELECT s FROM Servidor s WHERE s.id = :id")
 })
 public class Servidor extends Usuario implements Serializable {
 

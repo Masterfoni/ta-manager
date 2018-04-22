@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">
-          <img src="../resources/images/gem-logo.png" width="30" height="20" alt="Logo do GEM"></img>
+          <img src="../resources/images/gem-logo.png" class="d-inline-block" width="30" height="20" alt="Logo do GEM"></img>
         </a>
       </div>
       <ul class="nav navbar-nav">
@@ -19,12 +19,13 @@
         <li>
           <h:link href="#" outcome="edital">Edital</h:link>
         </li>
-        <li>
-          <h:link href="#" outcome="cursos">Cursos</h:link>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gerencia de Cursos<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><h:link href="#" outcome="cursos">Cursos</h:link></li>
+              <li><h:link href="#" outcome="componentes">Componentes Curriculares</h:link></li>
+            </ul>
         </li>
-        <li>
-          <a href="#">Logs de Ação</a>
-        </li> 
       </ul>
       <h:form>
         <ul class="nav navbar-nav navbar-right">
@@ -32,7 +33,7 @@
             <a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a>
           </li>
           <li>
-            <h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
+            <h:commandLink action="#{logoutView.logout}" value="Sair  "><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
           </li>
         </ul>
       </h:form>

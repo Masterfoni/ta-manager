@@ -1,0 +1,15 @@
+td.right {
+    text-align: right;
+}
+
+td.center {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+.err-m-10 {
+    margin: 10px;
+}
