@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+            GEM
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h:link href="#" class="nav-link" outcome="home">Home</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="inscricao">Inscrição de Candidato</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="planos">Plano de Monitoria</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="edital">Edital</h:link>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gerencia de Cursos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <h:link class="dropdown-item" href="#" outcome="cursos">Cursos</h:link>
+                        <h:link class="dropdown-item" href="#" outcome="componentes">Componentes Curriculares</h:link>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</html>

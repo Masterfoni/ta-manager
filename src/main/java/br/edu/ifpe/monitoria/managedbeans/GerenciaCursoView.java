@@ -76,13 +76,6 @@ public class GerenciaCursoView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-
-//		servidores = servidorbean.consultaServidores();
-//		Servidor vazio = new Servidor();
-//		vazio.setNome("-- Informar depois --");
-//		vazio.setId(-1L);
-//		servidores.add(vazio);
-		
 		cursoAtualizado = new Curso();
 		cursoPersistido = new Curso();
 		cursos = new ArrayList<Curso>();
@@ -102,7 +95,6 @@ public class GerenciaCursoView implements Serializable {
 		
 	public String deletaCurso(Curso curso) {
 		cursos.remove(curso);
-		
 		cursobean.deletaCurso(curso.getId());
 		
 		return "";
@@ -110,7 +102,6 @@ public class GerenciaCursoView implements Serializable {
 	
 	public void alteraCurso(Curso curso) {
 		cursoAtualizado = curso;
-		System.out.println(cursoAtualizado);
 	}
 	
 	public void persisteAlteracao() {
