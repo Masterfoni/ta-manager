@@ -32,7 +32,8 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
 			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("
 			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))"),
-	@NamedQuery(name = "Monitoria.findByAluno", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital AND m.aluno = :aluno")
+	@NamedQuery(name = "Monitoria.findByAluno", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital AND m.aluno = :aluno"),
+	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{

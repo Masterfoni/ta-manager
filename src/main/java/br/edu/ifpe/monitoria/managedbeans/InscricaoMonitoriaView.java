@@ -55,6 +55,8 @@ public class InscricaoMonitoriaView implements Serializable{
 	
 	private Aluno aluno;
 	
+	private List<Edital> editais;
+	
 	private Edital edital;
 
 	public InscricaoMonitoriaView() {
@@ -101,9 +103,8 @@ public class InscricaoMonitoriaView implements Serializable{
 		return false;
 	}
 	
-	public void checkBolsa(PlanoMonitoria plano) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(plano.getJustificativa()));
+	public void selecionarEdital(Edital edital) {
+
 	}
 	
 	public List<PlanoMonitoria> getPlanos() {
@@ -127,7 +128,7 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 	
 	public Monitoria getMonitoria() {
-		if(monitoria == null) {
+		if(monitoria == null && edital != null) {
 			monitoria = monitoriaBean.consultaMonitoriaByAluno(getAluno(), getEdital());
 		}
 		return monitoria;
@@ -165,6 +166,7 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 
 	public Curso getCurso() {
+		curso = getAluno().getCurso();
 		return curso;
 	}
 
@@ -172,23 +174,30 @@ public class InscricaoMonitoriaView implements Serializable{
 		this.curso = curso;
 	}
 
-	public Edital getEdital() {
-		if(edital == null) {
-			List<Edital> editais = editalBean.consultaEditais();
-			edital = null;
+	public List<Edital> getEditais() {
+		if(editais == null) {
+			List<Edital> editaisVigentes = editalBean.consultaEditaisVigentes();
+			editais = new ArrayList<Edital>();
 			Date dataAtual = new Date();
-			for (Edital ed : editais) {
+			for (Edital ed : editaisVigentes) {
 				if(dataAtual.before(ed.getFimInscricaoEstudante()) &&
 						dataAtual.after(ed.getInicioInscricaoEstudante())) {
-					edital = ed;
+					editais.add(ed);
 				}
 			}
 		}
+		return editais;
+	}
+
+	public void setEditais(List<Edital> editais) {
+		this.editais = editais;
+	}
+
+	public Edital getEdital() {
 		return edital;
 	}
 
 	public void setEdital(Edital edital) {
 		this.edital = edital;
-	}
-
+	}	
 }

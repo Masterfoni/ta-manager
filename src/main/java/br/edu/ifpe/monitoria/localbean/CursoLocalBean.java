@@ -38,14 +38,7 @@ public class CursoLocalBean
 	public boolean atualizaCurso(Curso curso)
 	{
 		em.merge(curso);
-//		Curso cursoAtualizar = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", curso.getId()).getSingleResult();
-//		
-//		cursoAtualizar.setCoordenador(curso.getCoordenador());
-//		cursoAtualizar.setSigla(curso.getSigla());
-//		cursoAtualizar.setNome(curso.getNome());
-//		
-//		em.merge(cursoAtualizar);
-		
+
 		return true;
 	}
 	

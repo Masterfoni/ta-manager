@@ -30,7 +30,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "TB_EDITAL")
 @NamedQueries({
 	@NamedQuery(name = "Edital.findAll", query = "SELECT e FROM Edital e"),
-	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id")
+	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id"),
+	@NamedQuery(name = "Edital.findVigentes", query = "SELECT e FROM Edital e WHERE e.vigente = true")
 })
 @Access(AccessType.FIELD)
 public class Edital implements Serializable {

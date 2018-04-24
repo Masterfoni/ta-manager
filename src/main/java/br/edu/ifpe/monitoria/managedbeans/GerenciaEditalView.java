@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaEditalView")
 @ViewScoped
@@ -127,9 +128,23 @@ public class GerenciaEditalView implements Serializable {
 	/** Exclui o edital informado do sistema 
 	 * @param edital Edital
      */
-	public void deletaEdital(Edital edital) {
-		editais.remove(edital);
-		editalbean.deletaEdital(edital.getId());
+	public String deletaEdital(Edital edital) {
+		DelecaoRequestResult remocaoResultado = editalbean.deletaEdital(edital.getId());
+
+		if(remocaoResultado.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			for (String erro : remocaoResultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		} 
+		else 
+		{
+			editais.remove(edital);
+		}
+		
+		return "";
 	}
 	
 	/** Seleciona o edital para exibir informaçoes de alteração 

@@ -15,6 +15,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.Monitoria;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 /**
  * Responsável por salvar, listar, atualizar e remover editais no banco de dados.
@@ -77,13 +80,37 @@ public class EditalLocalBean
      * @return boolean - Informa se houve sucesso na transação
      */
 	@RolesAllowed({"comissao"})
-	public boolean deletaEdital(Long id)
+	public DelecaoRequestResult deletaEdital(Long id)
 	{
-		Edital editalDeletado = em.createNamedQuery("Edital.findById", Edital.class)
-										 .setParameter("id", id).getSingleResult();
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
+		boolean podeExcluir = true;
 		
-		em.remove(editalDeletado);		
-		return true;
+		Edital editalDeletado = em.createNamedQuery("Edital.findById", Edital.class)
+				.setParameter("id", id).getSingleResult();
+		
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByEdital", Monitoria.class).setParameter("edital", editalDeletado).getResultList();
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).setParameter("edital", editalDeletado).getResultList();
+		
+		if(monitorias != null && !monitorias.isEmpty()) {
+			delecao.errors.add("Existem monitorias vinculados à este edital, não é possivel excluir este edital. "
+					+ "Mas você pode dizer que não está vigente na opção alterar.");
+			podeExcluir = false;
+		}
+		if(planos != null && !planos.isEmpty()) {
+			delecao.errors.add("Existem planos de monitorias vinculados à este edital, não é possivel excluir este edital. "
+					+ "Remova-os primeiro!");
+			podeExcluir = false;
+		}
+		
+		if(podeExcluir) {
+			try {
+				em.remove(editalDeletado);
+			} catch (Exception e) {
+				delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+			}
+		}
+				
+		return delecao;
 	}
 	
 	/** Salva um edital válido no sistema
@@ -96,5 +123,11 @@ public class EditalLocalBean
 		em.persist(edital);
 		
 		return true;
+	}
+
+	public List<Edital> consultaEditaisVigentes() {
+		List<Edital> editais = em.createNamedQuery("Edital.findVigentes", Edital.class).getResultList();
+		
+		return editais;
 	}
 }

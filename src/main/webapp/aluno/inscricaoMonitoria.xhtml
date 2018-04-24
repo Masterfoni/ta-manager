@@ -14,26 +14,49 @@
 			
 			<h1>Inscrições Monitoria</h1>
 			
-			<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
+			<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
 				<hr></hr>
 				<h4>Inscrição Atual</h4>
-				<p><strong>Componente curricular:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.nome} </p>
-				<p><strong>Turno:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.turno} </p>
-				<p>
-					<strong>Bolsista:</strong>  
-					<h:outputText value=" Sim" rendered="#{inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText>
-					<h:outputText value=" Não" rendered="#{not inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText> 
-				</p>  
+				<h:panelGroup layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
+					<p><strong>Componente curricular:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.nome} </p>
+					<p><strong>Turno:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.turno} </p>
+					<p>
+						<strong>Bolsista:</strong>  
+						<h:outputText value=" Sim" rendered="#{inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText>
+						<h:outputText value=" Não" rendered="#{not inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText> 
+					</p>
+				</h:panelGroup>
+				<h:panelGroup layout="block" rendered="#{empty inscricaoMonitoriaView.monitoria}">
+					<p>Você ainda não esta inscrito para nenhuma monitoria.</p>
+				</h:panelGroup>
 				<hr></hr>
 			</h:panelGroup>
-		
+			
+			<div class="row">
+				<h:form>
+					<div class="form-group">
+						<div class="col-lg-9">
+							<label>Selecione o edital para inscrição:</label>
+							<h:selectOneMenu styleClass="form-control" value="#{inscricaoMonitoriaView.edital}" converter="editalConverter">
+								<f:selectItems value="#{inscricaoMonitoriaView.editais}" var="ed" itemValue="#{ed}" itemLabel="#{ed.numeroEdital}"/>
+							</h:selectOneMenu>
+						</div>
+						<div class="col-lg-3">
+							<br />
+							<h:commandButton value="Selecionar Edital" update="@all" class="btn btn-info" />
+						</div>
+					</div>
+				</h:form>
+			</div>
+					
+			<h:panelGroup id="cursos" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
 			<div class="row">
 				<h:form>
 					<div class="form-group">
 						<div class="col-lg-9">
 							<label>Selecione seu curso: </label>
 							<h:selectOneMenu styleClass="form-control" value="#{inscricaoMonitoriaView.curso}" converter="cursoConverter">
-								<f:selectItems value="#{gerenciaCursoView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
+								<f:selectItems value="#{inscricaoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
 							</h:selectOneMenu>
 						</div>
 						<div class="col-lg-3">
@@ -44,6 +67,7 @@
 					</div>
 				</h:form>
 			</div>
+			</h:panelGroup>
 		
 			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
 				<div class="alert alert-warning alert-dismissable fade in">
@@ -52,7 +76,7 @@
 				</div>
 			</h:panelGroup>
 		
-			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.aluno.curso}">
+			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.aluno.curso and not empty inscricaoMonitoriaView.edital}">
 				<hr></hr>
 				<div class="row">
 					<div class="col-lg-12">
