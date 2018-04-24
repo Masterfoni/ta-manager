@@ -14,6 +14,11 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 
+/**
+ * Responsável por salvar, listar, atualizar e remover planos de monitoria no banco de dados.
+ *
+ * @author Felipe Araujo, João Vitor
+ */
 @Stateless
 @LocalBean
 @DeclareRoles({"comissao", "professor", "aluno"})
@@ -25,7 +30,7 @@ public class PlanoMonitoriaLocalBean
 	/**
 	 * Método responsável por inserir no banco um novo plano de monitoria
 	 *
-	 * @param PlanoMonitoria uma instância de PlanoMonitoria que representa o plano à ser persistido
+	 * @param plano uma instância de {@code PlanoMonitoria} que representa o plano à ser persistido
 	 * @return true no caso de sucesso 
 	 */
 	@RolesAllowed({"professor", "comissao"})
@@ -36,6 +41,12 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
+	/**
+	 * Método responsável por resgatar planos de monitoria com base no ID do servidor
+	 *
+	 * @param id Identificador único do servidor no banco de dados
+	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria vinculados à um componente curricular do qual o servidor é professor. 
+	 */
 	public List<PlanoMonitoria> consultaPlanosByServidor(Long id)
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByProfessor", PlanoMonitoria.class).setParameter("id", id).getResultList();
@@ -63,6 +74,12 @@ public class PlanoMonitoriaLocalBean
 		return planos;
 	}
 	
+	/**
+	 * Método responsável por resgatar um plano de monitoria específico do banco de dados
+	 *
+	 * @param id Identificador único do plano de monitoria no banco de dados.
+	 * @return {@code PlanoMonitoria} Plano de monitoria do banco de dados 
+	 */
 	@RolesAllowed({"professor", "comissao"})
 	public PlanoMonitoria consultaPlanosById(Long id)
 	{

@@ -3,27 +3,15 @@
     xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<h:head>
-		<ui:include src="/comum/header-libs.xhtml"/>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 		<link rel="stylesheet" href="../publico/cadastroServidor.css"></link>
+		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
 		<title>Cadastro Servidor</title>
 	</h:head>
 	<h:body>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">Programa de Monitoria - <i>Campus</i> Recife</a>
-				</div>
-				<ul class="nav navbar-nav">
-				</ul>
-				<h:form>
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink>
-						</li>
-					</ul>
-				</h:form>
-			</div>
-		</nav>
+		<ui:include src="/comum/navbar-top-basico.xhtml" />
 
 		<div class="container">
 			<h2>Finalização do cadastro de Servidor</h2>

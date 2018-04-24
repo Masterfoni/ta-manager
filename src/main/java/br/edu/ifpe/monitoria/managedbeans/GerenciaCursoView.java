@@ -15,6 +15,7 @@ import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaCursoView")
 @ViewScoped
@@ -76,13 +77,6 @@ public class GerenciaCursoView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-
-//		servidores = servidorbean.consultaServidores();
-//		Servidor vazio = new Servidor();
-//		vazio.setNome("-- Informar depois --");
-//		vazio.setId(-1L);
-//		servidores.add(vazio);
-		
 		cursoAtualizado = new Curso();
 		cursoPersistido = new Curso();
 		cursos = new ArrayList<Curso>();
@@ -100,17 +94,28 @@ public class GerenciaCursoView implements Serializable {
 		}
 	}
 		
-	public String deletaCurso(Curso curso) {
-		cursos.remove(curso);
-		
-		cursobean.deletaCurso(curso.getId());
+	public String deletaCurso(Curso curso) 
+	{
+		DelecaoRequestResult remocaoResultado = cursobean.deletaCurso(curso.getId());
+
+		if(remocaoResultado.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			for (String erro : remocaoResultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		} 
+		else 
+		{
+			cursos.remove(curso);
+		}
 		
 		return "";
 	}
 	
 	public void alteraCurso(Curso curso) {
 		cursoAtualizado = curso;
-		System.out.println(cursoAtualizado);
 	}
 	
 	public void persisteAlteracao() {

@@ -102,7 +102,7 @@
   
   <error-page>
         <error-code>403</error-code>
-        <location>/publico/nao_autorizado.xhtml</location>
+        <location>/publico/nao-autorizado.xhtml</location>
     </error-page>  
   
   <context-param>

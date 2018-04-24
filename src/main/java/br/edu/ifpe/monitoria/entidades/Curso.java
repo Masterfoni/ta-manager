@@ -55,7 +55,7 @@ public class Curso implements Serializable{
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.coordenacao}")
 	@Column (name="TXT_COORDENACAO")
-	private String coordenação;
+	private String coordenacao;
 	
 	@Column (name="TXT_DEPARTAMENTO")
 	private String departamento;
@@ -96,12 +96,12 @@ public class Curso implements Serializable{
 		this.id = id;
 	}
 	
-	public String getCoordenação() {
-		return coordenação;
+	public String getCoordenacao() {
+		return coordenacao;
 	}
 
-	public void setCoordenação(String coordenação) {
-		this.coordenação = coordenação;
+	public void setCoordenacao(String coordenacao) {
+		this.coordenacao = coordenacao;
 	}
 
 	public String getDepartamento() {

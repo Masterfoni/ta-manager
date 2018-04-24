@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -32,7 +33,9 @@ import org.hibernate.validator.constraints.NotBlank;
 	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id")
 })
 @Access(AccessType.FIELD)
-public class Edital {
+public class Edital implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_EDITAL")
