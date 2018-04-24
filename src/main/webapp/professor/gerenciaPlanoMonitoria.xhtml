@@ -80,8 +80,10 @@
 								<div id="atualizaPlano">
 									<div class="form-group">
 										<label>Edital</label>
-										<h:selectOneMenu styleClass="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital.id}" itemLabel="#{edital.numeroEdital}"/>
+
+										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}" converter="editalConverter">
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
@@ -146,8 +148,8 @@
 								<div id="cadastraPlano">
 									<div class="form-group">
 										<label>Edital</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalId}">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital.id}" itemLabel="#{edital.numeroEdital}"/>
+										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">

@@ -8,12 +8,15 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
 @LocalBean
@@ -34,13 +37,14 @@ public class CursoLocalBean
 	@RolesAllowed({"comissao"})
 	public boolean atualizaCurso(Curso curso)
 	{
-		Curso cursoAtualizar = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", curso.getId()).getSingleResult();
-		
-		cursoAtualizar.setCoordenador(curso.getCoordenador());
-		cursoAtualizar.setSigla(curso.getSigla());
-		cursoAtualizar.setNome(curso.getNome());
-		
-		em.merge(cursoAtualizar);
+		em.merge(curso);
+//		Curso cursoAtualizar = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", curso.getId()).getSingleResult();
+//		
+//		cursoAtualizar.setCoordenador(curso.getCoordenador());
+//		cursoAtualizar.setSigla(curso.getSigla());
+//		cursoAtualizar.setNome(curso.getNome());
+//		
+//		em.merge(cursoAtualizar);
 		
 		return true;
 	}
@@ -62,13 +66,31 @@ public class CursoLocalBean
 	}
 	
 	@RolesAllowed({"comissao"})
-	public boolean deletaCurso(Long id)
+	public DelecaoRequestResult deletaCurso(Long id)
 	{
-		Curso cursoDeletado = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", id).getSingleResult();
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
 		
-		em.remove(cursoDeletado);
+		List<ComponenteCurricular> componentesDoCurso = em.createNamedQuery("ComponenteCurricular.findByCurso", ComponenteCurricular.class).setParameter("id", id).getResultList();
 		
-		return true;
+		if(componentesDoCurso != null && !componentesDoCurso.isEmpty())
+		{
+			delecao.errors.add("Existem componentes vinculados à este curso, remova-os primeiro!");
+		}
+		else
+		{
+			try {
+				Curso cursoDeletado = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", id).getSingleResult();
+				try {
+					em.remove(cursoDeletado);
+				} catch (Exception e) {
+					delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+				}
+			} catch (NoResultException e) {
+				delecao.errors.add("Entidade não encontrada no banco de dados, contate o suporte.");
+			}
+		}
+		
+		return delecao;
 	}
 	
 	@RolesAllowed({"comissao"})
