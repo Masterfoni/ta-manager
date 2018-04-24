@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -57,14 +56,20 @@ public class InscricaoMonitoriaView implements Serializable{
 	private Aluno aluno;
 	
 	private Edital edital;
-	
-	private boolean bolsista;
 
 	public InscricaoMonitoriaView() {
 		planos = new ArrayList<PlanoMonitoria>();
 	}
 	
-	public void selecionarPlano(PlanoMonitoria plano) {	
+	public void selecionarPlanoVoluntario(PlanoMonitoria plano) {	
+		salvarMonitoria(plano, false);
+	}
+	
+	public void selecionarPlanoComBolsa(PlanoMonitoria plano) {
+		salvarMonitoria(plano, true);
+	}
+	
+	private void salvarMonitoria(PlanoMonitoria plano, boolean bolsista) {
 		boolean alteracao = true;
 		
 		if(monitoria == null) {
@@ -94,6 +99,11 @@ public class InscricaoMonitoriaView implements Serializable{
 			return true;
 		}
 		return false;
+	}
+	
+	public void checkBolsa(PlanoMonitoria plano) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(plano.getJustificativa()));
 	}
 	
 	public List<PlanoMonitoria> getPlanos() {
@@ -181,11 +191,4 @@ public class InscricaoMonitoriaView implements Serializable{
 		this.edital = edital;
 	}
 
-	public boolean isBolsista() {
-		return bolsista;
-	}
-
-	public void setBolsista(boolean bolsista) {
-		this.bolsista = bolsista;
-	}
 }

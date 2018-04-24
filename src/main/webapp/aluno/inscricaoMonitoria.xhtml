@@ -15,10 +15,15 @@
 			<h1>Inscrições Monitoria</h1>
 			
 			<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
-				<h5>Inscrição Atual</h5>
+				<hr></hr>
+				<h4>Inscrição Atual</h4>
 				<p><strong>Componente curricular:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.nome} </p>
 				<p><strong>Turno:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.turno} </p>
-				<p><strong>Bolsista:</strong> #{inscricaoMonitoriaView.monitoria.bolsa} </p>
+				<p>
+					<strong>Bolsista:</strong>  
+					<h:outputText value=" Sim" rendered="#{inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText>
+					<h:outputText value=" Não" rendered="#{not inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText> 
+				</p>  
 				<hr></hr>
 			</h:panelGroup>
 		
@@ -66,12 +71,12 @@
 									#{plano.cc.turno}
 								</h:column>
 								<h:column>
-									<f:facet name="header">Bolsista</f:facet>
-									<h:selectBooleanCheckbox rendered="#{inscricaoMonitoriaView.temBolsa(plano)}" value="#{inscricaoMonitoriaView.bolsista}" /> 
+									<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoComBolsa(plano)}"
+													rendered="#{inscricaoMonitoriaView.temBolsa(plano)}" value="Bolsista" update="@form" class="btn btn-info" />
 								</h:column>
 								<h:column>
-									<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlano(plano)}"
-														value="Se inscrever" update="@form" class="btn btn-info" />
+									<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoVoluntario(plano)}"
+														value="Voluntário" update="@form" class="btn btn-info" />
 									<span>   </span>
 								</h:column>
 							</h:dataTable>
