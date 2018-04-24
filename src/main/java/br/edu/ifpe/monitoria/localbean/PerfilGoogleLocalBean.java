@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.Grupo;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 
 @Stateless
@@ -21,6 +22,13 @@ public class PerfilGoogleLocalBean
 	public boolean persistePerfilGoogle(@NotNull @Valid PerfilGoogle perfilGoogle)
 	{
 		em.persist(perfilGoogle);
+		
+		Grupo gp2 = new Grupo();
+		gp2.setGrupo(Grupo.Grupos.PROFESSOR);
+		gp2.setUsuario(perfilGoogle.getUsuario());
+		gp2.setEmail(perfilGoogle.getUsuario().getEmail());
+		em.persist(gp2);
+		
 		
 		return true;
 	}

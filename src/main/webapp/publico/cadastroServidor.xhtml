@@ -1,246 +1,114 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-  <meta charset="ISO-8859-1" />
-  <link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-  <link rel="stylesheet" href="./homepage.css"></link>
-  <link href="../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
-	<title>Cadastro Servidor</title>
-</h:head>
-<h:body>
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	    	<a class="navbar-brand" href="#">Programa de Monitoria - <i>Campus</i> Recife</a>
-	    </div>
-	    <ul class="nav navbar-nav">
-	    </ul>
-	    <h:form>
-	    <ul class="nav navbar-nav navbar-right">
-	      <li><h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink></li>
-	    </ul>
-	    </h:form>
-	  </div>
-	</nav>
+	<h:head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+		<link rel="stylesheet" href="../publico/cadastroServidor.css"></link>
+		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
+		<title>Cadastro Servidor</title>
+	</h:head>
+	<h:body>
+		<ui:include src="/comum/navbar-top-basico.xhtml" />
 
-	<div class="container">
+		<div class="container">
+			<h2>Finalização do cadastro de Servidor</h2>
 
-		<h2>Cadastro Servidor</h2>
-		<p>Escolha o tipo de usuario:</p>
-
-		<div class="btn-group">
-  			<button type="button" class="btn btn-primary" onClick="ativarProfessor()">Professor</button>
-  			<button type="button" class="btn btn-primary" onClick="ativarAdministrativo()">Técnico Administrativo</button>
-		</div>
-		<br />
-		<br />
-
-
-		<div id="dadosProfessor" style="display: none;">
-
-			<h:form id="cadastroformProfessor" class="form-group" role="form">
-				<h4>Professor</h4>
-
-				<div class="form-group">
-					<label for="email">Email</label>
-					<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
+			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+				<div class="alert alert-warning alert-dismissable fade in">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+					<h:messages/>
 				</div>
+			</h:panelGroup>
 
-				<div class="form-group">
-					<label for="primeiroNome">Primeiro Nome</label>
-					<h:inputText id="primeiroNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.givenName}" disabled="true"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="familiaNome">Segundo Nome</label>
-					<h:inputText id="familiaNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.familyName}" disabled="true"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="nomeP">Nome</label>
-					<span>   </span>
-					<h:message for="nomeP" styleClass="mensagem alert-danger"/>
-					<h:inputText id="nomeP" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="sexo">Sexo: </label>
-					<h:selectOneMenu class="form-control" id="sexo" value="#{cadastroServidorView.professor.sexo}">
-				   		<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
-				   		<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-				   		<f:selectItem itemValue="Outros" itemLabel="Outros" />
-					</h:selectOneMenu>
-				</div>
-
-				<div class="form-group">
-					<label for="cpfCadastro">CPF</label>
-					<span>   </span>
-					<h:message for="cpfCadastro" styleClass="mensagem alert-danger"/>
-						<h:inputText id="cpfCadastro" class="form-control cpf" value="#{cadastroServidorView.professor.cpf}"
-							aria-describedby="cpfDesc"></h:inputText>
-					<small id="cpfDesc" class="form-text text-muted">Utilize apenas numeros</small>
-				</div>
-
-				<div class="form-group row">
-					<div class="col-sm-5" >
-						<label for="rgCadastro">RG</label>
-						<span>   </span>
-						<h:message for="rgCadastro" styleClass="mensagem alert-danger"/>
-						<h:inputText id="rgCadastro" class="form-control" value="#{cadastroServidorView.professor.rg}"></h:inputText>
+			<div id="dadosProfessor">
+				<h:form id="cadastroformProfessor" class="form-group" role="form">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
 					</div>
-					<div class="col-sm-5" >
-						<label for="emissorCadastro">Orgão expedidor:</label>
-						<span>   </span>
-						<h:message for="emissorCadastro" styleClass="mensagem alert-danger"/>
-						<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{cadastroServidorView.professor.rgEmissor}"
-							aria-describedby="emissorDesc"></h:inputText>
-						<small id="emissorDesc" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label for="primeiroNome">Primeiro Nome</label>
+							<h:inputText id="primeiroNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.givenName}" disabled="true"></h:inputText>
+						</div>
+						<div class="col-sm-6">
+							<label for="familiaNome">Segundo Nome</label>
+							<h:inputText id="familiaNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.familyName}" disabled="true"></h:inputText>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group">
-					<label for="siape">SIAPE</label>
-					<span>   </span>
-					<h:message for="siape" styleClass="mensagem alert-danger"/>
-					<h:inputText id="siape" class="form-control siape" value="#{cadastroServidorView.professor.siape}"
-						aria-describedby="cpfDesc"></h:inputText>
-					<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
-				</div>
+					<div class="form-group">
+						<label for="nomeP">Nome</label>
+						<h:inputText id="nomeP" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
+					</div>
 
-				<div class="form-group">
-					<label for="titulo">Especialização</label>
-					<h:selectOneMenu id="titulo" class="form-control" value="#{cadastroServidorView.professor.titulacao}">
-				   		<f:selectItems value="#{cadastroServidorView.titulos}" var="titu" itemValue="#{titu}"
-				   					   itemLabel="#{titu.label}"/>
-					</h:selectOneMenu>
-				</div>
+					<div class="form-group">
+						<label for="sexo">Sexo: </label>
+						<h:selectOneMenu class="form-control" id="sexo" value="#{cadastroServidorView.servidor.sexo}">
+							<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
+							<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
+							<f:selectItem itemValue="Outros" itemLabel="Outros" />
+						</h:selectOneMenu>
+					</div>
 
-				<div class="form-group">
-					<label for="senhaCadastro">Senha</label>
-					<span>   </span>
-					<h:message for="senhaCadastro" styleClass="mensagem alert-danger"/>
-					<h:inputSecret id="senhaCadastro" class="form-control" value="#{cadastroServidorView.professor.senha}"
-						aria-describedby="senhaDesc"></h:inputSecret>
-					<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
-				</div>
+					<div class="form-group">
+						<label for="cpfCadastro">CPF</label>
+						<h:inputText id="cpfCadastro" class="form-control cpf" value="#{cadastroServidorView.servidor.cpf}"
+									 aria-describedby="cpfDesc">
+						</h:inputText>
+						<small id="cpfDesc" class="form-text text-muted">Utilize apenas numeros</small>
+					</div>
 
-				<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info ind-button" update="growlProfessor" />
-			</h:form>
-			<h:form>
-				<h:commandLink action="#{logoutView.logout}" type="button" class="btn btn-danger">Cancelar</h:commandLink>
-			</h:form>
-			<br />
-			<br />
-			<br />
-			<br />
+					<div class="form-group row">
+						<div class="col-sm-6" >
+							<label for="rgCadastro">RG</label>
+							<h:inputText id="rgCadastro" class="form-control" value="#{cadastroServidorView.servidor.rg}"></h:inputText>
+						</div>
+						<div class="col-sm-6" >
+							<label for="emissorCadastro">Orgão expedidor:</label>
+							<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{cadastroServidorView.servidor.rgEmissor}"
+										 aria-describedby="emissorDesc">
+							</h:inputText>
+							<small id="emissorDesc" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label for="siape">SIAPE</label>
+							<h:inputText id="siape" class="form-control siape" value="#{cadastroServidorView.servidor.siape}"
+										 aria-describedby="cpfDesc">
+							</h:inputText>
+							<small id="siapedesc" class="form-text text-muted">Utilize apenas numeros</small>
+						</div>
+						<div class="col-sm-6">
+							<label for="titulo">Especialização</label>
+							<h:selectOneMenu id="titulo" class="form-control" value="#{cadastroServidorView.servidor.titulacao}">
+								<f:selectItems value="#{cadastroServidorView.titulos}" var="titu" itemValue="#{titu}" itemLabel="#{titu.label}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="senhaCadastro">Senha</label>
+						<h:inputSecret id="senhaCadastro" class="form-control" value="#{cadastroServidorView.servidor.senha}"
+									   aria-describedby="senhaDesc" required="true" requiredMessage="Senha é obrigatória">
+						</h:inputSecret>
+						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
+					</div>
+
+					<h:commandButton value="Finalizar Cadastro" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info ind-button" update="growlProfessor" />
+				</h:form>
+			</div>
 		</div>
 
-
-		<div id="dadosAdministrativos" style="display: none;">
-			<h:form id="cadastroformAdministrativos" class="form-group" role="form">
-				<h4>Administrativo</h4>
-
-				<div class="form-group">
-					<label for="email">Email</label>
-					<h:inputText id="email" class="form-control" value="#{cadastroServidorView.email}" disabled="true"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="primeiroNome">Primeiro Nome</label>
-					<h:inputText id="primeiroNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.givenName}" disabled="true"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="familiaNome">Segundo Nome</label>
-					<h:inputText id="familiaNome" class="form-control" value="#{cadastroServidorView.perfilGoogle.familyName}" disabled="true"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="nomeA">Nome</label>
-					<span>   </span>
-					<h:message for="nomeA" styleClass="mensagem alert-danger"/>
-					<h:inputText id="nomeA" class="form-control" value="#{cadastroServidorView.nome}"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<label for="sexoA">Sexo: </label>
-					<h:selectOneMenu class="form-control" id="sexoA" value="#{cadastroServidorView.administrativo.sexo}">
-					   	<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
-					   	<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-					   	<f:selectItem itemValue="Outros" itemLabel="Outros" />
-					</h:selectOneMenu>
-				</div>
-
-				<div class="form-group">
-					<label for="cpfA">CPF</label>
-					<span>   </span>
-					<h:message for="cpfA" styleClass="mensagem alert-danger"/>
-					<h:inputText id="cpfA" class="form-control cpf" value="#{cadastroServidorView.administrativo.cpf}"
-						aria-describedby="cpfDescA"></h:inputText>
-					<small id="cpfDescA" class="form-text text-muted">Utilize apenas numeros</small>
-				</div>
-
-				<div class="form-group row">
-					<div class="col-sm-5" >
-						<label for="rgA">RG</label>
-						<span>   </span>
-						<h:message for="rgA" styleClass="mensagem alert-danger"/>
-						<h:inputText id="rgA" class="form-control" value="#{cadastroServidorView.administrativo.rg}"></h:inputText>
-					</div>
-					<div class="col-sm-5" >
-						<label for="emissorA">Orgão expedidor:</label>
-						<span>   </span>
-						<h:message for="emissorA" styleClass="mensagem alert-danger expedidor"/>
-						<h:inputText id="emissorA" class="form-control" value="#{cadastroServidorView.administrativo.rgEmissor}"
-							aria-describedby="emissorDescA"></h:inputText>
-						<small id="emissorDescA" class="form-text text-muted">Utilize o formato: INSITUIÇÃO/SIGLA DO ESTADO</small>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="siapeA">SIAPE</label>
-					<span>   </span>
-					<h:message for="siapeA" styleClass="mensagem alert-danger"/>
-					<h:inputText id="siapeA" class="form-control siape" value="#{cadastroServidorView.administrativo.siape}"
-						aria-describedby="siapeDescA"></h:inputText>
-					<small id="siapeDescA" class="form-text text-muted">Utilize apenas numeros</small>
-				</div>
-
-				<div class="form-group">
-					<label for="senhaA">Senha</label>
-					<span>   </span>
-					<h:message for="senhaA" styleClass="mensagem alert-danger"/>
-					<h:inputSecret id="senhaA" class="form-control" value="#{cadastroServidorView.administrativo.senha}"
-						aria-describedby="senhaDescA"></h:inputSecret>
-					<small id="senhaDescA" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
-				</div>
-
-				<h:commandButton value="Cadastrar" action="#{cadastroServidorView.salvarAdministrativo}" class="btn btn-info ind-button" update="growlAdministrativo" />
-			</h:form>
-			<h:form>
-				<h:commandLink action="#{logoutView.logout}" type="button" class="btn btn-danger">Cancelar</h:commandLink>
-			</h:form>
-			<br />
-			<br />
-			<br />
-			<br />
-		</div>
-	</div>
-
-	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
-	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="../js/cadastroServidor.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-	
-	<script>
-		$(".cpf").mask("999.999.999-99");
-		$(".expedidor").mask("AAA/AA");
-		$(".siape").mask("9999999");
-	</script>
-</h:body>
+		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="./cadastroServidor.js"></script>
+	</h:body>
 </html>

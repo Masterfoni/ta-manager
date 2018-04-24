@@ -16,10 +16,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Usuario;
+import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor", "aluno"})
+@DeclareRoles({"comissao", "professor", "aluno"})
 public class UsuarioLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
@@ -33,7 +34,7 @@ public class UsuarioLocalBean
 		return usuarios;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public boolean atualizaUsuario(Usuario usuario)
 	{
 		Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
@@ -63,14 +64,13 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@PermitAll
 	public Usuario consultaUsuarioPorEmail(String email)
 	{
 		Usuario userResult = null;
 		
 		try {
-			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email)
-																					   .getSingleResult();
+			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
 		}
@@ -78,15 +78,48 @@ public class UsuarioLocalBean
 		return userResult;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	public Usuario consultaUsuarioPorRg(String rg)
+	{
+		Usuario userResult = null;
+		
+		try {
+			userResult = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
+	}
+	
+	@PermitAll
+	public Usuario consultaUsuarioPorCpf(String cpf)
+	{
+		Usuario userResult = null;
+		
+		try {
+			userResult = em.createNamedQuery("Usuario.findByCpf", Usuario.class).setParameter("cpf", cpf).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return userResult;
+	}
+	
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public Usuario consultaUsuarioById(Long id)
 	{
-		Usuario usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		Usuario usuarioPorId = null;
+
+		try {
+			usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
 		
 		return usuarioPorId;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public List<Usuario> consultaUsuarioByName(String nome)
 	{
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findByNome", Usuario.class).setParameter("nome", nome).getResultList();
@@ -95,11 +128,17 @@ public class UsuarioLocalBean
 	}
 	
 	@PermitAll
-	public Long consultarIbByEmail(String email)
+	public LongRequestResult consultarIdByEmail(String email)
 	{
-		Long id = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
+		LongRequestResult result = new LongRequestResult();
 		
-		return id;
+		try {
+			result.data = em.createNamedQuery("Usuario.findIdByEmail", Long.class).setParameter("email", email).getSingleResult();
+		} catch (NoResultException e) {
+			result.errors.add("E-mail inexistente!");
+		}
+
+		return result;
 	}
 	
 	@DenyAll
@@ -112,7 +151,7 @@ public class UsuarioLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo", "aluno"})
+	@RolesAllowed({"professor", "comissao", "aluno"})
 	public boolean persisteUsuario(@NotNull @Valid Usuario usuario)
 	{
 		em.persist(usuario);

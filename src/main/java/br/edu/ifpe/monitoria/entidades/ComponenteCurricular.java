@@ -36,6 +36,8 @@ import br.edu.ifpe.monitoria.validacao.ValidaPeriodo;
 @NamedQueries({
 	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c"),
 	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id"),
+	@NamedQuery(name = "ComponenteCurricular.findByProfessor", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor = :professor"),
+	@NamedQuery(name = "ComponenteCurricular.findByCurso", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.id = :id")
 })
 public class ComponenteCurricular implements Serializable{
 
@@ -86,13 +88,13 @@ public class ComponenteCurricular implements Serializable{
 
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_COORDENACAO", referencedColumnName = "ID")
-	private Coordenacao coordenacao;
+	@JoinColumn (name = "ID_CURSO", referencedColumnName = "ID")
+	private Curso curso;
 
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn (name = "ID_PROFESSOR", referencedColumnName = "ID_USUARIO")
-	private Professor professor;
+	@JoinColumn (name = "ID_SERVIDOR", referencedColumnName = "ID_USUARIO")
+	private Servidor professor;
 
 	public String getNome() {
 		return nome;
@@ -118,12 +120,12 @@ public class ComponenteCurricular implements Serializable{
 		this.periodo = periodo;
 	}
 
-	public Coordenacao getCoordenacao() {
-		return coordenacao;
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setCoordenacao(Coordenacao coordenacao) {
-		this.coordenacao = coordenacao;
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 	
 	public Integer getCargaHoraria() {
@@ -134,11 +136,11 @@ public class ComponenteCurricular implements Serializable{
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	public Professor getProfessor() {
+	public Servidor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(Professor professor) {
+	public void setProfessor(Servidor professor) {
 		this.professor = professor;
 	}
 

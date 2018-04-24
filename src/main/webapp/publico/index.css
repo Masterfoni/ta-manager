@@ -98,7 +98,9 @@ input[type="radio"] {
 	box-shadow: 1px 1px 3px #000;
 }
 
-.fechar:hover { background: red; }
+.fechar:hover { 
+	background: red; 
+}
 
 img {
 	width: 90px;
@@ -120,22 +122,19 @@ img {
    background: white;
    color: #444;
    width: 100%;
-   /*
-   border-radius: 5px;
-   border: thin solid #888;
-   box-shadow: 1px 1px 1px grey; 
-   */
    white-space: nowrap;
  }
+
  #customBtn:hover {
    cursor: pointer;
  }
+
  span.label {
    font-family: 'Roboto', sans-serif;
    font-size: 13px;
-   /*font-weight: normal;*/
    color:  #444;
  }
+ 
  span.icon {
    background: url('../resources/images/g-normal.png') transparent 5px 50% no-repeat;
    display: inline-block;
@@ -143,6 +142,7 @@ img {
    width: 32px;
    height: 32px;
  }
+
  span.buttonText {
    display: inline-block;
    vertical-align: middle;
@@ -150,6 +150,9 @@ img {
    padding-right: 42px;
    font-size: 14px;
    font-weight: bold;
-   /* Use the Roboto font that is loaded in the <head> */
    font-family: 'Roboto', sans-serif;
+ }
+
+ .invalid-component {
+	border-color: red;
  }

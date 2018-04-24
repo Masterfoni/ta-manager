@@ -1,0 +1,23 @@
+td.right {
+    text-align: right;
+}
+
+td.center {
+    text-align: center;
+}
+
+td.left {
+    text-align: left;
+}
+
+th {
+    text-align: center;
+}
+
+.err-m-10 {
+    margin: 10px;
+}
+
+.cadastrador {
+	margin-top: 30px;
+}
