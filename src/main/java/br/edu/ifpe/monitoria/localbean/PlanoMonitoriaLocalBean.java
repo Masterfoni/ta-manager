@@ -3,6 +3,7 @@ package br.edu.ifpe.monitoria.localbean;
 import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -12,6 +13,8 @@ import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.Curso;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 
 @Stateless
@@ -82,5 +85,15 @@ public class PlanoMonitoriaLocalBean
 		em.merge(plano);
 
 		return true;
+	}
+	
+	@PermitAll
+	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso) {
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class).
+				setParameter("edital", edital).
+				setParameter("curso", curso.getId()).
+				getResultList();
+		
+		return planos;
 	}
 }

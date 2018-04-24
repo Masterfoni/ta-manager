@@ -3,6 +3,7 @@ package br.edu.ifpe.monitoria.localbean;
 import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -22,7 +23,7 @@ public class CursoLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"comissao", "professor"})
+	@PermitAll
 	public List<Curso> consultaCursos()
 	{
 		List<Curso> cursos = em.createNamedQuery("Curso.findAll", Curso.class).getResultList();

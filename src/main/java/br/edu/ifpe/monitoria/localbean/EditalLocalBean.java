@@ -3,6 +3,7 @@ package br.edu.ifpe.monitoria.localbean;
 import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -31,7 +32,7 @@ public class EditalLocalBean
 	/** Lista todos os editais criados no sistema
      * @return List<Edital> - Lista de editais
      */
-	@RolesAllowed({"comissao", "professor"})
+	@PermitAll
 	public List<Edital> consultaEditais()
 	{
 		List<Edital> editais = em.createNamedQuery("Edital.findAll", Edital.class).getResultList();
@@ -46,12 +47,7 @@ public class EditalLocalBean
 	@RolesAllowed({"comissao"})
 	public boolean atualizaEdital(Edital edital)
 	{
-		Edital editalAtualizar = em.createNamedQuery("Edital.findById", Edital.class)
-											   .setParameter("id", edital.getId()).getSingleResult();
-		
-		editalAtualizar.setNumeroEdital(edital.getNumeroEdital());
-		
-		em.merge(editalAtualizar);
+		em.merge(edital);
 		
 		return true;
 	}

@@ -7,11 +7,14 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.Aluno;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 
 @Stateless
@@ -90,5 +93,24 @@ public class MonitoriaLocalBean
 		em.persist(monitoria);
 
 		return true;
+	}
+
+
+	public Monitoria consultaMonitoriaByAluno(Aluno aluno, Edital edital) {
+		Monitoria monitoria = null;
+		try {
+		 monitoria = em.createNamedQuery("Monitoria.findByAluno", Monitoria.class).
+				setParameter("aluno", aluno).
+				setParameter("edital", edital).
+				getSingleResult();
+		}catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		return monitoria;
+	}
+
+
+	public void atualizaMonitoria(Monitoria monitoria) {
+		em.merge(monitoria);
 	}
 }

@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.localbean;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -58,5 +59,12 @@ public class AlunoLocalBean
 		}
 		
 		return alunoPorMatricula;
+	}
+	
+	@RolesAllowed("aluno")
+	public boolean atualizaAluno (Aluno aluno) {
+		
+		em.merge(aluno);
+		return true;
 	}
 }
