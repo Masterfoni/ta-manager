@@ -15,6 +15,7 @@ import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaCursoView")
 @ViewScoped
@@ -93,9 +94,22 @@ public class GerenciaCursoView implements Serializable {
 		}
 	}
 		
-	public String deletaCurso(Curso curso) {
-		cursos.remove(curso);
-		cursobean.deletaCurso(curso.getId());
+	public String deletaCurso(Curso curso) 
+	{
+		DelecaoRequestResult remocaoResultado = cursobean.deletaCurso(curso.getId());
+
+		if(remocaoResultado.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			for (String erro : remocaoResultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		} 
+		else 
+		{
+			cursos.remove(curso);
+		}
 		
 		return "";
 	}

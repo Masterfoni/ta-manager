@@ -2,9 +2,9 @@
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
             <img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
-            GEM
+            <span>GEM</span>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         
@@ -32,6 +32,16 @@
                     </div>
                 </li>
             </ul>
+            <h:form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="nav-link" onclick="goToProfile();"><span class="fa fa-user"></span>  Perfil</a>
+                    </li>
+                    <li>
+                        <h:commandLink class="nav-link" action="#{logoutView.logout}" value="Sair  "><span class="fa fa-power-off"></span></h:commandLink>
+                    </li>
+                </ul>
+            </h:form>
         </div>
     </nav>
 </html>

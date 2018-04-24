@@ -4,13 +4,9 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<h:head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../comum/new-navbar-top.css"></link>
-		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
-		<!-- <ui:include src="/comum/header-libs.xhtml"/> -->
-		<link rel="stylesheet" href="../resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="../admin/gerenciaCursos.css"></link>
-		<title>Administração de Coordenações</title>
+		<ui:include src="/comum/new-header-libs.xhtml"/>
+		<link rel="stylesheet" href="../admin/gerenciaCursos.css"/>
+		<title>Administração de Cursos</title>
 	</h:head>
 	
 	<h:body>
@@ -41,24 +37,25 @@
 			</div>
 
 			<h:form>
-				<div class="card-group">
+				<div class="card-columns">
 					<ui:repeat id="repeatCursos" value="#{gerenciaCursoView.cursos}" var="curso" varStatus="myStatus">
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">#{curso.nome}</h5>
 								<p>
-									<strong>Coordenação:</strong> #{curso.coordenação}<br />
+									<strong>Coordenação:</strong> #{curso.coordenacao}<br />
 									<strong>Coordenador:</strong> #{curso.coordenador.nome}
 								</p>
 							</div>
 							<div class="card-footer">
-								<h:commandButton actionListener="#{gerenciaCursoView.deletaCurso(curso)}"
-											  	 value="Deletar" update="@form" class="btn btn-danger" />
-								<span>   </span>
-								<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
-												 value="Alterar" class="btn btn-info alterador">
-									<f:ajax execute="@form" render=":formAtualizador :atualizaCoord" />
-								</h:commandButton>
+								<div class="btn-group" role="group">
+									<h:commandButton actionListener="#{gerenciaCursoView.deletaCurso(curso)}"
+													   value="Deletar" update="@form" class="btn btn-danger" />
+									<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
+													 value="Alterar" class="btn btn-info alterador">
+										<f:ajax execute="@form" render=":formAtualizador :atualizaCurso" />
+									</h:commandButton>
+								</div>
 							</div>
 						</div>
 					</ui:repeat>
@@ -71,13 +68,13 @@
 					<div class="modal-content">
 						<h:form id="formAtualizador" class="dialogSignup">
 							<div class="modal-header">
-								<h5 class="modal-title" id="atualizacaoModalLabel">Atualize a Coordenacao</h5>
+								<h5 class="modal-title" id="atualizacaoModalLabel">Atualize o Curso</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">x</span>
 								</button>
 							</div>
 							<div class="modal-body">
-								<div id="atualizaCoord">
+								<div id="atualizaCurso">
 									<div class="form-group">
 										<label for="cursoCadastro">Curso</label>
 										<h:inputText id="cursoCadastro" class="form-control" 
@@ -91,16 +88,18 @@
 										</h:inputText>
 									</div>
 									<div class="form-group">
-										<label for="nomeCadastro">Cordenação (sigla)</label>
-										<h:inputText id="nomeCadastro" class="form-control" 
-														value="#{gerenciaCursoView.cursoAtualizado.coordenação}">
+										<label for="nomeCadastro">Cordenação</label>
+										<h:inputText id="nomeCadastro" class="form-control" aria-describedby="coordHelp"
+													 value="#{gerenciaCursoView.cursoAtualizado.coordenacao}">
 										</h:inputText>
+										<small id="coordHelp" class="form-text text-muted">Apenas necessário informar a sigla.</small>
 									</div>
 									<div class="form-group">
-										<label for="departamentoCadastro">Departamento (sigla)</label>
-										<h:inputText id="departamentoCadastro" class="form-control" 
-														value="#{gerenciaCursoView.cursoAtualizado.departamento}">
+										<label for="departamentoCadastro">Departamento</label>
+										<h:inputText id="departamentoCadastro" class="form-control" aria-describedby="dptoHelp"
+													 value="#{gerenciaCursoView.cursoAtualizado.departamento}">
 										</h:inputText>
+										<small id="dptoHelp" class="form-text text-muted">Apenas necessário informar a sigla.</small>
 									</div>
 									<div class="form-group">
 										<label>Coordenador</label>
@@ -142,20 +141,22 @@
 									<div class="form-group">
 										<label for="siglaCadastroC">Sigla</label>
 										<h:inputText id="siglaCadastroC" class="form-control" 
-														value="#{gerenciaCursoView.cursoPersistido.sigla}">
+													 value="#{gerenciaCursoView.cursoPersistido.sigla}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label for="nomeCadastroC">Cordenação (sigla)</label>
-										<h:inputText id="nomeCadastroC" class="form-control" 
-														value="#{gerenciaCursoView.cursoPersistido.coordenação}">
+										<h:inputText id="nomeCadastroC" class="form-control" aria-describedby="coordHelpC"
+													 value="#{gerenciaCursoView.cursoPersistido.coordenacao}">
 										</h:inputText>
+										<small id="coordHelpC" class="form-text text-muted">Apenas necessário informar a sigla.</small>
 									</div>
 									<div class="form-group">
 										<label for="departamentoCadastroC">Departamento (sigla)</label>
-										<h:inputText id="departamentoCadastroC" class="form-control" 
-														value="#{gerenciaCursoView.cursoPersistido.departamento}">
+										<h:inputText id="departamentoCadastroC" class="form-control" aria-describedby="dptoHelpC"
+													 value="#{gerenciaCursoView.cursoPersistido.departamento}">
 										</h:inputText>
+										<small id="dptoHelpC" class="form-text text-muted">Apenas necessário informar a sigla.</small>
 									</div>
 									<div class="form-group">
 										<label>Coordenador</label>

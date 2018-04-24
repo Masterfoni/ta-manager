@@ -63,8 +63,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public String nomeBusca;
 	
-	public long editalId;
-	
 	public List<Curso> getCursos() {
 		return cursos;
 	}
@@ -135,10 +133,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		return editais;
 	}
 
-	public void setEditais(List<Edital> editais) {
-		this.editais = editais;
-	}
-
 	public PlanoMonitoria getPlanoPersistido() {
 		return planoPersistido;
 	}
@@ -166,14 +160,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.componentes = componentes;
 	}
 	
-	public long getEditalId() {
-		return editalId;
-	}
-
-	public void setEditalId(long editalId) {
-		this.editalId = editalId;
-	}
-
 	@PostConstruct
 	public void init() {
 		nomeBusca = "";
@@ -185,8 +171,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
-		
-		editalId = 0;
 	}
 	
 	/**
@@ -196,8 +180,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 */
 	public void cadastrarPlano()
 	{
-		planoPersistido.setEdital(editalbean.consultaEditalById(editalId));
-		
 		if(planobean.persistePlanoMonitoria(planoPersistido))
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
