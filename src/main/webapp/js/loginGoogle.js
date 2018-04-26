@@ -1,6 +1,6 @@
-jQuery(function(){
-	jQuery.noConflict();
-});
+// jQuery(function(){
+// 	jQuery.noConflict();
+// });
 onload = startApp;
 
 var googleUser = {};
