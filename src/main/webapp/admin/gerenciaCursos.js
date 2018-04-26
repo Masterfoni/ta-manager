@@ -1,5 +1,4 @@
 $(".cadastrador").click(function(e){
-    console.log("dale");
     $("#myModal2").modal();
 });
 

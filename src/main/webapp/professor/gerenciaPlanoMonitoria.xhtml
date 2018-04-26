@@ -1,89 +1,87 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<h:head>
-		<ui:include src="/comum/header-libs.xhtml"/>
+		<ui:include src="/comum/new-header-libs.xhtml"/>
 		<link rel="stylesheet" href="../professor/gerenciaPlanoMonitoria.css"></link>
 		<title>Administração de Planos de Monitoria</title>
 	</h:head>
 	<h:body>
-		<ui:include src="/comum/navbar-top.xhtml" />
+		<ui:include src="/comum/new-navbar-top.xhtml" />
 		<div class="container"> 
-			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2">
-					<h:form>
-						<div class="input-group">
-							<h:inputText styleClass="form-control" placeholder="Digite o parametro..." value="#{gerenciaPlanoMonitoriaView.nomeBusca}" disabled="true"></h:inputText>
-							<span class="input-group-btn">
-								<h:commandButton value="Buscar" action="#{gerenciaPlanoMonitoriaView.buscaPlanoMonitoria()}" update=":tabelaPlanos"
-													styleClass="btn btn-default">
-								</h:commandButton>
-								<h:commandButton value="Cadastrar" class="btn btn-default cadastrador">
-									<f:ajax execute="@none" render="cadastraPlano" />
-								</h:commandButton>
-							</span>
-						</div>
-					</h:form>
+			<div class="row align-items-center">
+				<div class="col col-sm-6">
+					<h1>Planos de Monitoria</h1>
+				</div>
+				<div class="col col-sm-6  text-right">	
+					<h:commandButton value="Cadastrar novo plano" class="btn btn-outline-success cadastrador">
+						<f:ajax execute="@none" render="cadastraPlano" />
+					</h:commandButton>	
 				</div>
 			</div>
 
-			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-				<div class="alert alert-danger alert-dismissable fade in err-m-10">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-					<h:messages/>
-				</div>
-			</h:panelGroup>
-			
 			<div class="row">
 				<div class="col-lg-12">
-					<h:form>
-						<h:dataTable id="tabelaPlanos" value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" class="table"
-									 columnClasses="center,center,center,center,right">
-							<h:column>
-								<f:facet name="header">Edital</f:facet>
-								#{plano.edital.numeroEdital}
-							</h:column>
-							<h:column>
-								<f:facet name="header">Bolsas</f:facet>
-								<span class="label label-success">#{plano.bolsas}</span>
-							</h:column>
-							<h:column>
-								<f:facet name="header">Componente Curricular</f:facet>
-								#{plano.cc.nome}
-							</h:column>
-							<h:column>
-								<f:facet name="header">Docente</f:facet>
-								#{plano.cc.professor.nome}
-							</h:column>
-							<h:column>
-								<h:commandButton id="botaoUpdate" actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}" 
-													value="Alterar" class="btn btn-info alterador">
-									<f:ajax execute="@form" render=":formAtualizador :atualizaPlano" />
-								</h:commandButton>
-							</h:column>
-						</h:dataTable>
-					</h:form>
+					<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<h:messages/>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+						</div>
+					</h:panelGroup>
 				</div>
+			</div>
+
+			<div class="row">
+				<h:form style="width: 100%">
+					<table class="table table-striped">
+						<thead>
+							<th scope="col">Edital</th>
+							<th scope="col">Bolsas</th>
+							<th scope="col">Componente Curricular</th>
+							<th scope="col">Docente</th>
+							<th scope="col"></th>
+						</thead>
+						<tbody>
+							<ui:repeat id="repeatPlanos" value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
+								<tr>
+									<td class="center">#{plano.edital.numeroEdital}</td>
+									<td class="center">
+										<span class="badge badge-pill badge-success">#{plano.bolsas}</span>
+									</td>
+									<td class="center">#{plano.cc.nome}</td>
+									<td class="center">#{plano.cc.professor.nome}</td>
+									<td class="right">
+										<h:commandButton id="botaoUpdate" actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}" 
+														value="Alterar" class="btn btn-info alterador">
+											<f:ajax execute="@form" render=":formAtualizador :atualizaPlano" />
+										</h:commandButton>
+									</td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</h:form>
 			</div>
 			
 			<!-- MODAL DE ATUALIZAÇÃO -->
-			<div id="myModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="atualizacaoModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<h:form id="formAtualizador" class="dialogSignup">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">x</button>
-									<h4 class="modal-title">Atualize o Plano de Monitoria</h4>
+								<h5 class="modal-title" id="atualizacaoModalLabel">Atualize o Plano de Monitoria</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">x</span>
+								</button>
 							</div>
 							<div class="modal-body">
 								<div id="atualizaPlano">
 									<div class="form-group">
 										<label>Edital</label>
-
 										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}" converter="editalConverter">
 											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
@@ -125,10 +123,10 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
-													update="@form" class="btn btn-info" />
-								<span>  </span>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<span>  </span>
+								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
+												 update="@form" class="btn btn-info" />
 							</div>
 						</h:form>
 					</div>
@@ -136,13 +134,15 @@
 			</div>
 			
 			<!-- MODAL DE CADASTRO -->
-			<div id="myModal2" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+			<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
+				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<h:form class="dialogSignup">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">x</button>
-									<h4 class="modal-title">Cadastre um Plano de Monitoria</h4>
+								<h5 class="modal-title" id="cadastroTitle">Cadastre um Plano de Monitoria</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">x</span>
+								</button>
 							</div>
 							<div class="modal-body">
 								<div id="cadastraPlano">
@@ -189,20 +189,20 @@
 								</div>
 							</div>
 							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<span>  </span>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarPlano()}" 
 												 update="@all" class="btn btn-info" />
-								<span>  </span>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 							</div>
 						</h:form>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>
 </html>

@@ -1,118 +1,128 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
 	<h:head>
-		<ui:include src="/comum/header-libs.xhtml"/>
+		<ui:include src="/comum/new-header-libs.xhtml"/>
+		<link rel="stylesheet" href="../aluno/inscricaoMonitoria.css"></link>
 		<title>Monitoria - IFPE</title>
 	</h:head>
 	
 	<h:body>
-		<ui:include src="/comum/navbar-top.xhtml" />
-				
+		<ui:include src="/comum/new-navbar-top.xhtml" />
 		<div class="container">		
+			<div class="row align-items-center">
+				<div class="col col-lg-12">
+					<h1>Inscrições Monitoria</h1>
+				</div>
+			</div>
 			
-			<h1>Inscrições Monitoria</h1>
-			
-			<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
-				<hr></hr>
-				<h4>Inscrição Atual</h4>
-				<h:panelGroup layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
-					<p><strong>Componente curricular:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.nome} </p>
-					<p><strong>Turno:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.turno} </p>
-					<p>
-						<strong>Bolsista:</strong>  
-						<h:outputText value=" Sim" rendered="#{inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText>
-						<h:outputText value=" Não" rendered="#{not inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText> 
-					</p>
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{empty inscricaoMonitoriaView.monitoria}">
-					<p>Você ainda não esta inscrito para nenhuma monitoria.</p>
-				</h:panelGroup>
-				<hr></hr>
+			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<h:messages/>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+						</div>
+					</div>
+				</div>
 			</h:panelGroup>
+
+			<div class="row row-m-5">
+				<div class="col col-lg-12">
+					<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
+						<hr></hr>
+						<h4>Inscrição Atual</h4>
+						<h:panelGroup layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
+							<p><strong>Componente curricular:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.nome} </p>
+							<p><strong>Turno:</strong> #{inscricaoMonitoriaView.monitoria.planoMonitoria.cc.turno} </p>
+							<p>
+								<strong>Bolsista:</strong>  
+								<h:outputText value=" Sim" rendered="#{inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText>
+								<h:outputText value=" Não" rendered="#{not inscricaoMonitoriaView.monitoria.bolsa}"></h:outputText> 
+							</p>
+						</h:panelGroup>
+						<h:panelGroup layout="block" rendered="#{empty inscricaoMonitoriaView.monitoria}">
+							<p>Você ainda não esta inscrito para nenhuma monitoria.</p>
+						</h:panelGroup>
+						<hr></hr>
+					</h:panelGroup>
+				</div>
+			</div>			
 			
-			<div class="row">
-				<h:form>
-					<div class="form-group">
-						<div class="col-lg-9">
-							<label>Selecione o edital para inscrição:</label>
-							<h:selectOneMenu styleClass="form-control" value="#{inscricaoMonitoriaView.edital}" converter="editalConverter">
+			<div class="row row-m-5">
+				<div class="col-lg-12">
+					<h:form class="form-inline">
+						<div class="form-group mx-sm-3">
+							<label for="selectEdital">Selecione o edital para inscrição:  </label>
+							<h:selectOneMenu id="selectEdital" styleClass="form-control" value="#{inscricaoMonitoriaView.edital}" converter="editalConverter">
 								<f:selectItems value="#{inscricaoMonitoriaView.editais}" var="ed" itemValue="#{ed}" itemLabel="#{ed.numeroEdital}"/>
 							</h:selectOneMenu>
 						</div>
-						<div class="col-lg-3">
-							<br />
-							<h:commandButton value="Selecionar Edital" update="@all" class="btn btn-info" />
-						</div>
-					</div>
-				</h:form>
+						
+						<h:commandButton value="Selecionar Edital" update="@all" class="btn btn-info" />
+					</h:form>
+				</div>
 			</div>
 					
 			<h:panelGroup id="cursos" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
-			<div class="row">
-				<h:form>
-					<div class="form-group">
-						<div class="col-lg-9">
-							<label>Selecione seu curso: </label>
-							<h:selectOneMenu styleClass="form-control" value="#{inscricaoMonitoriaView.curso}" converter="cursoConverter">
-								<f:selectItems value="#{inscricaoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
-							</h:selectOneMenu>
-						</div>
-						<div class="col-lg-3">
-							<br />
-							<h:commandButton value="Alterar Curso" actionListener="#{inscricaoMonitoriaView.alterarCurso()}" 
-													update="plano" class="btn btn-info" />
-						</div>
-					</div>
-				</h:form>
-			</div>
-			</h:panelGroup>
-		
-			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-				<div class="alert alert-warning alert-dismissable fade in">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-					<h:messages/>
-				</div>
-			</h:panelGroup>
-		
-			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.aluno.curso and not empty inscricaoMonitoriaView.edital}">
-				<hr></hr>
-				<div class="row">
+				<div class="row row-m-5">
 					<div class="col-lg-12">
-						<h:form>
-							<h:dataTable id="tabelaPlanos" value="#{inscricaoMonitoriaView.planos}" var="plano" class="table">
-								<h:column>
-									<f:facet name="header">Edital</f:facet>
-									#{plano.edital.numeroEdital}
-								</h:column>
-								<h:column>
-									<f:facet name="header">Componente Curricular</f:facet>
-									#{plano.cc.nome}
-								</h:column>
-								<h:column>
-									<f:facet name="header">Turno</f:facet>
-									#{plano.cc.turno}
-								</h:column>
-								<h:column>
-									<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoComBolsa(plano)}"
-													rendered="#{inscricaoMonitoriaView.temBolsa(plano)}" value="Bolsista" update="@form" class="btn btn-info" />
-								</h:column>
-								<h:column>
-									<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoVoluntario(plano)}"
-														value="Voluntário" update="@form" class="btn btn-info" />
-									<span>   </span>
-								</h:column>
-							</h:dataTable>
+						<h:form class="form-inline">
+							<div class="form-group mx-sm-3">
+								<label for="selectCurso">Selecione seu curso: </label>
+								<h:selectOneMenu id="selectCurso" styleClass="form-control" value="#{inscricaoMonitoriaView.curso}" converter="cursoConverter">
+									<f:selectItems value="#{inscricaoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
+								</h:selectOneMenu>
+							</div>
+	
+							<h:commandButton value="Alterar Curso" actionListener="#{inscricaoMonitoriaView.alterarCurso()}" update="plano" class="btn btn-info" />
 						</h:form>
 					</div>
 				</div>
 			</h:panelGroup>
-			
+		
+			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.aluno.curso and not empty inscricaoMonitoriaView.edital}">
+				<div class="row">
+					<div class="col col-lg-12">
+						<h:form>
+							<table class="table table-striped">
+								<thead>
+									<th scope="col">Edital</th>
+									<th scope="col">Componente Curricular</th>
+									<th scope="col">Turno</th>
+									<th scope="col"></th>
+								</thead>
+								<tbody>
+									<ui:repeat id="repeatPlanos" value="#{inscricaoMonitoriaView.planos}" var="plano" varStatus="myStatus">
+										<tr>
+											<td>#{plano.edital.numeroEdital}</td>
+											<td>#{plano.cc.nome}</td>
+											<td>#{plano.cc.turno}</td>
+											<td>
+												<div class="btn-group" role="group">
+													<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoComBolsa(plano)}"
+																	 rendered="#{inscricaoMonitoriaView.temBolsa(plano)}" value="Bolsista" update="@form" class="btn btn-info">
+													</h:commandButton>
+	
+													<h:commandButton actionListener="#{inscricaoMonitoriaView.selecionarPlanoVoluntario(plano)}"
+																	   value="Voluntário" update="@form" class="btn btn-info">
+													</h:commandButton>
+												</div>
+											</td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+						</h:form>
+					</div>
+				</div>
+			</h:panelGroup>
 		</div>
 		
-		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
-		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="../comum/navbar-top.js"></script>
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src="../comum/new-navbar-top.js"></script>
 	</h:body>
 </html>
