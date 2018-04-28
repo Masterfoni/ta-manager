@@ -66,6 +66,15 @@
 	    <artifactId>dbunit</artifactId>
 	    <version>2.5.4</version>
 	</dependency>
+  	
+  	<!-- https://mvnrepository.com/artifact/org.glassfish.main.extras/glassfish-embedded-all -->
+	<dependency>
+    	<groupId>org.glassfish.main.extras</groupId>
+    	<artifactId>glassfish-embedded-all</artifactId>
+    	<version>4.1.1</version>
+    	<scope>test</scope>
+	</dependency>
+  	
   
   	<dependency>
   		<groupId>org.postgresql</groupId>
