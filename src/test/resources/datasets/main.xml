@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <TB_USUARIO id="1" txt_nome="João Vitor Almeida de Lima" txt_cpf="107.393.994-46" txt_email="jval@a.recife.ifpe.edu.br" txt_senha="jval123" txt_rg="7981528" txt_rg_emissor="SDS/PE" txt_sexo="Masculino" />
+  
+  <TB_USUARIO_GRUPO id="1" txt_email="jval@a.recife.ifpe.edu.br" txt_grupo="COMISSAO" id_usuario="1"/>
+</dataset>
