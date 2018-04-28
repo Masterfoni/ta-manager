@@ -1,32 +1,101 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8" />
-	<link rel="stylesheet" href="./resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
-	<link rel="stylesheet" href="./publico/index.css"></link>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"></link>
-	<link href="./resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
-	<title>Monitoria - IFPE</title>
-</head>
-<body>
-	<div class="container">
-		<div class="login-panel col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<div class = "panel">
-				<div class="panel-heading">
-                	<div class="avatar">
-						<img src="./resources/images/ifpe-logo.jpg"></img>
-                    </div>
-                    <h3 class="text-center">Instituto Federal de Pernambuco</h3>
-                    <p class="text-center"><i>Campus</i> Recife</p>
-                    <h4 class="text-center">Programa de Monitoria</h4>
-               	</div>
-               	<div class="panel-body" >
-	             	<div class="col-sm-12 controls">
-	                	<a href="./publico/index.xhtml" class="text-center btn btn-info ind-button-a">Acessar o portal</a>
-                	</div>
-                </div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+	
+	<h:head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="./resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+		<link rel="stylesheet" href="./welcome.css"></link>
+		<link href="./resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
+		<title>Monitoria - IFPE</title>
+	</h:head>
+	
+	<h:body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">
+						<img src="./resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+					</a>
+				</div>
+				<ul class="nav navbar-nav">
+				</ul>
+				<h:form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<h:commandLink class="nav-link" action="#{logoutView.logout}" value="Sair  ">
+								<span class="fa fa-power-off"></span>
+							</h:commandLink>
+						</li>
+					</ul>
+				</h:form>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row my-4">
+				<div class="col-lg-8">
+					<img class="img-fluid rounded" src="http://placehold.it/900x400" alt=""></img>
+				</div>
+				<div class="col-lg-4">
+					<h1>Novo edital pulicado</h1>
+					<p>Edital jack djumpson, insira aqui a descrição do edital. Talvez o número de bolsas também entre aqui, mussum impsum.</p>
+					<a href="./publico/index.xhtml" class="btn btn-primary btn-lg">Acessar o portal</a>
+				</div>
+			</div>
+		  
+			<div class="card text-white my-4 text-center" style="background-color: #42a15a !important;">
+				<div class="card-body">
+					<p class="text-white m-0">Abaixo daqui, talvez estejam os editais mais antigos? Não sei, talvez outras informações relevantes</p>
+				</div>
+			</div>
+		  
+			<div class="row">
+				<div class="col-md-4 mb-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h2 class="card-title">Template incrível!</h2>
+							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-primary">Baixar</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h2 class="card-title">Copiei esse template uhul</h2>
+							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-primary">Baixar</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h2 class="card-title">Nada importante aqui</h2>
+							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-primary">Baixar</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
+		  
+		<footer class="py-5" style="background-color: #246f37 !important;">
+			<div class="container">
+				<p class="m-0 text-center text-white">Todos os direitos reservados &#174; Fal e Jval 2018</p>
+			</div>
+		</footer>
+
+		<script src="./resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="./resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+	</h:body>
 </html>

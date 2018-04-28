@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<h:head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../resources/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../publico/cadastroServidor.css"></link>
-		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
 		<title>Cadastro Servidor</title>
 	</h:head>
+	
 	<h:body>
-		<ui:include src="/comum/navbar-top-basico.xhtml" />
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">
+						<img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+					</a>
+				</div>
+				<ul class="nav navbar-nav">
+				</ul>
+				<h:form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<h:commandLink class="nav-link" action="#{logoutView.logout}" value="Sair  ">
+								<span class="fa fa-power-off"></span>
+							</h:commandLink>
+						</li>
+					</ul>
+				</h:form>
+			</div>
+		</nav>
 
 		<div class="container">
 			<h2>Finalização do cadastro de Servidor</h2>
@@ -101,13 +117,13 @@
 						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
 					</div>
 
-					<h:commandButton value="Finalizar Cadastro" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info ind-button" update="growlProfessor" />
+					<h:commandButton value="Finalizar Cadastro" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info btn-block" update="growlProfessor" />
 				</h:form>
 			</div>
 		</div>
 
-		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
-		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 		<script src="./cadastroServidor.js"></script>
 	</h:body>
