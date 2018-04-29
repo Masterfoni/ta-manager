@@ -226,7 +226,7 @@
 			<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<h:form class="dialogSignup">
+						<h:form id="formcadastro" class="dialogSignup">
 							<div class="modal-header">
 								<h5 class="modal-title" id="cadastroTitle">Crie um novo Edital</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -365,7 +365,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaEditalView.cadastrarEdital()}" 
-												 update="@form" class="btn btn-info" />
+												 id="btnCadastrar" update="@form" class="btn btn-info" />
 							</div>
 						</h:form>
 					</div>

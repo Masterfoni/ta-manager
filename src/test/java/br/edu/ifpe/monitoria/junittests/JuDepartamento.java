@@ -11,9 +11,9 @@ public class JuDepartamento {
 	
 	public JuDepartamento()
 	{
-		if(DbUnitUtil.ultimo_executado != Dataset.Departamento)
+		if(DbUnitUtil.ultimo_executado != Dataset.Usuario)
 		{
-			DbUnitUtil.selecionaDataset(Dataset.Departamento);
+			DbUnitUtil.selecionaDataset(Dataset.Usuario);
 			DbUnitUtil.inserirDados();
 		}
 	}

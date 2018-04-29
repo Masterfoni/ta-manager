@@ -23,13 +23,13 @@ public class DbUnitUtil
     {
         switch (dataset)
         {
-            case Departamento:
-                XML_FILE = "dbunit/dataset.xml";
-                ultimo_executado = Dataset.Departamento;
-                break;
             case Usuario:
                 XML_FILE = "dbunit/dataset.xml";
                 ultimo_executado = Dataset.Usuario;
+                break;
+            case EditalCucumber:
+            	XML_FILE = "dbunit/editalCucumber.xml";
+                ultimo_executado = Dataset.EditalCucumber;
                 break;
         }
     }
@@ -41,10 +41,16 @@ public class DbUnitUtil
             Statement stmt = connection.createStatement();
 
             String sql;
-           
-            sql = "DELETE FROM tb_usuario";
+            
+            sql = "DELETE FROM tb_edital";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_departamento";
+            sql = "DELETE FROM tb_usuario_grupo";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_servidor";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_perfilgoogle";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_usuario";
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
@@ -52,7 +58,6 @@ public class DbUnitUtil
         }
     }
 
-    @SuppressWarnings("UseSpecificCatch")
     public static void inserirDados()
     {
         Connection conn = null;
@@ -60,7 +65,7 @@ public class DbUnitUtil
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "postgres");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
             String schema = db_conn.getSchema();

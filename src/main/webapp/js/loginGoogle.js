@@ -37,6 +37,10 @@ function signOut() {
     });
 }
 
+function complete() {
+	return "kanban";
+}
+
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
     
