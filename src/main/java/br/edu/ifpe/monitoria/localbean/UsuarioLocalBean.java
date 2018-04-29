@@ -26,7 +26,7 @@ public class UsuarioLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@DenyAll
+	//@DenyAll
 	public List<Usuario> consultaUsuarios()
 	{
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();

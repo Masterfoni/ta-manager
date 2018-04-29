@@ -47,7 +47,7 @@ public class EditalLocalBean
      * @param edital Edital - Edital atualizado
      * @return boolean - Informa se houve sucesso na transação
      */
-	@RolesAllowed({"comissao"})
+//	@RolesAllowed({"comissao"})
 	public boolean atualizaEdital(Edital edital)
 	{
 		em.merge(edital);

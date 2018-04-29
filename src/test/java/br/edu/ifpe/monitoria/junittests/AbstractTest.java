@@ -18,7 +18,10 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.runner.RunWith;
-import org.primefaces.model.UploadedFile;
+import com.google.api.client.json.JsonFactory;
+import  com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 @RunWith(Arquillian.class)
 public abstract class AbstractTest {
@@ -31,6 +34,10 @@ public abstract class AbstractTest {
 		return ShrinkWrap.create(WebArchive.class, "gem.war")
 				.addPackages(true, "br.edu.ifpe.monitoria")
 				.addAsResource("META-INF/persistence.xml")
+				.addClass(JsonFactory.class)
+				.addClass(JacksonFactory.class)
+				.addClass(HttpTransport.class)
+				.addClass(NetHttpTransport.class)
 				.addAsResource("teste.pdf")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

@@ -12,11 +12,11 @@
 	</container>
 
 	<extension qualifier="persistence">
-		<property name="defaultDataSource">jdbc/monitoria</property>
+		<property name="defaultDataSource">monitoria</property>
 	</extension>
 	<extension qualifier="persistence-dbunit">
 		<property name="datatypeFactory">org.dbunit.ext.postgresql.PostgresqlDataTypeFactory</property>
-		<property name="metadataHandler">org.dbunit.ext.postgresql.PostgresqlMetadataHandler</property>
+<!-- 		<property name="metadataHandler">org.dbunit.ext.postgresql.PostgresqlMetadataHandler</property> -->
 		<property name="caseSensitiveTableNames">false</property>
 		<property name="defaultDataSetFormat">json</property>
 		<property name="excludePoi">true</property>
