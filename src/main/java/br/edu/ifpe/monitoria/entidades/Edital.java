@@ -31,6 +31,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @NamedQueries({
 	@NamedQuery(name = "Edital.findAll", query = "SELECT e FROM Edital e"),
 	@NamedQuery(name = "Edital.findById", query = "SELECT e FROM Edital e WHERE e.id = :id"),
+	@NamedQuery(name = "Edital.findByNumero", query = "SELECT e FROM Edital e WHERE e.numeroEdital = :numero"),
 	@NamedQuery(name = "Edital.findVigentes", query = "SELECT e FROM Edital e WHERE e.vigente = true")
 })
 @Access(AccessType.FIELD)

@@ -20,13 +20,11 @@ import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"comissao","professor"})
 public class CursoLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@PermitAll
 	public List<Curso> consultaCursos()
 	{
 		List<Curso> cursos = em.createNamedQuery("Curso.findAll", Curso.class).getResultList();
@@ -34,7 +32,6 @@ public class CursoLocalBean
 		return cursos;
 	}
 	
-	@RolesAllowed({"comissao"})
 	public boolean atualizaCurso(Curso curso)
 	{
 		em.merge(curso);
@@ -42,7 +39,6 @@ public class CursoLocalBean
 		return true;
 	}
 	
-	@RolesAllowed({"comissao"})
 	public Curso consultaCursoById(Long id)
 	{
 		Curso cursoPorId = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", id).getSingleResult();
@@ -50,7 +46,6 @@ public class CursoLocalBean
 		return cursoPorId;
 	}
 	
-	@RolesAllowed({"comissao"})
 	public List<Curso> consultaCursoByName(String nome)
 	{
 		List<Curso> cursos = em.createNamedQuery("Curso.findByNome", Curso.class).setParameter("nome", nome).getResultList();
@@ -58,7 +53,6 @@ public class CursoLocalBean
 		return cursos;
 	}
 	
-	@RolesAllowed({"comissao"})
 	public DelecaoRequestResult deletaCurso(Long id)
 	{
 		DelecaoRequestResult delecao = new DelecaoRequestResult();
@@ -86,7 +80,6 @@ public class CursoLocalBean
 		return delecao;
 	}
 	
-	@RolesAllowed({"comissao"})
 	public boolean persisteCurso(@NotNull @Valid Curso curso)
 	{
 		em.persist(curso);

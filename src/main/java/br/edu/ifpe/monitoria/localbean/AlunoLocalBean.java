@@ -33,7 +33,6 @@ public class AlunoLocalBean
 		return true;
 	}
 	
-	@PermitAll
 	public Aluno consultaAlunoById(Long id)
 	{
 		Aluno alunoPorId = null;
@@ -47,7 +46,6 @@ public class AlunoLocalBean
 		return alunoPorId;
 	}
 	
-	@PermitAll
 	public Aluno consultaAlunoByMatricula(String matricula)
 	{
 		Aluno alunoPorMatricula = null;
@@ -61,7 +59,6 @@ public class AlunoLocalBean
 		return alunoPorMatricula;
 	}
 	
-	@RolesAllowed("aluno")
 	public boolean atualizaAluno (Aluno aluno) {
 		
 		em.merge(aluno);
