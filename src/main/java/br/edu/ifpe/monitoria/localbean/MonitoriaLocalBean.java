@@ -2,8 +2,6 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +14,6 @@ import javax.validation.constraints.NotNull;
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
-import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
