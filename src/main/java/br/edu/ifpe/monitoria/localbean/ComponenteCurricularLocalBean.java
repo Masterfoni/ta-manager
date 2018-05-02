@@ -50,12 +50,12 @@ public class ComponenteCurricularLocalBean
 		return componentePorId;
 	}
 	
-	public List<ComponenteCurricular> consultaComponentesByName(String nome)
+	public ComponenteCurricular consultaComponenteByName(String nome)
 	{
-		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)
-												 .setParameter("nome", nome).getResultList();
+		ComponenteCurricular componente = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)
+												 .setParameter("nome", nome).getSingleResult();
 		
-		return componentes;
+		return componente;
 	}
 	
 	/**

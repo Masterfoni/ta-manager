@@ -46,11 +46,11 @@ public class CursoLocalBean
 		return cursoPorId;
 	}
 	
-	public List<Curso> consultaCursoByName(String nome)
+	public Curso consultaCursoByName(String nome)
 	{
-		List<Curso> cursos = em.createNamedQuery("Curso.findByNome", Curso.class).setParameter("nome", nome).getResultList();
+		Curso curso = em.createNamedQuery("Curso.findByNome", Curso.class).setParameter("nome", nome).getSingleResult();
 		
-		return cursos;
+		return curso;
 	}
 	
 	public DelecaoRequestResult deletaCurso(Long id)
