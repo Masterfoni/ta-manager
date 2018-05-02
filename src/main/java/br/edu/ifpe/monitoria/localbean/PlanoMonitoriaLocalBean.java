@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 /**
  * Responsável por salvar, listar, atualizar e remover planos de monitoria no banco de dados.
@@ -94,6 +96,33 @@ public class PlanoMonitoriaLocalBean
 		em.merge(plano);
 
 		return true;
+	}
+	
+	public DelecaoRequestResult deletaPlanoMonitoria(Long id)
+	{
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
+		boolean podeExcluir = true;
+		
+		PlanoMonitoria planoDeletado = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();
+		
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class).setParameter("plano", planoDeletado).getResultList();
+		
+		if(monitorias != null && !monitorias.isEmpty()) {
+			delecao.errors.add("Existem monitorias vinculados à este edital, não é possivel excluir este edital. "
+					+ "Mas você pode dizer que não está vigente na opção alterar.");
+			podeExcluir = false;
+		}
+		
+		if(podeExcluir) 
+		{
+			try {
+				em.remove(planoDeletado);
+			} catch (Exception e) {
+				delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+			}
+		}
+				
+		return delecao;
 	}
 	
 	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso) {
