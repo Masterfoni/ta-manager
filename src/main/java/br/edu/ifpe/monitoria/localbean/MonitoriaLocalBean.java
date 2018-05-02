@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
 @LocalBean
@@ -87,6 +89,21 @@ public class MonitoriaLocalBean
 		em.persist(monitoria);
 
 		return true;
+	}
+	
+	public DelecaoRequestResult deletaMonitoria(Long id)
+	{
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
+		
+		Monitoria monitoriaDeletada = em.createNamedQuery("Monitoria.findById", Monitoria.class).setParameter("id", id).getSingleResult();
+
+		try {
+			em.remove(monitoriaDeletada);
+		} catch (Exception e) {
+			delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+		}
+				
+		return delecao;
 	}
 
 

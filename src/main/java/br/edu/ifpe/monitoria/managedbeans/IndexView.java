@@ -88,7 +88,7 @@ public class IndexView implements Serializable {
 		{
 			context.addMessage(null, new FacesMessage("Matricula já cadastrada!"));
 		}
-		else if(alunoBean.persisteAluno(aluno))
+		else if(alunoBean.persisteAluno(aluno, true))
 		{
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 		}
