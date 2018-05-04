@@ -2,9 +2,6 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,7 +23,6 @@ import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
  */
 @Stateless
 @LocalBean
-@DeclareRoles({"comissao", "professor", "aluno"})
 public class EditalLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
@@ -35,7 +31,6 @@ public class EditalLocalBean
 	/** Lista todos os editais criados no sistema
      * @return List<Edital> - Lista de editais
      */
-	@PermitAll
 	public List<Edital> consultaEditais()
 	{
 		List<Edital> editais = em.createNamedQuery("Edital.findAll", Edital.class).getResultList();
@@ -47,7 +42,6 @@ public class EditalLocalBean
      * @param edital Edital - Edital atualizado
      * @return boolean - Informa se houve sucesso na transação
      */
-	@RolesAllowed({"comissao"})
 	public boolean atualizaEdital(Edital edital)
 	{
 		em.merge(edital);
@@ -60,7 +54,6 @@ public class EditalLocalBean
      * @exception NoResultException 
      * @return Edital - Edital encontrado com ID informado
      */
-	@RolesAllowed({"comissao", "professor"})
 	public Edital consultaEditalById(Long id)
 	{
 		Edital editalPorId = null;
@@ -79,7 +72,6 @@ public class EditalLocalBean
      * @param id Long - ID do edital a ser excluído
      * @return boolean - Informa se houve sucesso na transação
      */
-	@RolesAllowed({"comissao"})
 	public DelecaoRequestResult deletaEdital(Long id)
 	{
 		DelecaoRequestResult delecao = new DelecaoRequestResult();
@@ -115,19 +107,29 @@ public class EditalLocalBean
 	
 	/** Salva um edital válido no sistema
      * @param edital Edital - Edital a ser salvo
-     * @return boolean - Informa se houve sucesso na transação
+     * @return long - ID do edital persistido
      */
-	@RolesAllowed({"comissao"})
-	public boolean persisteEdital(@NotNull @Valid Edital edital)
+	public Long persisteEdital(@NotNull @Valid Edital edital)
 	{
 		em.persist(edital);
 		
-		return true;
+		return edital.getId();
 	}
-
+	
+	/** Consulta editais vigente
+     * @return List<Edital> - Lista de editais vigentes
+     */
 	public List<Edital> consultaEditaisVigentes() {
 		List<Edital> editais = em.createNamedQuery("Edital.findVigentes", Edital.class).getResultList();
 		
 		return editais;
+	}
+	
+	/** Consulta edital no sistema por número
+     * @param String numero - Numero do edital
+     * @return Edital - edital que possui exatamente o número passado
+     */
+	public Edital consultaEditalByNumero(String numero) {
+		return em.createNamedQuery("Edital.findByNumero", Edital.class).setParameter("numero", numero).getSingleResult();
 	}
 }

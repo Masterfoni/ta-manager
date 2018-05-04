@@ -115,14 +115,6 @@ public class PlanoMonitoria {
 		this.objetivo = objetivo;
 	}
 
-	public String getPeriodo() {
-		return listaAtividades;
-	}
-
-	public void setPeriodo(String listaAtividades) {
-		this.listaAtividades = listaAtividades;
-	}
-
 	public Long getId() {
 		return id;
 	}

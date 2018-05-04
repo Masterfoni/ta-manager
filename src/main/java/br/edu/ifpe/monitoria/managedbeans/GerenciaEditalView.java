@@ -89,7 +89,7 @@ public class GerenciaEditalView implements Serializable {
 	{
 		if(validarDatas(editalPersistido)) {		
 			editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
-			if(editalbean.persisteEdital(editalPersistido))
+			if(editalbean.persisteEdital(editalPersistido) > 0)
 			{
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));

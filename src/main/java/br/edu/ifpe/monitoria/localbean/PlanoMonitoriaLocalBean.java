@@ -2,9 +2,6 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,7 +12,9 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 /**
  * Responsável por salvar, listar, atualizar e remover planos de monitoria no banco de dados.
@@ -24,7 +23,6 @@ import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
  */
 @Stateless
 @LocalBean
-@DeclareRoles({"comissao", "professor", "aluno"})
 public class PlanoMonitoriaLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
@@ -36,7 +34,6 @@ public class PlanoMonitoriaLocalBean
 	 * @param plano uma instância de {@code PlanoMonitoria} que representa o plano à ser persistido
 	 * @return true no caso de sucesso 
 	 */
-	@RolesAllowed({"professor", "comissao"})
 	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
 		em.persist(plano);
@@ -69,7 +66,6 @@ public class PlanoMonitoriaLocalBean
 	 *
 	 * @return {@code List<PlanoMonitoria>} Uma lista de planos de monitoria, que pode estar vazia ou não. 
 	 */
-	@RolesAllowed({"professor", "comissao", "aluno"})
 	public List<PlanoMonitoria> consultaPlanos()
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findAll", PlanoMonitoria.class).getResultList();
@@ -83,7 +79,6 @@ public class PlanoMonitoriaLocalBean
 	 * @param id Identificador único do plano de monitoria no banco de dados.
 	 * @return {@code PlanoMonitoria} Plano de monitoria do banco de dados 
 	 */
-	@RolesAllowed({"professor", "comissao"})
 	public PlanoMonitoria consultaPlanosById(Long id)
 	{
 		PlanoMonitoria planoPorId = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();
@@ -96,7 +91,6 @@ public class PlanoMonitoriaLocalBean
 	 *
 	 * @return {@code true} ou {@code false} dependendo do sucesso, ou não da operação.
 	 */
-	@RolesAllowed({"professor", "comissao"})
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
 		em.merge(plano);
@@ -104,7 +98,33 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
-	@PermitAll
+	public DelecaoRequestResult deletaPlanoMonitoria(Long id)
+	{
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
+		boolean podeExcluir = true;
+		
+		PlanoMonitoria planoDeletado = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();
+		
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class).setParameter("plano", planoDeletado).getResultList();
+		
+		if(monitorias != null && !monitorias.isEmpty()) {
+			delecao.errors.add("Existem monitorias vinculados à este edital, não é possivel excluir este edital. "
+					+ "Mas você pode dizer que não está vigente na opção alterar.");
+			podeExcluir = false;
+		}
+		
+		if(podeExcluir) 
+		{
+			try {
+				em.remove(planoDeletado);
+			} catch (Exception e) {
+				delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+			}
+		}
+				
+		return delecao;
+	}
+	
 	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso) {
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class).
 				setParameter("edital", edital).
