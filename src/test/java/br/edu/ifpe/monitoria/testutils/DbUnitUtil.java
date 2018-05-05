@@ -24,18 +24,22 @@ public class DbUnitUtil
     {
         switch (dataset)
         {
-            case Usuario:
-                XML_FILE = "dbunit/dataset.xml";
-                ultimo_executado = Dataset.Usuario;
-                break;
-            case EditalCucumber:
-            	XML_FILE = "dbunit/editalCucumber.xml";
-                ultimo_executado = Dataset.EditalCucumber;
-                break;
-            case PlanoMonitoria:
-            	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
-                ultimo_executado = Dataset.PlanoMonitoria;
-                break;
+        case Vazio:
+        	XML_FILE = "dbunit/dataset.xml";
+            ultimo_executado = Dataset.Vazio;
+            break;
+        case EditalCucumber:
+        	XML_FILE = "dbunit/editalCucumber.xml";
+            ultimo_executado = Dataset.EditalCucumber;
+            break;
+        case PlanoMonitoriaCucumber:
+          	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
+            ultimo_executado = Dataset.PlanoMonitoriaCucumber;
+            break;
+        case CandidaturaCucumber:
+          	XML_FILE = "dbunit/candidaturaCucumber.xml";
+            ultimo_executado = Dataset.CandidaturaCucumber;
+            break;
         }
     }
 
@@ -47,14 +51,21 @@ public class DbUnitUtil
 
             String sql;
             
+            sql = "DELETE FROM tb_monitoria";
+            stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_plano_monitoria";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_comp_curricular";
             stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM tb_aluno";
+            stmt.executeUpdate(sql);
+            
             sql = "DELETE FROM tb_curso";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_edital";
             stmt.executeUpdate(sql);
+            
             sql = "DELETE FROM tb_usuario_grupo";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_servidor";

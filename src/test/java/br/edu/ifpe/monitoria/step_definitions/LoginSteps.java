@@ -48,8 +48,13 @@ public class LoginSteps {
 			break;
 
 		case ALUNO:
-		
-		
+			BrowserManager.openFirefox("http://localhost:8080/gem/publico/index.xhtml");
+			BrowserManager.esperar(5000);
+			BrowserManager.driver.findElement(By.id("loginform:emailUsuario")).sendKeys(login);
+			BrowserManager.driver.findElement(By.id("loginform:senhaUsuario")).sendKeys(senha);
+			BrowserManager.driver.findElement(By.id("loginform:loginaluno")).click();
+			BrowserManager.esperar(3000);
+			break;
 		}
 		
 	}

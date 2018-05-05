@@ -2,7 +2,8 @@ package br.edu.ifpe.monitoria.testutils;
 
 public enum Dataset
 {
-    Usuario,
+	Vazio,
     EditalCucumber,
-    PlanoMonitoria
+    PlanoMonitoriaCucumber,
+    CandidaturaCucumber
 }

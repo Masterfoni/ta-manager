@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.Select;
 import br.edu.ifpe.monitoria.testutils.BrowserManager;
 import br.edu.ifpe.monitoria.testutils.Dataset;
 import br.edu.ifpe.monitoria.testutils.DbUnitUtil;
-import cucumber.api.PendingException;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
@@ -17,8 +16,8 @@ import cucumber.api.java.pt.Quando;
 public class PlanodeMonitoriaSteps {
 	
 	public PlanodeMonitoriaSteps() {
-		if(DbUnitUtil.ultimo_executado != Dataset.PlanoMonitoria) {
-			 DbUnitUtil.selecionaDataset(Dataset.PlanoMonitoria);
+		if(DbUnitUtil.ultimo_executado != Dataset.PlanoMonitoriaCucumber) {
+			 DbUnitUtil.selecionaDataset(Dataset.PlanoMonitoriaCucumber);
 	         DbUnitUtil.inserirDados();
 		}
 	}
