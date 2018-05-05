@@ -11,7 +11,7 @@ Funcionalidade: Criacao de edital
 	Quando preencher o formulario com informacoes validas
 	Entao o sistema deve criar um novo edital
 
-#  Cenário: Criar um edital com datas invalidas
-#	Quando informar uma data final de inscricao menor que a atual
-#	Entao o sistema exibe uma mensagem de erro
+  Cenário: Criar um edital com datas invalidas
+	Quando informar periodos de datas inconsistentes
+	Entao o sistema informa que a data final de um periodo nao pode ser antes do inicio 
 	

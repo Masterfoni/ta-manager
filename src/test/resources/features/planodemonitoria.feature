@@ -7,7 +7,7 @@ Funcionalidade: Submeter plano de monitoria
 	E tenta submeter um novo plano de monitoria
 
   Cenário: Submeter plano de monitoria com informacoes validas
-	Quando preencher o formulario com informacoes validas
+	Quando preencher o formulario de plano de monitoria com informacoes validas
 	Entao o sistema deve submeter o plano de monitoria
 
 	

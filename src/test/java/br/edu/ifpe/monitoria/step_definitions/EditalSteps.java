@@ -29,31 +29,7 @@ public class EditalSteps {
 	
 	@Dado("^que o usuario esta logado com perfil da comissao$")
 	public void queOUsuarioEstaLogadoComPerfilDaComissao() throws Throwable {
-		
-		BrowserManager.openFirefox("http://localhost:8080/gem/publico/index.xhtml");
-		esperar(5000);
-		
-		WebElement loginServidor = BrowserManager.driver.findElement(By.id("customBtn"));
-		loginServidor.click();
-		esperar(5000);
-		
-		String mainHandle = BrowserManager.driver.getWindowHandle();
-		String[] handles = BrowserManager.driver.getWindowHandles().toArray(new String[0]);
-		BrowserManager.driver.switchTo().window(handles[handles.length - 1]);
-		
-		WebElement email = BrowserManager.driver.findElement(By.id("identifierId"));
-		email.sendKeys("fal@a.recife.ifpe.edu.br");
-		
-		WebElement next = BrowserManager.driver.findElement(By.id("identifierNext"));
-		next.click();
-		esperar(5000);
-		
-		WebElement pass = BrowserManager.driver.findElement(By.name("password"));
-		pass.sendKeys("");
-		WebElement passnext = BrowserManager.driver.findElement(By.id("passwordNext"));
-		passnext.click();
-		esperar(5000);
-		BrowserManager.driver.switchTo().window(mainHandle);
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
 	}
 
 	@Dado("^esteja na pagina de gerencia de editais$")
@@ -83,7 +59,26 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:vigenteE")).click();
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
-		esperar(5000);
+		BrowserManager.esperar(5000);
+	}
+
+	@Quando("^informar periodos de datas inconsistentes$")
+	public void informarPeriodosDeDatasInconsistentes() throws Throwable {
+		BrowserManager.driver.findElement(By.id("formcadastro:numeroCadastroE")).sendKeys("2");
+		BrowserManager.driver.findElement(By.id("formcadastro:anoCadastroE")).sendKeys("2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniCompE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimCompE")).sendKeys("02-03-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniPME")).sendKeys("02-02-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimPME")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniAlunoE")).sendKeys("02-02-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimAlunoE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniNotaE")).sendKeys("02-02-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:vigenteE")).click();
+		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
+		BrowserManager.esperar(5000);
 	}
 
 	@Entao("^o sistema deve criar um novo edital$")
@@ -91,17 +86,23 @@ public class EditalSteps {
 		WebElement mensagem = BrowserManager.driver.findElement(By.className("alert"));
 		WebElement lista = mensagem.findElement(By.tagName("ul"));
 		assertEquals("Cadastro realizado com sucesso!", lista.findElement(By.tagName("li")).getText());
+		BrowserManager.esperar(5000);
+		BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
+		BrowserManager.driver.close();
+		BrowserManager.driver = null;
 	}
 	
-	private void esperar(long millis) {
-		Wait<WebDriver> wait = new WebDriverWait(BrowserManager.driver, 30);
-	    wait.until(new Function<WebDriver, Boolean>() {
-	        public Boolean apply(WebDriver driver) {
-	        	long end = System.currentTimeMillis() + millis;
-	        	while (System.currentTimeMillis() < end) { }
-	        	return true;
-	        }
-	    });
+
+	@Entao("^o sistema informa que a data final de um periodo nao pode ser antes do inicio$")
+	public void oSistemaInformaQueADataFinalDeUmPeriodoNaoPodeSerAntesDoInicio() throws Throwable {
+		WebElement mensagem = BrowserManager.driver.findElement(By.className("alert"));
+		WebElement lista = mensagem.findElement(By.tagName("ul"));
+		assertEquals("A data para o fim de Inserção do Componente Curricular deve ser depois da data de início.", lista.findElement(By.tagName("li")).getText());
+		BrowserManager.esperar(5000);
+//		BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
+//		BrowserManager.driver.close();
+//		BrowserManager.driver = null;
 	}
+
 
 }
