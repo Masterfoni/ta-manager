@@ -2,18 +2,12 @@ package br.edu.ifpe.monitoria.step_definitions;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.function.Function;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import br.edu.ifpe.monitoria.testutils.BrowserManager;
 import br.edu.ifpe.monitoria.testutils.Dataset;
 import br.edu.ifpe.monitoria.testutils.DbUnitUtil;
-import cucumber.api.PendingException;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
@@ -29,7 +23,7 @@ public class EditalSteps {
 	
 	@Dado("^que o usuario esta logado com perfil da comissao$")
 	public void queOUsuarioEstaLogadoComPerfilDaComissao() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia de editais$")
@@ -39,8 +33,7 @@ public class EditalSteps {
 
 	@Dado("^tenta criar um novo edital$")
 	public void tentaCriarUmNovoEdital() throws Throwable {
-		WebElement criarEdital = BrowserManager.driver.findElement(By.className("cadastrador"));
-		criarEdital.click();
+		BrowserManager.driver.findElement(By.className("cadastrador")).click();
 	}
 
 	@Quando("^preencher o formulario com informacoes validas$")

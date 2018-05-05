@@ -9,6 +9,7 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -31,6 +32,10 @@ public class DbUnitUtil
             	XML_FILE = "dbunit/editalCucumber.xml";
                 ultimo_executado = Dataset.EditalCucumber;
                 break;
+            case PlanoMonitoria:
+            	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
+                ultimo_executado = Dataset.PlanoMonitoria;
+                break;
         }
     }
 
@@ -42,6 +47,12 @@ public class DbUnitUtil
 
             String sql;
             
+            sql = "DELETE FROM tb_plano_monitoria";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_comp_curricular";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_curso";
+            stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_edital";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM tb_usuario_grupo";
@@ -75,7 +86,7 @@ public class DbUnitUtil
 
             FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
             builder.setColumnSensing(true);
-            IDataSet dataSet = builder.build(new File(XML_FILE));
+            IDataSet dataSet = builder.build(new File(XML_FILE));      
             DatabaseOperation.CLEAN_INSERT.execute(db_conn, dataSet);
 
         } catch (Exception ex) {

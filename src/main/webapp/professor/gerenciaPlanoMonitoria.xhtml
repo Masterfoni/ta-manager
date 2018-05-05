@@ -137,7 +137,7 @@
 			<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
-						<h:form class="dialogSignup">
+						<h:form id="cadastro" class="dialogSignup">
 							<div class="modal-header">
 								<h5 class="modal-title" id="cadastroTitle">Cadastre um Plano de Monitoria</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -148,41 +148,41 @@
 								<div id="cadastraPlano">
 									<div class="form-group">
 										<label>Edital</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
+										<h:selectOneMenu id="edital" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
 											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
 										<label>Componente Curricular</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
+										<h:selectOneMenu id="cc" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
 											<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}"  itemLabel="#{comp.nome}"/>
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
-										<label>Bolsistas</label>
-										<h:inputText class="form-control numero2"
+										<label>Pedido de número de bolsistas</label>
+										<h:inputText id="nbolsistas" class="form-control numero2"
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.bolsas}"></h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Voluntários</label>
-										<h:inputText class="form-control numero2"
+										<h:inputText id="voluntarios" class="form-control numero2"
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.voluntarios}"></h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Justificativa</label>
-										<h:inputText class="form-control" 
+										<h:inputText id="justificativa" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.justificativa}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Objetivo</label>
-										<h:inputText class="form-control" 
+										<h:inputText id="objetivo" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.objetivo}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Lista de Atividades</label>
-										<h:inputText class="form-control" 
+										<h:inputText id="atividades" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.listaAtividades}">
 										</h:inputText>
 									</div>
@@ -191,7 +191,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
-								<h:commandButton value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarPlano()}" 
+								<h:commandButton id="cadastrar" value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarPlano()}" 
 												 update="@all" class="btn btn-info" />
 							</div>
 						</h:form>
