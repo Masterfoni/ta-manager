@@ -9,6 +9,7 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -23,14 +24,22 @@ public class DbUnitUtil
     {
         switch (dataset)
         {
-            case Departamento:
-                XML_FILE = "dbunit/dataset.xml";
-                ultimo_executado = Dataset.Departamento;
-                break;
-            case Usuario:
-                XML_FILE = "dbunit/dataset.xml";
-                ultimo_executado = Dataset.Usuario;
-                break;
+        case Vazio:
+        	XML_FILE = "dbunit/dataset.xml";
+            ultimo_executado = Dataset.Vazio;
+            break;
+        case EditalCucumber:
+        	XML_FILE = "dbunit/editalCucumber.xml";
+            ultimo_executado = Dataset.EditalCucumber;
+            break;
+        case PlanoMonitoriaCucumber:
+          	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
+            ultimo_executado = Dataset.PlanoMonitoriaCucumber;
+            break;
+        case CandidaturaCucumber:
+          	XML_FILE = "dbunit/candidaturaCucumber.xml";
+            ultimo_executado = Dataset.CandidaturaCucumber;
+            break;
         }
     }
 
@@ -41,10 +50,29 @@ public class DbUnitUtil
             Statement stmt = connection.createStatement();
 
             String sql;
-           
-            sql = "DELETE FROM tb_usuario";
+            
+            sql = "DELETE FROM tb_monitoria";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_departamento";
+            sql = "DELETE FROM tb_plano_monitoria";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_comp_curricular";
+            stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM tb_aluno";
+            stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM tb_curso";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_edital";
+            stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM tb_usuario_grupo";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_servidor";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_perfilgoogle";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM tb_usuario";
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
@@ -52,7 +80,6 @@ public class DbUnitUtil
         }
     }
 
-    @SuppressWarnings("UseSpecificCatch")
     public static void inserirDados()
     {
         Connection conn = null;
@@ -60,7 +87,7 @@ public class DbUnitUtil
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "postgres");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
             String schema = db_conn.getSchema();
@@ -70,7 +97,7 @@ public class DbUnitUtil
 
             FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
             builder.setColumnSensing(true);
-            IDataSet dataSet = builder.build(new File(XML_FILE));
+            IDataSet dataSet = builder.build(new File(XML_FILE));      
             DatabaseOperation.CLEAN_INSERT.execute(db_conn, dataSet);
 
         } catch (Exception ex) {

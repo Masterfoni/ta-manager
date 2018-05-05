@@ -18,10 +18,10 @@
   </login-config>
   
 	<security-constraint>
-        <display-name>Pg Administrativas</display-name>
+        <display-name>Pg Comissao</display-name>
         <web-resource-collection>
-            <web-resource-name>Protected Admin Area</web-resource-name>
-            <description>Protected Admin Area</description>
+            <web-resource-name>Protected Comissao Area</web-resource-name>
+            <description>Protected Comissao Area</description>
             <url-pattern>/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -33,7 +33,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>administrativo</role-name>
+            <role-name>comissao</role-name>
         </auth-constraint>     
     </security-constraint>
   
@@ -74,6 +74,7 @@
         <auth-constraint>
             <description/>
             <role-name>professor</role-name>
+            <role-name>comissao</role-name>
         </auth-constraint>     
     </security-constraint>
   
@@ -95,13 +96,13 @@
             <description/>
             <role-name>aluno</role-name>
             <role-name>professor</role-name>
-            <role-name>administrativo</role-name>
+            <role-name>comissao</role-name>
         </auth-constraint>     
     </security-constraint>
   
   <error-page>
         <error-code>403</error-code>
-        <location>/publico/nao_autorizado.xhtml</location>
+        <location>/publico/nao-autorizado.xhtml</location>
     </error-page>  
   
   <context-param>

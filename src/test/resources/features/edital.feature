@@ -7,11 +7,11 @@ Funcionalidade: Criacao de edital
 	E esteja na pagina de gerencia de editais
 	E tenta criar um novo edital
 
-  Cen·rio: Criar um edital com informacoes validas
-	Quando preencher o formul·rio com informacoes validas
+  Cen√°rio: Criar um edital com informacoes validas
+	Quando preencher o formulario com informacoes validas
 	Entao o sistema deve criar um novo edital
 
-  Cen·rio: Criar um edital com datas invalidas
-	Quando informar uma data final de inscricao menor que a atual
-	Entao o sistema exibe uma mensagem de erro
+  Cen√°rio: Criar um edital com datas invalidas
+	Quando informar periodos de datas inconsistentes
+	Entao o sistema informa que a data final de um periodo nao pode ser antes do inicio 
 	

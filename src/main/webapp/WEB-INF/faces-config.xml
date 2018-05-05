@@ -48,19 +48,11 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
-            <from-outcome>coordenacoes</from-outcome>
-            <to-view-id>/admin/gerenciaCoordenacao.xhtml</to-view-id>
+            <from-outcome>cursos</from-outcome>
+            <to-view-id>/admin/gerenciaCursos.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
-       
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>departamentos</from-outcome>
-            <to-view-id>/admin/gerenciaDepartamento.xhtml</to-view-id>
-        </navigation-case>        
-    </navigation-rule>
-       
+              
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
@@ -83,6 +75,22 @@
             <from-outcome>planos</from-outcome>
             <to-view-id>/professor/gerenciaPlanoMonitoria.xhtml</to-view-id>
         </navigation-case>        
-    </navigation-rule>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/publico/index.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>   
+    
+    <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>componentes</from-outcome>
+    		<to-view-id>/professor/gerenciaComponenteCurricular.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
     
 </faces-config>

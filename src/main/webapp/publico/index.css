@@ -1,155 +1,106 @@
-html, body {
-	background: linear-gradient(to right, rgb(96, 108, 136), rgb(63, 76, 107));
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+html {
+	height: 100%;
+	background: #68ce72;
+	background: -webkit-linear-gradient(to bottom, #213822, #68ce72);
+	background: linear-gradient(to bottom, #213822, #68ce72);
 }
 
-.panel-heading {
-	padding-bottom: 0px;
+.login-block {
+	float:left;
+	width:100%;
+	padding : 50px 0;
 }
 
-.login-panel {
-	margin-top: 100px;
+.banner-sec {
+	background: url(../resources/images/monitoria-banner.jpg)no-repeat left bottom; 
+	background-size:cover;
+	min-height:500px; 
+	border-radius: 0 10px 10px 0; 
+	padding:0;
 }
 
-.login-footer {
-	 border-top: 1px solid#888;
-	 padding-top:15px;
-	 font-size:85%
+.container {
+	background:#fff; 
+	border-radius: 10px; 
+	box-shadow:15px 20px 0px rgba(0,0,0,0.1);
 }
 
-.panel {
-	box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+.login-sec {
+	padding: 50px 30px; 
+	position:relative;
 }
 
-
-.panel-body {
-	padding-top: 15px;
+.login-sec .copy-text {
+	position:absolute; 
+	width:80%; 
+	bottom:20px; 
+	font-size:13px; 
+	text-align:center;
 }
 
-.input-group {
-	margin-bottom: 25px;
+.login-sec h2 {
+	margin-bottom:30px; 
+	font-weight:800; 
+	font-size:30px; 
+	color: #213822;
 }
 
-.avatar {
-    width: 100px;
-    height: 100px;
-    margin: 10px auto 30px;
-    background-size: cover;
+.login-sec h2:after {
+	content:" "; 
+	width:100px; 
+	height:5px; 
+	background:#68ce72; 
+	display:block; 
+	margin-top:20px; 
+	border-radius:3px; 
+	margin-left:auto;
+	margin-right:auto
 }
 
-.ind-button {
-	width: 100%;
+.btn-login {
+	background: #DE6262; 
+	color:#fff;
+	font-weight:600;
 }
 
-.ind-button-a {
-	width: 100%;
-	padding-top: 12px;
-}
-
-.modalDialog {
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.2);
-	z-index: 110;
-	opacity:0;
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	pointer-events: none;
-}
-
-.modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
-}
-
-.dialogSignup {
-	width: 50%;
-	margin: 5% auto;
-	padding: 10px 20px 10px 20px;
-	background: white;
-	box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
-}
-
-td {
-	padding-left: 10px;
-}
-
-input[type="radio"] {
-	margin-right: 5px;
-}
-
-.fechar {
-	background: #606061;
-	color: #FFFFFF;
-	line-height: 25px;
-	position: absolute;
-	right: 0px;
-	text-align: center;
-	/*top: -10px;*/
-	width: 24px;
-	text-decoration: none;
-	font-weight: bold;
-	-moz-box-shadow: 1px 1px 3px #000;
-	-webkit-box-shadow: 1px 1px 3px #000;
-	box-shadow: 1px 1px 3px #000;
-}
-
-.fechar:hover { background: red; }
-
-img {
-	width: 90px;
-	height: 100px;
-}
-
-.btn-success, .btn-info {
-	height: 46px;
-}
-
-#gSignInWrapper {
-	border-top: 1px solid#888;
-    padding-top: 15px;
-    padding-bottom: 15px;
+.customGPlusSignIn {
+	border: 1px solid;
 }
 
 #customBtn {
-   display: inline-block;
-   background: white;
-   color: #444;
-   width: 100%;
-   /*
-   border-radius: 5px;
-   border: thin solid #888;
-   box-shadow: 1px 1px 1px grey; 
-   */
-   white-space: nowrap;
- }
- #customBtn:hover {
-   cursor: pointer;
- }
- span.label {
-   font-family: 'Roboto', sans-serif;
-   font-size: 13px;
-   /*font-weight: normal;*/
-   color:  #444;
- }
- span.icon {
-   background: url('../resources/images/g-normal.png') transparent 5px 50% no-repeat;
-   display: inline-block;
-   vertical-align: middle;
-   width: 32px;
-   height: 32px;
- }
- span.buttonText {
-   display: inline-block;
-   vertical-align: middle;
-   padding-left: 42px;
-   padding-right: 42px;
-   font-size: 14px;
-   font-weight: bold;
-   /* Use the Roboto font that is loaded in the <head> */
-   font-family: 'Roboto', sans-serif;
- }
+	display: inline-block;
+	background: white;
+	color: #444;
+	width: 100%;
+	white-space: nowrap;
+}
+
+#customBtn:hover {
+	cursor: pointer;
+	background: rgb(223, 218, 218);
+}
+
+span.label {
+	font-family: 'Roboto', sans-serif;
+	font-size: 13px;
+	color:  #444;
+}
+
+span.icon {
+	background: url('../resources/images/g-normal.png') transparent 5px 50% no-repeat;
+	display: inline-block;
+	vertical-align: middle;
+	width: 32px;
+	height: 32px;
+}
+
+span.buttonText {
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 42px;
+	padding-right: 42px;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+}

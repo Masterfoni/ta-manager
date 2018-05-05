@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -30,7 +31,10 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
 	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
 			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("
-			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))")
+			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))"),
+	@NamedQuery(name = "Monitoria.findByAluno", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital AND m.aluno = :aluno"),
+	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital"),
+	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
@@ -51,6 +55,11 @@ public class Monitoria implements Serializable{
 	@JoinColumn(name = "ID_PLANO_MONITORIA", referencedColumnName = "ID")
 	private PlanoMonitoria planoMonitoria;
 
+	@NotNull(message = "{mensagem.associacao}{tipo.edital}")
+	@ManyToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn (name = "ID_EDITAL", referencedColumnName = "ID")
+	private Edital edital;
+	
 	@Column (name="BOOL_BOLSA")
 	private boolean bolsa;
 
@@ -102,5 +111,13 @@ public class Monitoria implements Serializable{
 
 	public void setAvaliado(boolean avaliado) {
 		this.avaliado = avaliado;
+	}
+
+	public Edital getEdital() {
+		return edital;
+	}
+
+	public void setEdital(Edital edital) {
+		this.edital = edital;
 	}
 }

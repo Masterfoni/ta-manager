@@ -1,25 +1,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-	    <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-    </div>
-    <ul class="nav navbar-nav">
-    </ul>
-    <h:form>
-    <ul class="nav navbar-nav navbar-right">
-	  <li><a href="#" onclick="goToProfile();"><span class="glyphicon glyphicon-user"></span>  Perfil</a></li>
-	  <li><h:commandLink action="#{logoutView.logout}" value="Sair"><span class="glyphicon glyphicon-log-out"></span></h:commandLink></li>
-    </ul>
-    </h:form>
-  </div>
-</nav>
-
-<script>
-	function goToProfile() {
-		window.location.href = "gerenciaPerfil.xhtml";
-	}
-</script>
-
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+        </a>
+        
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h:link href="#" class="nav-link" outcome="home">Home</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="inscricao">Inscrição de Candidato</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="planos">Plano de Monitoria</h:link>
+                </li>
+                <li>
+                    <h:link href="#" class="nav-link" outcome="edital">Edital</h:link>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gerencia de Cursos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <h:link class="dropdown-item" href="#" outcome="cursos">Cursos</h:link>
+                        <h:link class="dropdown-item" href="#" outcome="componentes">Componentes Curriculares</h:link>
+                    </div>
+                </li>
+            </ul>
+            <h:form id="navbar-top">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="nav-link" onclick="goToProfile();"><span class="fa fa-user"></span>  Perfil</a>
+                    </li>
+                    <li>
+                        <h:commandLink id="logout" class="nav-link" action="#{logoutView.logout}" value="Sair  ">
+                            <span class="fa fa-power-off"></span>
+                        </h:commandLink>
+                    </li>
+                </ul>
+            </h:form>
+        </div>
+    </nav>
 </html>

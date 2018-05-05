@@ -6,10 +6,6 @@ Funcionalidade: Aluno se candidata a um plano de monitoria
 	E esteja na pagina de inscricao
 	E se inscrever para monitoria em um componente curricular
 
-  Cen·rio: primeira inscricao em um plano
+  Cen√°rio: primeira inscricao em um plano
 	Entao o aluno se candidata a monitoria
-
-  Cen·rio: aluno tenta selecionar mais de um plano
-	Entao impede a inscricao 
-	E exibe uma mensagem de erro
 	

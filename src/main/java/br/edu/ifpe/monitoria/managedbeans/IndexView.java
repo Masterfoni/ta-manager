@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @ManagedBean (name="indexView")
 public class IndexView implements Serializable {
@@ -30,8 +32,6 @@ public class IndexView implements Serializable {
 	private Usuario usuario;
 
 	private Aluno aluno;
-
-	FacesContext facesContext;
 	
 	public Aluno getAluno() {
 		return aluno;
@@ -52,50 +52,90 @@ public class IndexView implements Serializable {
 	public IndexView() {
 		usuario = new Usuario();
 		aluno = new Aluno();
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		
+		HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
+		
+		if(request.getRemoteUser() != null)
+		{
+			try {
+				extContext.redirect("../comum/homepage.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+	
 	public void cadastrarAluno()
 	{
-		if(alunoBean.persisteAluno(aluno))
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(usuarioBean.consultaUsuarioPorEmail(aluno.getEmail()) != null)
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("E-mail já cadastrado!"));
+		}
+		else if(usuarioBean.consultaUsuarioPorRg(aluno.getRg()) != null)
+		{
+			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
+		}
+		else if(usuarioBean.consultaUsuarioPorCpf(aluno.getCpf()) != null)
+		{
+			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
+		}
+		else if(alunoBean.consultaAlunoByMatricula(aluno.getMatricula()) != null)
+		{
+			context.addMessage(null, new FacesMessage("Matricula já cadastrada!"));
+		}
+		else if(alunoBean.persisteAluno(aluno, true))
+		{
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 		}
 	}
 
 	public String loginUsuario()
 	{
-		String email = usuario.getEmail();
-		Long id = usuarioBean.consultarIbByEmail(email);
-		
-		System.out.println(id);
-		
-		facesContext = FacesContext.getCurrentInstance();
+		String loginResult = "sucesso";
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext ec = facesContext.getExternalContext();
+		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		
+		String email = usuario.getEmail();
+		LongRequestResult userIdResult = usuarioBean.consultarIdByEmail(email);
+		
 		if(email.substring(email.indexOf("@")).equals("@a.recife.ifpe.edu.br"))
 		{
-			System.out.println(email.substring(email.indexOf("@")));
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Servidor, realizar login pelo botão \"Login Servidor\" com seu email instituncional.", null);
-			facesContext.addMessage(null, message);
-			return "falha";
+			facesContext.addMessage(null, new FacesMessage("Servidor, realize login pelo botão \"Login Servidor\" com seu email institucional."));
+			loginResult = "falha";
+		}
+		else if(!userIdResult.hasErrors())
+		{
+			session.setAttribute("id", userIdResult.data);
+			session.setAttribute("email", usuario.getEmail());
+			
+			try {
+				request.login(usuario.getEmail(), usuario.getSenha());
+			} catch (ServletException e) {
+				e.printStackTrace();
+				
+				facesContext.addMessage(null, new FacesMessage("Senha ou usuário inválidos!"));
+				
+				loginResult = "falha";
+			}
 		}
 		else
 		{
-			try {
-				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-				request.login(usuario.getEmail(), usuario.getSenha());
-				HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
-				session.setAttribute("id", id);
-				session.setAttribute("email", usuario.getEmail());
-			} 
-			catch (ServletException e) {
-				e.printStackTrace();
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Senha ou usuário inválidos!", null);
-				facesContext.addMessage(null, message);
-				return "falha";
+			for(String error : userIdResult.errors)
+			{
+				facesContext.addMessage(null, new FacesMessage(error));
 			}
+			
+			loginResult = "falha";
 		}
 		
-		return "sucesso";
+		return loginResult;
 	}
 }

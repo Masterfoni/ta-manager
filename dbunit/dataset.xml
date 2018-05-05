@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <dataset>
-	<TB_DEPARTAMENTO id="1" txt_nome="Departamento de Sistemas e Eletronica" txt_sigla="DASE" />
 	
-	<TB_DEPARTAMENTO id="2" txt_nome="Departamento de Turismo e Cultura" txt_sigla="DATC" />
-	
-	<TB_USUARIO id="1" txt_nome="João Vitor Almeida de Lima" txt_cpf="107.393.994-46" txt_email="jval@a.recife.ifpe.edu.br" txt_senha="jval123" 
-				txt_rg="7.981.528" txt_rg_emissor="SDS-PE" txt_sexo="Masculino" />
-
-	<TB_EDITAL id="1" txt_numero_edital="11AB11" dt_ini_inscricao_cc="2018-01-01 00:00:00" dt_fim_inscricao_cc="2018-02-01 00:00:00" dt_ini_inscricao_estudante="2018-02-05 00:00:00" dt_fim_inscricao_estudante="2018-02-15 00:00:00" />
-	
-	<TB_EDITAL id="2" txt_numero_edital="22AB22" dt_ini_inscricao_cc="2019-01-01 00:00:00" dt_fim_inscricao_cc="2019-02-01 00:00:00" dt_ini_inscricao_estudante="2019-02-05 00:00:00" dt_fim_inscricao_estudante="2019-02-15 00:00:00" />
 </dataset>

@@ -1,82 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<meta charset="UTF-8" />
-	<ui:include src="/comum/header-libs.xhtml"/>
-	<title>Administração de Usuarios</title>
-</h:head>
-<h:body>
-	<ui:include src="/comum/navbar-top.xhtml" />
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<div id="wrapper">
-		<ui:include src="/comum/navbar-left.xhtml" />
-		<div id="page-content-wrapper">
-			<div class="container-fluid"> 
-				<div class="row">
-					<div class="col-xs-8 col-xs-offset-2">
-	                    <h:form>
-							<div class="input-group">
-			                	<h:inputText styleClass="form-control" placeholder="Digite o parametro..." value="#{gerenciaUsuarioView.nomeBusca}"></h:inputText>
-		                    	<span class="input-group-btn">
-		                    	    <h:commandButton value="Buscar" action="#{gerenciaUsuarioView.buscaUsuario()}" update="tabelaUsuarios"
-		                    	    				 styleClass="btn btn-default">
-		                    	    </h:commandButton>
-		                    	</span>
-				            </div>
-						</h:form>
-					</div>
+	<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<title>Administração de Usuarios</title>
+	</h:head>
+	
+	<h:body>
+		<ui:include src="/comum/navbar-top.xhtml" />
+		
+		<div class="container-fluid"> 
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<h:form>
+						<div class="input-group">
+							<h:inputText styleClass="form-control" placeholder="Digite o parametro..." value="#{gerenciaUsuarioView.nomeBusca}"></h:inputText>
+							<span class="input-group-btn">
+								<h:commandButton value="Buscar" action="#{gerenciaUsuarioView.buscaUsuario()}" update="tabelaUsuarios"
+													styleClass="btn btn-default">
+								</h:commandButton>
+							</span>
+						</div>
+					</h:form>
 				</div>
-            	<div class="row">
-                	<div class="col-lg-12">
-                		<h:form>
-	                        <h:dataTable id="tabelaUsuarios" value="#{gerenciaUsuarioView.usuarios}" var="usuario" class="table">
-	                        	<h:column>
-	                        		<f:facet name="header">Nome</f:facet>
-	                        		#{usuario.nome}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">CPF</f:facet>
-	                        		#{usuario.cpf}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">RG</f:facet>
-	                        		#{usuario.rg} #{usuario.rgEmissor}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">E-mail</f:facet>
-	                        		#{usuario.email}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<h:commandButton actionListener="#{gerenciaUsuarioView.deletaUsuario(usuario)}" value="Deletar"
-	                        						 update="@form" class="btn btn-danger" />
-	                        	</h:column>
-	                        </h:dataTable>
-	                	</h:form>
-                    </div>
-                </div>
-                <h:panelGroup layout="block">
-					<div class="alert alert-danger alert-dismissable fade in">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-						<h:messages/>
-					</div>
-				</h:panelGroup>
-            </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<h:form>
+						<h:dataTable id="tabelaUsuarios" value="#{gerenciaUsuarioView.usuarios}" var="usuario" class="table">
+							<h:column>
+								<f:facet name="header">Nome</f:facet>
+								#{usuario.nome}
+							</h:column>
+							<h:column>
+								<f:facet name="header">CPF</f:facet>
+								#{usuario.cpf}
+							</h:column>
+							<h:column>
+								<f:facet name="header">RG</f:facet>
+								#{usuario.rg} #{usuario.rgEmissor}
+							</h:column>
+							<h:column>
+								<f:facet name="header">E-mail</f:facet>
+								#{usuario.email}
+							</h:column>
+							<h:column>
+								<h:commandButton actionListener="#{gerenciaUsuarioView.deletaUsuario(usuario)}" value="Deletar"
+													update="@form" class="btn btn-danger" />
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+			
+			<h:panelGroup layout="block">
+				<div class="alert alert-danger alert-dismissable fade in">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+					<h:messages/>
+				</div>
+			</h:panelGroup>
 		</div>
-	</div>
 
-	
-	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script> 
-	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	
-	<script>
-	   $("#menu-toggle").click(function(e) {
-	        e.preventDefault();
-	        $("#wrapper").toggleClass("toggled");
-	    });
-	</script>
-</h:body>
+		
+		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script> 
+		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</h:body>
 </html>

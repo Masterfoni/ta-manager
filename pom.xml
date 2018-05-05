@@ -26,9 +26,19 @@
         <url>http://repository.primefaces.org</url>
         <layout>default</layout>
     </repository>
+    
   </repositories>
   
   <dependencies>
+  	
+  	<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>23.0</version>
+	</dependency>
+  	
+  	<!-- PRIMEFACES -->
   	<!-- https://mvnrepository.com/artifact/javax.faces/jsf-api -->
 	<dependency>
 		<groupId>org.primefaces</groupId>
@@ -36,6 +46,43 @@
 		<version>6.2</version>
 	</dependency>
 	
+	
+	<!-- DEPENDENCIAS BD -->
+	<dependency>
+		<groupId>org.eclipse.persistence</groupId>
+		<artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+		<version>2.5.2</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+  		<groupId>org.postgresql</groupId>
+  		<artifactId>postgresql</artifactId>
+  		<version>42.1.1.jre7</version>
+  	</dependency>
+  	
+  	
+  	<!-- DEPENDECIAS GOOGLE API -->
+  	<!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+	<dependency>
+    	<groupId>com.google.api-client</groupId>
+    	<artifactId>google-api-client</artifactId>
+    	<version>1.23.0</version>
+    	<exclusions>
+    		<exclusion>
+    			<groupId>com.google.guava</groupId>
+    			<artifactId>guava-jdk5</artifactId>
+    		</exclusion>
+    	</exclusions>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+	<dependency>
+    	<groupId>com.google.code.gson</groupId>
+    	<artifactId>gson</artifactId>
+    	<version>2.8.1</version>
+	</dependency>
+	
+	
+	<!-- TESTES -->
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
 	<dependency>
 	    <groupId>junit</groupId>
@@ -43,14 +90,6 @@
 	    <version>4.12</version>
 	    <scope>test</scope>
 	</dependency>
-
-	<dependency>
-		<groupId>org.eclipse.persistence</groupId>
-		<artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-		<version>2.5.2</version>
-		<scope>provided</scope>
-	</dependency>
-	
 	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
 	<dependency>
 	    <groupId>org.slf4j</groupId>
@@ -58,35 +97,67 @@
 	    <version>1.7.25</version>
 	    <scope>test</scope>
 	</dependency>
-
-	
+	<dependency>
+		<groupId>org.eclipse.persistence</groupId>
+		<artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+		<version>2.5.2</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.glassfish.main.extras</groupId>
+		<artifactId>glassfish-embedded-all</artifactId>
+		<version>4.1.1</version>
+		<scope>test</scope>
+	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.dbunit/dbunit -->
 	<dependency>
 	    <groupId>org.dbunit</groupId>
 	    <artifactId>dbunit</artifactId>
 	    <version>2.5.4</version>
 	</dependency>
-  
-  	<dependency>
-  		<groupId>org.postgresql</groupId>
-  		<artifactId>postgresql</artifactId>
-  		<version>42.1.1.jre7</version>
-  	</dependency>
-  	
-  	<!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+	
+	
+	<!-- CUCUMBER -->
+	<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
 	<dependency>
-    	<groupId>com.google.api-client</groupId>
-    	<artifactId>google-api-client</artifactId>
-    	<version>1.23.0</version>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-core</artifactId>
+      <version>1.2.5</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-jvm-deps -->
+	<dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-jvm-deps</artifactId>
+      <version>1.0.5</version>
+      <scope>provided</scope>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/info.cukes/gherkin -->
+	<dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>gherkin</artifactId>
+      <version>2.12.2</version>
+      <scope>provided</scope>
+ 	</dependency>
+	<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-java -->
+	<dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>1.2.5</version>
+ 	</dependency>
+	<dependency>
+	  <groupId>info.cukes</groupId>
+	  <artifactId>cucumber-junit</artifactId>
+	  <version>1.2.5</version>
+	  <scope>test</scope>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-java</artifactId>
+	    <version>3.11.0</version>
 	</dependency>
 
 	
-	<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-	<dependency>
-    	<groupId>com.google.code.gson</groupId>
-    	<artifactId>gson</artifactId>
-    	<version>2.8.1</version>
-	</dependency>
 	
   </dependencies>
 </project>

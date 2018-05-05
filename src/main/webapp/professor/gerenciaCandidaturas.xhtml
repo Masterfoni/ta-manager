@@ -1,103 +1,77 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<meta charset="UTF-8" />
-	<ui:include src="/comum/header-libs.xhtml"/>
-	<title>Administração de Candidaturas</title>
-</h:head>
-<h:body>
-	<ui:include src="/comum/navbar-top.xhtml" />
-	<div id="wrapper">
-		<ui:include src="/comum/navbar-left.xhtml" />
-		<div id="page-content-wrapper">
-			<div class="container-fluid"> 
-            	<div class="row">
-                	<div class="col-lg-12">
-                		<h:form>
-	                        <h:dataTable id="tabelaMonitorias" value="#{gerenciaCandidaturaView.monitorias}" var="monitoria" class="table">
-	                        	<h:column>
-	                        		<f:facet name="header">Código</f:facet>
-	                        		#{monitoria.id}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">Aluno</f:facet>
-	                        		#{monitoria.aluno.nome}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">Disciplina</f:facet>
-	                        		#{monitoria.planoMonitoria.cc.nome}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<f:facet name="header">Bolsista?</f:facet>
-	                        		#{monitoria.bolsa}
-	                        	</h:column>
-	                        	<h:column>
-	                        		<h:commandButton action="#{gerenciaCandidaturaView.aprovaMonitoria(monitoria)}"
-	                        						 value="Aprovar" class="btn btn-success"/>
-                					
-                					<span></span>
-                					
-                					<h:commandButton action="#{gerenciaCandidaturaView.defereMonitoria(monitoria)}"
-	                        						 value="Deferir" class="btn btn-danger"/>
-	                        	</h:column>
-	                        </h:dataTable>
-	                	</h:form>
-                    </div>
-                </div>
-                
-                <h:panelGroup layout="block">
-					<div class="alert alert-danger alert-dismissable fade in">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-						<h:messages/>
-					</div>
-				</h:panelGroup>
-                
-				<!-- MODAL DE CADASTRO COMPONENTE CURRICULAR -->
-				<div id="myModal3" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-	    					<h:form class="dialogSignup">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">x</button>
-										<h4 class="modal-title">Cadastre um Componente Curricular</h4>
-								</div>
-								<div class="modal-body">
-				    			</div>
-				    			<div class="modal-footer">
-				    			</div>
-							</h:form>
-			    		</div>
+	<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<title>Administração de Candidaturas</title>
+	</h:head>
+	<h:body>
+		<ui:include src="/comum/navbar-top.xhtml" />
+		<div class="container-fluid"> 
+			<div class="row">
+				<div class="col-lg-12">
+					<h:form>
+						<h:dataTable id="tabelaMonitorias" value="#{gerenciaCandidaturaView.monitorias}" var="monitoria" class="table">
+							<h:column>
+								<f:facet name="header">Código</f:facet>
+								#{monitoria.id}
+							</h:column>
+							<h:column>
+								<f:facet name="header">Aluno</f:facet>
+								#{monitoria.aluno.nome}
+							</h:column>
+							<h:column>
+								<f:facet name="header">Disciplina</f:facet>
+								#{monitoria.planoMonitoria.cc.nome}
+							</h:column>
+							<h:column>
+								<f:facet name="header">Bolsista?</f:facet>
+								#{monitoria.bolsa}
+							</h:column>
+							<h:column>
+								<h:commandButton action="#{gerenciaCandidaturaView.aprovaMonitoria(monitoria)}"
+													value="Aprovar" class="btn btn-success"/>
+								
+								<span></span>
+								
+								<h:commandButton action="#{gerenciaCandidaturaView.defereMonitoria(monitoria)}"
+													value="Deferir" class="btn btn-danger"/>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+			
+			<h:panelGroup layout="block">
+				<div class="alert alert-danger alert-dismissable fade in">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+					<h:messages/>
+				</div>
+			</h:panelGroup>
+			
+			<!-- MODAL DE CADASTRO COMPONENTE CURRICULAR -->
+			<div id="myModal3" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<h:form class="dialogSignup">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">x</button>
+									<h4 class="modal-title">Cadastre um Componente Curricular</h4>
+							</div>
+							<div class="modal-body">
+							</div>
+							<div class="modal-footer">
+							</div>
+						</h:form>
 					</div>
 				</div>
-            </div>
+			</div>
 		</div>
-	</div>
-	
-	<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
-	<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-	
-	<script>
-	   $("#menu-toggle").click(function(e) {
-	        e.preventDefault();
-	        $("#wrapper").toggleClass("toggled");
-	    });
-
-	   $(".cadastrador").click(function(e){
-		   $("#myModal2").modal();
-	   });
-	   
-	   $(".alterador").click(function(e) {
-		   $("#myModal").modal();
-	   });
-	   
-	   $(".cadastradorComponente").click(function(e) {
-		   $("#myModal3").modal();
-	   });
-	</script>
-</h:body>
+		
+		<script src="../resources/libs/jquery-3.2.1/jquery-3.2.1.js"></script>
+		<script src="../resources/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="./gerenciaCandidaturas.js"></script>
+	</h:body>
 </html>

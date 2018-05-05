@@ -2,8 +2,6 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,16 +11,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.entidades.Servidor;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
 @LocalBean
-@DeclareRoles({"administrativo", "professor"})
 public class ComponenteCurricularLocalBean 
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	@RolesAllowed({"professor", "administrativo"})
 	public List<ComponenteCurricular> consultaComponentesCurriculares()
 	{
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findAll", ComponenteCurricular.class).getResultList();
@@ -30,19 +29,19 @@ public class ComponenteCurricularLocalBean
 		return componentes;
 	}
 	
-	@RolesAllowed({"professor"})
+	/**
+	 * Método responsável por atualizar um componente curricular.
+	 *
+	 * @param componenteCurricular Um objeto ComponenteCurricular que representa o estado atualizado.
+	 * @return true no caso de sucesso 
+	 */
 	public boolean atualizaComponenteCurricular(ComponenteCurricular componenteCurricular)
 	{
-		ComponenteCurricular componenteAtualizar = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
-											   .setParameter("id", componenteCurricular.getId()).getSingleResult();
-		
-		
-		em.merge(componenteAtualizar);
+		em.merge(componenteCurricular);
 		
 		return true;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
 	public ComponenteCurricular consultaComponenteById(Long id)
 	{
 		ComponenteCurricular componentePorId = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
@@ -51,31 +50,60 @@ public class ComponenteCurricularLocalBean
 		return componentePorId;
 	}
 	
-	@RolesAllowed({"professor", "administrativo"})
-	public List<ComponenteCurricular> consultaComponentesByName(String nome)
+	public ComponenteCurricular consultaComponenteByName(String nome)
 	{
-		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)
-												 .setParameter("nome", nome).getResultList();
+		ComponenteCurricular componente = em.createNamedQuery("ComponenteCurricular.findByNome", ComponenteCurricular.class)
+												 .setParameter("nome", nome).getSingleResult();
 		
-		return componentes;
+		return componente;
 	}
 	
-	@RolesAllowed({"professor"})
-	public boolean deletaComponenteCurricular(Long id)
+	/**
+	 * Método responsável por remover um componente curricular do banco de dados.
+	 *
+	 * @param {@code Long} id Identificador ùnico do componente curricular
+	 * @return {@code DelecaoRequestResult} Objeto que engloba uma lista de erros e o resultado da operação, que caso seja bem sucedida,
+	 * será {@code true} e a lista de erros estará vazia.
+	 */
+	public DelecaoRequestResult deletaComponenteCurricular(Long id)
 	{
-		ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
-										 		  .setParameter("id", id).getSingleResult();
+		DelecaoRequestResult result = new DelecaoRequestResult();
+		result.result = false;
 		
-		em.remove(componenteDeletado);
+		if(!em.createNamedQuery("PlanoMonitoria.findByComponente", PlanoMonitoria.class).setParameter("id", id).getResultList().isEmpty())
+		{
+			result.errors.add("Existem planos vinculados à este componente, não é possível deletá-lo!");
+		}
+		else 
+		{
+			ComponenteCurricular componenteDeletado = em.createNamedQuery("ComponenteCurricular.findById", ComponenteCurricular.class)
+														.setParameter("id", id).getSingleResult();
+			em.remove(componenteDeletado);
+			
+			result.result = true;
+		}
 		
-		return true;
+		return result;
 	}
 	
-	@RolesAllowed({"professor"})
 	public boolean persisteComponenteCurricular(@NotNull @Valid ComponenteCurricular componente)
 	{
 		em.persist(componente);
 		
 		return true;
+	}
+
+	/**
+	 * Método responsável por procurar os componentes curriculares de um professor especifico.
+	 *
+	 * @param {@code Long} id Identificador único do professor
+	 * @return {@code List<ComponenteCurricular>} Lista de componentes curriculares de um professor
+	 */
+	public List<ComponenteCurricular> consultaComponentesByProfessor(Servidor servidor) {
+		
+		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByProfessor", ComponenteCurricular.class)
+				 .setParameter("professor", servidor).getResultList();
+		
+		return componentes;
 	}
 }

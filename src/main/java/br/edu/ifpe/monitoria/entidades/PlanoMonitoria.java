@@ -26,7 +26,13 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "PlanoMonitoria.findAll", query = "SELECT p FROM PlanoMonitoria p"),
-	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id")
+	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findByProfessor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.professor.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findByCoordenador", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital"),
+	@NamedQuery(name = "PlanoMonitoria.findByEditaleCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND "
+			+ "p.cc.curso.id = :curso")
 })
 public class PlanoMonitoria {
 
@@ -109,14 +115,6 @@ public class PlanoMonitoria {
 		this.objetivo = objetivo;
 	}
 
-	public String getPeriodo() {
-		return listaAtividades;
-	}
-
-	public void setPeriodo(String listaAtividades) {
-		this.listaAtividades = listaAtividades;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -132,4 +130,18 @@ public class PlanoMonitoria {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof PlanoMonitoria) && (id != null) 
+             ? id.equals(((PlanoMonitoria) object).getId()) 
+             : (object == this);
+    }
 }

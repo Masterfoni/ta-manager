@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<link rel="stylesheet" href="../admin/gerenciaCursos.css"/>
+		<title>Administração de Cursos</title>
+	</h:head>
+	
+	<h:body>
+		<ui:include src="/comum/navbar-top.xhtml" />
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col col-sm-6">
+					<h1>Cursos</h1>
+				</div>
+				<div class="col col-sm-6  text-right">		
+					<h:commandButton value="Adicionar novo Curso" class="btn btn-outline-success cadastrador">
+						<f:ajax execute="@none" render="cadastraCurso" />
+					</h:commandButton>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<h:messages/>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							  <span aria-hidden="true">x</span>
+							</button>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+
+			<h:form>
+				<div class="card-columns">
+					<ui:repeat id="repeatCursos" value="#{gerenciaCursoView.cursos}" var="curso" varStatus="myStatus">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">#{curso.nome}</h5>
+								<p>
+									<strong>Coordenação:</strong> #{curso.coordenacao}<br />
+									<strong>Coordenador:</strong> #{curso.coordenador.nome}
+								</p>
+							</div>
+							<div class="card-footer">
+								<div class="btn-group" role="group">
+									<h:commandButton actionListener="#{gerenciaCursoView.deletaCurso(curso)}"
+													   value="Deletar" update="@form" class="btn btn-danger" />
+									<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
+													 value="Alterar" class="btn btn-info alterador">
+										<f:ajax execute="@form" render=":formAtualizador :atualizaCurso" />
+									</h:commandButton>
+								</div>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</h:form>
+			
+			<!-- MODAL DE ATUALIZACAO -->
+			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="atualizacaoModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<h:form id="formAtualizador" class="dialogSignup">
+							<div class="modal-header">
+								<h5 class="modal-title" id="atualizacaoModalLabel">Atualize o Curso</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">x</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="atualizaCurso">
+									<div class="form-group">
+										<label for="cursoCadastro">Curso</label>
+										<h:inputText id="cursoCadastro" class="form-control" 
+														value="#{gerenciaCursoView.cursoAtualizado.nome}">
+										</h:inputText>
+									</div>
+									<div class="form-group">
+										<label for="siglaCadastro">Sigla</label>
+										<h:inputText id="siglaCadastro" class="form-control" 
+														value="#{gerenciaCursoView.cursoAtualizado.sigla}">
+										</h:inputText>
+									</div>
+									<div class="form-group">
+										<label for="nomeCadastro">Cordenação</label>
+										<h:inputText id="nomeCadastro" class="form-control" aria-describedby="coordHelp"
+													 value="#{gerenciaCursoView.cursoAtualizado.coordenacao}">
+										</h:inputText>
+										<small id="coordHelp" class="form-text text-muted">Apenas necessário informar a sigla.</small>
+									</div>
+									<div class="form-group">
+										<label for="departamentoCadastro">Departamento</label>
+										<h:inputText id="departamentoCadastro" class="form-control" aria-describedby="dptoHelp"
+													 value="#{gerenciaCursoView.cursoAtualizado.departamento}">
+										</h:inputText>
+										<small id="dptoHelp" class="form-text text-muted">Apenas necessário informar a sigla.</small>
+									</div>
+									<div class="form-group">
+										<label>Coordenador</label>
+										<h:selectOneMenu styleClass="form-control" value="#{gerenciaCursoView.cursoAtualizado.coordenador}" converter="servidorConverter">
+											<f:selectItems value="#{gerenciaCursoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaCursoView.persisteAlteracao()}" 
+													update="@form" class="btn btn-info" />
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+
+			<!-- MODAL DE CADASTRO NOVO-->
+			<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<h:form class="dialogSignup">
+							<div class="modal-header">
+								<h5 class="modal-title" id="cadastroTitle">Cadastre um Curso</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">x</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="cadastraCurso">
+									<div class="form-group">
+										<label for="cursoCadastroC">Curso</label>
+										<h:inputText id="cursoCadastroC" class="form-control" 
+													value="#{gerenciaCursoView.cursoPersistido.nome}">
+										</h:inputText>
+									</div>
+									<div class="form-group">
+										<label for="siglaCadastroC">Sigla</label>
+										<h:inputText id="siglaCadastroC" class="form-control" 
+													 value="#{gerenciaCursoView.cursoPersistido.sigla}">
+										</h:inputText>
+									</div>
+									<div class="form-group">
+										<label for="nomeCadastroC">Cordenação (sigla)</label>
+										<h:inputText id="nomeCadastroC" class="form-control" aria-describedby="coordHelpC"
+													 value="#{gerenciaCursoView.cursoPersistido.coordenacao}">
+										</h:inputText>
+										<small id="coordHelpC" class="form-text text-muted">Apenas necessário informar a sigla.</small>
+									</div>
+									<div class="form-group">
+										<label for="departamentoCadastroC">Departamento (sigla)</label>
+										<h:inputText id="departamentoCadastroC" class="form-control" aria-describedby="dptoHelpC"
+													 value="#{gerenciaCursoView.cursoPersistido.departamento}">
+										</h:inputText>
+										<small id="dptoHelpC" class="form-text text-muted">Apenas necessário informar a sigla.</small>
+									</div>
+									<div class="form-group">
+										<label>Coordenador</label>
+										<h:selectOneMenu styleClass="form-control" value="#{gerenciaCursoView.cursoPersistido.coordenador}" converter="servidorConverter">
+											<f:selectItems value="#{gerenciaCursoView.servidores}" var="prof" itemValue="#{prof}" itemLabel="#{prof.nome}"/>
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+									<h:commandButton value="Cadastrar" actionListener="#{gerenciaCursoView.cadastrarCurso()}" 
+													update="@form" class="btn btn-info" />
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src="./gerenciaCursos.js"></script>
+	</h:body>
+</html>

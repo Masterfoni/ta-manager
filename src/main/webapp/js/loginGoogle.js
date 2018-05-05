@@ -1,6 +1,6 @@
-jQuery(function(){
-	jQuery.noConflict();
-});
+// jQuery(function(){
+// 	jQuery.noConflict();
+// });
 onload = startApp;
 
 var googleUser = {};
@@ -26,7 +26,7 @@ function attachSignin(element) {
         onSignIn(googleUser);
       }, 
       function(error) {
-        alert(JSON.stringify(error, undefined, 2));
+        //alert(JSON.stringify(error, undefined, 2));
       });
 }
 
@@ -37,14 +37,17 @@ function signOut() {
     });
 }
 
+function complete() {
+	return "kanban";
+}
+
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
-	  
-	  if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br')
-	  {
-		  alert("Utilize seu email instituncional.");
-		  signOut();
-	  }	
+    
+    if(googleUser.getHostedDomain() != 'a.recife.ifpe.edu.br') {
+      document.getElementById("loginErrorButton").click();
+      signOut();
+    }
 	  
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  
