@@ -109,6 +109,16 @@
     <param-name>javax.faces.webapp.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
+  <context-param>
+    <param-name>dominio1</param-name>
+    <param-value>a.recife.ifpe.edu.br</param-value>
+  </context-param>
+   <context-param>
+    <param-name>dominio2</param-name>
+    <param-value>gmail.com</param-value>
+  </context-param>
+  
+  
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

@@ -3,7 +3,11 @@ package br.edu.ifpe.monitoria.managedbeans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -44,34 +48,54 @@ public class GoogleSignInView implements Serializable{
 		
 		Payload payload = verificarIntegridade(idToken);
 		
-		if(payload != null && payload.getHostedDomain() != null && payload.getHostedDomain().equals("a.recife.ifpe.edu.br"))
+		List<String> dominios = new ArrayList<String>();
+		
+		boolean emailDoDominio = false;
+		
+		Map<?,?> envMap= FacesContext.getCurrentInstance().getExternalContext().getInitParameterMap();
+		Set<?> chaves = envMap.keySet();
+		for (Object chave : chaves)
 		{
-			LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
-			
-			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession) ec.getSession(true);
-			
-			PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
-			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-			
-			try {
-				request.login(payload.getEmail(), perfilMontado.getSubject());
-			
-				ec.redirect("../comum/homepage.xhtml");
-				
-			} catch (ServletException e) {
-				
-				try {
-					ec.redirect("../publico/cadastroServidor.xhtml");
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
+			if(chave != null) {
+				String ch = (String)chave;
+				if(ch.substring(0, 7).equals("dominio")) {
+					System.out.println(envMap.get(chave));
+					dominios.add((String) envMap.get(chave));
 				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
-		else 
+		
+		for (String dominio : dominios) {
+			if(payload != null && payload.getHostedDomain() != null && payload.getHostedDomain().equals(dominio))
+			{
+				LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
+				
+				ExternalContext ec = fc.getExternalContext();
+				HttpSession session = (HttpSession) ec.getSession(true);
+				
+				PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
+				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+				
+				try {
+					request.login(payload.getEmail(), perfilMontado.getSubject());
+					
+					ec.redirect("../comum/homepage.xhtml");
+					
+				} catch (ServletException e) {
+					
+					try {
+						ec.redirect("../publico/cadastroServidor.xhtml");
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		if(!emailDoDominio)
 		{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Por favor, utilize seu e-mail institucional."));
 		}
