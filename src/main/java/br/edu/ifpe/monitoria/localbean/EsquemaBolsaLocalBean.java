@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
 
@@ -39,13 +40,25 @@ public class EsquemaBolsaLocalBean
 	 * Método responsável por salvar um novo esquema de bolsa no banco de dados
 	 *
 	 * @param {@code Bolsa} bolsa Entidade de bolsa à ser persistidaid Identificador único do professor
-	 * @return {@code boolean} True ou False dependendo do resultado da operação
+	 * @return {@code CriacaoRequestResult} Objeto que terá seu atributo {@code result} setado como true ou false dependendo do resultado da operação
 	 */
-	public boolean persisteEsquemaBolsa(@NotNull @Valid EsquemaBolsa esquemaBolsa)
+	public CriacaoRequestResult persisteEsquemaBolsa(@NotNull @Valid EsquemaBolsa esquemaBolsa)
 	{
-		em.persist(esquemaBolsa);
-
-		return true;
+		CriacaoRequestResult resultado = new CriacaoRequestResult();
+		
+		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
+									  .setParameter("idEdital", esquemaBolsa.getEdital().getId())
+									  .setParameter("idCurso", esquemaBolsa.getCurso().getId()).getResultList();
+		
+		if(!esquemas.isEmpty()) {
+			resultado.errors.add("Já existe um esquema de bolsas deste curso para este edital!");
+			resultado.result = false;
+		} else {
+			em.persist(esquemaBolsa);
+			resultado.result = true;
+		}
+		
+		return resultado;
 	}
 
 	/**

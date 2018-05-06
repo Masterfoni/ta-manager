@@ -16,6 +16,7 @@ import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaEditalView")
@@ -145,7 +146,13 @@ public class GerenciaEditalView implements Serializable {
 		novoEsquema.setEdital(this.editalExpandido);
 		novoEsquema.setCurso(this.cursoSelecionado);
 		
-		esquemabean.persisteEsquemaBolsa(novoEsquema);
+		CriacaoRequestResult resultadoCriacao = esquemabean.persisteEsquemaBolsa(novoEsquema);
+		
+		if(resultadoCriacao.hasErrors()) {
+			for(String erro : resultadoCriacao.errors) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+			}
+		}
 	}
 	
 	/** Persiste no banco de dados um edital criado na propriedade editalPersistido 
