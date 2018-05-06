@@ -37,15 +37,15 @@
 			</div>
 
 			<div class="row">
-				<h:form style="width: 100%">
-					<table class="table table-striped">
-						<thead>
-							<th scope="col">Numero</th>
-							<th scope="col">Vigencia</th>
-							<th scope="col"></th>
-						</thead>
-						<tbody>
-							<ui:repeat id="repeatEditais" value="#{gerenciaEditalView.editais}" var="edital" varStatus="myStatus">
+				<table class="table table-striped">
+					<thead>
+						<th scope="col">Numero</th>
+						<th scope="col">Vigencia</th>
+						<th scope="col"></th>
+					</thead>
+					<tbody>
+						<ui:repeat id="repeatEditais" value="#{gerenciaEditalView.editais}" var="edital" varStatus="myStatus">
+							<h:form style="width: 100%">
 								<tr>
 									<td>#{edital.numeroEdital}</td>
 									<td>
@@ -64,24 +64,23 @@
 																value="Alterar" class="btn btn-info alterador">
 												<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" />
 											</h:commandButton>
-											<button type="button" class="btn btn-secondary colapsador" jsf:id="expandbtn" 
+											<button type="button" class="btn btn-secondary colapsador"
 													jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
-
-												<f:ajax execute="@form" render=":collapsibleCursos"/>
+												<f:ajax execute="@form" render=":repeatEsquemasEdital :collapsibleCursos"/>
 												<i class="fa fa-caret-down"></i>
 											</button>
 										</div>
 									</td>
 								</tr>
-							</ui:repeat>
-						</tbody>
-					</table>
-				</h:form>
+							</h:form>
+						</ui:repeat>
+					</tbody>
+				</table>
 			</div>
 			
 			<div class="row collapse" id="collapsibleCursos">
 				<div class="col-md-12">
-					<h:form>
+					<h:form id="esquemasForm">
 						<div class="input-group mb-3">
 							<h:selectOneMenu class="form-control" value="#{gerenciaEditalView.cursoSelecionado}" converter="cursoConverter">
 								<f:selectItems value="#{gerenciaEditalView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
@@ -96,8 +95,8 @@
 					</h:form>
 				</div>
 
-				<div class="card-group">
-					<ui:repeat id="repeatEsquemasEdital" value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
+				<h:panelGroup layout="block" id="repeatEsquemasEdital" class="card-group">
+					<ui:repeat value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
 						<div class="col-md-4">
 							<div class="card">
 								<div class="card-body">
@@ -116,7 +115,7 @@
 							</div>
 						</div>
 					</ui:repeat>
-				</div>
+				</h:panelGroup>
 			</div>
 
 			<!-- MODAL DE ATUALIZACAO -->
