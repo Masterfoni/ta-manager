@@ -13,4 +13,8 @@ $(function () {
         console.log("lololo");
         $(".specificdate").mask("99-99-9999");
     });
+
+    $(".colapsador").click(function(e){
+        $("#collapsibleCursos").collapse();
+    });
 });

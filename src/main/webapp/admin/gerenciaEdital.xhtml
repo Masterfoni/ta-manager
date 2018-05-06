@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf">
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
@@ -63,6 +64,12 @@
 																value="Alterar" class="btn btn-info alterador">
 												<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" />
 											</h:commandButton>
+											<button type="button" class="btn btn-secondary colapsador" jsf:id="expandbtn" 
+													jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
+
+												<f:ajax execute="@form" render=":collapsibleCursos"/>
+												<i class="fa fa-caret-down"></i>
+											</button>
 										</div>
 									</td>
 								</tr>
@@ -70,6 +77,46 @@
 						</tbody>
 					</table>
 				</h:form>
+			</div>
+			
+			<div class="row collapse" id="collapsibleCursos">
+				<div class="col-md-12">
+					<h:form>
+						<div class="input-group mb-3">
+							<h:selectOneMenu class="form-control" value="#{gerenciaEditalView.cursoSelecionado}" converter="cursoConverter">
+								<f:selectItems value="#{gerenciaEditalView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
+							</h:selectOneMenu>
+							<div class="input-group-append">
+								<h:commandButton id="botaoCriaEsquema" actionListener="#{gerenciaEditalView.cadastraEsquema()}" 
+												 value="Criar Esquema" class="btn btn-success">
+									<f:ajax execute="@form" render=":collapsibleCursos" />
+								</h:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</div>
+
+				<div class="card-group">
+					<ui:repeat id="repeatEsquemasEdital" value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-body">
+									#{esquemaEdital.curso.nome}
+								</div>
+								<div class="card-footer">
+									<div class="input-group mb-3">
+										<input type="number" class="form-control" placeholder="Quantidade" />
+										<div class="input-group-append">
+											<button class="btn btn-outline-success" type="button">
+												Atualizar bolsas
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
 			</div>
 
 			<!-- MODAL DE ATUALIZACAO -->
