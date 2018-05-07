@@ -64,35 +64,59 @@ public class GerenciaEditalView implements Serializable {
 		this.editais = editais;
 	}
 	
+	/** Retorna os esquemas de bolsas de um determinado edital
+     * @return List<EsquemaBolsa> - Lista de esquemas de bolsa
+     */
 	public List<EsquemaBolsa> getEsquemasEdital() {
 		return esquemasEdital;
 	}
 	
+	/** Atribui uma lista de esquemas de um determinado edital 
+     * @param List<EsquemaBolsa> esquemas
+     */
 	public void setEsquemasEditals(List<EsquemaBolsa> esquemas) {
 		this.esquemasEdital = esquemas;
 	}
 	
+	/** Retorna todos os cursos cadastrados no sistema
+     * @return List<Curso> - Lista de cursos
+     */
 	public List<Curso> getCursos() {
 		cursos = cursobean.consultaCursos();
 		return cursos;
 	}
 	
+	/** Atribui uma lista cursos para serem utilizados na view 
+     * @param List<Curso> cursos
+     */
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
 	
+	/** Retorna o curso selecionado em relação ao edital
+     * @return {@code Curso} Curso selecionado
+     */
 	public Curso getCursoSelecionado() {
 		return cursoSelecionado;
 	}
 	
+	/** Seleciona determinado curso como o curso relativo à criação de esquemas de um edital
+     * @param Curso
+     */
 	public void setCursoSelecionado(Curso cursoSelecionado) {
 		this.cursoSelecionado = cursoSelecionado;
 	}
 	
+	/** Retorna o edital que está expandido no contexto atual
+     * @return {@code Edital} Edital com seus esquemas de bolsa detalhados
+     */
 	public Edital getEditalExpandido() {
 		return editalExpandido;
 	}
 	
+	/** Define o atual edital que encontra-se expandido, com seus esquemas de bolsa detalhados
+     * @param Edital
+     */
 	public void setEditalExpandido(Edital editalExpandido) {
 		this.editalExpandido = editalExpandido;
 	}
@@ -135,12 +159,19 @@ public class GerenciaEditalView implements Serializable {
 		editalPersistido = new Edital();
 	}
 	
+	/**
+	 * Expande um edital para detalhar seus esquemas de monitoria ou cadastrar eventuais esquemas
+	 * @param edital
+	 */
 	public void expandeEdital(Edital edital) { 
 		this.editalExpandido = edital;
 		this.esquemasEdital = esquemabean.consultaEsquemaByEdital(edital);
-		System.out.println(this.esquemasEdital.size());
 	}
 	
+	/**
+	 * Utilizando o atual edital expandido e o curso selecionado, cria um novo esquema de bolsas para planos de monitoria do curso
+	 * no determinado edital. Caso existam erros na operação, eles serão inseridos no {@code FacesContext} como mensagens.
+	 */
 	public void cadastraEsquema() {
 		EsquemaBolsa novoEsquema = new EsquemaBolsa();
 		novoEsquema.setEdital(this.editalExpandido);
@@ -155,6 +186,11 @@ public class GerenciaEditalView implements Serializable {
 		}
 	}
 	
+	/**
+	 * Atualiza o número de bolsas de um determinado esquema de monitoria, leva em consideração as bolsas já distribuidas
+	 * e não permite que o novo número seja menor do que as bolsas já distribuidas pelos planos de monitoria de um determinado curso num determinado edital.
+	 * Caso não seja possível realizar a atualização, mensagens do tipo {@code FacesMessage} serão adicionadas ao contexto {@code FacesContext} 
+	 */
 	public void atualizaBolsasEsquema(EsquemaBolsa esquema) {
 		AtualizacaoRequestResult resultado = esquemabean.atualizaEsquemaBolsa(esquema);
 		
