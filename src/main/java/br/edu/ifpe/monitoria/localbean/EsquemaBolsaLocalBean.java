@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -26,14 +28,37 @@ public class EsquemaBolsaLocalBean
 	/**
 	 * Método responsável por atualizar um esquema de bolsa.
 	 *
-	 * @param componenteCurricular Um objeto ComponenteCurricular que representa o estado atualizado.
-	 * @return true no caso de sucesso 
+	 * @param esquemaBolsa Um objeto {@code EsquemaBolsa} que representa o estado atualizado.
+	 * @return AtualizacaoRequestResult Um objeto contendo eventuais mensagens de erros e um {@code boolean} representando o resultado;
 	 */
-	public boolean atualizaEsquemaBolsa(EsquemaBolsa esquemaBolsa)
+	public AtualizacaoRequestResult atualizaEsquemaBolsa(EsquemaBolsa esquemaBolsa)
 	{
-		em.merge(esquemaBolsa);
+		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
+		
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class)
+									  .setParameter("edital", esquemaBolsa.getEdital())
+									  .setParameter("curso", esquemaBolsa.getCurso().getId()).getResultList();
+		
+		int numeroBolsas = 0;
+		
+		for(PlanoMonitoria plano : planos)
+		{
+			numeroBolsas += plano.getBolsas();
+		}
+		
+		if(numeroBolsas > esquemaBolsa.getQuantidade())
+		{
+			resultado.errors.add("Esta quantidade de bolsas é menor do que o número já distribuído pelo coordenador nos planos!");
+			resultado.result = false;
+		}
+		else
+		{
+			em.merge(esquemaBolsa);
+			resultado.result = true;
+		}
+		
 
-		return true;
+		return resultado;
 	}
 
 	/**

@@ -16,6 +16,7 @@ import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
@@ -47,7 +48,6 @@ public class GerenciaEditalView implements Serializable {
 	public Edital editalExpandido;
 	
 	public Curso cursoSelecionado;
-	
 	
 	/** Retorna todos os editais criados no sistema
      * @return List<Edital> - Lista de editais
@@ -150,6 +150,18 @@ public class GerenciaEditalView implements Serializable {
 		
 		if(resultadoCriacao.hasErrors()) {
 			for(String erro : resultadoCriacao.errors) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+			}
+		}
+	}
+	
+	public void atualizaBolsasEsquema(EsquemaBolsa esquema) {
+		AtualizacaoRequestResult resultado = esquemabean.atualizaEsquemaBolsa(esquema);
+		
+		if(resultado.hasErrors())
+		{
+			for(String erro : resultado.errors)
+			{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
 			}
 		}
