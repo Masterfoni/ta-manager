@@ -85,6 +85,19 @@ public class EsquemaBolsaLocalBean
 		
 		return resultado;
 	}
+	 
+	/** Deleta um esquema de bolsas do sistema
+     * @param esquema Esquema de bolsa a ser deletado
+     * @return boolean - Informa se houve sucesso na transação
+     */
+	public boolean deletaEsquema(Long esquemaId)
+	{
+		EsquemaBolsa esquema = em.createNamedQuery("EsquemaBolsa.findById", EsquemaBolsa.class).setParameter("id", esquemaId).getSingleResult();
+
+		em.remove(esquema);
+		
+		return true;
+	}
 
 	/**
 	 * Método responsável por procurar os esquemas de bolsas de um determinado edital

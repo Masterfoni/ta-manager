@@ -69,14 +69,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Edital editalSelecionado;
 	
-	public boolean showButton;
+	public Servidor loggedServidor;
 	
-	public boolean isShowButton() {
-		return showButton;
+	public Servidor getLoggedServidor() {
+		return loggedServidor;
 	}
 
-	public void setShowButton(boolean showButton) {
-		this.showButton = showButton;
+	public void setLoggedServidor(Servidor loggedServidor) {
+		this.loggedServidor = loggedServidor;
 	}
 
 	public List<Curso> getCursos() {
@@ -111,10 +111,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria 
 	 */
 	public List<PlanoMonitoria> getPlanos() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
 		
 		if(request.isUserInRole("comissao"))
 		{
@@ -123,8 +120,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		else
 		{
 			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
-			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(loggedServidor.getId());;
-			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(loggedServidor.getId());
+			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());;
+			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(this.loggedServidor.getId());
 
 			if(!planosByServidor.isEmpty())
 			{
@@ -166,9 +163,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
-		componentes = componentebean.consultaComponentesByProfessor(loggedServidor);
+		componentes = componentebean.consultaComponentesByProfessor(this.loggedServidor);
 		return componentes;
 	}
 
@@ -178,9 +173,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		showButton = request.isUserInRole("comissao");
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		this.loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
 		
 		cursos = cursobean.consultaCursos();
 		servidores = servidorbean.consultaServidores();

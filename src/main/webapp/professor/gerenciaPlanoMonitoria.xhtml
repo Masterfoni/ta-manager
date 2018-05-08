@@ -72,7 +72,7 @@
 											<span class="badge badge-pill badge-success">#{plano.bolsas}</span>
 										</td>
 										<td class="center">
-											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.showButton}">
+											<h:panelGroup rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome}">
 												<span class="badge badge-pill badge-warning">
 													#{gerenciaPlanoMonitoriaView.calcularMaximoDisponivel(plano)} bolsas restantes
 												</span>

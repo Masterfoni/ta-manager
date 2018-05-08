@@ -26,6 +26,7 @@ import javax.validation.Valid;
 @Table(name = "TB_ESQUEMA_BOLSA")
 @Access(AccessType.FIELD)
 @NamedQueries({
+	@NamedQuery(name = "EsquemaBolsa.findById", query = "SELECT eb FROM EsquemaBolsa eb WHERE eb.id = :id"),
 	@NamedQuery(name = "EsquemaBolsa.findByEdital", query = "SELECT eb FROM EsquemaBolsa eb WHERE eb.edital.id = :idEdital"),
 	@NamedQuery(name = "EsquemaBolsa.findByCurso", query = "SELECT eb FROM EsquemaBolsa eb WHERE eb.curso.id = :idCurso"),
 	@NamedQuery(name = "EsquemaBolsa.findByEditalCurso", query = "SELECT eb FROM EsquemaBolsa eb WHERE eb.edital.id = :idEdital AND eb.curso.id = :idCurso")
