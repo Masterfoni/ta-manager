@@ -79,16 +79,18 @@
 											</h:panelGroup>
 										</td>
 										<td class="center">
-											<div class="btn-group" role="group">
-												<h:commandButton id="botaoRemoveBolsas" value="-" class="btn btn-danger"
-																	actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(false, plano)}">
-													<f:ajax execute="@form" render="@form"/>
-												</h:commandButton>
-												<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn btn-success"
-																	actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(true, plano)}">
-													<f:ajax execute="@form" render="@form"/>
-												</h:commandButton>
-											</div>
+											<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome}">
+												<div class="btn-group" role="group">
+													<h:commandButton id="botaoRemoveBolsas" value="-" class="btn btn-danger"
+																		actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(false, plano)}">
+														<f:ajax execute="@form" render="@form"/>
+													</h:commandButton>
+													<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn btn-success"
+																		actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(true, plano)}">
+														<f:ajax execute="@form" render="@form"/>
+													</h:commandButton>
+												</div>
+											</h:panelGroup>
 										</td>
 										<td class="center">#{plano.cc.nome}</td>
 										<td class="center">#{plano.cc.professor.nome}</td>
