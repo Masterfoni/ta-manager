@@ -35,36 +35,38 @@
 			</div>
 			
 			<div class="row">
-				<h:form>
-					<table class="table table-striped">
-						<thead>
-							<th scope="col">Componente Curricular</th>
-							<th scope="col">Professor</th>
-							<th scope="col">Curso</th>
-							<th scope="col"></th>
-						</thead>
-						<tbody>
-							<ui:repeat id="repeatComponentes" value="#{gerenciaComponenteCurricularView.componentes}" var="componente" varStatus="myStatus">
-								<tr>
-									<td>#{componente.nome}</td>
-									<td>#{componente.professor.nome}</td>
-									<td>#{componente.curso.nome}</td>
-									<td>
-										<div class="btn-group" role="group">
-											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
-			 												 value="Alterar" class="btn btn-info alterador">
-												<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" />
-											</h:commandButton>
-											<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
-															 update="@form" class="btn btn-danger">
-											</h:commandButton>
-										</div>
-									</td>
-								</tr>
-							</ui:repeat>
-						</tbody>
-					</table>
-				</h:form>
+				<div class="col-md-12">
+					<h:form>
+						<table class="table table-striped">
+							<thead>
+								<th scope="col">Componente Curricular</th>
+								<th scope="col">Professor</th>
+								<th scope="col">Curso</th>
+								<th scope="col"></th>
+							</thead>
+							<tbody>
+								<ui:repeat id="repeatComponentes" value="#{gerenciaComponenteCurricularView.componentes}" var="componente" varStatus="myStatus">
+									<tr>
+										<td>#{componente.nome}</td>
+										<td>#{componente.professor.nome}</td>
+										<td>#{componente.curso.nome}</td>
+										<td>
+											<div class="btn-group" role="group">
+												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
+																  value="Alterar" class="btn btn-info alterador">
+													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" />
+												</h:commandButton>
+												<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
+																 update="@form" class="btn btn-danger">
+												</h:commandButton>
+											</div>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</h:form>
+				</div>
 			</div>
 
 			<!-- MODAL DE CADASTRO NOVO-->

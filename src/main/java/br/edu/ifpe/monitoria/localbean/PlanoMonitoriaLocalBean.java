@@ -41,6 +41,13 @@ public class PlanoMonitoriaLocalBean
 		return true;
 	}
 	
+	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).setParameter("edital", edital).getResultList();
+		
+		return planos;
+	}
+	
 	/**
 	 * Método responsável por resgatar planos de monitoria com base no ID do servidor
 	 *

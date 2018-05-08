@@ -49,9 +49,12 @@ public class PlanoMonitoria {
 	@JoinColumn (name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular cc;
 	
-	@NotNull(message = "{mensagem.notnull}{tipo.bolsas}")
 	@Column (name="INT_BOLSAS")
 	private Integer bolsas;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.bolsas}")
+	@Column (name="INT_BOLSAS_SOLICITADAS")
+	private Integer bolsasSolicitadas;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.voluntarios}")
 	@Column (name="INT_VOLUNTARIOS")
@@ -130,7 +133,15 @@ public class PlanoMonitoria {
 		this.id = id;
 	}
 	
-    @Override
+    public Integer getBolsasSolicitadas() {
+		return bolsasSolicitadas;
+	}
+
+	public void setBolsasSolicitadas(Integer bolsasSolicitadas) {
+		this.bolsasSolicitadas = bolsasSolicitadas;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
