@@ -185,6 +185,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 		}
+		planoPersistido = new PlanoMonitoria();
 	}
 	
 	public void buscaPlanoMonitoria() {

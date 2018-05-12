@@ -133,4 +133,12 @@ public class PlanoMonitoriaLocalBean
 		
 		return planos;
 	}
+	
+	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital) {
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).
+				setParameter("edital", edital).
+				getResultList();
+		
+		return planos;
+	}
 }
