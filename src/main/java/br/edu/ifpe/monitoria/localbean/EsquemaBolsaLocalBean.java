@@ -14,6 +14,7 @@ import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.EsquemaBolsaRequestResult;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
 
@@ -71,6 +72,11 @@ public class EsquemaBolsaLocalBean
 	{
 		CriacaoRequestResult resultado = new CriacaoRequestResult();
 		
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class)
+				  										.setParameter("edital", esquemaBolsa.getEdital())
+				  										.setParameter("curso", esquemaBolsa.getCurso().getId()).getResultList(); 
+		esquemaBolsa.setQuantidade(0);
+		
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
 									  .setParameter("idEdital", esquemaBolsa.getEdital().getId())
 									  .setParameter("idCurso", esquemaBolsa.getCurso().getId()).getResultList();
@@ -80,6 +86,12 @@ public class EsquemaBolsaLocalBean
 			resultado.result = false;
 		} else {
 			em.persist(esquemaBolsa);
+			
+			for(PlanoMonitoria plano : planos) {
+				plano.setEsquemaAssociado(esquemaBolsa);
+				em.merge(plano);
+			}
+			
 			resultado.result = true;
 		}
 		
@@ -134,12 +146,19 @@ public class EsquemaBolsaLocalBean
 	 * @param curso Curso possuidor de esquemas
 	 * @return {@code List<EsquemaBolsa>} Lista de esquemas de um determinado edital para um curso
 	 */
-	public List<EsquemaBolsa> consultaEsquemaByEditalCurso(Edital edital, Curso curso) {
-
+	public EsquemaBolsaRequestResult consultaEsquemaByEditalCurso(Edital edital, Curso curso) {
+		EsquemaBolsaRequestResult resultado = new EsquemaBolsaRequestResult();
+		
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
 				.setParameter("idEdital", curso.getId()).setParameter("idCurso", curso.getId()).getResultList();
 
-		return esquemas;
+		if(!esquemas.isEmpty()) {
+			resultado.result = esquemas.get(0);
+		} else {
+			resultado.errors.add("Não existe um esquema de bolsa cadastrado ainda para esta combinação de edital e curso");
+		}
+		
+		return resultado;
 	}
 
 }

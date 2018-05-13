@@ -71,6 +71,37 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Servidor loggedServidor;
 	
+	public EsquemaBolsa esquemaAtual;
+	
+	public Curso cursoCoordenado;
+	
+	@PostConstruct
+	public void init() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		
+		cursos = cursobean.consultaCursos();
+		servidores = servidorbean.consultaServidores();
+		editais = editalbean.consultaEditais();
+		planos = new ArrayList<PlanoMonitoria>();
+		
+		editalSelecionado = editais.size() > 0 ? editais.get(0) : new Edital();
+		
+		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
+		
+		planoAtualizado = new PlanoMonitoria();
+		planoPersistido = new PlanoMonitoria();
+	}
+	
+	public EsquemaBolsa getEsquemaAtual() {
+		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, cursoCoordenado).result;
+		return esquemaAtual;
+	}
+
+	public void setEsquemaAtual(EsquemaBolsa esquemaAtual) {
+		this.esquemaAtual = esquemaAtual;
+	}
+
 	public Servidor getLoggedServidor() {
 		return loggedServidor;
 	}
@@ -171,22 +202,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.componentes = componentes;
 	}
 	
-	@PostConstruct
-	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		this.loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
-		
-		cursos = cursobean.consultaCursos();
-		servidores = servidorbean.consultaServidores();
-		editais = editalbean.consultaEditais();
-		planos = new ArrayList<PlanoMonitoria>();
-		
-		editalSelecionado = editais.size() > 0 ? editais.get(0) : new Edital();
-		
-		planoAtualizado = new PlanoMonitoria();
-		planoPersistido = new PlanoMonitoria();
-	}
-	
 	public void aplicaFiltroEdital(AjaxBehaviorEvent abe)
 	{
 		planos = planobean.consultaPlanosByEdital(editalSelecionado);
@@ -206,58 +221,12 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		}
 	}
 	
-	public String calcularMaximoDisponivel(PlanoMonitoria plano)
+	public void modificarBolsas(boolean isIncremento, PlanoMonitoria plano)
 	{
-		String disponiveis = "";
-		int bolsasUtilizadas = 0;
-		
-		List<EsquemaBolsa> esquemas = esquemabean.consultaEsquemaByEditalCurso(plano.getEdital(), plano.getCc().getCurso());
-		List<PlanoMonitoria> planos = planobean.consultaPlanosByEditaleCurso(plano.getEdital(), plano.getCc().getCurso());
-		
-		for(PlanoMonitoria item : planos)
-		{
-			bolsasUtilizadas += item.getBolsas();
+		if(plano.distribuirBolsa(isIncremento)) {
+			planobean.atualizaPlanoMonitoria(plano);
+			esquemaAtual.setQuantidadeRemanescente(isIncremento ? esquemaAtual.getQuantidadeRemanescente() - 1 : esquemaAtual.getQuantidadeRemanescente() + 1);
 		}
-		
-		if(esquemas.size() > 0)
-		{
-			disponiveis = "" + (esquemas.get(0).getQuantidade() - bolsasUtilizadas);
-		}
-		
-		return disponiveis;
-	}
-	
-	public void modificarBolsas(boolean adiciona, PlanoMonitoria plano)
-	{
-		int novaQuantidade = adiciona ? plano.getBolsas() +1 : Math.max(0, plano.getBolsas() -1);
-		int bolsasDisponibilizadasTotal = 0;
-		
-		List<EsquemaBolsa> esquemas = esquemabean.consultaEsquemaByEditalCurso(plano.getEdital(), plano.getCc().getCurso());
-		List<PlanoMonitoria> planos = planobean.consultaPlanosByEditaleCurso(plano.getEdital(), plano.getCc().getCurso());
-		
-		for(PlanoMonitoria item : planos)
-		{
-			if(item.getId() != plano.getId())
-				bolsasDisponibilizadasTotal += item.getBolsas();
-		}
-		
-		if(esquemas.size() > 0) 
-		{
-			if(esquemas.get(0).getQuantidade() < (novaQuantidade + bolsasDisponibilizadasTotal))
-			{
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Quantidade não permitida pois excede o máximo disponibilizado pela comissão."));
-			}
-			else
-			{
-				plano.setBolsas(novaQuantidade);
-				planobean.atualizaPlanoMonitoria(plano);
-			}
-		}
-		else
-		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ainda não foi definida uma quantidade de bolsas para este curso."));
-		}
-		
 	}
 	
 	public void buscaPlanoMonitoria() {
