@@ -93,4 +93,13 @@
     	</navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/professor/gerenciaPlanoMonitoria.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inserirNotas</from-outcome>
+            <to-view-id>/professor/inserirNotas.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    
 </faces-config>

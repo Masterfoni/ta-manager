@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
+import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
@@ -120,5 +121,13 @@ public class MonitoriaLocalBean
 
 	public void atualizaMonitoria(Monitoria monitoria) {
 		em.merge(monitoria);
+	}
+
+
+	public List<Monitoria> consultaMonitoriaByPlano(PlanoMonitoria plano) {
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class)
+				  .setParameter("plano", plano).getResultList();
+
+		return monitorias;
 	}
 }

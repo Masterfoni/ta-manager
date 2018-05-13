@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../professor/gerenciaPlanoMonitoria.css"></link>
@@ -42,6 +43,7 @@
 							<th scope="col">Componente Curricular</th>
 							<th scope="col">Docente</th>
 							<th scope="col"></th>
+							<th scope="col"></th>
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatPlanos" value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
@@ -57,6 +59,12 @@
 														value="Alterar" class="btn btn-info alterador">
 											<f:ajax execute="@form" render=":formAtualizador :atualizaPlano" />
 										</h:commandButton>
+									</td>
+									<td class="right">
+										<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
+														class="btn btn-info alterador">
+											<span class="fas fa-clipboard-list"></span> Inserir Notas
+										</button>
 									</td>
 								</tr>
 							</ui:repeat>

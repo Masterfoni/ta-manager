@@ -187,6 +187,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		}
 	}
 	
+	public String lancarNotas(PlanoMonitoria plano) {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
+	    return "inserirNotas?faces-redirect=true";
+	}
+	
 	public void buscaPlanoMonitoria() {
 			this.planos = planobean.consultaPlanos();
 	}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<title>Inserir Notas</title>
+	</h:head>
+<h:body>
+		<ui:include src="/comum/navbar-top.xhtml" />
+		<div class="container"> 
+			<div class="row align-items-center">
+				<div class="col col-sm-12">
+					<h1>Inserir Notas</h1>
+					<p>Componente curricular: <strong>#{inserirNotasView.plano.cc.nome}</strong></p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<h:messages/>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+
+			<div class="row">
+				<h:form style="width: 100%">
+					<table class="table table-striped">
+						<thead>
+							<th scope="col">Aluno</th>
+							<th scope="col">Nota Seleção</th>
+							<th scope="col">Nota Cadeira</th>
+						</thead>
+						<tbody>
+							<ui:repeat id="repeatPlanos" value="#{inserirNotasView.monitorias}" var="monitoria" varStatus="myStatus">
+								<tr>
+									<td class="center">#{monitoria.aluno.nome}</td>
+									<td class="center">
+										<h:inputText class="form-control numero2"
+													 value="">
+										</h:inputText>
+									</td>
+									<td class="center">
+										<h:inputText class="form-control numero2"
+													 value="">
+										</h:inputText>
+									</td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</h:form>
+			</div>
+		</div>
+
+	<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+	<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+</h:body>
+</html>
