@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -21,6 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_ESQUEMA_BOLSA",
@@ -46,9 +48,11 @@ public class EsquemaBolsa implements Serializable
 	@Version
 	private Integer version;
 	
+	@NotNull
 	@Column (name="INT_QUANTIDADE")
 	private Integer quantidade;
 	
+	@NotNull
 	@Column (name="INT_QUANTIDADE_REMANESCENTE")
 	private Integer quantidadeRemanescente;
 	
@@ -75,7 +79,7 @@ public class EsquemaBolsa implements Serializable
 	}
 
 	public Integer getQuantidade() {
-		return quantidade;
+		return quantidade != null ? quantidade : 0;
 	}
 
 	public void setQuantidade(Integer quantidade) {
@@ -89,6 +93,8 @@ public class EsquemaBolsa implements Serializable
 			} else {
 				this.quantidade = quantidade;
 			}
+		} else {
+			this.quantidade = quantidade;
 		}
 	}
 
@@ -119,11 +125,13 @@ public class EsquemaBolsa implements Serializable
 	public Integer getQuantidadeRemanescente() {
 		int totalUsado = 0;
 		
-		for(PlanoMonitoria plano : this.getPlanos()) {
+		List<PlanoMonitoria> planosAssociados = getPlanos() != null ? getPlanos() : new ArrayList<PlanoMonitoria>();
+
+		for(PlanoMonitoria plano : planosAssociados) {
 			totalUsado += plano.getBolsas();
 		}
 		
-		return quantidade - totalUsado;
+		return getQuantidade() - totalUsado;
 	}
 
 	public void setQuantidadeRemanescente(Integer quantidadeRemanescente) {

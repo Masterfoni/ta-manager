@@ -75,8 +75,7 @@ public class EsquemaBolsaLocalBean
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class)
 				  										.setParameter("edital", esquemaBolsa.getEdital())
 				  										.setParameter("curso", esquemaBolsa.getCurso().getId()).getResultList(); 
-		esquemaBolsa.setQuantidade(0);
-		
+
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
 									  .setParameter("idEdital", esquemaBolsa.getEdital().getId())
 									  .setParameter("idCurso", esquemaBolsa.getCurso().getId()).getResultList();
