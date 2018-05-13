@@ -172,7 +172,10 @@ public class GerenciaEditalView implements Serializable {
 	 * Utilizando o atual edital expandido e o curso selecionado, cria um novo esquema de bolsas para planos de monitoria do curso
 	 * no determinado edital. Caso existam erros na operação, eles serão inseridos no {@code FacesContext} como mensagens.
 	 */
-	public void cadastraEsquema() {
+	public void cadastraEsquema() 
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		
 		EsquemaBolsa novoEsquema = new EsquemaBolsa();
 		novoEsquema.setEdital(this.editalExpandido);
 		novoEsquema.setCurso(this.cursoSelecionado);
@@ -181,9 +184,11 @@ public class GerenciaEditalView implements Serializable {
 		
 		CriacaoRequestResult resultadoCriacao = esquemabean.persisteEsquemaBolsa(novoEsquema);
 		
-		if(resultadoCriacao.hasErrors()) {
-			for(String erro : resultadoCriacao.errors) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+		if(resultadoCriacao.hasErrors()) 
+		{
+			for(String erro : resultadoCriacao.errors) 
+			{
+				context.addMessage(null, new FacesMessage(erro));
 			}
 		}
 	}
@@ -195,12 +200,13 @@ public class GerenciaEditalView implements Serializable {
 	 */
 	public void atualizaBolsasEsquema(EsquemaBolsa esquema) {
 		AtualizacaoRequestResult resultado = esquemabean.atualizaEsquemaBolsa(esquema);
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if(resultado.hasErrors())
 		{
 			for(String erro : resultado.errors)
 			{
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+				context.addMessage(null, new FacesMessage(erro));
 			}
 		}
 	}
@@ -210,43 +216,27 @@ public class GerenciaEditalView implements Serializable {
      */
 	public void cadastrarEdital()
 	{
-		if(validarDatas(editalPersistido)) {		
-			editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
-			if(editalbean.persisteEdital(editalPersistido) > 0)
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
+		
+		CriacaoRequestResult resultado = editalbean.persisteEdital(editalPersistido);
+		
+		if(resultado.hasErrors())
+		{
+			for(String error : resultado.errors)
 			{
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
-				editalPersistido = new Edital();
+				context.addMessage(null, new FacesMessage(error));
 			}
+		}
+		else 
+		{
+			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+			editalPersistido = new Edital();
 		}
 	}
 	
-	/** Valida as datas dos periodos de um edital 
-	 * As datas são validadas se a data de inicio de periodo for antes da data de término
-	 * @param editalPersistido Edital
-	 * @return boolean - Se as datas são válidos
-     */
-	private boolean validarDatas(Edital edital) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		boolean flag = true;
-		if (edital.getInicioInscricaoComponenteCurricular().after(edital.getFimInscricaoComponenteCurricular())) {
-			context.addMessage(null, new FacesMessage("A data para o fim de Inserção do Componente Curricular deve ser depois da data de início."));
-			flag = false;
-		}  if (edital.getInicioInscricaoEstudante().after(edital.getFimInscricaoEstudante())) {
-			context.addMessage(null, new FacesMessage("A data para o fim de Inscrição dos Alunos deve ser depois da data de início."));
-			flag = false;
-		}  if (edital.getInicioInsercaoNota().after(edital.getFimInsercaoNota())) {
-			context.addMessage(null, new FacesMessage("A data para o fim de Inserção das Notas deve ser depois da data de início."));
-			flag = false;
-		}  if (edital.getInicioInsercaoPlano().after(edital.getFimInsercaoPlano())) {
-			context.addMessage(null, new FacesMessage("A data para o fim de Inserção dos Planos de Monitoria deve ser depois da data de início."));
-			flag = false;
-		}  if (edital.getInicioMonitoria().after(edital.getFimMonitoria())) {
-			context.addMessage(null, new FacesMessage("A data para o fim da Monitoria deve ser depois da data de início."));
-			flag = false;
-		}
-		return flag;
-	}
+
 	
 	/** Exclui o edital informado do sistema 
 	 * @param edital Edital
@@ -283,9 +273,16 @@ public class GerenciaEditalView implements Serializable {
 	 * @param edital Edital
      */
 	public void persisteAlteracao() {
-		if(validarDatas(editalAtualizado)) {	
-			editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
-			editalbean.atualizaEdital(editalAtualizado);
+		editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
+		AtualizacaoRequestResult resultado = editalbean.atualizaEdital(editalAtualizado);
+
+		if(resultado.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			for (String erro : resultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
 		}
 	}
 }

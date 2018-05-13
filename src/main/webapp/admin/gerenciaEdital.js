@@ -7,12 +7,7 @@ $(function () {
         $("#myModal").modal();
     });
     
-    $(".specificdate").mask("99-99-9999");
-
-    $(".specificdate2").change(function(e) {
-        console.log("lololo");
-        $(".specificdate").mask("99-99-9999");
-    });
+    $(".date").mask("99-99-9999");
 
     $(".colapsador").click(function(e){
         $("#collapsibleCursos").collapse();
