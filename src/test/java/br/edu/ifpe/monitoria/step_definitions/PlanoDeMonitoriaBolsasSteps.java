@@ -24,7 +24,7 @@ public class PlanoDeMonitoriaBolsasSteps {
 	
 	@Dado("^que o usuario esta logado como comissao$")
 	public void queOUsuarioEstaLogadoComoProfessor() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de edital$")
