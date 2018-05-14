@@ -40,7 +40,7 @@
 						<div class="input-group mb-3">
 							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
 								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-								<f:ajax listener="#{gerenciaPlanoMonitoriaView.aplicaFiltroEdital}" render="@all"/>
+								<f:ajax render=":formTablePlanos :detalheCoordInfo"/>
 							</h:selectOneMenu>
 						</div>
 					</h:form>
@@ -49,21 +49,21 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual != null 
-											  and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}"
-								  id="detalheCoordInfo">
-						<div class="alert alert-info" role="alert">
-							<h4 class="alert-heading">
-								Curso: 
-								<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.curso.nome}</strong>
-							</h4>
-							<hr></hr>
-							<p class="mb-0">
-								Quantidade de bolsas restantes: 
-								<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.quantidadeRemanescente}</strong>
-							</p>
-						</div>
-					</h:panelGroup>
+					<h:form id="detalheCoordInfo">
+						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual != null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
+							<div class="alert alert-info" role="alert">
+								<h4 class="alert-heading">
+									Curso: 
+									<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.curso.nome}</strong>
+								</h4>
+								<hr></hr>
+								<p class="mb-0">
+									Quantidade de bolsas restantes: 
+									<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.quantidadeRemanescente}</strong>
+								</p>
+							</div>
+						</h:panelGroup>
+					</h:form>
 				</div>
 			</div>
 
@@ -260,7 +260,7 @@
 		</div>
 
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>

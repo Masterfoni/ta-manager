@@ -149,7 +149,7 @@ public class EsquemaBolsaLocalBean
 		EsquemaBolsaRequestResult resultado = new EsquemaBolsaRequestResult();
 		
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
-				.setParameter("idEdital", curso.getId()).setParameter("idCurso", curso.getId()).getResultList();
+				.setParameter("idEdital", edital.getId()).setParameter("idCurso", curso.getId()).getResultList();
 
 		if(!esquemas.isEmpty()) {
 			resultado.result = esquemas.get(0);

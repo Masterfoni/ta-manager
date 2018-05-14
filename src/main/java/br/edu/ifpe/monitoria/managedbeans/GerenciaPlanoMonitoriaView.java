@@ -146,7 +146,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		if(request.isUserInRole("comissao"))
 		{
-			planos = planobean.consultaPlanos();
+			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado) : planobean.consultaPlanos(); 
 		} 
 		else
 		{
@@ -163,7 +163,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 				planosNaoRepetidos.addAll(planosByCoordenador);
 			}
 			
-			planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+			if(editalSelecionado != null)
+			{
+				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado));
+			}
+			else
+			{
+				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+			}
 		}
 		
 		return planos;
@@ -200,11 +208,6 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 
 	public void setComponentes(List<ComponenteCurricular> componentes) {
 		this.componentes = componentes;
-	}
-	
-	public void aplicaFiltroEdital(AjaxBehaviorEvent abe)
-	{
-		planos = planobean.consultaPlanosByEdital(editalSelecionado);
 	}
 	
 	/**
