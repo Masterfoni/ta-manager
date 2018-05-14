@@ -66,7 +66,7 @@ public class GoogleSignInView implements Serializable{
 		}
 		
 		for (String dominio : dominios) {
-			if(payload != null && payload.getHostedDomain() != null && payload.getHostedDomain().equals(dominio))
+			if(payload != null && payload.getEmail() != null && payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio))
 			{
 				LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
 				
