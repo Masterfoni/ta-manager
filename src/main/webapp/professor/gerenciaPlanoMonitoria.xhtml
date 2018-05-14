@@ -54,13 +54,23 @@
 							<div class="alert alert-info" role="alert">
 								<h4 class="alert-heading">
 									Curso: 
-									<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.curso.nome}</strong>
+									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
 								</h4>
 								<hr></hr>
 								<p class="mb-0">
 									Quantidade de bolsas restantes: 
 									<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.quantidadeRemanescente}</strong>
 								</p>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null}">
+							<div class="alert alert-secondary" role="alert">
+								<h4 class="alert-heading">
+									Curso:
+									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
+								</h4>
+								<hr></hr>
+								<p class="mb-0">Ainda não existem bolsas disponibilizadas pela comissão.</p>
 							</div>
 						</h:panelGroup>
 					</h:form>

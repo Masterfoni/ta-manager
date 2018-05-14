@@ -12,7 +12,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -93,6 +92,16 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		planoPersistido = new PlanoMonitoria();
 	}
 	
+	
+	
+	public Curso getCursoCoordenado() {
+		return cursoCoordenado;
+	}
+
+	public void setCursoCoordenado(Curso cursoCoordenado) {
+		this.cursoCoordenado = cursoCoordenado;
+	}
+
 	public EsquemaBolsa getEsquemaAtual() {
 		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, cursoCoordenado).result;
 		return esquemaAtual;
@@ -221,6 +230,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+			planoPersistido = new PlanoMonitoria();
 		}
 	}
 	
@@ -228,7 +238,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	{
 		if(plano.distribuirBolsa(isIncremento)) {
 			planobean.atualizaPlanoMonitoria(plano);
-			esquemaAtual.setQuantidadeRemanescente(isIncremento ? esquemaAtual.getQuantidadeRemanescente() - 1 : esquemaAtual.getQuantidadeRemanescente() + 1);
+			esquemaAtual.setQuantidadeRemanescente(isIncremento ? esquemaAtual.getQuantidadeRemanescente() - 1 : esquemaAtual.getQuantidadeRemanescente() + 1);			//TIRAR AQUI DEPOIS
 		}
 	}
 	

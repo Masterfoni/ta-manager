@@ -92,40 +92,42 @@
 							</h:selectOneMenu>
 							<div class="input-group-append">
 								<h:commandButton id="botaoCriaEsquema" actionListener="#{gerenciaEditalView.cadastraEsquema()}" 
-												 value="Lançar Bolsas" class="btn btn-success" update="@form">
-									<f:ajax execute="@form" render=":wrapperPanelErrors :repeatEsquemasEdital :globalform" />
+												 value="Lançar Bolsas" class="btn btn-success">
+									<f:ajax execute="@form" render="repeatEsquemasEdital :collapsibleCursos :globalform :wrapperPanelErrors" />
 								</h:commandButton>
 							</div>
 						</div>
 					</h:form>
 				</div>
 
-				<h:form style="width: 100%" id="globalform">
-					<h:panelGroup layout="block" id="repeatEsquemasEdital" class="card-group">
-						<ui:repeat value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
-							<div class="col-md-4">
-								<div class="card">
-									<div class="card-body">
-										#{esquemaEdital.curso.nome}
-									</div>
-									<div class="card-footer">
-										<div class="input-group mb-3">
-											<div class="input-group-append">
-												<h:inputText type="number" class="form-control" value="#{esquemaEdital.quantidade}">
-													<f:convertNumber integerOnly="true"/>
-												</h:inputText>
-												<h:commandButton value="Atualizar Bolsas" class="btn btn-outline-success">
-													<f:ajax execute="@form" render=":wrapperPanelErrors :repeatEsquemasEdital :globalform" 
-															listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
-												</h:commandButton>
-											</div> 
+				<div class="col-md-12">
+					<h:form id="globalform">
+						<h:panelGroup layout="block" id="repeatEsquemasEdital" class="card-group">
+							<ui:repeat value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-body">
+											#{esquemaEdital.curso.nome}
+										</div>
+										<div class="card-footer">
+											<div class="input-group mb-3">
+												<div class="input-group-append">
+													<h:inputText type="number" class="form-control" value="#{esquemaEdital.quantidade}">
+														<f:convertNumber integerOnly="true"/>
+													</h:inputText>
+													<h:commandButton value="Atualizar Bolsas" class="btn btn-outline-success">
+														<f:ajax execute="@form" render=":wrapperPanelErrors :repeatEsquemasEdital :globalform" 
+																listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
+													</h:commandButton>
+												</div> 
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</ui:repeat>
-					</h:panelGroup>
-				</h:form>
+							</ui:repeat>
+						</h:panelGroup>
+					</h:form>
+				</div>
 			</div>
 
 			<!-- MODAL DE ATUALIZACAO -->
