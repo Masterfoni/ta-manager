@@ -69,7 +69,7 @@
 												</h:commandButton>
 												<button type="button" class="btn btn-secondary colapsador"
 														jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
-													<f:ajax execute="@form" render=":repeatEsquemasEdital :collapsibleCursos :globalform"/>
+													<f:ajax execute="@form" render=":collapsibleCursos :globalform"/>
 													Gerenciar Bolsas
 													<i class="fa fa-caret-down"></i>
 												</button>
@@ -93,7 +93,7 @@
 							<div class="input-group-append">
 								<h:commandButton id="botaoCriaEsquema" actionListener="#{gerenciaEditalView.cadastraEsquema()}" 
 												 value="Lançar Bolsas" class="btn btn-success">
-									<f:ajax execute="@form" render="repeatEsquemasEdital :collapsibleCursos :globalform :wrapperPanelErrors" />
+									<f:ajax execute="@form" render=":esquemasForm :globalform :wrapperPanelErrors" />
 								</h:commandButton>
 							</div>
 						</div>
@@ -102,7 +102,7 @@
 
 				<div class="col-md-12">
 					<h:form id="globalform">
-						<h:panelGroup layout="block" id="repeatEsquemasEdital" class="card-group">
+						<h:panelGroup layout="block" class="card-group">
 							<ui:repeat value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
 								<div class="col-md-4">
 									<div class="card">
@@ -116,7 +116,7 @@
 														<f:convertNumber integerOnly="true"/>
 													</h:inputText>
 													<h:commandButton value="Atualizar Bolsas" class="btn btn-outline-success">
-														<f:ajax execute="@form" render=":wrapperPanelErrors :repeatEsquemasEdital :globalform" 
+														<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
 																listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
 													</h:commandButton>
 												</div> 

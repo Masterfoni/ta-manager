@@ -190,6 +190,8 @@ public class GerenciaEditalView implements Serializable {
 			{
 				context.addMessage(null, new FacesMessage(erro));
 			}
+		} else {
+			esquemasEdital = esquemabean.consultaEsquemaByEdital(editalExpandido);
 		}
 	}
 	

@@ -63,7 +63,7 @@
 								</p>
 							</div>
 						</h:panelGroup>
-						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null}">
+						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
 							<div class="alert alert-secondary" role="alert">
 								<h4 class="alert-heading">
 									Curso:

@@ -67,7 +67,7 @@ public class EsquemaBolsa implements Serializable
 	private Edital edital;
 	
 	@Valid
-	@OneToMany(mappedBy="esquemaAssociado", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="esquemaAssociado", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<PlanoMonitoria> planos;
 	
 	public Long getId() {
