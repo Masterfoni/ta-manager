@@ -189,7 +189,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public String lancarNotas(PlanoMonitoria plano) {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		session.setAttribute("plano", plano);
+		
 	    return "inserirNotas?faces-redirect=true";
+	    
 	}
 	
 	public void buscaPlanoMonitoria() {

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpSession;
 import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Monitoria;
@@ -25,7 +26,9 @@ public class InserirNotasView implements Serializable{
 
 	public InserirNotasView() {
 		if(plano == null) {
-			plano = (PlanoMonitoria)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("plano");
+			//plano = (PlanoMonitoria)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("plano");
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			plano = (PlanoMonitoria) session.getAttribute("plano");
 		}
 	}
 
