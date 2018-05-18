@@ -40,7 +40,7 @@
 						<div class="input-group mb-3">
 							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
 								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-								<f:ajax render=":formTablePlanos :detalheCoordInfo"/>
+								<f:ajax render=":formTablePlanos :detalheCoordInfo" onevent="handleAjax"/>
 							</h:selectOneMenu>
 						</div>
 					</h:form>
