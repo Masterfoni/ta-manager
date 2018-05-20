@@ -26,12 +26,15 @@ public class InserirNotasView implements Serializable{
 
 	public InserirNotasView() {
 		if(plano == null) {
-			//plano = (PlanoMonitoria)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("plano");
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 			plano = (PlanoMonitoria) session.getAttribute("plano");
 		}
 	}
 
+	public void salvarNotas() {
+		monitoriaBean.salvarNotas(monitorias);
+	}
+	
 	public PlanoMonitoria getPlano() {
 		return plano;
 	}
@@ -43,6 +46,7 @@ public class InserirNotasView implements Serializable{
 	public List<Monitoria> getMonitorias() {
 		if(monitorias == null) {
 			monitorias = monitoriaBean.consultaMonitoriaByPlano(plano);
+			monitorias = monitoriaBean.classificar(monitorias);
 		}
 		return monitorias;
 	}

@@ -31,30 +31,42 @@
 
 			<div class="row">
 				<h:form style="width: 100%">
-					<table class="table table-striped">
+					<table class="table table-hover">
 						<thead>
+							<th scope="col">Classificação</th>
 							<th scope="col">Aluno</th>
-							<th scope="col">Nota Seleção</th>
-							<th scope="col">Nota Cadeira</th>
+							<th scope="col">Existe reprovação</th>
+							<th scope="col">Nota da Seleção</th>
+							<th scope="col">Média do Componente</th>
+							<th scope="col">Desempate</th>
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatPlanos" value="#{inserirNotasView.monitorias}" var="monitoria" varStatus="myStatus">
 								<tr>
-									<td class="center">#{monitoria.aluno.nome}</td>
-									<td class="center">
-										<h:inputText class="form-control numero2"
-													 value="">
+									<td>#{monitoria.classificacao}</td>
+									<td>#{monitoria.aluno.nome}</td>
+									<td class="text-center">
+										<h:selectBooleanCheckbox id="checkReprovacao" styleClass="form-check-input"  
+																	 value="#{monitoria.reprovacao}" />
+									</td>
+									<td>
+										<h:inputText class="form-control" value="#{monitoria.notaSelecao}" disabled="#{monitoria.reprovacao}">
 										</h:inputText>
 									</td>
-									<td class="center">
-										<h:inputText class="form-control numero2"
-													 value="">
+									<td >
+										<h:inputText class="form-control" value="#{monitoria.mediaComponente}" disabled="#{monitoria.reprovacao}">
 										</h:inputText>
+									</td>
+									<td >
 									</td>
 								</tr>
 							</ui:repeat>
 						</tbody>
 					</table>
+					<div class=" text-right">
+						<h:commandButton value="Salvar Alterações" actionListener="#{inserirNotasView.salvarNotas()}" 
+												update="@form" class="btn btn-info" />
+					</div>
 				</h:form>
 			</div>
 		</div>

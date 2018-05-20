@@ -11,41 +11,7 @@
 	<h:body>
 		<ui:include src="/comum/navbar-top.xhtml" />	
 		<div class="container">
-			<div class="row align-items-center">
-				<div class="col col-lg-12">
-					<h1>Resultados da seleção</h1>
-				</div>
-			</div>
-			<div class="row">
-				<h:form style="width: 100%">
-					<h:dataTable id="tabelaMonitoria" value="#{homePageView.monitorias}" var="monitoria" class="table table-striped">
-						<h:column>
-							<f:facet name="header">Edital</f:facet>
-							#{monitoria.planoMonitoria.edital.numeroEdital}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Componente Curricular</f:facet>
-							#{monitoria.planoMonitoria.cc.nome}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Coordenação</f:facet>
-							#{monitoria.planoMonitoria.cc.coordenacao.nome}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Aluno</f:facet>
-							#{monitoria.aluno.nome}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Situação</f:facet>
-							#{monitoria.selecionado}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Bolsista</f:facet>
-							#{monitoria.bolsa}
-						</h:column>
-					</h:dataTable>
-				</h:form>
-			</div>
+			
 		</div>
 		
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>

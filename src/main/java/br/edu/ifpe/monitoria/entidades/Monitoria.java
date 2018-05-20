@@ -27,14 +27,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "TB_MONITORIA")
 @NamedQueries({
 	@NamedQuery(name = "Monitoria.findAll", query = "SELECT m FROM Monitoria m"),
-	@NamedQuery(name = "Monitoria.findAvaliadas", query = "SELECT m FROM Monitoria m WHERE m.avaliado = TRUE"),
 	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
-	@NamedQuery(name = "Monitoria.findByProfessor", query = "SELECT m FROM Monitoria m WHERE m.avaliado = FALSE AND m.planoMonitoria.id = "
-			+ "(SELECT pm.id FROM PlanoMonitoria pm WHERE pm.cc = ("
-			+ "SELECT cc FROM ComponenteCurricular cc WHERE cc.professor.id = :id))"),
 	@NamedQuery(name = "Monitoria.findByAluno", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital AND m.aluno = :aluno"),
 	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital"),
-	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano")
+	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano ORDER BY m.classificacao")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
@@ -63,12 +59,21 @@ public class Monitoria implements Serializable{
 	@Column (name="BOOL_BOLSA")
 	private boolean bolsa;
 
-	@Column (name="BOOL_SELECIONADO")
-	private boolean selecionado;
+	@Column (name="BOOL_CLASSIFICADO")
+	private boolean classificado;
 
-	@Column (name="BOOL_AVALIADO")
-	private boolean avaliado;
-
+	@Column (name="NOTA_SELECAO")
+	private Double notaSelecao;
+	
+	@Column (name="MEDIA_COMPONENTE")
+	private Double mediaComponente;
+	
+	@Column (name="BOOL_REPROVACAO")
+	private boolean reprovacao;
+	
+	@Column (name="INT_CLASSIFICACAO")
+	private Integer classificacao;
+	
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -97,27 +102,60 @@ public class Monitoria implements Serializable{
 		return id;
 	}
 
-	public boolean isSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
-	}
-
-	public boolean isAvaliado() {
-		return avaliado;
-	}
-
-	public void setAvaliado(boolean avaliado) {
-		this.avaliado = avaliado;
-	}
-
 	public Edital getEdital() {
 		return edital;
 	}
 
 	public void setEdital(Edital edital) {
 		this.edital = edital;
+	}
+
+	public Double getNotaSelecao() {
+		return notaSelecao;
+	}
+
+	public void setNotaSelecao(Double notaSelecao) {
+		this.notaSelecao = notaSelecao;
+	}
+
+	public Double getMediaComponente() {
+		return mediaComponente;
+	}
+
+	public void setMediaComponente(Double mediaComponente) {
+		this.mediaComponente = mediaComponente;
+	}
+
+	public boolean isReprovacao() {
+		return reprovacao;
+	}
+
+	public void setReprovacao(boolean reprovacao) {
+		this.reprovacao = reprovacao;
+		if(reprovacao == true) {
+			setNotaSelecao(0.0);
+		}
+	}
+
+	public Integer getClassificacao() {
+		return classificacao;
+	}
+
+	public void setClassificacao(Integer classificacao) {
+		this.classificacao = classificacao;
+	}
+
+	public boolean isClassificado() {
+		if(notaSelecao != null && notaSelecao >= 7 && 
+				mediaComponente != null && mediaComponente >= 7) {
+			setClassificado(true);
+		} else {
+			setClassificado(false);
+		}
+		return classificado;
+	}
+
+	public void setClassificado(boolean classificado) {
+		this.classificado = classificado;
 	}
 }

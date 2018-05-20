@@ -1,5 +1,7 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -38,24 +40,6 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 
-	public boolean aprovaMonitoria(Monitoria monitoria)
-	{
-		Monitoria monitoriaAprovada = em.createNamedQuery("Monitoria.findById", Monitoria.class)
-											   .setParameter("id", monitoria.getId()).getSingleResult();
-
-		monitoriaAprovada.setAluno(monitoria.getAluno());
-		monitoriaAprovada.setBolsa(monitoria.isBolsa());
-		monitoriaAprovada.setPlanoMonitoria(monitoria.getPlanoMonitoria());
-		monitoriaAprovada.setAvaliado(true);
-		monitoriaAprovada.setSelecionado(true);
-		
-		System.out.println(monitoriaAprovada.isAvaliado());
-
-		em.merge(monitoriaAprovada);
-
-		return true;
-	}
-
 	public List<Monitoria> consultaMonitoriaByProfessor(Long idProfessor)
 	{
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByProfessor", Monitoria.class)
@@ -64,24 +48,6 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 	
-	public boolean defereMonitoria(Monitoria monitoria)
-	{
-		Monitoria monitoriaDeferida = em.createNamedQuery("Monitoria.findById", Monitoria.class)
-										 .setParameter("id", monitoria.getId()).getSingleResult();
-
-		monitoriaDeferida.setAluno(monitoria.getAluno());
-		monitoriaDeferida.setBolsa(monitoria.isBolsa());
-		monitoriaDeferida.setPlanoMonitoria(monitoria.getPlanoMonitoria());
-		monitoriaDeferida.setAvaliado(true);
-		monitoriaDeferida.setSelecionado(false);
-		
-		System.out.println(monitoriaDeferida.isAvaliado());
-
-		em.merge(monitoriaDeferida);
-
-		return true;
-	}
-
 	public boolean persisteMonitoria (@Valid @NotNull Monitoria monitoria)
 	{
 		em.persist(monitoria);
@@ -127,6 +93,50 @@ public class MonitoriaLocalBean
 	public List<Monitoria> consultaMonitoriaByPlano(PlanoMonitoria plano) {
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class)
 				  .setParameter("plano", plano).getResultList();
+
+		return monitorias;
+	}
+
+
+	public void salvarNotas(List<Monitoria> monitorias) {
+		monitorias = classificar(monitorias);
+		int classificacao = 1;
+		for (Monitoria monitoria : monitorias) {
+			if(monitoria.isClassificado()) {
+				monitoria.setClassificacao(classificacao);
+				classificacao++;
+			}
+			em.merge(monitoria);
+		}
+		
+	}
+
+	public List<Monitoria> classificar(List<Monitoria> monitorias) {
+		Collections.sort(monitorias, new Comparator<Monitoria>() {
+			@Override
+			public int compare(Monitoria m1, Monitoria m2) {
+				if(m1.getNotaSelecao() != null && 
+						m2.getNotaSelecao() != null && 
+						m1.getMediaComponente() != null &&
+						m2.getMediaComponente() != null) {
+					if(m1.getNotaSelecao().doubleValue() > m2.getNotaSelecao().doubleValue()) {
+						return -1;
+					} else if (m1.getNotaSelecao().doubleValue() < m2.getNotaSelecao().doubleValue()) {
+						return 1;
+					} else if (m1.getNotaSelecao().doubleValue() == m2.getNotaSelecao().doubleValue()) {
+						if(m1.getMediaComponente().doubleValue() > m2.getMediaComponente().doubleValue()) {
+							return -1;
+						} else if (m1.getMediaComponente().doubleValue() < m2.getMediaComponente().doubleValue()) {
+							return 1;
+						} else if (m1.getMediaComponente().doubleValue() == m2.getMediaComponente().doubleValue()) {
+							return 0;
+						}
+					}
+				}
+				return 0;
+			}
+
+		});
 
 		return monitorias;
 	}

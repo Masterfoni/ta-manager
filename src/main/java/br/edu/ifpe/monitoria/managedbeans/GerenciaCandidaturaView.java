@@ -44,16 +44,16 @@ public class GerenciaCandidaturaView implements Serializable {
 		monitorias = monitoriabean.consultaMonitoriaByProfessor((long)session.getAttribute("id"));
 	}
 	
-	public String defereMonitoria(Monitoria monitoria) {
-		
-		monitorias.remove(monitoria);
-		
-		monitoriabean.defereMonitoria(monitoria);
-		
-		return "";
-	}
-	
-	public void aprovaMonitoria(Monitoria monitoria) {
-		monitoriabean.aprovaMonitoria(monitoria);
-	}
+//	public String defereMonitoria(Monitoria monitoria) {
+//		
+//		monitorias.remove(monitoria);
+//		
+//		monitoriabean.defereMonitoria(monitoria);
+//		
+//		return "";
+//	}
+//	
+//	public void aprovaMonitoria(Monitoria monitoria) {
+//		monitoriabean.aprovaMonitoria(monitoria);
+//	}
 }
