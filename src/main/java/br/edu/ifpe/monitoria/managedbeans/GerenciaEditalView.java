@@ -181,6 +181,7 @@ public class GerenciaEditalView implements Serializable {
 		novoEsquema.setCurso(this.cursoSelecionado);
 		novoEsquema.setQuantidadeRemanescente(0);
 		novoEsquema.setQuantidade(0);
+		novoEsquema.setDistribuido(false);
 		
 		CriacaoRequestResult resultadoCriacao = esquemabean.persisteEsquemaBolsa(novoEsquema);
 		

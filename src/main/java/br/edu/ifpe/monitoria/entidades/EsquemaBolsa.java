@@ -56,6 +56,10 @@ public class EsquemaBolsa implements Serializable
 	@Column (name="INT_QUANTIDADE_REMANESCENTE")
 	private Integer quantidadeRemanescente;
 	
+	@NotNull
+	@Column (name="BOOL_DISTRIBUIDO")
+	private boolean distribuido;
+	
 	@Valid
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_CURSO", referencedColumnName = "ID")
@@ -144,6 +148,14 @@ public class EsquemaBolsa implements Serializable
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	
+	public boolean isDistribuido() {
+		return distribuido;
+	}
+
+	public void setDistribuido(boolean distribuido) {
+		this.distribuido = distribuido;
 	}
 
 	public void addPlano(PlanoMonitoria plano) {

@@ -12,7 +12,9 @@ import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
@@ -88,8 +90,22 @@ public class EditalLocalBean
 		resultado.errors = validarDatas(edital);
 		
 		if(!resultado.hasErrors())
-		{
+		{		
+			List<Curso> cursos = em.createNamedQuery("Curso.findAll", Curso.class).getResultList();
+
 			em.persist(edital);
+			
+			for(Curso curso : cursos) {
+				EsquemaBolsa esquema = new EsquemaBolsa();
+				esquema.setEdital(edital);
+				esquema.setCurso(curso);
+				esquema.setQuantidadeRemanescente(0);
+				esquema.setQuantidade(0);
+				esquema.setDistribuido(false);
+				
+				em.persist(esquema);
+			}
+			
 			resultado.result = true;
 		}
 		
@@ -105,6 +121,15 @@ public class EditalLocalBean
 		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
 		
 		resultado.errors = validarDatas(edital);
+
+		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEdital", EsquemaBolsa.class).setParameter("idEdital", edital.getId()).getResultList();
+		
+		for(EsquemaBolsa esquema : esquemas) {
+			if(!esquema.isDistribuido()) {
+				resultado.errors.add("Você deve explicitar o número de bolsas para cada curso!");
+				break;
+			}
+		}
 		
 		if(!resultado.hasErrors())
 		{

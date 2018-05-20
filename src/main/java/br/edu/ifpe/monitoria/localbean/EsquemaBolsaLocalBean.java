@@ -54,11 +54,11 @@ public class EsquemaBolsaLocalBean
 		}
 		else
 		{
+			esquemaBolsa.setDistribuido(true);
 			em.merge(esquemaBolsa);
 			resultado.result = true;
 		}
 		
-
 		return resultado;
 	}
 
