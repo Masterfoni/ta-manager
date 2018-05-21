@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
@@ -36,9 +37,26 @@ public class PlanoMonitoriaLocalBean
 	 */
 	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
+		plano.setBolsas(0);
+		
+		List<EsquemaBolsa> esquemaSingleResult = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
+														.setParameter("idEdital", plano.getEdital().getId())
+														.setParameter("idCurso", plano.getCc().getCurso().getId()).getResultList();
+		
+		if(esquemaSingleResult.size() > 0) {
+			plano.setEsquemaAssociado(esquemaSingleResult.get(0));
+		}
+			
 		em.persist(plano);
 		
 		return true;
+	}
+	
+	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).setParameter("edital", edital).getResultList();
+		
+		return planos;
 	}
 	
 	/**
@@ -94,7 +112,7 @@ public class PlanoMonitoriaLocalBean
 	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
 		em.merge(plano);
-
+		
 		return true;
 	}
 	

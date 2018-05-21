@@ -13,3 +13,9 @@ th {
 .err-m-10 {
     margin: 10px;
 }
+
+.gem-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #ccd5d5;
+}

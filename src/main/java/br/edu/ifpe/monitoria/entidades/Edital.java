@@ -2,20 +2,25 @@ package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -109,6 +114,10 @@ public class Edital implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_MONITORIA")
 	private Date fimMonitoria;
+	
+	@Valid
+	@OneToMany(mappedBy="edital", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<EsquemaBolsa> esquemas;
 
     public String getNumeroEdital() {
 		return numeroEdital;
@@ -224,6 +233,14 @@ public class Edital implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public List<EsquemaBolsa> getEsquemas() {
+		return esquemas;
+	}
+
+	public void setEsquemas(List<EsquemaBolsa> esquemas) {
+		this.esquemas = esquemas;
 	}
 
 	@Override

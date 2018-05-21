@@ -31,7 +31,8 @@ import org.hibernate.validator.constraints.NotBlank;
 	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
 	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
     @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla"),
-    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome")
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome"),
+    @NamedQuery(name = "Curso.findByCoordenador", query = "SELECT c FROM Curso c WHERE c.coordenador.id = :coordenadorId")
 })
 @NamedNativeQueries({
      @NamedNativeQuery(name = "Curso.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Curso.class)
