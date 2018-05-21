@@ -26,6 +26,7 @@ import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 
 @ManagedBean (name="gerenciaPlanoMonitoriaView")
 @ViewScoped
@@ -236,11 +237,19 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 */
 	public void cadastrarPlano()
 	{
-		if(planobean.persistePlanoMonitoria(planoPersistido))
+		CriacaoRequestResult resultadoPlano = planobean.persistePlanoMonitoria(planoPersistido); 
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(!resultadoPlano.hasErrors())
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 			planoPersistido = new PlanoMonitoria();
+		}
+		else
+		{
+			for(String erro : resultadoPlano.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
 		}
 	}
 	

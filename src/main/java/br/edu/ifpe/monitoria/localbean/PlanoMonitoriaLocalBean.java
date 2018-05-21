@@ -15,6 +15,7 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 /**
@@ -35,27 +36,43 @@ public class PlanoMonitoriaLocalBean
 	 * @param plano uma instância de {@code PlanoMonitoria} que representa o plano à ser persistido
 	 * @return true no caso de sucesso 
 	 */
-	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
+	public CriacaoRequestResult persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
-		plano.setBolsas(0);
-		plano.setHomologado(false);
+		CriacaoRequestResult resultado = new CriacaoRequestResult();
 		
-		List<EsquemaBolsa> esquemaSingleResult = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
-														.setParameter("idEdital", plano.getEdital().getId())
-														.setParameter("idCurso", plano.getCc().getCurso().getId()).getResultList();
-		
-		if(esquemaSingleResult.size() > 0) {
-			EsquemaBolsa esquemaAssociado = esquemaSingleResult.get(0);
-			plano.setEsquemaAssociado(esquemaSingleResult.get(0));
-			em.persist(plano);
+		List<PlanoMonitoria> planoSingleResult = em.createNamedQuery("PlanoMonitoria.findByEditalComponente", PlanoMonitoria.class)
+				.setParameter("editalId", plano.getEdital().getId())
+				.setParameter("ccId", plano.getCc().getId()).getResultList();
 
-			esquemaAssociado.addPlano(plano);
-			em.merge(esquemaAssociado);
-		} else {
-			em.persist(plano);
+		if(!planoSingleResult.isEmpty()) {
+			resultado.errors.add("Já existe um plano cadastrado para este edital e componente!");
+			resultado.result = false;
 		}
 		
-		return true;
+		
+		if(!resultado.hasErrors()) {
+			plano.setBolsas(0);
+			plano.setHomologado(false);
+			
+			List<EsquemaBolsa> esquemaSingleResult = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
+					.setParameter("idEdital", plano.getEdital().getId())
+					.setParameter("idCurso", plano.getCc().getCurso().getId()).getResultList();
+			
+			if(esquemaSingleResult.size() > 0) {
+				EsquemaBolsa esquemaAssociado = esquemaSingleResult.get(0);
+				plano.setEsquemaAssociado(esquemaSingleResult.get(0));
+				em.persist(plano);
+				
+				esquemaAssociado.addPlano(plano);
+				em.merge(esquemaAssociado);
+			} else {
+				em.persist(plano);
+			}
+			
+			resultado.result = true;
+		}
+		
+		return resultado;
 	}
 	
 	/**

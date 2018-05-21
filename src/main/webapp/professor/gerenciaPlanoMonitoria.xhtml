@@ -202,7 +202,7 @@
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
 												 update="@form" class="btn btn-info" />
 								
-								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado}">
+								<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome) }">
 									<span>  </span>
 									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
 													 update="@form" class="btn btn-success"/>
