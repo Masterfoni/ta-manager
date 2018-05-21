@@ -38,25 +38,24 @@ public class PlanoMonitoriaLocalBean
 	public boolean persistePlanoMonitoria (@Valid @NotNull PlanoMonitoria plano)
 	{
 		plano.setBolsas(0);
+		plano.setHomologado(false);
 		
 		List<EsquemaBolsa> esquemaSingleResult = em.createNamedQuery("EsquemaBolsa.findByEditalCurso", EsquemaBolsa.class)
 														.setParameter("idEdital", plano.getEdital().getId())
 														.setParameter("idCurso", plano.getCc().getCurso().getId()).getResultList();
 		
 		if(esquemaSingleResult.size() > 0) {
+			EsquemaBolsa esquemaAssociado = esquemaSingleResult.get(0);
 			plano.setEsquemaAssociado(esquemaSingleResult.get(0));
+			em.persist(plano);
+
+			esquemaAssociado.addPlano(plano);
+			em.merge(esquemaAssociado);
+		} else {
+			em.persist(plano);
 		}
-			
-		em.persist(plano);
 		
 		return true;
-	}
-	
-	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital)
-	{
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).setParameter("edital", edital).getResultList();
-		
-		return planos;
 	}
 	
 	/**
@@ -152,10 +151,10 @@ public class PlanoMonitoriaLocalBean
 		return planos;
 	}
 	
-	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital) {
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEdital", PlanoMonitoria.class).
-				setParameter("edital", edital).
-				getResultList();
+	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital, boolean apenasHomologados) {
+		String namedQuery = apenasHomologados ? "PlanoMonitoria.findHomologadosByEdital" : "PlanoMonitoria.findByEdital";
+		
+		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).setParameter("edital", edital).getResultList();
 		
 		return planos;
 	}

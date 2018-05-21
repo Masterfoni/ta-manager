@@ -53,10 +53,6 @@ public class EsquemaBolsa implements Serializable
 	private Integer quantidade;
 	
 	@NotNull
-	@Column (name="INT_QUANTIDADE_REMANESCENTE")
-	private Integer quantidadeRemanescente;
-	
-	@NotNull
 	@Column (name="BOOL_DISTRIBUIDO")
 	private boolean distribuido;
 	
@@ -71,7 +67,7 @@ public class EsquemaBolsa implements Serializable
 	private Edital edital;
 	
 	@Valid
-	@OneToMany(mappedBy="esquemaAssociado", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="esquemaAssociado", cascade=CascadeType.ALL)
 	private List<PlanoMonitoria> planos;
 	
 	public Long getId() {
@@ -138,10 +134,6 @@ public class EsquemaBolsa implements Serializable
 		return getQuantidade() - totalUsado;
 	}
 
-	public void setQuantidadeRemanescente(Integer quantidadeRemanescente) {
-		this.quantidadeRemanescente = quantidadeRemanescente;
-	}
-	
 	public Integer getVersion() {
 		return version;
 	}

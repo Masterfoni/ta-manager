@@ -99,30 +99,33 @@
 											<span class="badge badge-pill badge-info">#{plano.bolsasSolicitadas}</span>
 										</td>
 										<td class="center">
-											<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome}">
-												<div class="input-group mb-3">
+											<div class="input-group mb-3">
+												<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome 
+																						 and (!plano.homologado or gerenciaPlanoMonitoriaView.comissao)}">
 													<div class="input-group-prepend">
 														<h:commandButton id="botaoRemoveBolsas" value="-" class="btn btn-danger"
 																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(false, plano)}">
 															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
 														</h:commandButton>
 													</div>
-													<h:inputText class="form-control text-center gem-disabled" value="#{plano.bolsas}"/>
+												</h:panelGroup>
+											
+												<h:inputText class="form-control text-center gem-disabled" value="#{plano.bolsas}"/>
+											
+												<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome 
+																					 	 and (!plano.homologado or gerenciaPlanoMonitoriaView.comissao)}">
 													<div class="input-group-append">
 														<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn btn-success"
 																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(true, plano)}">
 															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
 														</h:commandButton>
 													</div>
-												</div>
-											</h:panelGroup>
-											<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome != gerenciaPlanoMonitoriaView.loggedServidor.nome}">
-												<span class="badge badge-success">#{plano.bolsas}</span>	
-											</h:panelGroup>
+												</h:panelGroup>
+											</div>
 										</td>
 										<td class="right">
-											<h:commandButton id="botaoUpdate" value="Alterar" class="btn btn-info alterador"
-																actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}">
+											<h:commandButton id="botaoUpdate" value="Alterar" class="btn btn-info alterador" rendered="#{gerenciaPlanoMonitoriaView.comissao or not plano.homologado}"
+															 actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}">
 												<f:ajax execute="@form" render=":formAtualizador :atualizaPlano"/>
 											</h:commandButton>
 										</td>
@@ -193,9 +196,17 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
 								<span>  </span>
+
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
 												 update="@form" class="btn btn-info" />
+								
+								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado}">
+									<span>  </span>
+									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
+													 update="@form" class="btn btn-success"/>
+								</h:panelGroup>
 							</div>
 						</h:form>
 					</div>

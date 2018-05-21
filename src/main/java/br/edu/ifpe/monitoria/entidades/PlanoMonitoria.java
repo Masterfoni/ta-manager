@@ -31,6 +31,7 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "PlanoMonitoria.findByProfessor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.professor.id = :id"),
 	@NamedQuery(name = "PlanoMonitoria.findByCoordenador", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :id"),
 	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id"),
+	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE"),
 	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditaleCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso")
 })
@@ -52,6 +53,10 @@ public class PlanoMonitoria {
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular cc;
+	
+	@NotNull
+	@Column (name="VF_HOMOLOGADO")
+	private boolean homologado;
 	
 	@Column (name="INT_BOLSAS")
 	private Integer bolsas;
@@ -183,6 +188,14 @@ public class PlanoMonitoria {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	
+	public boolean isHomologado() {
+		return homologado;
+	}
+
+	public void setHomologado(boolean homologado) {
+		this.homologado = homologado;
 	}
 
 	@Override

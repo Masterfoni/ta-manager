@@ -5,23 +5,23 @@
 	<h:head>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="./resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"/>
 		<link rel="stylesheet" href="./welcome.css"></link>
 		<link href="./resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
 		<title>Monitoria - IFPE</title>
 	</h:head>
 	
 	<h:body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="../welcome.xhtml">
+				<img src="./resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+			</a>
 			
-				<div class="navbar-header">
-				<!--  
-					<a class="navbar-brand" href="#">
-    					<img src="resources/images/icone.png" width="30" height="30" class="d-inline-block align-top" alt="" />
-    					<strong>GEM</strong>
-  					</a>
-  				-->
-				</div>
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="nav navbar-nav">
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -29,6 +29,7 @@
 						<a href="./publico/index.xhtml" class="btn btn-success btn-lg">Acessar o Portal</a>	
 					</li>
 				</ul>
+			</div>
 		</nav>
 
 		<div class="container">
@@ -43,12 +44,6 @@
 				</div>
 			</div>
 		  
-			<div class="card text-white my-4 text-center" style="background-color: #42a15a !important;">
-				<div class="card-body">
-					<p class="text-white m-0">Acesso as informações</p>
-				</div>
-			</div>
-		  
 			<div class="row">
 				<div class="col-lg-4 mb-4">
 					<div class="card h-100">
@@ -57,7 +52,7 @@
 							<p class="card-text">Confira a lista de editais vigentes</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Acessar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
@@ -68,7 +63,7 @@
 							<p class="card-text">Listagem de componentes curriculares ofertados com número de vagas para bolsistas e voluntários.</p>
 						</div>
 						<div class="card-footer">
-							<a href="publico/divulgacaoPlanos.xhtml" class="btn btn-primary">Acessar</a>
+							<a href="publico/divulgacaoPlanos.xhtml" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
@@ -79,7 +74,7 @@
 							<p class="card-text">Divulgação da data e local da prova teórica e/ou prática para seleção.</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Acessar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
@@ -90,7 +85,7 @@
 							<p class="card-text">Divulgação dos estudantes classificados para monitoria</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Acessar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
@@ -101,22 +96,15 @@
 							<p class="card-text">Divulgação oficial dos estudantes selecionados para monitoria</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Acessar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
-		  
-		<footer class="py-5" style="background-color: #246f37 !important;">
-			<div class="container">
-				<p class="m-0 text-center text-white">Todos os direitos reservados &#174; FAL | JVAL 2018</p>
-			</div>
-		</footer>
 
 		<script src="./resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="./resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="./resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 	</h:body>
 </html>

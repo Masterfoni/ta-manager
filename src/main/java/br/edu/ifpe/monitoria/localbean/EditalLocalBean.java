@@ -99,7 +99,6 @@ public class EditalLocalBean
 				EsquemaBolsa esquema = new EsquemaBolsa();
 				esquema.setEdital(edital);
 				esquema.setCurso(curso);
-				esquema.setQuantidadeRemanescente(0);
 				esquema.setQuantidade(0);
 				esquema.setDistribuido(false);
 				

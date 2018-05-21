@@ -12,7 +12,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
@@ -74,10 +73,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Curso cursoCoordenado;
 	
+	public boolean comissao;
+	
 	@PostConstruct
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		
+		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
 		cursos = cursobean.consultaCursos();
 		servidores = servidorbean.consultaServidores();
@@ -151,11 +154,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria 
 	 */
 	public List<PlanoMonitoria> getPlanos() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		if(request.isUserInRole("comissao"))
+		if(comissao)
 		{
-			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado) : planobean.consultaPlanos(); 
+			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado, false) : planobean.consultaPlanos(); 
 		} 
 		else
 		{
@@ -175,7 +176,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			if(editalSelecionado != null)
 			{
 				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
-				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado));
+				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado, false));
 			}
 			else
 			{
@@ -209,9 +210,18 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void setPlanoAtualizado(PlanoMonitoria planoAtualizado) {
 		this.planoAtualizado = planoAtualizado;
 	}
+	
+	public boolean isComissao() {
+		return comissao;
+	}
+
+	public void setComissao(boolean comissao) {
+		this.comissao = comissao;
+	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		componentes = componentebean.consultaComponentesByProfessor(this.loggedServidor);
+		componentes = comissao ? componentebean.consultaComponentesCurriculares() : componentebean.consultaComponentesByProfessor(this.loggedServidor); 
+		
 		return componentes;
 	}
 
@@ -238,8 +248,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	{
 		if(plano.distribuirBolsa(isIncremento)) {
 			planobean.atualizaPlanoMonitoria(plano);
-			esquemaAtual.setQuantidadeRemanescente(isIncremento ? esquemaAtual.getQuantidadeRemanescente() - 1 : esquemaAtual.getQuantidadeRemanescente() + 1);			//TIRAR AQUI DEPOIS
 		}
+		
 		planoPersistido = new PlanoMonitoria();
 	}
 	
@@ -249,6 +259,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public void alteraPlano(PlanoMonitoria plano) {
 		planoAtualizado = plano;
+	}
+	
+	public void homologarPlano() {
+		planoAtualizado.setHomologado(true);
+		planobean.atualizaPlanoMonitoria(planoAtualizado);
 	}
 	
 	public void persisteAlteracao() {

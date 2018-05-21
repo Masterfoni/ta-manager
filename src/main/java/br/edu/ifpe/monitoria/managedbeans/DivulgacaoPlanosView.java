@@ -61,7 +61,7 @@ public class DivulgacaoPlanosView {
 		if(planos == null) {
 			planos = new ArrayList<>();
 			for (Edital edital : editais) {
-				List<PlanoMonitoria> planinho = planobean.consultaPlanosByEdital(edital);
+				List<PlanoMonitoria> planinho = planobean.consultaPlanosByEdital(edital, true);
 				planos.add(planinho);
 			}
 		}
