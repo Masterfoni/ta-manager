@@ -29,6 +29,7 @@ import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.testutils.JUnitUtils;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -119,9 +120,11 @@ public class EsquemaBolsaTest {
 		esquema.setCurso(curso);
 		esquema.setEdital(edital);
 		esquema.setQuantidade(1);
+		esquema.setDistribuido(false);
 		
-		esquemabean.persisteEsquemaBolsa(esquema);
-		assertNotNull(esquema.getId());
+		CriacaoRequestResult resultado = esquemabean.persisteEsquemaBolsa(esquema);
+		System.out.println(resultado.errors);
+		assertTrue(resultado.result);
 	}
 
 	@Test

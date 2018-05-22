@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <dataset>
-
 	<TB_USUARIO id="1"
 		disc_usuario="SERVIDOR"
 		txt_cpf="102.503.234-94"
@@ -33,24 +32,8 @@
 	<TB_USUARIO_GRUPO id="2"
 		txt_email="fal@a.recife.ifpe.edu.br"
 		txt_grupo="COMISSAO"
-		id_usuario="2" />
+		id_usuario="1" />
 		
-	<TB_EDITAL id="1"
-		txt_ano="2018"
-  		dt_fim_inscricao_cc="2018-08-02"
-  		dt_fim_inscricao_estudante="2018-08-02"
-  		dt_fim_inscercao_nt="2018-08-02"
-  		dt_fim_inscercao_pm="2018-08-02"
-  		dt_fim_monitoria="2018-08-02"
-  		dt_ini_inscricao_cc="2018-02-02"
-  		dt_ini_inscricao_estudante="2018-02-02"
-  		dt_ini_insercao_nt="2018-02-02"
-  		dt_ini_insercao_pm="2018-02-02"
-  		dt_ini_monitoria="2018-02-02"
-  		txt_numero="2"
-  		txt_numero_edital="2/2018"
-  		bool_vigente="true" />
-  		
   	<TB_CURSO id="1"
   		txt_coordenacao="CTADS"
   		txt_departamento="DASE"
@@ -65,5 +48,4 @@
   		txt_turno="NOTURNO"
   		id_curso="1"
   		id_servidor="1" />
-  		
 </dataset>

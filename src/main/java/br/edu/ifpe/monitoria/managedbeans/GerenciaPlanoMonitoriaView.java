@@ -162,7 +162,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		else
 		{
 			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
-			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());;
+			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
 			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(this.loggedServidor.getId());
 
 			if(!planosByServidor.isEmpty())
@@ -221,8 +221,32 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		componentes = comissao ? componentebean.consultaComponentesCurriculares() : componentebean.consultaComponentesByProfessor(this.loggedServidor); 
 		
+		if(comissao) 
+		{
+			componentes = componentebean.consultaComponentesCurriculares();
+		} 
+		else 
+		{
+			Curso curso = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
+
+			Set<ComponenteCurricular> cursosNaoRepetidos = new HashSet<ComponenteCurricular>();
+			
+			List<ComponenteCurricular> componentesByProfessor = componentebean.consultaComponentesByProfessor(this.loggedServidor);
+			List<ComponenteCurricular> componentesByCurso = componentebean.consultaComponentesByCurso(curso.getId());
+
+			if(!componentesByProfessor.isEmpty())
+			{
+				cursosNaoRepetidos.addAll(componentesByProfessor);
+			}
+			if(!componentesByCurso.isEmpty())
+			{
+				cursosNaoRepetidos.addAll(componentesByCurso);
+			}
+			
+			componentes = new ArrayList<ComponenteCurricular>(cursosNaoRepetidos);
+		}
+ 
 		return componentes;
 	}
 

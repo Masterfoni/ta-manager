@@ -9,7 +9,6 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -55,32 +54,31 @@ public class DbUnitUtil
 
             String sql;
             
-            sql = "DELETE FROM tb_monitoria";
+            sql = "DELETE FROM TB_ESQUEMA_BOLSA";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_plano_monitoria";
+            sql = "DELETE FROM TB_MONITORIA";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_comp_curricular";
+            sql = "DELETE FROM TB_PLANO_MONITORIA";
             stmt.executeUpdate(sql);
-            
-            sql = "DELETE FROM tb_aluno";
+            sql = "DELETE FROM TB_COMP_CURRICULAR";
             stmt.executeUpdate(sql);
-            
-            sql = "DELETE FROM tb_curso";
+            sql = "DELETE FROM TB_ALUNO";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_edital";
+            sql = "DELETE FROM TB_CURSO";
             stmt.executeUpdate(sql);
-            
-            sql = "DELETE FROM tb_usuario_grupo";
+            sql = "DELETE FROM TB_EDITAL";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_servidor";
+            sql = "DELETE FROM TB_USUARIO_GRUPO";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_perfilgoogle";
+            sql = "DELETE FROM TB_SERVIDOR";
             stmt.executeUpdate(sql);
-            sql = "DELETE FROM tb_usuario";
+            sql = "DELETE FROM TB_PERFILGOOGLE";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM TB_USUARIO";
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
-        	
+        	e.printStackTrace();
         }
     }
 
@@ -94,7 +92,6 @@ public class DbUnitUtil
             conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
-            String schema = db_conn.getSchema();
 
             DatabaseConfig dbConfig = db_conn.getConfig();
             dbConfig.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());

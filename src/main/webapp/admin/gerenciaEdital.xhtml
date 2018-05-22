@@ -103,19 +103,19 @@
 				<div class="col-md-12">
 					<h:form id="globalform">
 						<h:panelGroup layout="block" class="card-group">
-							<ui:repeat value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
+							<ui:repeat id="repeatEsquemas" value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
 								<div class="col-md-4">
 									<div class="card">
-										<div class="card-body">
+										<div id="esquemaTituloCC" class="card-body">
 											#{esquemaEdital.curso.nome}
 										</div>
 										<div class="card-footer">
 											<div class="input-group mb-3">
 												<div class="input-group-append">
-													<h:inputText type="number" class="form-control" value="#{esquemaEdital.quantidade}">
+													<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
 														<f:convertNumber integerOnly="true"/>
 													</h:inputText>
-													<h:commandButton value="Atualizar Bolsas" class="btn btn-outline-success">
+													<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-outline-success">
 														<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
 																listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
 													</h:commandButton>

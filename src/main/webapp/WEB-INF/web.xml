@@ -16,15 +16,15 @@
 			<form-error-page>/publico/index.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
-	
+
 	<security-role>
-	    <role-name>aluno</role-name>
+		<role-name>aluno</role-name>
 	</security-role>
 	<security-role>
-	    <role-name>comissao</role-name>
+		<role-name>comissao</role-name>
 	</security-role>
 	<security-role>
-	    <role-name>professor</role-name>
+		<role-name>professor</role-name>
 	</security-role>
 
 	<security-constraint>
