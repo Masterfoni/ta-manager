@@ -5,97 +5,106 @@
 	<h:head>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="./resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"/>
 		<link rel="stylesheet" href="./welcome.css"></link>
 		<link href="./resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
 		<title>Monitoria - IFPE</title>
 	</h:head>
 	
 	<h:body>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">
-						<img src="./resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
-					</a>
-				</div>
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="../welcome.xhtml">
+				<img src="./resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+			</a>
+			
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="nav navbar-nav">
 				</ul>
-				<h:form>
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<h:commandLink class="nav-link" action="#{logoutView.logout}" value="Sair  ">
-								<span class="fa fa-power-off"></span>
-							</h:commandLink>
-						</li>
-					</ul>
-				</h:form>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="./publico/index.xhtml" class="btn btn-success btn-lg">Acessar o Portal</a>	
+					</li>
+				</ul>
 			</div>
 		</nav>
 
 		<div class="container">
 			<div class="row my-4">
 				<div class="col-lg-8">
-					<img class="img-fluid rounded" src="http://placehold.it/900x400" alt=""></img>
+					<img class="img-fluid rounded" src="resources/images/banner.png" alt=""></img>
 				</div>
 				<div class="col-lg-4">
-					<h1>Novo edital pulicado</h1>
-					<p>Edital jack djumpson, insira aqui a descrição do edital. Talvez o número de bolsas também entre aqui, mussum impsum.</p>
-					<a href="./publico/index.xhtml" class="btn btn-primary btn-lg">Acessar o portal</a>
-				</div>
-			</div>
-		  
-			<div class="card text-white my-4 text-center" style="background-color: #42a15a !important;">
-				<div class="card-body">
-					<p class="text-white m-0">Abaixo daqui, talvez estejam os editais mais antigos? Não sei, talvez outras informações relevantes</p>
+					<h1>Gerenciamento de Monitoria</h1>
+					<p class="text-justify">Para alunos, professores e servidores administrativos que participam do programa de monitoria, que precisam agilizar e tornar menos burocrático o processo de seleção e acompanhamento dos programas de monitoria.</p>
+					<p class="text-justify"> O Gem é um sistema web que permite o gerenciamento do programa desde a inscrição dos componentes curriculares até o término da monitoria de forma digital. </p>
 				</div>
 			</div>
 		  
 			<div class="row">
-				<div class="col-md-4 mb-4">
+				<div class="col-lg-4 mb-4">
 					<div class="card h-100">
 						<div class="card-body">
-							<h2 class="card-title">Template incrível!</h2>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+							<h2 class="card-title">Editais vigentes</h2>
+							<p class="card-text">Confira a lista de editais vigentes</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Baixar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 mb-4">
+				<div class="col-lg-4 mb-4">
 					<div class="card h-100">
 						<div class="card-body">
-							<h2 class="card-title">Copiei esse template uhul</h2>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+							<h2 class="card-title">Componentes curriculares</h2>
+							<p class="card-text">Listagem de componentes curriculares ofertados com número de vagas para bolsistas e voluntários.</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Baixar</a>
+							<a href="publico/divulgacaoPlanos.xhtml" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 mb-4">
+				<div class="col-lg-4 mb-4">
 					<div class="card h-100">
 						<div class="card-body">
-							<h2 class="card-title">Nada importante aqui</h2>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+							<h2 class="card-title">Data e locais de prova</h2>
+							<p class="card-text">Divulgação da data e local da prova teórica e/ou prática para seleção.</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">Baixar</a>
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 mb-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h2 class="card-title">Estudantes Classificados</h2>
+							<p class="card-text">Divulgação dos estudantes classificados para monitoria</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 mb-4">
+					<div class="card h-100">
+						<div class="card-body">
+							<h2 class="card-title">Estudantes Selecionados</h2>
+							<p class="card-text">Divulgação oficial dos estudantes selecionados para monitoria</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-block btn-primary">Acessar</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		  
-		<footer class="py-5" style="background-color: #246f37 !important;">
-			<div class="container">
-				<p class="m-0 text-center text-white">Todos os direitos reservados &#174; Fal e Jval 2018</p>
-			</div>
-		</footer>
 
 		<script src="./resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="./resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="./resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 	</h:body>
 </html>

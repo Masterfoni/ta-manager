@@ -50,6 +50,18 @@ public class CursoLocalBean
 		return curso;
 	}
 	
+	public Curso consultaCursoByCoordenador(Long servidorId) {
+		Curso resultado = new Curso();
+		
+		List<Curso> cursoResultList = em.createNamedQuery("Curso.findByCoordenador", Curso.class).setParameter("coordenadorId", servidorId).getResultList();
+		
+		if (!cursoResultList.isEmpty()) {
+			resultado = cursoResultList.get(0);
+		}
+		
+		return resultado;
+	}
+	
 	public DelecaoRequestResult deletaCurso(Long id)
 	{
 		DelecaoRequestResult delecao = new DelecaoRequestResult();

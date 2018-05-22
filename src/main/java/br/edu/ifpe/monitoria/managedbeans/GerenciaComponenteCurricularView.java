@@ -108,6 +108,7 @@ public class GerenciaComponenteCurricularView implements Serializable {
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+			componentePersistido = new ComponenteCurricular();
 		}
 	}
 	

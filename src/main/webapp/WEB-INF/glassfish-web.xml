@@ -17,6 +17,4 @@
     	<role-name>comissao</role-name>
     	<group-name>COMISSAO</group-name>
     </security-role-mapping>
-    
-    
 </glassfish-web-app>

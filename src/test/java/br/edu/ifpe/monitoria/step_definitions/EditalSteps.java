@@ -23,7 +23,7 @@ public class EditalSteps {
 	
 	@Dado("^que o usuario esta logado com perfil da comissao$")
 	public void queOUsuarioEstaLogadoComPerfilDaComissao() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
 	}
 
 	@Dado("^esteja na pagina de gerencia de editais$")
@@ -50,7 +50,6 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:vigenteE")).click();
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		BrowserManager.esperar(5000);
 	}
@@ -69,7 +68,6 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:vigenteE")).click();
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		BrowserManager.esperar(5000);
 	}

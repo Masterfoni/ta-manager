@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../professor/gerenciaPlanoMonitoria.css"></link>
@@ -34,35 +35,106 @@
 			</div>
 
 			<div class="row">
-				<h:form style="width: 100%">
-					<table class="table table-striped">
-						<thead>
-							<th scope="col">Edital</th>
-							<th scope="col">Bolsas</th>
-							<th scope="col">Componente Curricular</th>
-							<th scope="col">Docente</th>
-							<th scope="col"></th>
-						</thead>
-						<tbody>
-							<ui:repeat id="repeatPlanos" value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
-								<tr>
-									<td class="center">#{plano.edital.numeroEdital}</td>
-									<td class="center">
-										<span class="badge badge-pill badge-success">#{plano.bolsas}</span>
-									</td>
-									<td class="center">#{plano.cc.nome}</td>
-									<td class="center">#{plano.cc.professor.nome}</td>
-									<td class="right">
-										<h:commandButton id="botaoUpdate" actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}" 
-														value="Alterar" class="btn btn-info alterador">
-											<f:ajax execute="@form" render=":formAtualizador :atualizaPlano" />
-										</h:commandButton>
-									</td>
-								</tr>
-							</ui:repeat>
-						</tbody>
-					</table>
-				</h:form>
+				<div class="col-md-12">
+					<h:form id="editalForm">
+						<div class="input-group mb-3">
+							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
+								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+								<f:ajax render=":formTablePlanos :detalheCoordInfo" onevent="handleAjax"/>
+							</h:selectOneMenu>
+						</div>
+					</h:form>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h:form id="detalheCoordInfo">
+						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual != null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
+							<div class="alert alert-info" role="alert">
+								<h4 class="alert-heading">
+									Curso: 
+									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
+								</h4>
+								<hr></hr>
+								<p class="mb-0">
+									Quantidade de bolsas restantes: 
+									<strong>#{gerenciaPlanoMonitoriaView.esquemaAtual.quantidadeRemanescente}</strong>
+								</p>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
+							<div class="alert alert-secondary" role="alert">
+								<h4 class="alert-heading">
+									Curso:
+									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
+								</h4>
+								<hr></hr>
+								<p class="mb-0">Ainda não existem bolsas disponibilizadas pela comissão.</p>
+							</div>
+						</h:panelGroup>
+					</h:form>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h:form id="formTablePlanos">
+						<table class="table table-striped">
+							<thead>
+								<th scope="col">Edital</th>
+								<th scope="col">Componente Curricular</th>
+								<th scope="col">Docente</th>
+								<th scope="col">Bolsas Solicitadas</th>
+								<th scope="col">Bolsas Disponibilizadas</th>
+								<th scope="col"></th>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
+									<tr>
+										<td class="center">#{plano.edital.numeroEdital}</td>
+										<td class="center">#{plano.cc.nome}</td>
+										<td class="center">#{plano.cc.professor.nome}</td>
+										<td class="center">
+											<span class="badge badge-pill badge-info">#{plano.bolsasSolicitadas}</span>
+										</td>
+										<td class="center">
+											<div class="input-group mb-3">
+												<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome 
+																						 and (!plano.homologado or gerenciaPlanoMonitoriaView.comissao)}">
+													<div class="input-group-prepend">
+														<h:commandButton id="botaoRemoveBolsas" value="-" class="btn btn-danger"
+																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(false, plano)}">
+															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
+														</h:commandButton>
+													</div>
+												</h:panelGroup>
+											
+												<h:inputText class="form-control text-center gem-disabled" value="#{plano.bolsas}"/>
+											
+												<h:panelGroup layout="block" rendered="#{plano.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome 
+																					 	 and (!plano.homologado or gerenciaPlanoMonitoriaView.comissao)}">
+													<div class="input-group-append">
+														<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn btn-success"
+																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(true, plano)}">
+															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
+														</h:commandButton>
+													</div>
+												</h:panelGroup>
+											</div>
+										</td>
+										<td class="right">
+											<h:commandButton id="botaoUpdate" value="Alterar" class="btn btn-info alterador" rendered="#{gerenciaPlanoMonitoriaView.comissao or not plano.homologado}"
+															 actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}">
+												<f:ajax execute="@form" render=":formAtualizador :atualizaPlano"/>
+											</h:commandButton>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</h:form>
+				</div>
 			</div>
 			
 			<!-- MODAL DE ATUALIZAÇÃO -->
@@ -91,9 +163,9 @@
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
-										<label>Bolsistas</label>
+										<label>Bolsas Solicitadas</label>
 										<h:inputText class="form-control numero2"
-													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.bolsas}">
+													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.bolsasSolicitadas}">
 										</h:inputText>
 									</div>
 									<div class="form-group">
@@ -124,9 +196,17 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
 								<span>  </span>
+
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
 												 update="@form" class="btn btn-info" />
+								
+								<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome) }">
+									<span>  </span>
+									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
+													 update="@form" class="btn btn-success"/>
+								</h:panelGroup>
 							</div>
 						</h:form>
 					</div>
@@ -161,7 +241,7 @@
 									<div class="form-group">
 										<label>Pedido de número de bolsistas</label>
 										<h:inputText id="nbolsistas" class="form-control numero2"
-														value="#{gerenciaPlanoMonitoriaView.planoPersistido.bolsas}"></h:inputText>
+														value="#{gerenciaPlanoMonitoriaView.planoPersistido.bolsasSolicitadas}"></h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Voluntários</label>
@@ -201,7 +281,7 @@
 		</div>
 
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>
