@@ -8,3 +8,25 @@ $(".alterador").click(function(e) {
 
 $(".numero2").mask("99");
 $(".periodo").mask("9999/9");
+
+function handleAjax(data) {
+    var status = data.status;
+
+    switch(status) {
+        case "complete":
+            updateAlteradorFunction();
+            break;
+        case "success":
+            updateAlteradorFunction();
+            break;
+    }
+}
+
+function updateAlteradorFunction() {
+    $(".alterador").click(function(e) {
+        $("#myModal").modal();
+    }); 
+
+    $(".numero2").mask("99");
+    $(".periodo").mask("9999/9");
+}

@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.Select;
 import br.edu.ifpe.monitoria.testutils.BrowserManager;
 import br.edu.ifpe.monitoria.testutils.Dataset;
 import br.edu.ifpe.monitoria.testutils.DbUnitUtil;
-import cucumber.api.PendingException;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 

@@ -58,6 +58,10 @@ public class ComponenteCurricularLocalBean
 		return componente;
 	}
 	
+	public List<ComponenteCurricular>consultaComponentesByCurso(Long cursoId) {
+		return em.createNamedQuery("ComponenteCurricular.findByCurso", ComponenteCurricular.class).setParameter("id", cursoId).getResultList();
+	}
+	
 	/**
 	 * Método responsável por remover um componente curricular do banco de dados.
 	 *
@@ -102,7 +106,7 @@ public class ComponenteCurricularLocalBean
 	public List<ComponenteCurricular> consultaComponentesByProfessor(Servidor servidor) {
 		
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByProfessor", ComponenteCurricular.class)
-				 .setParameter("professor", servidor).getResultList();
+				 .setParameter("professorId", servidor.getId()).getResultList();
 		
 		return componentes;
 	}

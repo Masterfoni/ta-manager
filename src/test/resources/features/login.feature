@@ -6,24 +6,24 @@ Funcionalidade: Realizar login
     Dado que o usuario esteja na tela de login do sistema
   	E o usuario informa o email e senha
   
-  Cenário: Servidor logando pela primeira vez
+  Cenario: Servidor logando pela primeira vez
   	Quando utilizar o email instituncional 
     E o sistema verificar que o usuario nao esta cadastrado
-    Ent�o redireciona para a tela de cadastro de servidor
+    Entao redireciona para a tela de cadastro de servidor
   
-  Cenário: Servidor logando o sistema
+  Cenario: Servidor logando o sistema
   	Quando utilizar o email instituncional
     E o sistema verificar que o usuario possui cadastro
-    Ent�o redireciona para a pagina de home do servidor
+    Entao redireciona para a pagina de home do servidor
 
-  Cenário: Aluno realiza login
+  Cenario: Aluno realiza login
 	E o sistema autentica o usuario
-	Então redireciona para a pagina home do aluno
+	Entao redireciona para a pagina home do aluno
 
-  Cenário: Aluno tenta realizar login com credenciais invalidas
+  Cenario: Aluno tenta realizar login com credenciais invalidas
     Quando informar um email e ou senha invalida
 	E sistema nao autentica o usuario
-	Então informa mensagem de erro
+	Entao informa mensagem de erro
 
 #	Exemplos:
 #	| email							| senha		| home					|

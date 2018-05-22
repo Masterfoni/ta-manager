@@ -12,19 +12,21 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
+import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 
 @ManagedBean (name="gerenciaPlanoMonitoriaView")
 @ViewScoped
@@ -47,6 +49,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	@EJB
 	private ServidorLocalBean servidorbean;
 	
+	@EJB
+	private EsquemaBolsaLocalBean esquemabean;
+	
 	public List<ComponenteCurricular> componentes;
 	
 	public List<Curso> cursos;
@@ -61,8 +66,63 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public PlanoMonitoria planoAtualizado;
 	
-	public String nomeBusca;
+	public Edital editalSelecionado;
 	
+	public Servidor loggedServidor;
+	
+	public EsquemaBolsa esquemaAtual;
+	
+	public Curso cursoCoordenado;
+	
+	public boolean comissao;
+	
+	@PostConstruct
+	public void init() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		
+		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
+		
+		cursos = cursobean.consultaCursos();
+		servidores = servidorbean.consultaServidores();
+		editais = editalbean.consultaEditais();
+		planos = new ArrayList<PlanoMonitoria>();
+		
+		editalSelecionado = editais.size() > 0 ? editais.get(0) : new Edital();
+		
+		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
+		
+		planoAtualizado = new PlanoMonitoria();
+		planoPersistido = new PlanoMonitoria();
+	}
+	
+	
+	
+	public Curso getCursoCoordenado() {
+		return cursoCoordenado;
+	}
+
+	public void setCursoCoordenado(Curso cursoCoordenado) {
+		this.cursoCoordenado = cursoCoordenado;
+	}
+
+	public EsquemaBolsa getEsquemaAtual() {
+		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, cursoCoordenado).result;
+		return esquemaAtual;
+	}
+
+	public void setEsquemaAtual(EsquemaBolsa esquemaAtual) {
+		this.esquemaAtual = esquemaAtual;
+	}
+
+	public Servidor getLoggedServidor() {
+		return loggedServidor;
+	}
+
+	public void setLoggedServidor(Servidor loggedServidor) {
+		this.loggedServidor = loggedServidor;
+	}
+
 	public List<Curso> getCursos() {
 		return cursos;
 	}
@@ -71,20 +131,20 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		this.cursos = cursos;
 	}
 
-	public String getNomeBusca() {
-		return nomeBusca;
-	}
-
-	public void setNomeBusca(String nomeBusca) {
-		this.nomeBusca = nomeBusca;
-	}
-
 	public List<Servidor> getProfessores() {
 		return servidores;
 	}
 
 	public void setServidores(List<Servidor> servidores) {
 		this.servidores = servidores;
+	}
+	
+	public Edital getEditalSelecionado() {
+		return editalSelecionado;
+	}
+
+	public void setEditalSelecionado(Edital editalSelecionado) {
+		this.editalSelecionado = editalSelecionado;
 	}
 
 	/**
@@ -95,20 +155,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria 
 	 */
 	public List<PlanoMonitoria> getPlanos() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
-		
-		if(request.isUserInRole("comissao"))
+		if(comissao)
 		{
-			planos = planobean.consultaPlanos();
+			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado, false) : planobean.consultaPlanos(); 
 		} 
 		else
 		{
 			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
-			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(loggedServidor.getId());;
-			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(loggedServidor.getId());
+			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
+			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(this.loggedServidor.getId());
 
 			if(!planosByServidor.isEmpty())
 			{
@@ -119,7 +174,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 				planosNaoRepetidos.addAll(planosByCoordenador);
 			}
 			
-			planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+			if(editalSelecionado != null)
+			{
+				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado, false));
+			}
+			else
+			{
+				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+			}
 		}
 		
 		return planos;
@@ -148,29 +211,47 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void setPlanoAtualizado(PlanoMonitoria planoAtualizado) {
 		this.planoAtualizado = planoAtualizado;
 	}
+	
+	public boolean isComissao() {
+		return comissao;
+	}
+
+	public void setComissao(boolean comissao) {
+		this.comissao = comissao;
+	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		Servidor loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
-		componentes = componentebean.consultaComponentesByProfessor(loggedServidor);
+		
+		if(comissao) 
+		{
+			componentes = componentebean.consultaComponentesCurriculares();
+		} 
+		else 
+		{
+			Curso curso = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
+
+			Set<ComponenteCurricular> cursosNaoRepetidos = new HashSet<ComponenteCurricular>();
+			
+			List<ComponenteCurricular> componentesByProfessor = componentebean.consultaComponentesByProfessor(this.loggedServidor);
+			List<ComponenteCurricular> componentesByCurso = componentebean.consultaComponentesByCurso(curso.getId());
+
+			if(!componentesByProfessor.isEmpty())
+			{
+				cursosNaoRepetidos.addAll(componentesByProfessor);
+			}
+			if(!componentesByCurso.isEmpty())
+			{
+				cursosNaoRepetidos.addAll(componentesByCurso);
+			}
+			
+			componentes = new ArrayList<ComponenteCurricular>(cursosNaoRepetidos);
+		}
+ 
 		return componentes;
 	}
 
 	public void setComponentes(List<ComponenteCurricular> componentes) {
 		this.componentes = componentes;
-	}
-	
-	@PostConstruct
-	public void init() {
-		nomeBusca = "";
-		
-		cursos = cursobean.consultaCursos();
-		servidores = servidorbean.consultaServidores();
-		editais = editalbean.consultaEditais();
-		planos = new ArrayList<PlanoMonitoria>();
-		
-		planoAtualizado = new PlanoMonitoria();
-		planoPersistido = new PlanoMonitoria();
 	}
 	
 	/**
@@ -180,10 +261,19 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 */
 	public void cadastrarPlano()
 	{
-		if(planobean.persistePlanoMonitoria(planoPersistido))
+		CriacaoRequestResult resultadoPlano = planobean.persistePlanoMonitoria(planoPersistido); 
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(!resultadoPlano.hasErrors())
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+			planoPersistido = new PlanoMonitoria();
+		}
+		else
+		{
+			for(String erro : resultadoPlano.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
 		}
 	}
 	
@@ -194,15 +284,28 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		session.setAttribute("plano", plano);
 		
 	    return "inserirNotas?faces-redirect=true";
-	    
+	}
+
+	public void modificarBolsas(boolean isIncremento, PlanoMonitoria plano)
+	{
+		if(plano.distribuirBolsa(isIncremento)) {
+			planobean.atualizaPlanoMonitoria(plano);
+		}
+		
+		planoPersistido = new PlanoMonitoria();
 	}
 	
 	public void buscaPlanoMonitoria() {
-			this.planos = planobean.consultaPlanos();
+		this.planos = planobean.consultaPlanos();
 	}
 	
 	public void alteraPlano(PlanoMonitoria plano) {
 		planoAtualizado = plano;
+	}
+	
+	public void homologarPlano() {
+		planoAtualizado.setHomologado(true);
+		planobean.atualizaPlanoMonitoria(planoAtualizado);
 	}
 	
 	public void persisteAlteracao() {

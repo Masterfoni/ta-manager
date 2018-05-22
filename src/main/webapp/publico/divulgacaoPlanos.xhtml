@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"/>
+		<link rel="stylesheet" href="./divulgacaoPlanos.css"></link>
+		<link rel="stylesheet" href="captcha.css"></link>
+		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
+		<title>Monitoria - IFPE</title>
+	</h:head>
+	
+	<h:body>
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="../welcome.xhtml">
+				<img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+			</a>
+			
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav">
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../publico/index.xhtml" class="btn btn-success btn-lg">Acessar o Portal</a>	
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container" >
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Componentes Curriculares</h2>
+				</div>
+			</div>
+			
+			<h:form rendered="#{not divulgacaoPlanosView.captchaValidado}">
+				<div class="row justify-content-md-center">
+					<div class="g-recaptcha " data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"></div>
+				</div>
+				<div class="row justify-content-md-center mb-5">
+					<h:commandButton update="@all" id="btn" value="Acessar listagem" action="#{divulgacaoPlanosView.validarCaptcha}" class="btn btn-success"/>
+				</div>
+			</h:form>
+			
+			<h:panelGroup layout="block" rendered="#{divulgacaoPlanosView.captchaValidado}">
+				<div class="row">
+					<div class="col-md-12">
+						<ui:repeat value="#{divulgacaoPlanosView.editais}" var="edital" varStatus="varedital">
+							<h4>
+								Edital: #{edital.numeroEdital} | <i>Campus: </i>
+							</h4>
+							<table class="table table-striped mb-5">
+								<thead>
+									<th scope="col">Componente Curricular</th>
+									<th scope="col">Professor</th>
+									<th scope="col">Curso</th>
+									<th scope="col">Vagas<br /> Voluntário</th>
+									<th scope="col">Vagas<br /> Bolsista</th>
+								</thead>
+								<tbody>
+									<ui:repeat id="repeatPlanos" value="#{divulgacaoPlanosView.planos.get(varedital.index)}" var="plano" varStatus="myStatus">
+										<tr>
+											<td>#{plano.cc.nome}</td>
+											<td>#{plano.cc.professor.nome}</td>
+											<td>#{plano.cc.curso.nome}</td>
+											<td>#{plano.bolsas}</td>
+											<td>#{plano.voluntarios}</td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+						</ui:repeat>
+					</div>
+				</div>
+			</h:panelGroup>
+		</div>
+
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</h:body>
+</html>
