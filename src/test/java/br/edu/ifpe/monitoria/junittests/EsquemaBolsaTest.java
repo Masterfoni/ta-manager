@@ -29,8 +29,8 @@ import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.testutils.JUnitUtils;
-import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
+import br.edu.ifpe.monitoria.utils.EsquemaBolsaRequestResult;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EsquemaBolsaTest {
@@ -83,7 +83,6 @@ public class EsquemaBolsaTest {
 		servidor.setSexo("Masculino");
 
 		servidorbean.persisteProfessor(servidor);
-
 		assertNotNull(servidor.getId());
 
 		Curso curso = new Curso();
@@ -94,7 +93,6 @@ public class EsquemaBolsaTest {
 		curso.setCoordenador(servidor);
 
 		cursobean.persisteCurso(curso);
-
 		assertNotNull(curso.getId());
 		
 		Edital edital = new Edital();
@@ -116,15 +114,8 @@ public class EsquemaBolsaTest {
 		editalbean.persisteEdital(edital);
 		assertNotNull(edital.getId());
 		
-		EsquemaBolsa esquema = new EsquemaBolsa();
-		esquema.setCurso(curso);
-		esquema.setEdital(edital);
-		esquema.setQuantidade(1);
-		esquema.setDistribuido(false);
-		
-		CriacaoRequestResult resultado = esquemabean.persisteEsquemaBolsa(esquema);
-		System.out.println(resultado.errors);
-		assertTrue(resultado.result);
+		EsquemaBolsaRequestResult consultaEsquemaByEditalCurso = esquemabean.consultaEsquemaByEditalCurso(edital, curso);
+		assertFalse(consultaEsquemaByEditalCurso.hasErrors());
 	}
 
 	@Test

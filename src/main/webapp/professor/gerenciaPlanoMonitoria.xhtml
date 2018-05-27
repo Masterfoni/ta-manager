@@ -38,6 +38,9 @@
 				<div class="col-md-12">
 					<h:form id="editalForm">
 						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Edital</div>
+							</div>
 							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
 								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 								<f:ajax render=":formTablePlanos :detalheCoordInfo" onevent="handleAjax"/>
@@ -53,7 +56,7 @@
 						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual != null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
 							<div class="alert alert-info" role="alert">
 								<h4 class="alert-heading">
-									Curso: 
+									Você está distribuindo bolsas para o curso: 
 									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
 								</h4>
 								<hr></hr>
@@ -66,7 +69,7 @@
 						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
 							<div class="alert alert-secondary" role="alert">
 								<h4 class="alert-heading">
-									Curso:
+									Você está distribuindo bolsas para o curso:
 									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
 								</h4>
 								<hr></hr>
@@ -82,9 +85,10 @@
 					<h:form id="formTablePlanos">
 						<table class="table table-striped">
 							<thead>
-								<th scope="col">Edital</th>
+								<th scope="col">Curso</th>
 								<th scope="col">Componente Curricular</th>
 								<th scope="col">Docente</th>
+								<th scope="col">Status</th>
 								<th scope="col">Bolsas Solicitadas</th>
 								<th scope="col">Bolsas Disponibilizadas</th>
 								<th scope="col"></th>
@@ -92,9 +96,17 @@
 							<tbody>
 								<ui:repeat value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
 									<tr>
-										<td class="center">#{plano.edital.numeroEdital}</td>
+										<td class="center">#{plano.cc.curso.sigla}</td>
 										<td class="center">#{plano.cc.nome}</td>
 										<td class="center">#{plano.cc.professor.nome}</td>
+										<td class="center">
+											<h:panelGroup rendered="#{plano.homologado}">
+												<span class="badge badge-pill badge-success">HOMOLOGADO</span>	
+											</h:panelGroup>
+											<h:panelGroup rendered="#{!plano.homologado}">
+												<span class="badge badge-pill badge-danger">NÃO HOMOLOGADO</span>	
+											</h:panelGroup>
+										</td>
 										<td class="center">
 											<span class="badge badge-pill badge-info">#{plano.bolsasSolicitadas}</span>
 										</td>
@@ -199,11 +211,13 @@
 
 								<span>  </span>
 
-								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
-												 update="@form" class="btn btn-info" />
-								
-								<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome) }">
+								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado or gerenciaPlanoMonitoriaView.comissao}">
+									<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
+													 update="@form" class="btn btn-info" />
 									<span>  </span>
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
 									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
 													 update="@form" class="btn btn-success"/>
 								</h:panelGroup>

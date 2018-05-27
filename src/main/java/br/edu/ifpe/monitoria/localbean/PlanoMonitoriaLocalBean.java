@@ -15,6 +15,7 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
@@ -79,18 +80,12 @@ public class PlanoMonitoriaLocalBean
 	 * Método responsável por resgatar planos de monitoria com base no ID do servidor
 	 *
 	 * @param id Identificador único do servidor no banco de dados
-	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria vinculados à um componente curricular do qual o servidor é professor. 
+	 * @return {@code List<PlanoMonitoria>} uma lista de planos de monitoria vinculados à um componente curricular do qual o servidor é professor
+	 * ou que o servidor é coordenador do curso ao qual aquele componente pertence. 
 	 */
 	public List<PlanoMonitoria> consultaPlanosByServidor(Long id)
 	{
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByProfessor", PlanoMonitoria.class).setParameter("id", id).getResultList();
-		
-		return planos;
-	}
-	
-	public List<PlanoMonitoria> consultaPlanosByCoordenador(Long id)
-	{
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByCoordenador", PlanoMonitoria.class).setParameter("id", id).getResultList();
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByServidor", PlanoMonitoria.class).setParameter("servidorId", id).getResultList();
 		
 		return planos;
 	}
@@ -125,11 +120,29 @@ public class PlanoMonitoriaLocalBean
 	 *
 	 * @return {@code true} ou {@code false} dependendo do sucesso, ou não da operação.
 	 */
-	public boolean atualizaPlanoMonitoria(PlanoMonitoria plano)
+	public AtualizacaoRequestResult atualizaPlanoMonitoria(PlanoMonitoria plano)
 	{
-		em.merge(plano);
+		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
 		
-		return true;
+		PlanoMonitoria planoOriginal = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", plano.getId()).getSingleResult();
+		
+		if(planoOriginal.getEdital().getId() != plano.getEdital().getId() || planoOriginal.getCc().getId() != plano.getCc().getId()) {
+			List<PlanoMonitoria> planoSingleResult = em.createNamedQuery("PlanoMonitoria.findByEditalComponente", PlanoMonitoria.class)
+					.setParameter("editalId", plano.getEdital().getId())
+					.setParameter("ccId", plano.getCc().getId()).getResultList();
+			
+			if(!planoSingleResult.isEmpty()) {
+				resultado.errors.add("Já existe um plano cadastrado para este edital e componente!");
+				resultado.result = false;
+			}
+		}
+		
+		if(!resultado.hasErrors()) {
+			em.merge(plano);
+			resultado.result = true;
+		}
+		
+		return resultado;
 	}
 	
 	public DelecaoRequestResult deletaPlanoMonitoria(Long id)

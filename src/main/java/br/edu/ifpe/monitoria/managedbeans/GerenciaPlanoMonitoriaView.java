@@ -161,27 +161,16 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		} 
 		else
 		{
-			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
 			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
-			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(this.loggedServidor.getId());
 
-			if(!planosByServidor.isEmpty())
-			{
-				planosNaoRepetidos.addAll(planosByServidor);
-			}
-			if(!planosByCoordenador.isEmpty())
-			{
-				planosNaoRepetidos.addAll(planosByCoordenador);
-			}
-			
 			if(editalSelecionado != null)
 			{
-				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado, false));
 			}
 			else
 			{
-				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 			}
 		}
 		
