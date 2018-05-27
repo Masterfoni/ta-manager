@@ -74,6 +74,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Curso cursoCoordenado;
 	
+	public Curso cursoSelecionado;
+	
 	public boolean comissao;
 	
 	@PostConstruct
@@ -91,14 +93,17 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		editalSelecionado = editais.size() > 0 ? editais.get(0) : new Edital();
 		
 		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
+		cursoSelecionado = comissao ? cursobean.consultaCursos().get(0) : new Curso();
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
 	}
 	
-	
-	
 	public Curso getCursoCoordenado() {
+		if(comissao) {
+			cursoCoordenado = cursoSelecionado;
+		}
+		
 		return cursoCoordenado;
 	}
 
@@ -107,7 +112,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public EsquemaBolsa getEsquemaAtual() {
-		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, cursoCoordenado).result;
+		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, getCursoCoordenado()).result;
 		return esquemaAtual;
 	}
 
@@ -146,6 +151,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void setEditalSelecionado(Edital editalSelecionado) {
 		this.editalSelecionado = editalSelecionado;
 	}
+	
+	public Curso getCursoSelecionado() {
+		return cursoSelecionado;
+	}
+	
+	public void setCursoSelecionado(Curso cursoSelecionado) {
+		this.cursoSelecionado = cursoSelecionado;
+	}
 
 	/**
 	 * Método responsável por atualizar um componente curricular.
@@ -157,7 +170,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public List<PlanoMonitoria> getPlanos() {
 		if(comissao)
 		{
-			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado, false) : planobean.consultaPlanos(); 
+			if(editalSelecionado != null) {
+				if(cursoSelecionado != null) {
+					planos = planobean.consultaPlanosByEditaleCurso(editalSelecionado, cursoSelecionado);
+				} else {
+					planos = planobean.consultaPlanosByEdital(editalSelecionado, false);
+				}
+			} else {
+				planos = planobean.consultaPlanos(); 
+			}
 		} 
 		else
 		{
