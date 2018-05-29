@@ -30,7 +30,7 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Monitoria.findById", query = "SELECT m FROM Monitoria m WHERE m.id = :id"),
 	@NamedQuery(name = "Monitoria.findByAluno", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital AND m.aluno = :aluno"),
 	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital"),
-	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano ORDER BY m.classificacao")
+	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
@@ -56,23 +56,33 @@ public class Monitoria implements Serializable{
 	@JoinColumn (name = "ID_EDITAL", referencedColumnName = "ID")
 	private Edital edital;
 	
-	@Column (name="BOOL_BOLSA")
-	private boolean bolsa;
-
-	@Column (name="BOOL_CLASSIFICADO")
-	private boolean classificado;
-
 	@Column (name="NOTA_SELECAO")
 	private Double notaSelecao;
 	
 	@Column (name="MEDIA_COMPONENTE")
 	private Double mediaComponente;
 	
-	@Column (name="BOOL_REPROVACAO")
-	private boolean reprovacao;
+	@Column (name="NOTA_DESEMPATE")
+	private Double notaDesempate;
 	
 	@Column (name="INT_CLASSIFICACAO")
 	private Integer classificacao;
+	
+	@Column (name="BOOL_EMPATADO")
+	private boolean empatado;
+	
+	@Column (name="BOOL_REPROVACAO")
+	private boolean reprovacao;
+	
+	@Column (name="BOOL_CLASSIFICADO")
+	private boolean classificado;
+	
+	@Column (name="BOOL_BOLSA")
+	private boolean bolsa;
+	
+	public Long getId() {
+		return id;
+	}
 	
 	public Aluno getAluno() {
 		return aluno;
@@ -90,22 +100,10 @@ public class Monitoria implements Serializable{
 		this.planoMonitoria = planoMonitoria;
 	}
 
-	public boolean isBolsa() {
-		return bolsa;
-	}
-
-	public void setBolsa(boolean bolsa) {
-		this.bolsa = bolsa;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public Edital getEdital() {
 		return edital;
 	}
-
+	
 	public void setEdital(Edital edital) {
 		this.edital = edital;
 	}
@@ -113,28 +111,33 @@ public class Monitoria implements Serializable{
 	public Double getNotaSelecao() {
 		return notaSelecao;
 	}
-
+	
 	public void setNotaSelecao(Double notaSelecao) {
+		if(notaSelecao == null || notaSelecao < 7) {
+			setClassificado(false);
+			setClassificacao(null);
+		}
 		this.notaSelecao = notaSelecao;
 	}
-
+	
 	public Double getMediaComponente() {
 		return mediaComponente;
 	}
 
 	public void setMediaComponente(Double mediaComponente) {
+		if(notaSelecao == null || notaSelecao < 7) {
+			setClassificado(false);
+			setClassificacao(null);
+		} 
 		this.mediaComponente = mediaComponente;
 	}
-
-	public boolean isReprovacao() {
-		return reprovacao;
+		
+	public Double getNotaDesempate() {
+		return notaDesempate;
 	}
 
-	public void setReprovacao(boolean reprovacao) {
-		this.reprovacao = reprovacao;
-		if(reprovacao == true) {
-			setNotaSelecao(0.0);
-		}
+	public void setNotaDesempate(Double notaDesempate) {
+		this.notaDesempate = notaDesempate;
 	}
 
 	public Integer getClassificacao() {
@@ -144,18 +147,47 @@ public class Monitoria implements Serializable{
 	public void setClassificacao(Integer classificacao) {
 		this.classificacao = classificacao;
 	}
+	
+	public boolean isEmpatado() {
+		return empatado;
+	}
+
+	public void setEmpatado(boolean empatado) {
+		this.empatado = empatado;
+	}
+
+	public boolean isReprovacao() {
+		return reprovacao;
+	}
+
+	public void setReprovacao(boolean reprovacao) {
+		if(reprovacao) {
+			setClassificado(false);
+			setClassificacao(null);
+		}
+		this.reprovacao = reprovacao;
+	}
 
 	public boolean isClassificado() {
-		if(notaSelecao != null && notaSelecao >= 7 && 
-				mediaComponente != null && mediaComponente >= 7) {
+		if(!reprovacao &&
+				mediaComponente != null && notaSelecao != null &&
+				mediaComponente >= 7 && notaSelecao >= 7 && 
+				(!empatado || (empatado && notaDesempate != null)))
 			setClassificado(true);
-		} else {
+		else
 			setClassificado(false);
-		}
 		return classificado;
 	}
 
 	public void setClassificado(boolean classificado) {
 		this.classificado = classificado;
+	}
+	
+	public boolean isBolsa() {
+		return bolsa;
+	}
+
+	public void setBolsa(boolean bolsa) {
+		this.bolsa = bolsa;
 	}
 }

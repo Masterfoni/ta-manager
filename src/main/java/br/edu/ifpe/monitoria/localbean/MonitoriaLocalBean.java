@@ -2,6 +2,7 @@ package br.edu.ifpe.monitoria.localbean;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -99,22 +100,46 @@ public class MonitoriaLocalBean
 
 
 	public void salvarNotas(List<Monitoria> monitorias) {
+		monitorias = verificarEmpates(monitorias);
+		monitorias = ordenar(monitorias);
 		monitorias = classificar(monitorias);
-		int classificacao = 1;
 		for (Monitoria monitoria : monitorias) {
-			if(monitoria.isClassificado()) {
-				monitoria.setClassificacao(classificacao);
-				classificacao++;
-			}
 			em.merge(monitoria);
 		}
-		
 	}
 
-	public List<Monitoria> classificar(List<Monitoria> monitorias) {
+	public List<Monitoria> verificarEmpates(List<Monitoria> monitorias) {
+		for (Monitoria m1 : monitorias) {
+			boolean empate = false;
+			for (Monitoria m2 : monitorias) {
+				if(m1.isClassificado() &&
+						m1.getId().longValue() != m2.getId().longValue() &&
+						m1.getMediaComponente() != null && m1.getNotaSelecao() != null &&
+						m2.getMediaComponente() != null && m2.getNotaSelecao() != null) {
+					if(m1.getNotaSelecao().doubleValue() == m2.getNotaSelecao().doubleValue() &&
+							m1.getMediaComponente().doubleValue() == m2.getMediaComponente().doubleValue()) {
+						empate=true;
+					} 
+				}
+			}
+			m1.setEmpatado(empate);
+		}
+		return monitorias;
+	}
+	
+	public List<Monitoria> ordenar(List<Monitoria> monitorias) {
 		Collections.sort(monitorias, new Comparator<Monitoria>() {
 			@Override
 			public int compare(Monitoria m1, Monitoria m2) {
+				
+				if(!m1.isClassificado() && !m2.isClassificado()) {
+					return 0;
+				} else if (!m1.isClassificado()) {
+					return 1;
+				} else if (!m2.isClassificado()) {
+					return -1;
+				}
+				
 				if(m1.getNotaSelecao() != null && 
 						m2.getNotaSelecao() != null && 
 						m1.getMediaComponente() != null &&
@@ -129,7 +154,19 @@ public class MonitoriaLocalBean
 						} else if (m1.getMediaComponente().doubleValue() < m2.getMediaComponente().doubleValue()) {
 							return 1;
 						} else if (m1.getMediaComponente().doubleValue() == m2.getMediaComponente().doubleValue()) {
-							return 0;
+							if(m1.getNotaDesempate() != null && m2.getNotaDesempate() != null) {
+								if(m1.getNotaDesempate().doubleValue() > m2.getNotaDesempate().doubleValue()) {
+									return -1;
+								} else if(m1.getNotaDesempate().doubleValue() < m2.getNotaDesempate().doubleValue()) {
+									return 1;
+								}
+							} else {
+								if(m1.getNotaDesempate() != null) {
+									return -1;
+								} else {
+									return 1;
+								}
+							}
 						}
 					}
 				}
@@ -138,6 +175,22 @@ public class MonitoriaLocalBean
 
 		});
 
+		return monitorias;
+	}
+	
+	public List<Monitoria> classificar(List<Monitoria> monitorias) {
+		int classificacao = 1;
+		for (Monitoria monitoria : monitorias) {
+			System.out.println(monitoria.getAluno().getNome());
+			if(monitoria.isClassificado() && 
+					(!monitoria.isEmpatado() || (monitoria.isEmpatado() && monitoria.getNotaDesempate() != null))) {
+				monitoria.setClassificacao(classificacao);
+				classificacao++;
+			}
+			else {
+				monitoria.setClassificacao(null);
+			}
+		}
 		return monitorias;
 	}
 }

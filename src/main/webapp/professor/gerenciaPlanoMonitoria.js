@@ -8,6 +8,7 @@ $(".alterador").click(function(e) {
 
 $(".numero2").mask("99");
 $(".periodo").mask("9999/9");
+$(".inserirNotas").tooltip();
 
 function handleAjax(data) {
     var status = data.status;
@@ -29,4 +30,5 @@ function updateAlteradorFunction() {
 
     $(".numero2").mask("99");
     $(".periodo").mask("9999/9");
+    $(".inserirNotas").tooltip();
 }

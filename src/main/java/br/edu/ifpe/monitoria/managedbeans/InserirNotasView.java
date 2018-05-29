@@ -33,6 +33,7 @@ public class InserirNotasView implements Serializable{
 
 	public void salvarNotas() {
 		monitoriaBean.salvarNotas(monitorias);
+		monitorias = null;
 	}
 	
 	public PlanoMonitoria getPlano() {
@@ -46,7 +47,7 @@ public class InserirNotasView implements Serializable{
 	public List<Monitoria> getMonitorias() {
 		if(monitorias == null) {
 			monitorias = monitoriaBean.consultaMonitoriaByPlano(plano);
-			monitorias = monitoriaBean.classificar(monitorias);
+			monitorias = monitoriaBean.ordenar(monitorias);
 		}
 		return monitorias;
 	}
@@ -54,4 +55,5 @@ public class InserirNotasView implements Serializable{
 	public void setMonitorias(List<Monitoria> monitorias) {
 		this.monitorias = monitorias;
 	}
+	
 }

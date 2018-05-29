@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:jsf="http://xmlns.jcp.org/jsf">
+    xmlns:jsf="http://xmlns.jcp.org/jsf" >
 <h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<title>Inserir Notas</title>
@@ -30,7 +30,7 @@
 			</div>
 
 			<div class="row">
-				<h:form style="width: 100%">
+				<h:form id="formNotas" style="width: 100%">
 					<table class="table table-hover">
 						<thead>
 							<th scope="col">Classificação</th>
@@ -38,7 +38,7 @@
 							<th scope="col">Existe reprovação</th>
 							<th scope="col">Nota da Seleção</th>
 							<th scope="col">Média do Componente</th>
-							<th scope="col">Desempate</th>
+							<th scope="col">Nota de Desempate</th>
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatPlanos" value="#{inserirNotasView.monitorias}" var="monitoria" varStatus="myStatus">
@@ -47,17 +47,21 @@
 									<td>#{monitoria.aluno.nome}</td>
 									<td class="text-center">
 										<h:selectBooleanCheckbox id="checkReprovacao" styleClass="form-check-input"  
-																	 value="#{monitoria.reprovacao}" />
+												value="#{monitoria.reprovacao}" >
+												
+										</h:selectBooleanCheckbox>
 									</td>
 									<td>
-										<h:inputText class="form-control" value="#{monitoria.notaSelecao}" disabled="#{monitoria.reprovacao}">
+										<h:inputText id="notaSelecao" class="form-control nota" value="#{monitoria.notaSelecao}" disabled="#{monitoria.reprovacao}">
 										</h:inputText>
 									</td>
 									<td >
-										<h:inputText class="form-control" value="#{monitoria.mediaComponente}" disabled="#{monitoria.reprovacao}">
+										<h:inputText id="mediaComponente" class="form-control nota" value="#{monitoria.mediaComponente}" disabled="#{monitoria.reprovacao}">
 										</h:inputText>
 									</td>
 									<td >
+										<h:inputText id="notaDesempate" class="form-control nota" value="#{monitoria.notaDesempate}" rendered="#{monitoria.empatado}">
+										</h:inputText>
 									</td>
 								</tr>
 							</ui:repeat>
@@ -72,7 +76,8 @@
 		</div>
 
 	<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+	<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 	<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+	<script src="../professor/inserirNotas.js"></script>
 </h:body>
 </html>

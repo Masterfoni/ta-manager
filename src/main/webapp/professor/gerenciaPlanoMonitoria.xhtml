@@ -66,7 +66,7 @@
 						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.esquemaAtual == null and gerenciaPlanoMonitoriaView.esquemaAtual.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id}">
 							<div class="alert alert-secondary" role="alert">
 								<h4 class="alert-heading">
-									Curso:
+									Curso: 
 									<strong>#{gerenciaPlanoMonitoriaView.cursoCoordenado.nome}</strong>
 								</h4>
 								<hr></hr>
@@ -87,6 +87,7 @@
 								<th scope="col">Docente</th>
 								<th scope="col">Bolsas Solicitadas</th>
 								<th scope="col">Bolsas Disponibilizadas</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
 							<tbody>
@@ -128,6 +129,13 @@
 															 actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}">
 												<f:ajax execute="@form" render=":formAtualizador :atualizaPlano"/>
 											</h:commandButton>
+										</td>
+										
+										<td class="right">
+											<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
+												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
+												<span class="fas fa-clipboard-list"></span>
+											</button>
 										</td>
 									</tr>
 								</ui:repeat>
@@ -281,6 +289,7 @@
 		</div>
 
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/popper/popper.min.js"></script>
 		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
