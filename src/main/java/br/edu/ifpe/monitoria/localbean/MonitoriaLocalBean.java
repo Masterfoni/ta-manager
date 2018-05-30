@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -112,21 +113,39 @@ public class MonitoriaLocalBean
 		for (Monitoria m1 : monitorias) {
 			boolean empate = false;
 			for (Monitoria m2 : monitorias) {
-				if(m1.isClassificado() &&
-						m1.getId().longValue() != m2.getId().longValue() &&
+				if(m1.getId().longValue() != m2.getId().longValue() &&
 						m1.getMediaComponente() != null && m1.getNotaSelecao() != null &&
 						m2.getMediaComponente() != null && m2.getNotaSelecao() != null) {
 					if(m1.getNotaSelecao().doubleValue() == m2.getNotaSelecao().doubleValue() &&
 							m1.getMediaComponente().doubleValue() == m2.getMediaComponente().doubleValue()) {
 						empate=true;
+						break;
 					} 
 				}
 			}
 			m1.setEmpatado(empate);
+			if(empate && m1.getNotaDesempate() == null) { 
+				atualizarEmpatados(m1, monitorias);
+			}
+			else if(!empate){ 
+				m1.setNotaDesempate(null);
+			}
 		}
 		return monitorias;
 	}
 	
+	private void atualizarEmpatados(Monitoria m1, List<Monitoria> monitorias) {
+		Double notaDesempate = 1.00;
+		for (Monitoria monitoria : monitorias) {
+			if(monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue() &&
+					monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue()) {
+				monitoria.setEmpatado(true);
+				monitoria.setNotaDesempate(notaDesempate);
+				notaDesempate++;
+			}
+		}
+	}
+
 	public List<Monitoria> ordenar(List<Monitoria> monitorias) {
 		Collections.sort(monitorias, new Comparator<Monitoria>() {
 			@Override
@@ -182,8 +201,7 @@ public class MonitoriaLocalBean
 		int classificacao = 1;
 		for (Monitoria monitoria : monitorias) {
 			System.out.println(monitoria.getAluno().getNome());
-			if(monitoria.isClassificado() && 
-					(!monitoria.isEmpatado() || (monitoria.isEmpatado() && monitoria.getNotaDesempate() != null))) {
+			if(monitoria.isClassificado()) {
 				monitoria.setClassificacao(classificacao);
 				classificacao++;
 			}

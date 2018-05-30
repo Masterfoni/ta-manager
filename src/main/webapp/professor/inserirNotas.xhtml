@@ -32,13 +32,14 @@
 			<div class="row">
 				<h:form id="formNotas" style="width: 100%">
 					<table class="table table-hover">
+						<caption>*O professor deverá escolher a colocação dos alunos empatados.</caption>
 						<thead>
 							<th scope="col">Classificação</th>
 							<th scope="col">Aluno</th>
 							<th scope="col">Existe reprovação</th>
 							<th scope="col">Nota da Seleção</th>
 							<th scope="col">Média do Componente</th>
-							<th scope="col">Nota de Desempate</th>
+							<th scope="col">Decisão de Desempate*</th>
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatPlanos" value="#{inserirNotasView.monitorias}" var="monitoria" varStatus="myStatus">
@@ -52,16 +53,34 @@
 										</h:selectBooleanCheckbox>
 									</td>
 									<td>
-										<h:inputText id="notaSelecao" class="form-control nota" value="#{monitoria.notaSelecao}" disabled="#{monitoria.reprovacao}">
+										<h:inputText id="notaSelecao" class="form-control nota" value="#{monitoria.notaSelecao}">
 										</h:inputText>
 									</td>
 									<td >
-										<h:inputText id="mediaComponente" class="form-control nota" value="#{monitoria.mediaComponente}" disabled="#{monitoria.reprovacao}">
+										<h:inputText id="mediaComponente" class="form-control nota" value="#{monitoria.mediaComponente}">
 										</h:inputText>
 									</td>
-									<td >
-										<h:inputText id="notaDesempate" class="form-control nota" value="#{monitoria.notaDesempate}" rendered="#{monitoria.empatado}">
-										</h:inputText>
+									<td class="text-center">
+										<div class="input-group mb-2 text-center">
+											<h:panelGroup layout="block" rendered="#{monitoria.empatado}">
+												<div class="input-group-prepend">
+													<h:commandButton id="sobePosicao" value=" Λ " class="btn btn-success"
+															actionListener="#{inserirNotasView.alterarEmpate(monitoria ,true)}"
+															update="@form">
+													</h:commandButton>
+												</div>
+											</h:panelGroup>
+											
+										
+											<h:panelGroup layout="block" rendered="#{monitoria.empatado}">
+												<div class="input-group-append">
+													<h:commandButton id="descePosicao" value=" V " class="btn btn-danger"
+															actionListener="#{inserirNotasView.alterarEmpate(monitoria ,false)}"
+															update="@form">
+													</h:commandButton>
+												</div>
+											</h:panelGroup>
+										</div>
 									</td>
 								</tr>
 							</ui:repeat>
