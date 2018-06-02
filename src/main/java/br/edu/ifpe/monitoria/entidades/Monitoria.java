@@ -171,7 +171,7 @@ public class Monitoria implements Serializable{
 	public boolean isClassificado() {
 		if(!reprovacao &&
 				mediaComponente != null && notaSelecao != null &&
-				mediaComponente >= 7 && notaSelecao >= 7 && 
+				mediaComponente >= edital.getMediaMinimaCC() && notaSelecao >= edital.getNotaMinimaSelecao() && 
 				(!empatado || (empatado && notaDesempate != null)))
 			setClassificado(true);
 		else

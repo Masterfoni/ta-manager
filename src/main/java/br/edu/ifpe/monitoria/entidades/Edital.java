@@ -115,6 +115,14 @@ public class Edital implements Serializable {
 	@Column(name = "DT_FIM_MONITORIA")
 	private Date fimMonitoria;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.notaselecao}")
+	@Column(name = "INT_NOTA_MINIMA")
+	private Integer notaMinimaSelecao;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.mediacomponente}")
+	@Column(name = "INT_MEDIA_MINIMA")
+	private Integer mediaMinimaCC;
+	
 	@Valid
 	@OneToMany(mappedBy="edital", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<EsquemaBolsa> esquemas;
@@ -229,6 +237,22 @@ public class Edital implements Serializable {
 
 	public void setFimMonitoria(Date fimMonitoria) {
 		this.fimMonitoria = fimMonitoria;
+	}
+	
+	public Integer getNotaMinimaSelecao() {
+		return notaMinimaSelecao;
+	}
+
+	public void setNotaMinimaSelecao(Integer notaMinimaSelecao) {
+		this.notaMinimaSelecao = notaMinimaSelecao;
+	}
+
+	public Integer getMediaMinimaCC() {
+		return mediaMinimaCC;
+	}
+
+	public void setMediaMinimaCC(Integer mediaMinimaCC) {
+		this.mediaMinimaCC = mediaMinimaCC;
 	}
 
 	public Long getId() {

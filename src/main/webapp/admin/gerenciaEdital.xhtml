@@ -146,14 +146,14 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastro">Numero</label>
-											<h:inputText type="number" id="numeroCadastro" class="form-control" 
+											<h:inputText type="number" id="numeroCadastro" class="form-control ano" 
 														value="#{gerenciaEditalView.editalAtualizado.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastro">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastro" class="form-control" 
+											<h:inputText type="number" min="2010" max="2100" id="anoCadastro" class="form-control ano" 
 														value="#{gerenciaEditalView.editalAtualizado.ano}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
@@ -260,6 +260,23 @@
 										</div>
 									</div>
 									
+									<div class="form-group row">
+										<div class="col-sm-12">
+										</div>
+										<div class="col-sm-6">
+											<label>Nota minima na prova de seleção:</label>
+											<h:inputText id="notaSelecao" class="form-control nota" 
+														value="#{gerenciaEditalView.editalAtualizado.notaMinimaSelecao}">
+											</h:inputText>
+										</div>
+										<div class="col-sm-6">
+											<label>Média minma do Componente:</label>
+											<h:inputText id="mediaComponente" class="form-control nota" 
+														value="#{gerenciaEditalView.editalAtualizado.mediaMinimaCC}">
+											</h:inputText>
+										</div>
+									</div>
+									
 									<div class="form-check row">
 										<div class="col-sm-12">
 											<h:selectBooleanCheckbox id="vigente" styleClass="form-check-input"  
@@ -296,14 +313,14 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastroE">Numero</label>
-											<h:inputText type="number" id="numeroCadastroE" class="form-control" 
+											<h:inputText type="number" id="numeroCadastroE" class="form-control ano" 
 														value="#{gerenciaEditalView.editalPersistido.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastroE">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastroE" class="form-control" 
+											<h:inputText type="number" min="2010" max="2100" id="anoCadastroE" class="form-control ano" 
 														value="#{gerenciaEditalView.editalPersistido.ano}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
@@ -409,6 +426,24 @@
 											</h:inputText>
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+										</div>
+										<div class="col-sm-6">
+											<label>Nota minima na prova de seleção:</label>
+											<h:inputText id="notaSelecaoE" class="form-control nota" 
+														value="#{gerenciaEditalView.editalPersistido.notaMinimaSelecao}">
+											</h:inputText>
+										</div>
+										<div class="col-sm-6">
+											<label>Média minma do Componente:</label>
+											<h:inputText id="mediaComponenteE" class="form-control nota" 
+														value="#{gerenciaEditalView.editalPersistido.mediaMinimaCC}">
+											</h:inputText>
+										</div>
+									</div>
+									
 								</div>
 							</div>
 							<div class="modal-footer">
