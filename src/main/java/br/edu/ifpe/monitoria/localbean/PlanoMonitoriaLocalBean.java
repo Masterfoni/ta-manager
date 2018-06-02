@@ -176,10 +176,11 @@ public class PlanoMonitoriaLocalBean
 	}
 	
 	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso, boolean apenasHomologados) {
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class).
+		String namedQuery = apenasHomologados ? "PlanoMonitoria.findHomologadosByEditalCurso" : "PlanoMonitoria.findByEditalCurso";
+		
+		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).
 				setParameter("edital", edital).
 				setParameter("curso", curso.getId()).
-				setParameter("homologado", apenasHomologados).
 				getResultList();
 		
 		return planos;
@@ -188,7 +189,7 @@ public class PlanoMonitoriaLocalBean
 	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital, boolean apenasHomologados) {
 		String namedQuery = apenasHomologados ? "PlanoMonitoria.findHomologadosByEdital" : "PlanoMonitoria.findByEdital";
 		
-		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).setParameter("edital", edital).setParameter("homologado", apenasHomologados).getResultList();
+		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).setParameter("edital", edital).getResultList();
 		
 		return planos;
 	}

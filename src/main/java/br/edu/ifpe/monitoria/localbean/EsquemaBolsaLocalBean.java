@@ -36,7 +36,7 @@ public class EsquemaBolsaLocalBean
 	{
 		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
 		
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class)
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditalCurso", PlanoMonitoria.class)
 									  .setParameter("edital", esquemaBolsa.getEdital())
 									  .setParameter("curso", esquemaBolsa.getCurso().getId()).getResultList();
 		
@@ -72,7 +72,7 @@ public class EsquemaBolsaLocalBean
 	{
 		CriacaoRequestResult resultado = new CriacaoRequestResult();
 		
-		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class)
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditalCurso", PlanoMonitoria.class)
 				  										.setParameter("edital", esquemaBolsa.getEdital())
 				  										.setParameter("curso", esquemaBolsa.getCurso().getId()).getResultList(); 
 

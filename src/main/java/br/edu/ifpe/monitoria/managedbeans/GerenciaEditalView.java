@@ -210,6 +210,8 @@ public class GerenciaEditalView implements Serializable {
 			{
 				context.addMessage(null, new FacesMessage(erro));
 			}
+		} else {
+			esquema.setVersion(esquema.getVersion() + 1);
 		}
 	}
 	
