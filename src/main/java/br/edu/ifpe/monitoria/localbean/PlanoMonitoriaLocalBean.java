@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -48,6 +49,8 @@ public class PlanoMonitoriaLocalBean
 		if(!planoSingleResult.isEmpty()) {
 			resultado.errors.add("Já existe um plano cadastrado para este edital e componente!");
 			resultado.result = false;
+		} else if(plano.getEdital().getFimInsercaoPlano().before(new Date())) {
+			resultado.errors.add("Já se passou o período de cadastro de planos de monitoria!");
 		}
 		
 		
@@ -172,10 +175,11 @@ public class PlanoMonitoriaLocalBean
 		return delecao;
 	}
 	
-	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso) {
+	public List<PlanoMonitoria> consultaPlanosByEditaleCurso(Edital edital, Curso curso, boolean apenasHomologados) {
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditaleCurso", PlanoMonitoria.class).
 				setParameter("edital", edital).
 				setParameter("curso", curso.getId()).
+				setParameter("homologado", apenasHomologados).
 				getResultList();
 		
 		return planos;
@@ -184,7 +188,7 @@ public class PlanoMonitoriaLocalBean
 	public List<PlanoMonitoria> consultaPlanosByEdital(Edital edital, boolean apenasHomologados) {
 		String namedQuery = apenasHomologados ? "PlanoMonitoria.findHomologadosByEdital" : "PlanoMonitoria.findByEdital";
 		
-		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).setParameter("edital", edital).getResultList();
+		List<PlanoMonitoria> planos = em.createNamedQuery(namedQuery, PlanoMonitoria.class).setParameter("edital", edital).setParameter("homologado", apenasHomologados).getResultList();
 		
 		return planos;
 	}

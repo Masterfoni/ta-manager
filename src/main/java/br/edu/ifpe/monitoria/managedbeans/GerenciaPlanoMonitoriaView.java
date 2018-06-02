@@ -93,7 +93,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		editalSelecionado = editais.size() > 0 ? editais.get(0) : new Edital();
 		
 		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
-		cursoSelecionado = comissao ? cursobean.consultaCursos().get(0) : new Curso();
+		
+		if(comissao) {
+			List<Curso> cursosConsultados = cursobean.consultaCursos();
+			cursoSelecionado = cursosConsultados.isEmpty() ? new Curso() : cursosConsultados.get(0);
+		}
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
@@ -172,7 +176,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		{
 			if(editalSelecionado != null) {
 				if(cursoSelecionado != null) {
-					planos = planobean.consultaPlanosByEditaleCurso(editalSelecionado, cursoSelecionado);
+					planos = planobean.consultaPlanosByEditaleCurso(editalSelecionado, cursoSelecionado, false);
 				} else {
 					planos = planobean.consultaPlanosByEdital(editalSelecionado, false);
 				}

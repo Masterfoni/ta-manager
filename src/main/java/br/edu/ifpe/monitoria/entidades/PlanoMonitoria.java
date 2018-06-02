@@ -34,7 +34,7 @@ import org.hibernate.validator.constraints.NotBlank;
 	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso, p.cc.nome"),
-	@NamedQuery(name = "PlanoMonitoria.findByEditaleCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEditaleCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso AND p.homologado = :homologado ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital.id = :editalId AND p.cc.id = :ccId ORDER BY p.cc.curso, p.cc.nome")
 })
 public class PlanoMonitoria {
