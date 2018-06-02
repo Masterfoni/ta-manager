@@ -143,6 +143,8 @@ public class MonitoriaTest
 		edital.setInicioInsercaoNota(new Date());
 		edital.setInicioInsercaoPlano(new Date());
 		edital.setInicioMonitoria(new Date());
+		edital.setMediaMinimaCC(7.0);
+		edital.setNotaMinimaSelecao(7.0);
 		edital.setVigente(true);
 
 		editalbean.persisteEdital(edital);
@@ -178,11 +180,11 @@ public class MonitoriaTest
 		
 		Monitoria monitoria = new Monitoria();
 		monitoria.setAluno(aluno);
-		monitoria.setAvaliado(true);
-		monitoria.setBolsa(true);
 		monitoria.setEdital(edital);
 		monitoria.setPlanoMonitoria(plano);
-		monitoria.setSelecionado(true);
+		
+		monitoria.setNotaSelecao(6.0);
+		monitoria.setMediaComponente(7.0);
 		
 		monitoriabean.persisteMonitoria(monitoria);
 		assertNotNull(monitoria.getId());
@@ -197,13 +199,14 @@ public class MonitoriaTest
 	@Test
 	public void t03_alterarMonitoria() throws Exception {
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-		monitoria.setSelecionado(false);
 
+		monitoria.setNotaSelecao(6.0);
+		
 		monitoriabean.atualizaMonitoria(monitoria);
 		
 		monitoria = monitoriabean.consultaMonitorias().get(0);
 		
-		assertFalse(monitoria.isSelecionado());
+		assertFalse(monitoria.isClassificado());
 	}
 	
 	@Test

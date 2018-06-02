@@ -116,12 +116,12 @@ public class Edital implements Serializable {
 	private Date fimMonitoria;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.notaselecao}")
-	@Column(name = "INT_NOTA_MINIMA")
-	private Integer notaMinimaSelecao;
+	@Column(name = "NOTA_MINIMA")
+	private Double notaMinimaSelecao;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.mediacomponente}")
-	@Column(name = "INT_MEDIA_MINIMA")
-	private Integer mediaMinimaCC;
+	@Column(name = "MEDIA_MINIMA")
+	private Double mediaMinimaCC;
 	
 	@Valid
 	@OneToMany(mappedBy="edital", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -239,19 +239,19 @@ public class Edital implements Serializable {
 		this.fimMonitoria = fimMonitoria;
 	}
 	
-	public Integer getNotaMinimaSelecao() {
+	public Double getNotaMinimaSelecao() {
 		return notaMinimaSelecao;
 	}
 
-	public void setNotaMinimaSelecao(Integer notaMinimaSelecao) {
+	public void setNotaMinimaSelecao(Double notaMinimaSelecao) {
 		this.notaMinimaSelecao = notaMinimaSelecao;
 	}
 
-	public Integer getMediaMinimaCC() {
+	public Double getMediaMinimaCC() {
 		return mediaMinimaCC;
 	}
 
-	public void setMediaMinimaCC(Integer mediaMinimaCC) {
+	public void setMediaMinimaCC(Double mediaMinimaCC) {
 		this.mediaMinimaCC = mediaMinimaCC;
 	}
 

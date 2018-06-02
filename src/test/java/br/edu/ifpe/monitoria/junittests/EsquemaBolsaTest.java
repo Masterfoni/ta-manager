@@ -111,6 +111,8 @@ public class EsquemaBolsaTest {
 		edital.setInicioInsercaoNota(new Date());
 		edital.setInicioInsercaoPlano(new Date());
 		edital.setInicioMonitoria(new Date());
+		edital.setNotaMinimaSelecao(7.0);
+		edital.setMediaMinimaCC(7.0);
 		edital.setVigente(true);
 
 		editalbean.persisteEdital(edital);
