@@ -197,6 +197,21 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			{
 				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 			}
+			
+			ArrayList<PlanoMonitoria> planinhosCoordenados = new ArrayList<PlanoMonitoria>();
+			ArrayList<PlanoMonitoria> planinhosLecionados = new ArrayList<PlanoMonitoria>();
+			
+			for(PlanoMonitoria planinho : planos) {
+				if(planinho.getCc().getCurso().getCoordenador().getId() == this.loggedServidor.getId()) {
+					planinhosCoordenados.add(planinho);
+				} else if(planinho.getCc().getProfessor().getId() == this.loggedServidor.getId()) {
+					planinhosLecionados.add(planinho);
+				}
+			}
+			
+			planos = new ArrayList<PlanoMonitoria>();
+			planos.addAll(planinhosCoordenados);
+			planos.addAll(planinhosLecionados);
 		}
 		
 		return planos;
