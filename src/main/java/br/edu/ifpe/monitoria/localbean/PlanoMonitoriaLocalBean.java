@@ -151,19 +151,16 @@ public class PlanoMonitoriaLocalBean
 	public DelecaoRequestResult deletaPlanoMonitoria(Long id)
 	{
 		DelecaoRequestResult delecao = new DelecaoRequestResult();
-		boolean podeExcluir = true;
 		
 		PlanoMonitoria planoDeletado = em.createNamedQuery("PlanoMonitoria.findById", PlanoMonitoria.class).setParameter("id", id).getSingleResult();
 		
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class).setParameter("plano", planoDeletado).getResultList();
 		
 		if(monitorias != null && !monitorias.isEmpty()) {
-			delecao.errors.add("Existem monitorias vinculados à este edital, não é possivel excluir este edital. "
-					+ "Mas você pode dizer que não está vigente na opção alterar.");
-			podeExcluir = false;
+			delecao.errors.add("Existem monitorias vinculados à este edital, não é possivel excluir este edital. Mas você pode dizer que não está vigente na opção alterar.");
 		}
 		
-		if(podeExcluir) 
+		if(!delecao.hasErrors()) 
 		{
 			try {
 				em.remove(planoDeletado);

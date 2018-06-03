@@ -136,7 +136,8 @@ public class EsquemaBolsaTest {
 	{
 		EsquemaBolsa esquema = esquemabean.consultaEsquemaByEdital(editalbean.consultaEditalByNumero("999999/2020")).get(0);
 
-		assertTrue(esquemabean.deletaEsquema(esquema.getId()));
+		DelecaoRequestResult delecaoResult = esquemabean.deletaEsquema(esquema.getId());
+		assertFalse(delecaoResult.hasErrors());
 		
 		DelecaoRequestResult resultado = cursobean.deletaCurso(cursobean.consultaCursoByName("CURSOTESTE").getId());
 

@@ -14,6 +14,7 @@ import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.EsquemaBolsaRequestResult;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -101,13 +102,16 @@ public class EsquemaBolsaLocalBean
      * @param esquema Esquema de bolsa a ser deletado
      * @return boolean - Informa se houve sucesso na transação
      */
-	public boolean deletaEsquema(Long esquemaId)
+	public DelecaoRequestResult deletaEsquema(Long esquemaId)
 	{
+		DelecaoRequestResult result = new DelecaoRequestResult();
+		
 		EsquemaBolsa esquema = em.createNamedQuery("EsquemaBolsa.findById", EsquemaBolsa.class).setParameter("id", esquemaId).getSingleResult();
 
 		em.remove(esquema);
+		result.result = true;
 		
-		return true;
+		return result;
 	}
 
 	/**
