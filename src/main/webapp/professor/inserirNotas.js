@@ -1,4 +1,5 @@
 $(".nota").mask("99.9");
+$(".fa-info-circle").tooltip();
 
 function handleAjax(data) {
     var status = data.status;
@@ -15,4 +16,5 @@ function handleAjax(data) {
 
 function updateAlteradorFunction() {
     $(".nota").mask("99.9");
+    $(".fa-info-circle").tooltip();
 }

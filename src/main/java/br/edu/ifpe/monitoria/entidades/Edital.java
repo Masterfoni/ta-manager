@@ -116,11 +116,11 @@ public class Edital implements Serializable {
 	private Date fimMonitoria;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.notaselecao}")
-	@Column(name = "NOTA_MINIMA")
+	@Column(name = "DOUBLE_NOTA_MINIMA")
 	private Double notaMinimaSelecao;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.mediacomponente}")
-	@Column(name = "MEDIA_MINIMA")
+	@Column(name = "DOUBLE_MEDIA_MINIMA")
 	private Double mediaMinimaCC;
 	
 	@Valid

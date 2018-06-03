@@ -3,7 +3,6 @@ package br.edu.ifpe.monitoria.localbean;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -124,24 +123,24 @@ public class MonitoriaLocalBean
 				}
 			}
 			m1.setEmpatado(empate);
-			if(empate && m1.getNotaDesempate() == null) { 
+			if(empate && m1.getDesempate() == null) { 
 				atualizarEmpatados(m1, monitorias);
 			}
 			else if(!empate){ 
-				m1.setNotaDesempate(null);
+				m1.setDesempate(null);
 			}
 		}
 		return monitorias;
 	}
 	
 	private void atualizarEmpatados(Monitoria m1, List<Monitoria> monitorias) {
-		Double notaDesempate = 1.00;
+		Integer desempate = 1;
 		for (Monitoria monitoria : monitorias) {
 			if(monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue() &&
 					monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue()) {
 				monitoria.setEmpatado(true);
-				monitoria.setNotaDesempate(notaDesempate);
-				notaDesempate++;
+				monitoria.setDesempate(desempate);
+				desempate++;
 			}
 		}
 	}
@@ -173,14 +172,14 @@ public class MonitoriaLocalBean
 						} else if (m1.getMediaComponente().doubleValue() < m2.getMediaComponente().doubleValue()) {
 							return 1;
 						} else if (m1.getMediaComponente().doubleValue() == m2.getMediaComponente().doubleValue()) {
-							if(m1.getNotaDesempate() != null && m2.getNotaDesempate() != null) {
-								if(m1.getNotaDesempate().doubleValue() > m2.getNotaDesempate().doubleValue()) {
+							if(m1.getDesempate() != null && m2.getDesempate() != null) {
+								if(m1.getDesempate().intValue() > m2.getDesempate().intValue()) {
 									return -1;
-								} else if(m1.getNotaDesempate().doubleValue() < m2.getNotaDesempate().doubleValue()) {
+								} else if(m1.getDesempate().intValue() < m2.getDesempate().intValue()) {
 									return 1;
 								}
 							} else {
-								if(m1.getNotaDesempate() != null) {
+								if(m1.getDesempate() != null) {
 									return -1;
 								} else {
 									return 1;
@@ -199,16 +198,84 @@ public class MonitoriaLocalBean
 	
 	public List<Monitoria> classificar(List<Monitoria> monitorias) {
 		int classificacao = 1;
+		int vagasVoluntario = monitorias.get(0).getPlanoMonitoria().getVoluntarios();
+		int vagasBolsista = monitorias.get(0).getPlanoMonitoria().getBolsas();
+		
 		for (Monitoria monitoria : monitorias) {
 			System.out.println(monitoria.getAluno().getNome());
 			if(monitoria.isClassificado()) {
 				monitoria.setClassificacao(classificacao);
 				classificacao++;
+				
+				if(monitoria.isBolsista()) {
+					if(vagasBolsista > 0) {
+						monitoria.setSelecionado(true);
+						vagasBolsista--;
+					} else {
+						monitoria.setSelecionado(false);
+					}
+				} else {
+					if(vagasVoluntario > 0) {
+						monitoria.setSelecionado(true);
+						vagasVoluntario--;
+					} else {
+						monitoria.setSelecionado(false);
+					}
+				}
 			}
 			else {
 				monitoria.setClassificacao(null);
+				monitoria.setSelecionado(false);
 			}
 		}
 		return monitorias;
+	}
+
+	public void alterarPosicaoDoEmpate(Monitoria monitoria, boolean subir, List<Monitoria> monitorias) {
+		 List<Monitoria> empatados = getEmpatados(monitoria, monitorias);
+		 int notaAnterior = monitoria.getDesempate();
+		 int notaMaxima = empatados.size();
+		 int novaNota;
+		 if(subir) {
+			 if(notaAnterior + 1 <= notaMaxima) {
+				 novaNota = notaAnterior + 1;
+			 } else {
+				 novaNota = notaAnterior;
+			 }
+		 } else {
+			 if(notaAnterior - 1 > 0) {
+				 novaNota = notaAnterior - 1;
+			 } else {
+				 novaNota = notaAnterior;
+			 }
+		 }
+		 
+		 if(novaNota != notaAnterior) {
+			for (Monitoria m1 : monitorias) {
+				if(empatados.contains(m1)) {
+					if(m1.getDesempate() == novaNota) {
+						m1.setDesempate(notaAnterior);
+					}
+					else if(m1.getId() == monitoria.getId()) {
+						m1.setDesempate(novaNota);
+					}
+				}
+			}
+		 }
+		 
+		 salvarNotas(monitorias);
+	}
+
+	private List<Monitoria> getEmpatados(Monitoria monitoria, List<Monitoria> monitorias) {
+		List<Monitoria> empatados = new ArrayList<>();
+		for (Monitoria m1 : monitorias) {
+			if(m1.isEmpatado()) {
+				if(monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue() &&
+						monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue()) {
+					empatados.add(m1);
+				}
+			}
+		}
+		return empatados;
 	}
 }

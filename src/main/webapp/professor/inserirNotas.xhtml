@@ -32,14 +32,16 @@
 			<div class="row">
 				<h:form id="formNotas" style="width: 100%">
 					<table class="table table-hover">
-						<caption>*O professor deverá escolher a colocação dos alunos empatados.</caption>
+						<caption></caption>
 						<thead>
 							<th scope="col">Classificação</th>
 							<th scope="col">Aluno</th>
 							<th scope="col">Existe reprovação</th>
 							<th scope="col">Nota da Seleção</th>
 							<th scope="col">Média do Componente</th>
-							<th scope="col">Decisão de Desempate*</th>
+							<th scope="col">Decisão de Desempate 
+								<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="O professor deverá escolher a colocação dos alunos empatados"></i>
+							</th>
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatPlanos" value="#{inserirNotasView.monitorias}" var="monitoria" varStatus="myStatus">
@@ -48,21 +50,23 @@
 									<td>#{monitoria.aluno.nome}</td>
 									<td class="text-center">
 										<h:selectBooleanCheckbox id="checkReprovacao" styleClass="form-check-input"  
-												value="#{monitoria.reprovacao}" >
+											value="#{monitoria.reprovacao}" disabled="#{not inserirNotasView.periodoDeInsercaoNotas}">
 												
 										</h:selectBooleanCheckbox>
 									</td>
 									<td>
-										<h:inputText id="notaSelecao" class="form-control nota" value="#{monitoria.notaSelecao}">
+										<h:inputText id="notaSelecao" class="form-control nota" value="#{monitoria.notaSelecao}"
+											disabled="#{not inserirNotasView.periodoDeInsercaoNotas}">
 										</h:inputText>
 									</td>
 									<td >
-										<h:inputText id="mediaComponente" class="form-control nota" value="#{monitoria.mediaComponente}">
+										<h:inputText id="mediaComponente" class="form-control nota" value="#{monitoria.mediaComponente}"
+											disabled="#{not inserirNotasView.periodoDeInsercaoNotas}">
 										</h:inputText>
 									</td>
 									<td class="text-center">
 										<div class="input-group mb-2 text-center">
-											<h:panelGroup layout="block" rendered="#{monitoria.empatado}">
+											<h:panelGroup layout="block" rendered="#{monitoria.empatado and inserirNotasView.periodoDeInsercaoNotas}">
 												<div class="input-group-prepend">
 													<h:commandButton id="sobePosicao" value=" Λ " class="btn btn-success"
 															actionListener="#{inserirNotasView.alterarEmpate(monitoria ,true)}"
@@ -72,7 +76,7 @@
 											</h:panelGroup>
 											
 										
-											<h:panelGroup layout="block" rendered="#{monitoria.empatado}">
+											<h:panelGroup layout="block" rendered="#{monitoria.empatado and inserirNotasView.periodoDeInsercaoNotas}">
 												<div class="input-group-append">
 													<h:commandButton id="descePosicao" value=" V " class="btn btn-danger"
 															actionListener="#{inserirNotasView.alterarEmpate(monitoria ,false)}"
@@ -87,14 +91,17 @@
 						</tbody>
 					</table>
 					<div class=" text-right">
-						<h:commandButton value="Salvar Alterações" actionListener="#{inserirNotasView.salvarNotas()}" 
-												update="@form" class="btn btn-info" />
+						<h:panelGroup layout="block" rendered="#{inserirNotasView.periodoDeInsercaoNotas}">
+							<h:commandButton value="Salvar Alterações" actionListener="#{inserirNotasView.salvarNotas()}" 
+								update="@form" class="btn btn-info" redenred="#{inserirNotasView.periodoDeInsercaoNotas}"/>
+						</h:panelGroup>
 					</div>
 				</h:form>
 			</div>
 		</div>
 
 	<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+	<script src="../resources/libs/popper/popper.min.js"></script>
 	<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 	<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 	<script src="../professor/inserirNotas.js"></script>

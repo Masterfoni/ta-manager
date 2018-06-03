@@ -82,7 +82,7 @@ public class InscricaoMonitoriaView implements Serializable{
 		monitoria.setPlanoMonitoria(plano);
 		monitoria.setAluno(aluno);
 		monitoria.setEdital(getEdital());
-		monitoria.setBolsa(bolsista);
+		monitoria.setBolsista(bolsista);
 		
 		if(alteracao) {
 			monitoriaBean.atualizaMonitoria(monitoria);

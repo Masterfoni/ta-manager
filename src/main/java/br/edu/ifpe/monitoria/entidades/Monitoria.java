@@ -56,14 +56,14 @@ public class Monitoria implements Serializable{
 	@JoinColumn (name = "ID_EDITAL", referencedColumnName = "ID")
 	private Edital edital;
 	
-	@Column (name="NOTA_SELECAO")
+	@Column (name="DOUBLE_NOTA_SELECAO")
 	private Double notaSelecao;
 	
-	@Column (name="MEDIA_COMPONENTE")
+	@Column (name="DOUBLE_MEDIA_COMPONENTE")
 	private Double mediaComponente;
 	
-	@Column (name="NOTA_DESEMPATE")
-	private Double notaDesempate;
+	@Column (name="INT_DESEMPATE")
+	private Integer desempate;
 	
 	@Column (name="INT_CLASSIFICACAO")
 	private Integer classificacao;
@@ -77,8 +77,11 @@ public class Monitoria implements Serializable{
 	@Column (name="BOOL_CLASSIFICADO")
 	private boolean classificado;
 	
-	@Column (name="BOOL_BOLSA")
-	private boolean bolsa;
+	@Column (name="BOOL_SELECIONADO")
+	private boolean selecionado;
+	
+	@Column (name="BOOL_BOLSISTA")
+	private boolean bolsista;
 	
 	public Long getId() {
 		return id;
@@ -132,12 +135,12 @@ public class Monitoria implements Serializable{
 		this.mediaComponente = mediaComponente;
 	}
 		
-	public Double getNotaDesempate() {
-		return notaDesempate;
+	public Integer getDesempate() {
+		return desempate;
 	}
 
-	public void setNotaDesempate(Double notaDesempate) {
-		this.notaDesempate = notaDesempate;
+	public void setDesempate(Integer desempate) {
+		this.desempate = desempate;
 	}
 
 	public Integer getClassificacao() {
@@ -172,7 +175,7 @@ public class Monitoria implements Serializable{
 		if(!reprovacao &&
 				mediaComponente != null && notaSelecao != null &&
 				mediaComponente >= edital.getMediaMinimaCC() && notaSelecao >= edital.getNotaMinimaSelecao() && 
-				(!empatado || (empatado && notaDesempate != null)))
+				(!empatado || (empatado && desempate != null)))
 			setClassificado(true);
 		else
 			setClassificado(false);
@@ -183,11 +186,19 @@ public class Monitoria implements Serializable{
 		this.classificado = classificado;
 	}
 	
-	public boolean isBolsa() {
-		return bolsa;
+	public boolean isBolsista() {
+		return bolsista;
 	}
 
-	public void setBolsa(boolean bolsa) {
-		this.bolsa = bolsa;
+	public void setBolsista(boolean bolsista) {
+		this.bolsista = bolsista;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 }

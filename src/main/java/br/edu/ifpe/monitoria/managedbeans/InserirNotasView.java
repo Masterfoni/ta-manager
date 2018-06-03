@@ -1,7 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,8 +10,10 @@ import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 import javax.faces.context.FacesContext;
 
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
+import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 
 @ManagedBean (name="inserirNotasView")
@@ -21,9 +23,14 @@ public class InserirNotasView implements Serializable{
 	private static final long serialVersionUID = -3536843049471998334L;
 	private PlanoMonitoria plano;
 	private List<Monitoria> monitorias;
+	private boolean periodoDeInsercaoNotas;
+	private Edital edital;
 	
 	@EJB
 	private MonitoriaLocalBean monitoriaBean;
+	
+	@EJB
+	private EditalLocalBean editalBean;
 
 	public InserirNotasView() {
 		if(plano == null) {
@@ -38,54 +45,10 @@ public class InserirNotasView implements Serializable{
 	}
 	
 	public void alterarEmpate(Monitoria monitoria, boolean subir) {
-		 List<Monitoria> empatados = getEmpatados(monitoria);
-		 double notaAnterior = monitoria.getNotaDesempate();
-		 double notaMaxima = empatados.size();
-		 double novaNota;
-		 if(subir) {
-			 if(notaAnterior + 1.00 <= notaMaxima) {
-				 novaNota = notaAnterior + 1.0;
-			 } else {
-				 novaNota = notaAnterior;
-			 }
-		 } else {
-			 if(notaAnterior - 1.00 >= 0.0) {
-				 novaNota = notaAnterior - 1.0;
-			 } else {
-				 novaNota = notaAnterior;
-			 }
-		 }
-		 
-		 if(novaNota != notaAnterior) {
-			for (Monitoria m1 : monitorias) {
-				if(empatados.contains(m1)) {
-					if(m1.getNotaDesempate().doubleValue() == novaNota) {
-						m1.setNotaDesempate(notaAnterior);
-					}
-					else if(m1.getId() == monitoria.getId()) {
-						m1.setNotaDesempate(novaNota);
-					}
-				}
-			}
-		 }
-		 
-		 monitoriaBean.salvarNotas(monitorias);
-		 monitorias = null;
+		monitoriaBean.alterarPosicaoDoEmpate(monitoria, subir, monitorias);
+		monitorias = null;
 	}
 	
-	private List<Monitoria> getEmpatados(Monitoria m1) {
-		List<Monitoria> empatados = new ArrayList<>();
-		for (Monitoria monitoria : monitorias) {
-			if(monitoria.isEmpatado()) {
-				if(monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue() &&
-						monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue()) {
-					empatados.add(monitoria);
-				}
-			}
-		}
-		return empatados;
-	}
-
 	public PlanoMonitoria getPlano() {
 		return plano;
 	}
@@ -105,5 +68,21 @@ public class InserirNotasView implements Serializable{
 	public void setMonitorias(List<Monitoria> monitorias) {
 		this.monitorias = monitorias;
 	}
-	
+
+	public boolean isPeriodoDeInsercaoNotas() {
+		if(edital == null)
+			edital = editalBean.consultaEditalById(plano.getEdital().getId());
+		if(new Date().after(edital.getInicioInsercaoNota()) && 
+				new Date().before(edital.getFimInsercaoNota()))
+			setPeriodoDeInsercaoNotas(true);
+		else
+			setPeriodoDeInsercaoNotas(false);
+		return periodoDeInsercaoNotas;
+	}
+
+	public void setPeriodoDeInsercaoNotas(boolean periodoDeInsercaoNotas) {
+		this.periodoDeInsercaoNotas = periodoDeInsercaoNotas;
+	}
 }
+
+
