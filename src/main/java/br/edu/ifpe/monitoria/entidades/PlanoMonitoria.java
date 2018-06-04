@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_PM",
 					sequenceName = "SQ_PM",
@@ -26,15 +28,15 @@ import javax.validation.constraints.NotNull;
 @Table(name = "TB_PLANO_MONITORIA")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name = "PlanoMonitoria.findAll", query = "SELECT p FROM PlanoMonitoria p"),
+	@NamedQuery(name = "PlanoMonitoria.findAll", query = "SELECT p FROM PlanoMonitoria p ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id"),
-	@NamedQuery(name = "PlanoMonitoria.findByProfessor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.professor.id = :id"),
-	@NamedQuery(name = "PlanoMonitoria.findByCoordenador", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :id"),
-	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id"),
-	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE"),
-	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital"),
-	@NamedQuery(name = "PlanoMonitoria.findByEditaleCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso"),
-	@NamedQuery(name = "PlanoMonitoria.findByEditalComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital.id = :editalId AND p.cc.id = :ccId")
+	@NamedQuery(name = "PlanoMonitoria.findByServidor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :servidorId OR p.cc.professor.id = :servidorId ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEditalComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital.id = :editalId AND p.cc.id = :ccId ORDER BY p.cc.curso, p.cc.nome")
 })
 public class PlanoMonitoria {
 
@@ -70,12 +72,15 @@ public class PlanoMonitoria {
 	@Column (name="INT_VOLUNTARIOS")
 	private Integer voluntarios;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.justificativa}")
 	@Column (name="TXT_JUSTIFICATIVA")
 	private String justificativa;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.objetivo}")
 	@Column (name="TXT_OBJETIVO")
 	private String objetivo;
 	
+	@NotBlank(message = "{mensagem.notnull}{tipo.atividades}")
 	@Column (name="TXT_LISTA_ATIVIDADES")
 	private String listaAtividades;
 	

@@ -110,7 +110,7 @@ public class InscricaoMonitoriaView implements Serializable{
 	public List<PlanoMonitoria> getPlanos() {
 		planos = null;
 		if(getEdital() != null) {
-			planos = planoBean.consultaPlanosByEditaleCurso(edital, getAluno().getCurso());
+			planos = planoBean.consultaPlanosByEditaleCurso(edital, getAluno().getCurso(), true);
 		}
 		if(planos == null) {
 			FacesContext context = FacesContext.getCurrentInstance();

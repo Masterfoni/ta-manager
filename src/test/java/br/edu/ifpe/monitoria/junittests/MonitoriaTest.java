@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.ejb.EJB;
@@ -21,6 +22,7 @@ import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.EsquemaBolsa;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
@@ -31,11 +33,13 @@ import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
+import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.testutils.JUnitUtils;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -67,6 +71,9 @@ public class MonitoriaTest
 	@EJB
 	private AlunoLocalBean alunobean;
 
+	@EJB
+	private EsquemaBolsaLocalBean esquemabean;
+	
 	@BeforeClass
 	public static void setUpClass() throws Exception 
 	{
@@ -84,6 +91,7 @@ public class MonitoriaTest
 		editalbean = (EditalLocalBean) JUnitUtils.getLocalBean(container, "EditalLocalBean");
 		monitoriabean = (MonitoriaLocalBean) JUnitUtils.getLocalBean(container, "MonitoriaLocalBean");
 		alunobean = (AlunoLocalBean) JUnitUtils.getLocalBean(container, "AlunoLocalBean");
+		esquemabean = (EsquemaBolsaLocalBean) JUnitUtils.getLocalBean(container, "EsquemaBolsaLocalBean");
 	}
 
 	@Test
@@ -130,19 +138,26 @@ public class MonitoriaTest
 		assertNotNull(cc.getId());
 		
 		Edital edital = new Edital();
+		Date initialDate = new Date();
+		
+		Calendar finalCalendar = Calendar.getInstance(); 
+		finalCalendar.setTime(initialDate); 
+		finalCalendar.add(Calendar.DATE, 1);
+		
 		edital.setAno(2020);
 		edital.setNumero(999999);
 		edital.setNumeroEdital("999999/2020");
-		edital.setFimInscricaoComponenteCurricular(new Date());
-		edital.setFimInscricaoEstudante(new Date());
-		edital.setFimInsercaoNota(new Date());
-		edital.setFimInsercaoPlano(new Date());
-		edital.setFimMonitoria(new Date());
-		edital.setInicioInscricaoComponenteCurricular(new Date());
-		edital.setInicioInscricaoEstudante(new Date());
-		edital.setInicioInsercaoNota(new Date());
-		edital.setInicioInsercaoPlano(new Date());
-		edital.setInicioMonitoria(new Date());
+
+		edital.setInicioInscricaoComponenteCurricular(initialDate);
+		edital.setInicioInscricaoEstudante(initialDate);
+		edital.setInicioInsercaoNota(initialDate);
+		edital.setInicioInsercaoPlano(initialDate);
+		edital.setInicioMonitoria(initialDate);
+		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
+		edital.setFimInscricaoEstudante(finalCalendar.getTime());
+		edital.setFimInsercaoNota(finalCalendar.getTime());
+		edital.setFimInsercaoPlano(finalCalendar.getTime());
+		edital.setFimMonitoria(finalCalendar.getTime());
 		edital.setMediaMinimaCC(7.0);
 		edital.setNotaMinimaSelecao(7.0);
 		edital.setVigente(true);
@@ -152,7 +167,7 @@ public class MonitoriaTest
 		
 		PlanoMonitoria plano = new PlanoMonitoria();
 		
-		plano.setBolsas(2);
+		plano.setBolsasSolicitadas(3);;
 		plano.setCc(cc);
 		plano.setEdital(edital);
 		plano.setJustificativa("eu quis");
@@ -160,8 +175,8 @@ public class MonitoriaTest
 		plano.setObjetivo("OBJECTIVE");
 		plano.setVoluntarios(2);
 		
-		planobean.persistePlanoMonitoria(plano);
-		assertNotNull(plano.getId());
+		CriacaoRequestResult criacaoResult = planobean.persistePlanoMonitoria(plano);
+		assertFalse(criacaoResult.hasErrors());
 		
 		Aluno aluno = new Aluno();
 		aluno.setCurso(curso);
@@ -213,37 +228,26 @@ public class MonitoriaTest
 	public void t04_deletarMonitoria() throws Exception 
 	{
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
+		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
+		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
+		Usuario usuario = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");
+		Edital edital = editalbean.consultaEditalByNumero("999999/2020");
+		EsquemaBolsa esquema = esquemabean.consultaEsquemaByEditalCurso(edital, curso).result;
 		
 		assertFalse(monitoriabean.deletaMonitoria(monitoria.getId()).hasErrors());
-		
-		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
-		
 		assertFalse(alunobean.deletaAluno(aluno.getId()).hasErrors());
-		
-		PlanoMonitoria plano = planobean.consultaPlanos().get(0);
-		
-		DelecaoRequestResult resultadoPlano = planobean.deletaPlanoMonitoria(plano.getId());
-		
-		assertFalse(resultadoPlano.hasErrors());
-		
-		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
+
+		DelecaoRequestResult resultadoEsquema = esquemabean.deletaEsquema(esquema.getId());
+		assertFalse(resultadoEsquema.hasErrors());
 
 		DelecaoRequestResult resultadoCc = componentebean.deletaComponenteCurricular(cc.getId());
-		
 		assertFalse(resultadoCc.hasErrors());
 		
-		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
-
 		DelecaoRequestResult resultadoCurso = cursobean.deletaCurso(curso.getId());
-		
 		assertFalse(resultadoCurso.hasErrors());
 		
-		Usuario usuario = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");
-		
 		assertFalse(usuariobean.deletaUsuario(usuario.getId()).hasErrors());
-		
-		Edital edital = editalbean.consultaEditalByNumero("999999/2020");
-		
 		assertFalse(editalbean.deletaEdital(edital.getId()).hasErrors());
 	}
 

@@ -6,5 +6,6 @@ public enum Dataset
     EditalCucumber,
     PlanoMonitoriaCucumber,
     PlanoMonitoriaBolsasCucumber,
-    CandidaturaCucumber
+    PlanoMonitoriaDistHomolCucumber,
+    CandidaturaCucumber,
 }
