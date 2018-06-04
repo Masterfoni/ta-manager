@@ -74,6 +74,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Curso cursoCoordenado;
 	
+	public Curso cursoSelecionado;
+	
 	public boolean comissao;
 	
 	@PostConstruct
@@ -92,13 +94,20 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
 		
+		if(comissao) {
+			List<Curso> cursosConsultados = cursobean.consultaCursos();
+			cursoSelecionado = cursosConsultados.isEmpty() ? new Curso() : cursosConsultados.get(0);
+		}
+		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
 	}
 	
-	
-	
 	public Curso getCursoCoordenado() {
+		if(comissao) {
+			cursoCoordenado = cursoSelecionado;
+		}
+		
 		return cursoCoordenado;
 	}
 
@@ -107,7 +116,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public EsquemaBolsa getEsquemaAtual() {
-		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, cursoCoordenado).result;
+		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalSelecionado, getCursoCoordenado()).result;
 		return esquemaAtual;
 	}
 
@@ -146,6 +155,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public void setEditalSelecionado(Edital editalSelecionado) {
 		this.editalSelecionado = editalSelecionado;
 	}
+	
+	public Curso getCursoSelecionado() {
+		return cursoSelecionado;
+	}
+	
+	public void setCursoSelecionado(Curso cursoSelecionado) {
+		this.cursoSelecionado = cursoSelecionado;
+	}
 
 	/**
 	 * Método responsável por atualizar um componente curricular.
@@ -157,32 +174,44 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public List<PlanoMonitoria> getPlanos() {
 		if(comissao)
 		{
-			planos = editalSelecionado != null ? planobean.consultaPlanosByEdital(editalSelecionado, false) : planobean.consultaPlanos(); 
+			if(editalSelecionado != null) {
+				if(cursoSelecionado != null) {
+					planos = planobean.consultaPlanosByEditaleCurso(editalSelecionado, cursoSelecionado, false);
+				} else {
+					planos = planobean.consultaPlanosByEdital(editalSelecionado, false);
+				}
+			} else {
+				planos = planobean.consultaPlanos(); 
+			}
 		} 
 		else
 		{
-			Set<PlanoMonitoria> planosNaoRepetidos = new HashSet<PlanoMonitoria>();
 			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
-			List<PlanoMonitoria> planosByCoordenador = planobean.consultaPlanosByCoordenador(this.loggedServidor.getId());
 
-			if(!planosByServidor.isEmpty())
-			{
-				planosNaoRepetidos.addAll(planosByServidor);
-			}
-			if(!planosByCoordenador.isEmpty())
-			{
-				planosNaoRepetidos.addAll(planosByCoordenador);
-			}
-			
 			if(editalSelecionado != null)
 			{
-				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 				planos.retainAll(planobean.consultaPlanosByEdital(editalSelecionado, false));
 			}
 			else
 			{
-				planos = new ArrayList<PlanoMonitoria>(planosNaoRepetidos);
+				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 			}
+			
+			ArrayList<PlanoMonitoria> planinhosCoordenados = new ArrayList<PlanoMonitoria>();
+			ArrayList<PlanoMonitoria> planinhosLecionados = new ArrayList<PlanoMonitoria>();
+			
+			for(PlanoMonitoria planinho : planos) {
+				if(planinho.getCc().getCurso().getCoordenador().getId() == this.loggedServidor.getId()) {
+					planinhosCoordenados.add(planinho);
+				} else if(planinho.getCc().getProfessor().getId() == this.loggedServidor.getId()) {
+					planinhosLecionados.add(planinho);
+				}
+			}
+			
+			planos = new ArrayList<PlanoMonitoria>();
+			planos.addAll(planinhosCoordenados);
+			planos.addAll(planinhosLecionados);
 		}
 		
 		return planos;

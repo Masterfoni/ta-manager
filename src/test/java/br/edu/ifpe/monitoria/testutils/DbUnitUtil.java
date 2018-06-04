@@ -23,26 +23,30 @@ public class DbUnitUtil
     {
         switch (dataset)
         {
-        case Vazio:
-        	XML_FILE = "dbunit/dataset.xml";
-            ultimo_executado = Dataset.Vazio;
-            break;
-        case EditalCucumber:
-        	XML_FILE = "dbunit/editalCucumber.xml";
-            ultimo_executado = Dataset.EditalCucumber;
-            break;
-        case PlanoMonitoriaCucumber:
-          	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
-            ultimo_executado = Dataset.PlanoMonitoriaCucumber;
-            break;
-        case PlanoMonitoriaBolsasCucumber:
-        	XML_FILE = "dbunit/planoMonitoriaBolsasCucumber.xml";
-        	ultimo_executado = Dataset.PlanoMonitoriaBolsasCucumber;
-        	break;
-        case CandidaturaCucumber:
-          	XML_FILE = "dbunit/candidaturaCucumber.xml";
-            ultimo_executado = Dataset.CandidaturaCucumber;
-            break;
+	        case Vazio:
+	        	XML_FILE = "dbunit/dataset.xml";
+	            ultimo_executado = Dataset.Vazio;
+	            break;
+	        case EditalCucumber:
+	        	XML_FILE = "dbunit/editalCucumber.xml";
+	            ultimo_executado = Dataset.EditalCucumber;
+	            break;
+	        case PlanoMonitoriaCucumber:
+	          	XML_FILE = "dbunit/planoMonitoriaCucumber.xml";
+	            ultimo_executado = Dataset.PlanoMonitoriaCucumber;
+	            break;
+	        case PlanoMonitoriaBolsasCucumber:
+	        	XML_FILE = "dbunit/planoMonitoriaBolsasCucumber.xml";
+	        	ultimo_executado = Dataset.PlanoMonitoriaBolsasCucumber;
+	        	break;
+	        case CandidaturaCucumber:
+	          	XML_FILE = "dbunit/candidaturaCucumber.xml";
+	            ultimo_executado = Dataset.CandidaturaCucumber;
+	            break;
+	        case PlanoMonitoriaDistHomolCucumber:
+	        	XML_FILE = "dbunit/planoMonitoriaDistHomolCucumber.xml";
+	        	ultimo_executado = Dataset.PlanoMonitoriaDistHomolCucumber;
+	        	break;
         }
     }
 
@@ -54,11 +58,11 @@ public class DbUnitUtil
 
             String sql;
             
-            sql = "DELETE FROM TB_ESQUEMA_BOLSA";
-            stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_MONITORIA";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_PLANO_MONITORIA";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM TB_ESQUEMA_BOLSA";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_COMP_CURRICULAR";
             stmt.executeUpdate(sql);

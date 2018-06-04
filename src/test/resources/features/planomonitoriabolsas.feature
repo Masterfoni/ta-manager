@@ -1,5 +1,5 @@
 # language: pt
-Funcionalidade: Distribuir bolsas para cursos e planos de monitoria
+Funcionalidade: Distribuir bolsas para cursos
 
  Contexto:
 	Dado que o usuario esta logado como comissao
