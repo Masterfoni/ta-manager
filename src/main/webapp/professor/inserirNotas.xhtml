@@ -92,7 +92,7 @@
 					</table>
 					<div class=" text-right">
 						<h:panelGroup layout="block" rendered="#{inserirNotasView.periodoDeInsercaoNotas}">
-							<h:commandButton value="Salvar Alterações" actionListener="#{inserirNotasView.salvarNotas()}" 
+							<h:commandButton id="salvar" value="Salvar Alterações" actionListener="#{inserirNotasView.salvarNotas()}" 
 								update="@form" class="btn btn-info" redenred="#{inserirNotasView.periodoDeInsercaoNotas}"/>
 						</h:panelGroup>
 					</div>

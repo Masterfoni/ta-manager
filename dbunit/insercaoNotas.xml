@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	
+	<!-- PROFESSOR -->
+	<TB_USUARIO id="1"
+		disc_usuario="SERVIDOR"
+		txt_cpf="102.503.234-94"
+		txt_email="fal@a.recife.ifpe.edu.br"
+		txt_nome="Felipe Araujo De Lima"
+		txt_rg="8776336"
+		txt_rg_emissor="SDS/PE"
+		txt_sal="RrLgKKGpgjuU0yWvIczwqOn5LmN74wTKRehCVI6tH8k="
+		txt_senha="KVINHLb53nQ+0GpkqTDIoPjE7x12gPh7nqhlP6bDQtw="
+		txt_sexo="Masculino" />
+	<TB_PERFILGOOGLE id="1"
+		txt_family_name="Araujo De Lima"
+		txt_given_name="Felipe"
+		txt_hosted_domain="a.recife.ifpe.edu.br"
+		txt_picture="https://lh4.googleusercontent.com/-KilPaBaPniY/AAAAAAAAAAI/AAAAAAAAAFA/21413CPRDSQ/s96-c/photo.jpg"
+		txt_subject="109820288239215949192"
+		id_usuario="1" />
+	<TB_SERVIDOR id_usuario="1"
+		int_siape="2981585"
+		txt_titulacao="GRADUAÇÃO" />
+	<TB_USUARIO_GRUPO id="1" 
+		txt_email="fal@a.recife.ifpe.edu.br"
+		txt_grupo="PROFESSOR"
+		id_usuario="1" />
+		
+	<!-- ALUNO 1 -->
+	<TB_USUARIO id="2"
+		disc_usuario="ALUNO"
+		txt_cpf="926.430.680-33"
+		txt_email="danilo@gmail.com"
+		txt_nome="Danilo Pereira"
+		txt_rg="1234567"
+		txt_rg_emissor="SDS/PE"
+		txt_sal="MBzSgbZ43RNdOXZCKDiYo5j+akrqK4eEFfpKjP7lXZA="
+		txt_senha="STHQPwZd3alHkizo9AExCkzx5qwcuvXDVwU0WJNAlnQ="
+		txt_sexo="Masculino" />
+	<TB_ALUNO id_usuario="2"
+		txt_matricula="99999A9-AA9999" />
+	<TB_USUARIO_GRUPO id="2" 
+		txt_email="danilo@gmail.com"
+		txt_grupo="ALUNO"
+		id_usuario="2" />
+	
+	<!-- ALUNO 2 -->
+	<TB_USUARIO id="3"
+		disc_usuario="ALUNO"
+		txt_cpf="174.287.334-05"
+		txt_email="iury@gmail.com"
+		txt_nome="Iury Drayton"
+		txt_rg="12345671"
+		txt_rg_emissor="SDS/PE"
+		txt_sal="MBzSgbZ43RNdOXZCKDiYo5j+akrqK4eEFfpKjP7lXZA="
+		txt_senha="STHQPwZd3alHkizo9AExCkzx5qwcuvXDVwU0WJNAlnQ="
+		txt_sexo="Masculino" />
+	<TB_ALUNO id_usuario="3"
+		txt_matricula="99999A9-AA9998" />
+	<TB_USUARIO_GRUPO id="3" 
+		txt_email="iury@gmail.com"
+		txt_grupo="ALUNO"
+		id_usuario="3" />
+		
+	<!-- ALUNO 3 -->
+	<TB_USUARIO id="4"
+		disc_usuario="ALUNO"
+		txt_cpf="669.192.818-05"
+		txt_email="raphael@gmail.com"
+		txt_nome="Raphael Almeida"
+		txt_rg="12345672"
+		txt_rg_emissor="SDS/PE"
+		txt_sal="MBzSgbZ43RNdOXZCKDiYo5j+akrqK4eEFfpKjP7lXZA="
+		txt_senha="STHQPwZd3alHkizo9AExCkzx5qwcuvXDVwU0WJNAlnQ="
+		txt_sexo="Masculino" />
+	<TB_ALUNO id_usuario="4"
+		txt_matricula="99999A9-AA9997" />
+	<TB_USUARIO_GRUPO id="4" 
+		txt_email="raphael@gmail.com"
+		txt_grupo="ALUNO"
+		id_usuario="4" />
+		
+	<!-- ALUNO 4 -->
+	<TB_USUARIO id="5"
+		disc_usuario="ALUNO"
+		txt_cpf="431.286.086-60"
+		txt_email="dudu@gmail.com"
+		txt_nome="Eduardo Amaral"
+		txt_rg="12345673"
+		txt_rg_emissor="SDS/PE"
+		txt_sal="MBzSgbZ43RNdOXZCKDiYo5j+akrqK4eEFfpKjP7lXZA="
+		txt_senha="STHQPwZd3alHkizo9AExCkzx5qwcuvXDVwU0WJNAlnQ="
+		txt_sexo="Masculino" />
+	<TB_ALUNO id_usuario="5"
+		txt_matricula="99999A9-AA9996" />
+	<TB_USUARIO_GRUPO id="5" 
+		txt_email="dudu@gmail.com"
+		txt_grupo="ALUNO"
+		id_usuario="5" />
+
+	<!-- CURSOS -->
+	<TB_CURSO id="1"
+  		txt_coordenacao="CTADS"
+  		txt_departamento="DASE"
+  		txt_nome="Tecnologia em Análise e Desenvolvimento de Sistemas"
+  		txt_sigla="TADS"
+  		id_coordenador="1" />
+
+	<!-- EDITAL -->
+	<TB_EDITAL id="1"
+		txt_ano="2018"
+  		dt_fim_inscricao_cc="2018-08-02"
+  		dt_fim_inscricao_estudante="2018-08-02"
+  		dt_fim_inscercao_nt="2018-08-02"
+  		dt_fim_inscercao_pm="2018-08-02"
+  		dt_fim_monitoria="2018-08-02"
+  		dt_ini_inscricao_cc="2018-02-02"
+  		dt_ini_inscricao_estudante="2018-02-02"
+  		dt_ini_insercao_nt="2018-02-02"
+  		dt_ini_insercao_pm="2018-02-02"
+  		dt_ini_monitoria="2018-02-02"
+  		double_media_minima="7"
+  		double_nota_minima="7"
+  		txt_numero="2"
+  		txt_numero_edital="2/2018"
+  		bool_vigente="true" />
+  	
+  	<TB_ESQUEMA_BOLSA id="1"
+  		bool_distribuido="true"
+  		int_quantidade="2"
+  		id_curso="1"
+  		id_edital="1" />
+  	
+  	 <TB_COMP_CURRICULAR id="1"
+  		int_carga_horaria="36"
+  		txt_codigo="TCCII"
+  		txt_nome="Trabalho de Conclusão de Curso"
+  		txt_periodo="2018/1"
+  		txt_turno="NOTURNO"
+  		id_curso="1"
+  		id_servidor="1" />
+  		
+  	<TB_PLANO_MONITORIA id="1"
+  		int_bolsas="1"
+  		int_bolsas_solicitadas="1"
+  		vf_homologado="true"
+  		txt_justificativa="justificativa"
+  		txt_lista_atividades="atividades"
+  		txt_objetivo="objetivo"
+  		int_voluntarios="1"
+  		id_edital="1"
+  		id_comp_curricular="1" 
+  		id_esquema_associado="1" /> 
+  		
+  	<TB_MONITORIA id="1"
+  		bool_bolsista="true"
+  		bool_classificado="false"
+  		bool_empatado="false"
+  		bool_reprovacao="false"
+  		id_edital="1"
+  		id_aluno="2"
+  		id_plano_monitoria="1" />
+  		
+  	 <TB_MONITORIA id="2"
+  		bool_bolsista="true"
+  		bool_classificado="false"
+  		bool_empatado="false"
+  		bool_reprovacao="false"
+  		id_edital="1"
+  		id_aluno="3"
+  		id_plano_monitoria="1" />
+  		
+  	<TB_MONITORIA id="3"
+  		bool_bolsista="false"
+  		bool_classificado="false"
+  		bool_empatado="false"
+  		bool_reprovacao="false"
+  		id_edital="1"
+  		id_aluno="4"
+  		id_plano_monitoria="1" />
+  		
+  	<TB_MONITORIA id="4"
+  		bool_bolsista="false"
+  		bool_classificado="false"
+  		bool_empatado="false"
+  		bool_reprovacao="false"
+  		id_edital="1"
+  		id_aluno="5"
+  		id_plano_monitoria="1" />
+
+</dataset>

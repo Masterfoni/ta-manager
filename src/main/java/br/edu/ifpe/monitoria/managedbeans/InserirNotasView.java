@@ -40,7 +40,8 @@ public class InserirNotasView implements Serializable{
 	}
 
 	public void salvarNotas() {
-		monitoriaBean.salvarNotas(monitorias);
+		if(monitorias.size()>0) 
+			monitoriaBean.salvarNotas(monitorias);
 		monitorias = null;
 	}
 	

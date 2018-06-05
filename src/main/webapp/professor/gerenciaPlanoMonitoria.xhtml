@@ -125,7 +125,7 @@
 								<th scope="col"></th>
 							</thead>
 							<tbody>
-								<ui:repeat value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
+								<ui:repeat id="repeatPlanos" value="#{gerenciaPlanoMonitoriaView.planos}" var="plano" varStatus="myStatus">
 									<tr>
 										<td class="center">#{plano.cc.curso.sigla}</td>
 										<td class="center">#{plano.cc.nome}</td>
@@ -174,10 +174,12 @@
 										</td>
 										
 										<td class="right">
+											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano)}">
 											<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
 												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
 												<span class="fas fa-clipboard-list"></span>
 											</button>
+											</h:panelGroup>
 										</td>
 									</tr>
 								</ui:repeat>

@@ -315,6 +315,13 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	    return "inserirNotas?faces-redirect=true";
 	}
 
+	public boolean isProfessorDe(PlanoMonitoria plano) {
+		if(plano.getCc().getProfessor().getId() == this.loggedServidor.getId())
+			return true;
+		else
+			return false;
+	}
+	
 	public void modificarBolsas(boolean isIncremento, PlanoMonitoria plano)
 	{
 		if(plano.distribuirBolsa(isIncremento)) {
