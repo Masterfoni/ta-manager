@@ -50,6 +50,8 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:notaSelecaoE")).sendKeys("7.0");
+		BrowserManager.driver.findElement(By.id("formcadastro:mediaComponenteE")).sendKeys("7.0");
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		BrowserManager.esperar(5000);
 	}
@@ -68,6 +70,8 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:notaSelecaoE")).sendKeys("7.0");
+		BrowserManager.driver.findElement(By.id("formcadastro:mediaComponenteE")).sendKeys("7.0");
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		BrowserManager.esperar(5000);
 	}

@@ -153,7 +153,7 @@
 													</div>
 												</h:panelGroup>
 											
-												<h:inputText class="form-control text-center gem-disabled" value="#{plano.bolsas}"/>
+												<h:inputText id="bolsasPlano" class="form-control text-center gem-disabled" value="#{plano.bolsas}"/>
 											
 												<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (plano.cc.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id 
 																					 	 and !plano.homologado)}">
@@ -259,7 +259,7 @@
 								
 								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
 									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
-													 update="@form" class="btn btn-success"/>
+													 id="homologar" update="@form" class="btn btn-success"/>
 								</h:panelGroup>
 							</div>
 						</h:form>

@@ -48,7 +48,7 @@
 						</thead>
 						<tbody>
 							<ui:repeat id="repeatEditais" value="#{gerenciaEditalView.editais}" var="edital" varStatus="myStatus">
-								<h:form style="width: 100%">
+								<h:form id="formEditais" style="width: 100%">
 									<tr>
 										<td>#{edital.numeroEdital}</td>
 										<td>
@@ -290,7 +290,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaEditalView.persisteAlteracao()}" 
-												 update="@form" class="btn btn-info" />
+												 id="salvarAlteracao" update="@form" class="btn btn-info" />
 							</div>
 						</h:form>
 					</div>

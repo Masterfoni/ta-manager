@@ -88,14 +88,13 @@ public class DivulgacaoClassificadosView {
 				for (List<PlanoMonitoria> planinhos : planos) {
 					for (PlanoMonitoria planinho : planinhos) {
 						List<Monitoria> monitinha = monitoriabean.consultaMonitoriaByPlano(planinho);
+						monitinha = monitoriabean.ordenar(monitinha);
 						monitoriasPorEdital.add(monitinha);
 					}
 				}
 				monitorias.add(monitoriasPorEdital);
 			}
 		}
-		
-		
 		
 		return monitorias;
 	}

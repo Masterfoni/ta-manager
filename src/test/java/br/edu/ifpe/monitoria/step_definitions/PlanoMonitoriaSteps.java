@@ -13,9 +13,9 @@ import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
 
-public class PlanodeMonitoriaSteps {
+public class PlanoMonitoriaSteps {
 	
-	public PlanodeMonitoriaSteps() {
+	public PlanoMonitoriaSteps() {
 		if(DbUnitUtil.ultimo_executado != Dataset.PlanoMonitoriaCucumber) {
 			 DbUnitUtil.selecionaDataset(Dataset.PlanoMonitoriaCucumber);
 	         DbUnitUtil.inserirDados();

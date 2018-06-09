@@ -47,6 +47,8 @@ public class PlanoMonitoriaBolsasSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:notaSelecaoE")).sendKeys("7.0");
+		BrowserManager.driver.findElement(By.id("formcadastro:mediaComponenteE")).sendKeys("7.0");
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		
 		BrowserManager.esperar(5000);
@@ -112,10 +114,10 @@ public class PlanoMonitoriaBolsasSteps {
 
 	@Quando("^definir um edital como vigente$")
 	public void definirUmEditalComoVigente() throws Throwable {
-  		BrowserManager.driver.findElement(By.id("repeatEditais:0:j_idt39:botaoUpdate")).click();
+  		BrowserManager.driver.findElement(By.id("repeatEditais:0:formEditais:botaoUpdate")).click();
 		BrowserManager.esperar(1000);
   		BrowserManager.driver.findElement(By.id("formAtualizador:vigente")).click();
-  		BrowserManager.driver.findElement(By.name("formAtualizador:j_idt75")).click();
+  		BrowserManager.driver.findElement(By.name("formAtualizador:salvarAlteracao")).click();
 	}	
 	
 	@Entao("^o sistema deve informar que se deve definir uma quantidade de bolsas$")

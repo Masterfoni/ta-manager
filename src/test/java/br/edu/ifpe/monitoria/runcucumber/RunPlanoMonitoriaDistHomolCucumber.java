@@ -12,6 +12,6 @@ glue = "classpath:br.edu.ifpe.monitoria.step_definitions",
 monochrome = false,
 format = "progress",
 snippets = SnippetType.CAMELCASE)
-public class RunPlanoMonitoriaDistHomolStepts {
+public class RunPlanoMonitoriaDistHomolCucumber {
 
 }

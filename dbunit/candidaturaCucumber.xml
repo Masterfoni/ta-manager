@@ -89,6 +89,7 @@
   		txt_objetivo="objetivo"
   		int_voluntarios="2"
   		id_edital="1"
-  		id_comp_curricular="1" /> 
+  		id_comp_curricular="1" 
+  		vf_homologado="true" /> 
   		
 </dataset>

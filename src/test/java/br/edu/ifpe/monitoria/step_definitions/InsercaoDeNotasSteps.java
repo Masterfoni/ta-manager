@@ -26,7 +26,7 @@ public class InsercaoDeNotasSteps {
 	
 	@Dado("^que o usuario esta logado com perfil de professor$")
 	public void queOUsuarioEstaLogadoComPerfilDeProfessor() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia dos planos de monitoria$")

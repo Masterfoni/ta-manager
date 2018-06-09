@@ -136,11 +136,13 @@ public class MonitoriaLocalBean
 	private void atualizarEmpatados(Monitoria m1, List<Monitoria> monitorias) {
 		Integer desempate = 1;
 		for (Monitoria monitoria : monitorias) {
-			if(monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue() &&
-					monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue()) {
-				monitoria.setEmpatado(true);
-				monitoria.setDesempate(desempate);
-				desempate++;
+			if(monitoria.getNotaSelecao() != null && monitoria.getMediaComponente() != null) {
+				if(monitoria.getNotaSelecao().doubleValue() == m1.getNotaSelecao().doubleValue() &&
+						monitoria.getMediaComponente().doubleValue() == m1.getMediaComponente().doubleValue()) {
+					monitoria.setEmpatado(true);
+					monitoria.setDesempate(desempate);
+					desempate++;
+				}
 			}
 		}
 	}
