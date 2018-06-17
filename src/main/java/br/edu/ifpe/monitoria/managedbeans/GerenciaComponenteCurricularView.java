@@ -17,6 +17,7 @@ import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaComponenteCurricularView")
@@ -96,6 +97,21 @@ public class GerenciaComponenteCurricularView implements Serializable {
 	
 	public void alteraComponente(ComponenteCurricular componente) {
 		componenteAtualizado = componente;
+	}
+	
+	public void inativaComponente() 
+	{
+		AtualizacaoRequestResult inativacaoResult = componentebean.inativaComponenteCurricular(componenteAtualizado);
+		
+		if(inativacaoResult.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+
+			for(String error : inativacaoResult.errors)
+			{	
+				context.addMessage(null, new FacesMessage(error));				
+			}
+		}
 	}
 	
 	public void persisteAlteracao() {

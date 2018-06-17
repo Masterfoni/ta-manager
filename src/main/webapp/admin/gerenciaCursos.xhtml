@@ -49,8 +49,10 @@
 							</div>
 							<div class="card-footer">
 								<div class="btn-group" role="group">
-									<h:commandButton actionListener="#{gerenciaCursoView.deletaCurso(curso)}"
-													   value="Deletar" update="@form" class="btn btn-danger" />
+									<h:commandButton actionListener="#{gerenciaCursoView.toggleCursoAtivacao(curso)}"
+													 value="#{curso.ativo ? 'Desativar' : 'Ativar'}" update="@form"
+													 class="#{curso.ativo ? 'btn btn-danger' : 'btn btn-success'}">
+									</h:commandButton>
 									<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
 													 value="Alterar" class="btn btn-info alterador">
 										<f:ajax execute="@form" render=":formAtualizador :atualizaCurso" />

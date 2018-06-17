@@ -52,12 +52,12 @@
 										<td>#{componente.curso.nome}</td>
 										<td>
 											<div class="btn-group" role="group">
+												<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
+																 update="@form" class="btn btn-danger">
+												</h:commandButton>
 												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
 																  value="Alterar" class="btn btn-info alterador">
 													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" />
-												</h:commandButton>
-												<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
-																 update="@form" class="btn btn-danger">
 												</h:commandButton>
 											</div>
 										</td>
@@ -198,10 +198,13 @@
 								</div>
 							</div>
 							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<span>  </span>
+								<h:commandButton value="Desativar" actionListener="#{gerenciaComponenteCurricularView.inativaComponente()}"
+												 update="@form" class="btn btn-danger" />
+								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaComponenteCurricularView.persisteAlteracao()}" 
 													update="@form" class="btn btn-info" />
-								<span>  </span>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 							</div>
 						</h:form>
 					</div>
@@ -210,7 +213,7 @@
 		</div>
 		
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaComponenteCurricular.js"></script>
 	</h:body>

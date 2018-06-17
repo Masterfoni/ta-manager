@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
@@ -90,8 +91,26 @@ public class ComponenteCurricularLocalBean
 		return result;
 	}
 	
+	public AtualizacaoRequestResult inativaComponenteCurricular(ComponenteCurricular componente)
+	{
+		AtualizacaoRequestResult inativacaoResult = new AtualizacaoRequestResult();
+		
+		componente.setAtivo(false);
+		
+		try {
+			em.merge(componente);
+			inativacaoResult.result = true;
+		} catch (Exception e) {
+			inativacaoResult.result = false;
+			inativacaoResult.errors.add(e.getMessage());
+		}
+		
+		return inativacaoResult;
+	}
+	
 	public boolean persisteComponenteCurricular(@NotNull @Valid ComponenteCurricular componente)
 	{
+		componente.setAtivo(true);
 		em.persist(componente);
 		
 		return true;

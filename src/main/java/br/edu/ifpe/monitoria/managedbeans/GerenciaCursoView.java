@@ -15,6 +15,7 @@ import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @ManagedBean (name="gerenciaCursoView")
@@ -113,6 +114,20 @@ public class GerenciaCursoView implements Serializable {
 		}
 		
 		return "";
+	}
+	
+	public void toggleCursoAtivacao(Curso curso)
+	{
+		AtualizacaoRequestResult toggleResultado = cursobean.toggleCursoAtivacao(curso.getId(), !curso.isAtivo());
+		
+		if(toggleResultado.hasErrors())
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			for (String erro : toggleResultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		}
 	}
 	
 	public void alteraCurso(Curso curso) {
