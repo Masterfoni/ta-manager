@@ -1,7 +1,10 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -285,6 +288,29 @@ public class Edital implements Serializable {
     public String toString() {
         return "br.edu.ifpe.monitoria.entidades.Edital[ id=" + id + ":" + numeroEdital + " ]";
     }
+
+	public List<GregorianCalendar> getMesesMonitoria() {
+		GregorianCalendar dataInicio = new GregorianCalendar();
+		dataInicio.setTime(inicioMonitoria);
+
+		GregorianCalendar data = new GregorianCalendar();
+		data.setTime(inicioMonitoria);
+		data.set(GregorianCalendar.DAY_OF_MONTH, 1);
+		
+		GregorianCalendar dataFim = new GregorianCalendar();
+		dataFim.setTime(fimMonitoria);
+				
+		List<GregorianCalendar> meses = new ArrayList<GregorianCalendar>();
+		
+		do{
+			GregorianCalendar d = new GregorianCalendar();
+			d.setTime(data.getTime());
+			meses.add(d);
+			data.set(GregorianCalendar.MONTH, data.get(GregorianCalendar.MONTH) +1);
+		} while(data.before(dataFim) || data.equals(dataFim));
+		
+		return meses;
+	}
 }
 
 

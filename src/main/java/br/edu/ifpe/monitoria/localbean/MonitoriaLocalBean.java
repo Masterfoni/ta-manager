@@ -3,6 +3,7 @@ package br.edu.ifpe.monitoria.localbean;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -71,7 +72,6 @@ public class MonitoriaLocalBean
 		return delecao;
 	}
 
-
 	public Monitoria consultaMonitoriaByAluno(Aluno aluno, Edital edital) {
 		Monitoria monitoria = null;
 		try {
@@ -85,6 +85,24 @@ public class MonitoriaLocalBean
 		return monitoria;
 	}
 
+	public Monitoria consultaMonitoriaAtivaByAluno(Aluno aluno) {
+		Monitoria monitoria = null;
+
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findAtivaByAluno", Monitoria.class)
+				.setParameter("aluno", aluno)
+				.getResultList();
+		
+		Date hoje = new Date();
+		
+		for (Monitoria m1 : monitorias) {
+			if(m1.getEdital().isVigente() &&
+					hoje.after(m1.getEdital().getInicioMonitoria()) && 
+					hoje.before(m1.getEdital().getFimMonitoria())) {
+				monitoria = m1;
+			}
+		}
+		return monitoria;
+	}
 
 	public void atualizaMonitoria(Monitoria monitoria) {
 		em.merge(monitoria);
