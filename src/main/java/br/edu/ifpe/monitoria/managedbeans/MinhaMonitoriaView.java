@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
-import org.apache.derby.tools.sysinfo;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Atividade;
@@ -71,6 +70,7 @@ public class MinhaMonitoriaView {
 		CriacaoRequestResult resultado = atividadeBean.registrarAvidade(novaAtividade);
 		if(resultado.result) {
 			novaAtividade = new Atividade();
+			frequencias = null;
 		}
 	}
 	
@@ -85,10 +85,14 @@ public class MinhaMonitoriaView {
 	}
 	
 	public List<Frequencia> getFrequencias() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
 		if(frequencias == null) {
 			FrequenciaRequestResult result = frequenciaBean.findByMonitoria(getMonitoria());
 			if(result.hasErrors()) {
-				
+				for (String erro : result.errors) {
+					context.addMessage(null, new FacesMessage(erro));
+				}
 			} else {
 				frequencias = result.frequencias;
 			}
@@ -160,21 +164,11 @@ public class MinhaMonitoriaView {
 				}
 			}
 		}
-		for (Atividade atividade : frequenciaSelecionada.getAtividades()) {
-			System.out.println("-------------------------------------------------------------");
-			System.out.println(atividade.getAtividade());
-		}
-		
-		
 		return frequenciaSelecionada;
 	}
 
 	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
 		this.frequenciaSelecionada = frequenciaSelecionada;
-		for (Atividade atividade : frequenciaSelecionada.getAtividades()) {
-			System.out.println("-------------------------------------------------------------");
-			System.out.println(atividade.getAtividade());
-		}
 	}
 
 	public Atividade getNovaAtividade() {

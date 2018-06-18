@@ -1,10 +1,6 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.eclipse.persistence.annotations.TimeOfDay;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_ATIVIDADE",
@@ -35,22 +31,27 @@ public class Atividade implements Serializable{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_ATIVIDADE")
 	private Long id;
 	
+	@Valid
 	@ManyToOne
 	@JoinColumn(name="ID_FREQUENCIA")
 	private Frequencia frequencia;
 	
+	@NotNull(message = "{mensagem.notnull}{data.atividade}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_DATA")
 	private Date data;
 	
+	@NotNull(message = "{mensagem.notnull}{horainicio.atividade}")
 	@Temporal(TemporalType.TIME)
 	@Column(name="TM_HORAINICIO", columnDefinition="TIME")
 	private Date horaInicio;
 	
+	@NotNull(message = "{mensagem.notnull}{horafim.atividade}")
 	@Temporal(TemporalType.TIME)
 	@Column(name="TM_HORAFIM", columnDefinition ="TIME")
 	private Date horaFim;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.atividade}")
 	@Column (name="TXT_ATIVIDADE")
 	private String atividade;
 
