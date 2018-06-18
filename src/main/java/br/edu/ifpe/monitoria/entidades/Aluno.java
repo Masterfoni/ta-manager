@@ -25,7 +25,8 @@ import javax.validation.constraints.Size;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id"),
-	@NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula")
+	@NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
+	@NamedQuery(name = "Aluno.findMonitoresByComponente", query = "SELECT a FROM Aluno a, Monitoria m WHERE m.planoMonitoria.cc.id = :componenteId AND m.classificado = TRUE AND a.id = m.aluno.id")  
 })
 public class Aluno extends Usuario implements Serializable {
 
@@ -56,4 +57,23 @@ public class Aluno extends Usuario implements Serializable {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
+	
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Aluno) && (id != null) 
+             ? id.equals(((Aluno) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Aluno[ id=" + id + ":" + nome + " ]";
+    }
 }

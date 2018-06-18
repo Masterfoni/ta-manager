@@ -31,8 +31,14 @@
                         <h:link class="dropdown-item" href="#" outcome="componentes">Componentes Curriculares</h:link>
                     </div>
                 </li>
-                <li>
-                    <h:link href="#" class="nav-link" outcome="frequencias">Frequencias</h:link>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropFreq" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Frequências
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropFreq">
+                        <h:link href="#" class="dropdown-item" outcome="minhaMonitoria">Minha Monitoria</h:link>
+                        <h:link href="#" class="dropdown-item" outcome="gerenciaFrequencias">Gerenciamento de Frequencias</h:link>
+                    </div>
                 </li>
             </ul>
             <h:form id="navbar-top">
