@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
@@ -62,6 +63,24 @@ public class CursoLocalBean
 		return resultado;
 	}
 	
+	public AtualizacaoRequestResult toggleCursoAtivacao(Long id, boolean ativo)
+	{
+		AtualizacaoRequestResult toggleResult = new AtualizacaoRequestResult();
+		
+		Curso curso = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", id).getSingleResult();
+		curso.setAtivo(ativo);
+		
+		try {
+			em.merge(curso);
+			toggleResult.result = true;
+		} catch(Exception e) {
+			toggleResult.result = false;
+			toggleResult.errors.add(e.getMessage());
+		}
+		
+		return toggleResult;
+	}
+	
 	public DelecaoRequestResult deletaCurso(Long id)
 	{
 		DelecaoRequestResult delecao = new DelecaoRequestResult();
@@ -91,6 +110,7 @@ public class CursoLocalBean
 	
 	public boolean persisteCurso(@NotNull @Valid Curso curso)
 	{
+		curso.setAtivo(true);
 		em.persist(curso);
 		
 		return true;

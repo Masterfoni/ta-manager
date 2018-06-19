@@ -34,11 +34,11 @@ import br.edu.ifpe.monitoria.validacao.ValidaPeriodo;
 @Table(name = "TB_COMP_CURRICULAR")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c"),
-	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id"),
-	@NamedQuery(name = "ComponenteCurricular.findByProfessor", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor.id = :professorId"),
-	@NamedQuery(name = "ComponenteCurricular.findByCurso", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.id = :id"),
-	@NamedQuery(name = "ComponenteCurricular.findByNome", query = "SELECT c FROM ComponenteCurricular c WHERE c.nome = :nome")
+	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.ativo = TRUE AND c.ativo = TRUE"),
+	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id AND c.curso.ativo = TRUE AND c.ativo = TRUE"),
+	@NamedQuery(name = "ComponenteCurricular.findByProfessor", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor.id = :professorId AND c.curso.ativo = TRUE AND c.ativo = true"),
+	@NamedQuery(name = "ComponenteCurricular.findByCurso", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.id = :id AND c.curso.ativo = TRUE AND c.ativo = TRUE"),
+	@NamedQuery(name = "ComponenteCurricular.findByNome", query = "SELECT c FROM ComponenteCurricular c WHERE c.nome = :nome AND c.curso.ativo = TRUE AND c.ativo = TRUE")
 })
 public class ComponenteCurricular implements Serializable{
 
@@ -64,6 +64,9 @@ public class ComponenteCurricular implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@Column (name="TXT_TURNO")
 	private Turno turno;
+	
+	@Column (name="BOOL_ATIVO")
+	private boolean ativo;
 	
 	public enum Turno {
 		MATUTINO("Matutino"),
@@ -157,7 +160,15 @@ public class ComponenteCurricular implements Serializable{
 		this.turno = turno;
 	}
 	
-    @Override
+    public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);

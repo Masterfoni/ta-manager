@@ -28,11 +28,11 @@ import org.hibernate.validator.constraints.NotBlank;
 		allocationSize = 1)
 @Table(name="TB_CURSO")
 @NamedQueries({
-	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
-	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
-    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla"),
-    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome"),
-    @NamedQuery(name = "Curso.findByCoordenador", query = "SELECT c FROM Curso c WHERE c.coordenador.id = :coordenadorId")
+	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c WHERE c.ativo = TRUE"),
+	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id AND c.ativo = TRUE"),
+    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla AND c.ativo = TRUE"),
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome AND c.ativo = TRUE"),
+    @NamedQuery(name = "Curso.findByCoordenador", query = "SELECT c FROM Curso c WHERE c.coordenador.id = :coordenadorId AND c.ativo = TRUE")
 })
 @NamedNativeQueries({
      @NamedNativeQuery(name = "Curso.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Curso.class)
@@ -45,6 +45,9 @@ public class Curso implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_CURSO")
 	private Long id;
+	
+	@Column (name="BOOL_ATIVO")
+	private boolean ativo;
 	
 	@NotBlank(message = "{mensagem.notnull}{tipo.nome}")
 	@Column (name="TXT_NOME")
@@ -111,6 +114,14 @@ public class Curso implements Serializable{
 
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override
