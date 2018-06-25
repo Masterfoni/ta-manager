@@ -1,0 +1,41 @@
+.print-only { 
+    display: none;
+}
+
+.titulo-capa {
+    margin-top: 500px;
+    margin-bottom: 500px;
+    font-size: xx-large;
+}
+
+.spaced-paragraph {
+    font-size: large;
+}
+
+@media print {
+    .print-only {
+        display: block;
+    }
+
+    .not-printed {
+        display: none !important;
+    }
+
+    button {
+      display: none !important;
+    }
+
+    .btn {
+        display: none !important;
+    }
+
+    input, textarea {
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    .p-break-after-me {
+        page-break-after: always;
+    }
+}

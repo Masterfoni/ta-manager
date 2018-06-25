@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <ui:include src="/comum/header-libs.xhtml" />
+        <link rel="stylesheet" href="../aluno/relatorioFinal.css"></link>
+        <title>Monitoria - IFPE</title>
+    </h:head>
+
+    <h:body>
+        <ui:include src="/comum/navbar-top.xhtml" />
+        <div class="container">
+            <h:panelGroup layout="block" rendered="#{!relatorioFinalView.monitor}">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-warning" role="alert">
+                            <h4 class="alert-heading">
+                                <p><strong>Você não possui nenhuma monitoria ativa no momento.</strong></p>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+            <div class="row print-only p-break-after-me">
+                <div class="col-lg-12 titulo-capa text-center">
+                    <h1><strong>RELATÓRIO FINAL DAS ATIVIDADES DE MONITORIA</strong></h1>
+                </div>
+                <div class="col-lg-12">
+                    <p class="spaced-paragraph">
+                        <h3><strong>Departamento:</strong> #{relatorioFinalView.monitoriaAtual.planoMonitoria.cc.curso.departamento}</h3>
+                    </p>
+                    <p class="spaced-paragraph">
+                        <h3><strong>Coordenação:</strong> #{relatorioFinalView.monitoriaAtual.planoMonitoria.cc.curso.coordenacao}</h3>
+                    </p>
+                    <p class="spaced-paragraph">
+                        <h3><strong>Nome do estudante monitor:</strong> #{relatorioFinalView.loggedAluno.nome}</h3>
+                    </p>
+                    <p class="spaced-paragraph">
+                        <h3><strong>Nome do professor orientador:</strong> #{relatorioFinalView.monitoriaAtual.planoMonitoria.cc.professor.nome}</h3>
+                    </p>
+                    <p class="spaced-paragraph">
+                        <h3><strong>Edital nº:</strong> #{relatorioFinalView.monitoriaAtual.edital.numeroEdital}</h3>
+                    </p>
+                </div>
+            </div>
+
+            <h:panelGroup layout="block" rendered="#{relatorioFinalView.monitor}">
+                <div class="row align-items-center not-printed">
+                    <div class="col col-lg-9">
+                        <h1>Relatorio Final de Monitoria</h1>
+                    </div>
+                    <div class="col col-md-3 text-right">
+                        <button class="btn btn-outline-info">Imprimir</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-12">
+                        <h:form>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Atividades desenvolvidas</label>
+                                <h:inputTextarea id="atividades" class="form-control" rows="10" 
+                                                 value="#{relatorioFinalView.relatorioAtual.atividadesDesenv}">
+                                </h:inputTextarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Dificuldades encontradas</label>
+                                <h:inputTextarea id="dificuldades" class="form-control" rows="10" 
+                                                 value="#{relatorioFinalView.relatorioAtual.dificuldades}">
+                                </h:inputTextarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Sugestões para melhoria do processo</label>
+                                <h:inputTextarea id="sugestoes" class="form-control" rows="10" 
+                                                 value="#{relatorioFinalView.relatorioAtual.sugestoes}">
+                                </h:inputTextarea>
+                            </div>
+                            <div class="form-group row">
+                                <label for="avaliacao" class="col-sm-4 col-form-label font-weight-bold">Avaliação do orientador</label>
+                                <div class="col-sm-8">
+                                    <h:inputText id="avaliacao" class="form-control" value="#{relatorioFinalView.relatorioAtual.avaliacao}"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <h:commandButton value="Salvar" class="btn btn-block btn-success" action="#{relatorioFinalView.salvarRelatorio()}">
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
+
+        <script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+        <script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+        <script src="../comum/navbar-top.js"></script>
+    </h:body>
+
+</html>
