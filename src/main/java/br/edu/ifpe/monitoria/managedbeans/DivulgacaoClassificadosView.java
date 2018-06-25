@@ -80,7 +80,6 @@ public class DivulgacaoClassificadosView {
 
 	public List<List<List<Monitoria>>> getMonitorias() {
 		List<List<Monitoria>> monitoriasPorEdital;
-		List<PlanoMonitoria> planosVazios = new ArrayList<>();
 		if(monitorias == null) {
 			monitorias = new ArrayList<>();
 			for(int i=0;i<editais.size();i++) {

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15236681917580" configfile="/ta-manager/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="publico/index.xhtml" x="122" y="178" id="pf15243495826130" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" outlinks="pf15243495826141 pf15243495826142" inlinks="pf15243495826142 pf15245299107060" path="/publico/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="comum/homepage.xhtml" x="338" y="370" id="pf15243495826143" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15243495826141 pf15243495826144 pf15243495826145" path="/comum/homepage.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="publico/cadastroServidor.xhtml" x="122" y="562" id="pf15243495826146" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" outlinks="pf15243495826144 pf15243495826147" inlinks="pf15243495826147" path="/publico/cadastroServidor.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1522" id="pf15243495826158" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf15243495826145 pf15243495826159 pf152434958261510 pf152434958261511 pf152434958261512 pf152434958261513 pf15245299107071 pf15245299107060" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaUsuario.xhtml" x="338" y="754" id="pf152434958261514" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf15243495826159" path="/admin/gerenciaUsuario.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaCursos.xhtml" x="338" y="1138" id="pf152434958261515" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf152434958261510" path="/admin/gerenciaCursos.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaEdital.xhtml" x="338" y="1522" id="pf152434958261516" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf152434958261511" path="/admin/gerenciaEdital.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="aluno/inscricaoMonitoria.xhtml" x="338" y="1906" id="pf152434958261517" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf152434958261512" path="/aluno/inscricaoMonitoria.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="professor/gerenciaPlanoMonitoria.xhtml" x="338" y="2290" id="pf152434958261518" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf152434958261513" path="/professor/gerenciaPlanoMonitoria.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="professor/gerenciaComponenteCurricular.xhtml" x="338" y="2674" id="pf15245299107072" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf15245299107071" path="/professor/gerenciaComponenteCurricular.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="publico/index.xhtml" x="338" y="946" id="pf15243495826130" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" outlinks="pf15243495826141 pf15243495826142" inlinks="pf15243495826142 pf15245299107060" path="/publico/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="comum/homepage.xhtml" x="554" y="946" id="pf15243495826143" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15243495826141 pf15243495826144 pf15243495826145" path="/comum/homepage.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="publico/cadastroServidor.xhtml" x="338" y="178" id="pf15243495826146" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" outlinks="pf15243495826144 pf15243495826147" inlinks="pf15243495826147" path="/publico/cadastroServidor.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1351" id="pf15243495826158" referenceLink="//@navigationRule.11/@fromViewId|" outlinks="pf15243495826145 pf15243495826159 pf152434958261510 pf152434958261511 pf152434958261512 pf152434958261513 pf15245299107071 pf15245299107060 pf15297642752600" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaUsuario.xhtml" x="338" y="562" id="pf152434958261514" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf15243495826159" path="/admin/gerenciaUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaCursos.xhtml" x="338" y="1351" id="pf152434958261515" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf152434958261510" path="/admin/gerenciaCursos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/gerenciaEdital.xhtml" x="338" y="1735" id="pf152434958261516" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf152434958261511" path="/admin/gerenciaEdital.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="aluno/inscricaoMonitoria.xhtml" x="338" y="2503" id="pf152434958261517" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf152434958261512" path="/aluno/inscricaoMonitoria.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="professor/gerenciaPlanoMonitoria.xhtml" x="338" y="2119" id="pf152434958261518" referenceLink="//@navigationRule.11/@fromViewId|" outlinks="pf15297642752601" inlinks="pf152434958261513" path="/professor/gerenciaPlanoMonitoria.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="professor/gerenciaComponenteCurricular.xhtml" x="338" y="2887" id="pf15245299107072" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf15245299107071" path="/professor/gerenciaComponenteCurricular.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="professor/inserirNotas.xhtml" x="554" y="2119" id="pf15297642752602" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf15297642752601" path="/professor/inserirNotas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="aluno/relatorioFinal.xhtml" id="pf15297642752603" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf15297642752600" path="/aluno/relatorioFinal.xhtml"/>
   <links id="pf15243495826141" target="pf15243495826143" source="pf15243495826130" outcome="sucesso"/>
   <links id="pf15243495826144" target="pf15243495826143" source="pf15243495826146" outcome="sucesso"/>
   <links id="pf15243495826145" target="pf15243495826143" source="pf15243495826158" outcome="home"/>
@@ -19,6 +21,8 @@
   <links id="pf152434958261512" target="pf152434958261517" source="pf15243495826158" outcome="inscricao"/>
   <links id="pf152434958261513" target="pf152434958261518" source="pf15243495826158" outcome="planos"/>
   <links id="pf15245299107071" target="pf15245299107072" source="pf15243495826158" outcome="componentes"/>
+  <links id="pf15245299107060" target="pf15243495826130" source="pf15243495826158" outcome="index"/>
+  <links id="pf15297642752601" target="pf15297642752602" source="pf152434958261518" outcome="inserirNotas"/>
   <links id="pf15243495826142" target="pf15243495826130" source="pf15243495826130" outcome="falha">
     <bendPoints d1Height="-36" d2Height="-36"/>
     <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
@@ -29,5 +33,5 @@
     <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
     <bendPoints d1Width="-64" d2Width="-64"/>
   </links>
-  <links id="pf15245299107060" target="pf15243495826130" source="pf15243495826158" outcome="index"/>
+  <links id="pf15297642752600" target="pf15297642752603" source="pf15243495826158" outcome="relatorioFinal"/>
 </pageflow:Pageflow>

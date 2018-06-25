@@ -72,17 +72,43 @@ public class MonitoriaLocalBean
 	}
 
 
-	public Monitoria consultaMonitoriaByAluno(Aluno aluno, Edital edital) {
+	public Monitoria consultaMonitoriaByAlunoEdital(Aluno aluno, Edital edital) {
 		Monitoria monitoria = null;
+		
 		try {
-		 monitoria = em.createNamedQuery("Monitoria.findByAluno", Monitoria.class).
-				setParameter("aluno", aluno).
-				setParameter("edital", edital).
-				getSingleResult();
-		}catch (NoResultException e) {
+		 monitoria = em.createNamedQuery("Monitoria.findByAlunoEdital", Monitoria.class)
+				 			.setParameter("aluno", aluno)
+				 			.setParameter("edital", edital)
+				 			.getSingleResult();
+		} catch (NoResultException e) {
 			e.printStackTrace();
 		}
+		
 		return monitoria;
+	}
+	
+	public Monitoria consultaMonitoriaAtualPorAluno(Aluno monitor) {
+		Monitoria monitoria = null;
+		
+		try {
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoSelecionado", Monitoria.class).setParameter("alunoId", monitor.getId()).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return monitoria;
+	}
+	
+	public boolean isCurrentMonitor(Aluno aluno) {
+		List<Monitoria> monitoria = new ArrayList<Monitoria>();
+		
+		try {
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return monitoria.size() > 0;
 	}
 
 
