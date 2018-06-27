@@ -12,6 +12,14 @@
     font-size: large;
 }
 
+.printed-text-content {
+    margin-bottom: 100px;
+}
+
+.printed-text-title {
+    margin-bottom: 50px;
+}
+
 @media print {
     .print-only {
         display: block;

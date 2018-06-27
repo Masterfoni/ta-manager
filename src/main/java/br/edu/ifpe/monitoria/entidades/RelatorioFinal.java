@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -32,7 +33,7 @@ public class RelatorioFinal {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_RF")
 	private Long id;
 	
-	@NotNull(message = "{mensagem.associacao}") //INSERIR TIPO CORRETO
+	@NotNull(message = "{mensagem.associacao}")
 	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn (name = "ID_MONITORIA", referencedColumnName = "ID")
 	private Monitoria monitoria;
@@ -41,12 +42,15 @@ public class RelatorioFinal {
 	@Column (name="VF_HOMOLOGADO")
 	private boolean homologado;
 	
-	@Column (name="TXT_ATIVIDADES_DESENV") //PERMISSÃO DE BLANK, PQ O ALUNO PODE DEIXAR ALGO POR ESCREVER, SERÁ UMA PÁGINA REPRESENTANDO O PDF
+	@Lob
+	@Column (name="TXT_ATIVIDADES_DESENV")
 	private String atividadesDesenv;
 	
+	@Lob
 	@Column (name="TXT_DIFICULDADES")
 	private String dificuldades;
 	
+	@Lob
 	@Column (name="TXT_SUGESTOES")
 	private String sugestoes;
 	

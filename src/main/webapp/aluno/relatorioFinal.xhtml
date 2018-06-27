@@ -52,11 +52,35 @@
                         <h1>Relatorio Final de Monitoria</h1>
                     </div>
                     <div class="col col-md-3 text-right">
-                        <button class="btn btn-outline-info">Imprimir</button>
+                        <button class="btn btn-outline-info" onclick="window.print()">Imprimir</button>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="print-only row printed-text-title">
+                    <div class="col-lg-12 text-center">
+                        <h3>Atividades desenvolvidas</h3>
+                    </div>
+                    <div class="col-lg-12 printed-text-content">
+                        <h6>#{relatorioFinalView.relatorioAtual.atividadesDesenv}</h6>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <h3>Dificuldades encontradas</h3>
+                    </div>
+                    <div class="col-lg-12 printed-text-content">
+                        <h6>#{relatorioFinalView.relatorioAtual.atividadesDesenv}</h6>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <h3>Sugestões para melhoria do processo</h3>
+                    </div>
+                    <div class="col-lg-12 printed-text-content">
+                        <h6>#{relatorioFinalView.relatorioAtual.atividadesDesenv}</h6>
+                    </div>
+                    <div class="col-lg-12 printed-text-content">
+                        <h5>Avaliação por parte do aluno sobre o orientador: #{relatorioFinalView.relatorioAtual.avaliacao}</h5>
+                    </div>
+                </div>
+
+                <div class="row not-printed">
                     <div class="col col-lg-12">
                         <h:form>
                             <div class="form-group">
