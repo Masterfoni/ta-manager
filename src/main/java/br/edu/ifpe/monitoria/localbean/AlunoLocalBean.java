@@ -1,5 +1,8 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -59,6 +62,21 @@ public class AlunoLocalBean
 		}
 		
 		return alunoPorMatricula;
+	}
+	
+	public List<Aluno> consultaMonitoresByComponente(Long componenteId)
+	{
+		List<Aluno> alunosPorComponente = new ArrayList<Aluno>();
+		
+		try {
+			alunosPorComponente = em.createNamedQuery("Aluno.findMonitoresByComponente", Aluno.class)
+					.setParameter("componenteId", componenteId)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return alunosPorComponente;
 	}
 	
 	public boolean atualizaAluno (Aluno aluno) {

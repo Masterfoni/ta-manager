@@ -25,7 +25,8 @@ import javax.validation.constraints.Size;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id"),
-	@NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula")
+	@NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
+	@NamedQuery(name = "Aluno.findMonitoresByComponente", query = "SELECT a FROM Aluno a, Monitoria m WHERE m.planoMonitoria.cc.id = :componenteId AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.aluno.id = a.id AND m.selecionado = TRUE AND m.edital.vigente = TRUE AND m.edital.fimMonitoria > CURRENT_DATE")
 })
 public class Aluno extends Usuario implements Serializable {
 
