@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -21,6 +22,7 @@ import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.AtividadeLocalBean;
 import br.edu.ifpe.monitoria.localbean.FrequenciaLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
 
@@ -54,6 +56,12 @@ public class MinhaMonitoriaView {
 	
 	private Atividade novaAtividade;
 	
+	private Atividade atividadeSelecionada;
+	
+	private String horaInicioAlt;
+	
+	private String horaFimAlt;
+	
 	public MinhaMonitoriaView() {
 		novaAtividade = new Atividade();
 	}
@@ -65,23 +73,83 @@ public class MinhaMonitoriaView {
 	}
 	
 	public void registrarAtividade() {
-		novaAtividade.setFrequencia(getFrequenciaSelecionada());
+		String dataRA = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("dataRA");
+		novaAtividade.setData(convertData(dataRA));
 		
-		CriacaoRequestResult resultado = atividadeBean.registrarAvidade(novaAtividade);
+		String entradaRA = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("entradaRA");
+		novaAtividade.setHoraInicio(converteHora(entradaRA));
+		
+		String saidaRA = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("saidaRA");
+		novaAtividade.setHoraFim(converteHora(saidaRA));
+		
+		CriacaoRequestResult resultado = atividadeBean.registrarAvidade(novaAtividade, frequencias);
 		if(resultado.result) {
 			novaAtividade = new Atividade();
+			
 			frequencias = null;
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+			for (String erro : resultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
 		}
 	}
 	
+	public void alterarAtividade() {
+		novaAtividade.setHoraInicio(converteHora(horaInicioAlt));
+		novaAtividade.setHoraFim(converteHora(horaFimAlt));
+		
+		AtualizacaoRequestResult resultado = atividadeBean.atualizarAtividade(atividadeSelecionada);
+		if(!resultado.result) { 
+			FacesContext context = FacesContext.getCurrentInstance();
+			for (String erro : resultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		}
+	}
+	
+	public void removerAtividade(Atividade atividade) {
+		atividadeBean.removeAtividade(atividade, atividade.getFrequencia());
+	}
+	
+	public Date converteHora(String hora) {
+		Calendar saida = new GregorianCalendar();
+		saida.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hora.substring(0, 2)));
+		saida.set(Calendar.MINUTE, Integer.parseInt(hora.substring(3,5)));
+		saida.set(Calendar.SECOND, 00);
+		return saida.getTime();
+	}
+	
+	public Date convertData(String data) {
+		Calendar dataCalendar = new GregorianCalendar();
+		dataCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.substring(8, 10)));
+		dataCalendar.set(Calendar.MONTH, (Integer.parseInt(data.substring(5, 7))-1 ));
+		dataCalendar.set(Calendar.YEAR, Integer.parseInt(data.substring(0, 4)));
+		return dataCalendar.getTime();
+	}
+	
 	public String getHora(Date hora) {
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-	    return format.format(hora);
+		if(hora != null) {
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+			return format.format(hora);
+		}
+		return "";
 	}
 	
 	public String getData(Date data) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-	    return format.format(data);
+		if(data != null) {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	    	return format.format(data);
+		}
+		return "";
+	}
+	
+	public String getDataForm(Date data) {
+		if(data != null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    	return format.format(data);
+		}
+		return "";
 	}
 	
 	public List<Frequencia> getFrequencias() {
@@ -177,5 +245,39 @@ public class MinhaMonitoriaView {
 
 	public void setNovaAtividade(Atividade novaAtividade) {
 		this.novaAtividade = novaAtividade;
+	}
+
+	public Atividade getAtividadeSelecionada() {
+		return atividadeSelecionada;
+	}
+
+	public void setAtividadeSelecionada(Atividade atividadeSelecionada) {
+		this.atividadeSelecionada = atividadeSelecionada;
+	}
+
+	public String getHoraInicioAlt() {
+		if(atividadeSelecionada != null) {
+			horaInicioAlt = getHora(atividadeSelecionada.getHoraInicio());
+		} else {
+			horaInicioAlt = "";
+		}
+		return horaInicioAlt;
+	}
+
+	public void setHoraInicioAlt(String horaInicioAlt) {
+		this.horaInicioAlt = horaInicioAlt;
+	}
+
+	public String getHoraFimAlt() {
+		if(atividadeSelecionada != null) {
+			horaFimAlt = getHora(atividadeSelecionada.getHoraFim());
+		} else {
+			horaFimAlt = "";
+		}
+		return horaFimAlt;
+	}
+
+	public void setHoraFimAlt(String horaFimAlt) {
+		this.horaFimAlt = horaFimAlt;
 	}
 }

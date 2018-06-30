@@ -2,13 +2,12 @@ $(function () {
     $(".cadastrador").click(function(e){
         $("#modalRegistroAtividade").modal();
     });
-
-    $(".alterador").click(function(e) {
-        $("#myModal").modal();
+    
+    $(".editarAtividade").click(function(e) {
+        $("#modalAlterarAtividade").modal();
     });
     
-    $(".date").mask("99-99-9999");
-    $(".hora").mask("99:99:99");
+    $(".excluirAtividade").tooltip();
 });
 
 function handleAjax(data) {
@@ -16,10 +15,23 @@ function handleAjax(data) {
 
 	    switch(status) {
 	        case "complete":
-	        	console.log("complete");
+	        	updateAlteradorFunction();
 	            break;
 	        case "success":
-	        	console.log("success");
+	        	updateAlteradorFunction();
 	            break;
 	    }
+}
+
+function updateAlteradorFunction() {
+	$(".cadastrador").click(function(e){
+		$("#modalRegistroAtividade").modal();
+	});
+	
+	$(".editarAtividade").click(function(e) {
+		 $("#modalAlterarAtividade").modal();
+	});
+
+	
+    $(".excluirAtividade").tooltip();
 }

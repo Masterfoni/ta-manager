@@ -1,6 +1,8 @@
 package br.edu.ifpe.monitoria.localbean;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -10,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import br.edu.ifpe.monitoria.entidades.Atividade;
+import br.edu.ifpe.monitoria.entidades.Frequencia;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 
 @Stateless
@@ -19,32 +23,75 @@ public class AtividadeLocalBean {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	public CriacaoRequestResult registrarAvidade(Atividade atividade) {
+	public CriacaoRequestResult registrarAvidade(Atividade atividade, List<Frequencia> frequencias) {
 		CriacaoRequestResult resultado = new CriacaoRequestResult();
 		
-		resultado.errors = validarData(atividade);
+		atividade.setFrequencia(frequencias);
+		
+		validarData(atividade, resultado.errors);
+		validarHorario(atividade, resultado.errors);
 		
 		if(!resultado.hasErrors()) {
 			em.persist(atividade);
+			em.merge(atividade.getFrequencia());
+			em.flush();
 			resultado.result = true;
 		}
 		
 		return resultado;
 	}
 	
-	private List<String> validarData(Atividade atividade) {
-		List<String> validationFailures = new ArrayList<String>();
+	public void removeAtividade(Atividade atividade, Frequencia frequencia) {
+		
+		Atividade atv = em.createNamedQuery("Atividade.findById", Atividade.class)
+			.setParameter("id", atividade.getId()).getSingleResult();
+		
+		em.remove(atv);
+		em.flush();
+	}
+	
+	private void validarHorario(Atividade atividade, List<String> errors) {
+		if(atividade.getHoraInicio().after(atividade.getHoraFim())) {
+			errors.add("A hora de início da atividade deve ser antes da hora de encerramento.");
+		}
+	}
+	
+	private void validarData(Atividade atividade, List<String> errors) {
+		
+		if(atividade.getFrequencia() == null) {
+			errors.add("A data da atividade precisa ser no período da monitoria.");
+			return;
+		}
 		
 		if(atividade.getData().before(atividade.getFrequencia().getMonitoria().getEdital().getInicioMonitoria()) || 
 				atividade.getData().after(atividade.getFrequencia().getMonitoria().getEdital().getFimMonitoria())) {
 			
 			
-			validationFailures.add("A data da atividade precisa ser no periodo da monitoria. Entre " + 
+			errors.add("A data da atividade precisa ser no periodo da monitoria. Entre " + 
 						atividade.getFrequencia().getMonitoria().getEdital().getInicioMonitoria() +
 						" e " + 
 						atividade.getFrequencia().getMonitoria().getEdital().getFimMonitoria());
 		}
 		
-		return validationFailures;
+		GregorianCalendar amanha = new GregorianCalendar();
+		amanha.setTime(new Date());
+		amanha.set(Calendar.DAY_OF_MONTH, amanha.get(Calendar.DAY_OF_MONTH) + 1);
+		if(atividade.getData().after(amanha.getTime())) {
+			errors.add("Só é possível adicionar atividades que já ocorreram.");
+		}
+		
+	}
+
+	public AtualizacaoRequestResult atualizarAtividade(Atividade atividade) {
+		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
+		
+		validarHorario(atividade, resultado.errors);
+		
+		if(!resultado.hasErrors()) {
+			em.merge(atividade);
+			em.merge(atividade.getFrequencia());
+			resultado.result = true;
+		}
+		return resultado;
 	}
 }
