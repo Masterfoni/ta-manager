@@ -51,7 +51,10 @@ public class DbUnitUtil
 	        	XML_FILE = "dbunit/insercaoNotas.xml";
 	        	ultimo_executado = Dataset.InsercaoDeNotasCucumber;
 	        	break;
-	        	
+	        case SubmissaoRelatorioFinalCucumber:
+	        	XML_FILE = "dbunit/submissaoRelatorioFinalCucumber.xml";
+	        	ultimo_executado = Dataset.SubmissaoRelatorioFinalCucumber;
+	        	break;
         }
     }
 
@@ -63,6 +66,8 @@ public class DbUnitUtil
 
             String sql;
             
+            sql = "DELETE FROM TB_RELATORIO_FINAL";
+            stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_MONITORIA";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_PLANO_MONITORIA";
@@ -98,7 +103,7 @@ public class DbUnitUtil
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "postgres");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
 

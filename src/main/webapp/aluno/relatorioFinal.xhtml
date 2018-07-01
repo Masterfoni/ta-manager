@@ -11,6 +11,19 @@
     <h:body>
         <ui:include src="/comum/navbar-top.xhtml" />
         <div class="container">
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <h:messages/>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            
             <h:panelGroup layout="block" rendered="#{!relatorioFinalView.monitor}">
                 <div class="row">
                     <div class="col-lg-12">
@@ -67,13 +80,13 @@
                         <h3>Dificuldades encontradas</h3>
                     </div>
                     <div class="col-lg-12 printed-text-content">
-                        <h6>#{relatorioFinalView.relatorioAtual.atividadesDesenv}</h6>
+                        <h6>#{relatorioFinalView.relatorioAtual.dificuldades}</h6>
                     </div>
                     <div class="col-lg-12 text-center">
                         <h3>Sugestões para melhoria do processo</h3>
                     </div>
                     <div class="col-lg-12 printed-text-content">
-                        <h6>#{relatorioFinalView.relatorioAtual.atividadesDesenv}</h6>
+                        <h6>#{relatorioFinalView.relatorioAtual.sugestoes}</h6>
                     </div>
                     <div class="col-lg-12 printed-text-content">
                         <h5>Avaliação por parte do aluno sobre o orientador: #{relatorioFinalView.relatorioAtual.avaliacao}</h5>
@@ -82,7 +95,7 @@
 
                 <div class="row not-printed">
                     <div class="col col-lg-12">
-                        <h:form>
+                        <h:form id="formRelatorioFinal">
                             <div class="form-group">
                                 <label class="font-weight-bold">Atividades desenvolvidas</label>
                                 <h:inputTextarea id="atividades" class="form-control" rows="10" 
@@ -109,7 +122,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <h:commandButton value="Salvar" class="btn btn-block btn-success" action="#{relatorioFinalView.salvarRelatorio()}">
+                                    <h:commandButton id="btnSalvar" value="Salvar" class="btn btn-block btn-success" action="#{relatorioFinalView.salvarRelatorio()}">
                                     </h:commandButton>
                                 </div>
                             </div>

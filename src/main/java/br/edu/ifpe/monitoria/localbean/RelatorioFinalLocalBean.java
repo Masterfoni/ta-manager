@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.RelatorioFinal;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
 
 @Stateless
@@ -19,15 +20,25 @@ public class RelatorioFinalLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	public boolean persisteRelatorio(@NotNull @Valid RelatorioFinal relatorioFinal)
+	public CriacaoRequestResult persisteRelatorio(@NotNull @Valid RelatorioFinal relatorioFinal)
 	{
-		try {
-			em.persist(relatorioFinal);			
-		} catch (Exception e) {
-			return false;
+		CriacaoRequestResult resultado = new CriacaoRequestResult();
+		
+		if(relatorioFinal.getAvaliacao() > 10) {
+			resultado.errors.add("Avaliação deve ser igual ou inferior à 10!");
 		}
 		
-		return true;
+		if(!resultado.hasErrors()) {
+			try {
+				em.persist(relatorioFinal);
+				resultado.result = true;
+			} catch (Exception e) {
+				resultado.errors.add(e.getMessage());
+				resultado.result = false;
+			}			
+		}
+		
+		return resultado;
 	}
 	
 	public RelatorioFinalRequestResult consultaRelatorioFinalPorMonitor(Long monitorId) {
@@ -47,12 +58,18 @@ public class RelatorioFinalLocalBean
 	{
 		AtualizacaoRequestResult resultado = new AtualizacaoRequestResult();
 		
-		try {
-			em.merge(relatorioFinal);
-			resultado.result = true;
-		} catch (Exception e) {
-			resultado.errors.add(e.getMessage());
-			resultado.result = false;
+		if(relatorioFinal.getAvaliacao() > 10) {
+			resultado.errors.add("Avaliação deve ser igual ou inferior à 10!");
+		}
+		
+		if(!resultado.hasErrors()) {
+			try {
+				em.merge(relatorioFinal);
+				resultado.result = true;
+			} catch (Exception e) {
+				resultado.errors.add(e.getMessage());
+				resultado.result = false;
+			}
 		}
 		
 		return resultado;

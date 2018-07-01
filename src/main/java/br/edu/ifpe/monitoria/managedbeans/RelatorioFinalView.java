@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -17,6 +18,7 @@ import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.RelatorioFinalLocalBean;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
 
 @ManagedBean (name="relatorioFinalView")
@@ -55,12 +57,20 @@ public class RelatorioFinalView implements Serializable {
 	public void salvarRelatorio() {
 		if(relatorioAtual.getId() == null) {
 			relatorioAtual.setMonitoria(monitoriaAtual);
-			relatorioFinalBean.persisteRelatorio(relatorioAtual);
+			CriacaoRequestResult persisteRelatorio = relatorioFinalBean.persisteRelatorio(relatorioAtual);
+			
+			if(persisteRelatorio.hasErrors()) {
+				for(String erro : persisteRelatorio.errors) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+				}
+			}
 		} else {
 			AtualizacaoRequestResult atualizacaoResultado = relatorioFinalBean.atualizaRelatorio(relatorioAtual);
 			
 			if(atualizacaoResultado.hasErrors()) {
-				System.out.println(atualizacaoResultado.errors);
+				for(String erro : atualizacaoResultado.errors) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(erro));
+				}
 			}
 		}
 	}
