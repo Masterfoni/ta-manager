@@ -1,0 +1,1 @@
+$(".avaliacaoClass").mask("99");

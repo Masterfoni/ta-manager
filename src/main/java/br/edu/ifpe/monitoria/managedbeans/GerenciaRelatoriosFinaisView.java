@@ -98,6 +98,8 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
+		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
+		
 		return componentes;
 	}
 
@@ -106,7 +108,6 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public ComponenteCurricular getComponenteSelecionado() {
-		componenteSelecionado = componentes != null && componentes.size() > 0 ? componentes.get(0) : null;
 		return componenteSelecionado;
 	}
 
@@ -124,7 +125,6 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public Aluno getAlunoSelecionado() {
-		alunoSelecionado = alunos != null && alunos.size() > 0 ? alunos.get(0) : null;
 		return alunoSelecionado;
 	}
 

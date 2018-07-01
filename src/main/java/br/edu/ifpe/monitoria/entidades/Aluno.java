@@ -57,4 +57,23 @@ public class Aluno extends Usuario implements Serializable {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
+	
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Aluno[ id=" + id + ":" + nome + " ]";
+    }
+	
+	@Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Aluno) && (id != null) 
+             ? id.equals(((Aluno) object).getId()) 
+             : (object == this);
+    }
 }

@@ -10,4 +10,5 @@ public enum Dataset
     CandidaturaCucumber,
     InsercaoDeNotasCucumber,
     SubmissaoRelatorioFinalCucumber,
+    HomologacaoRelatorioFinalCucumber,
 }

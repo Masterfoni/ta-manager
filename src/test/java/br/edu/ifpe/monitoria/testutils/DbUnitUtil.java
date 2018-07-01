@@ -55,6 +55,10 @@ public class DbUnitUtil
 	        	XML_FILE = "dbunit/submissaoRelatorioFinalCucumber.xml";
 	        	ultimo_executado = Dataset.SubmissaoRelatorioFinalCucumber;
 	        	break;
+	        case HomologacaoRelatorioFinalCucumber:
+	        	XML_FILE = "dbunit/homologacaoRelatorioFinalCucumber.xml";
+	        	ultimo_executado = Dataset.HomologacaoRelatorioFinalCucumber;
+	        	break;
         }
     }
 
@@ -103,7 +107,7 @@ public class DbUnitUtil
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "postgres");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
 
