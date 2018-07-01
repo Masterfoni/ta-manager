@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -70,11 +71,11 @@ public class AtividadeLocalBean {
 		if(atividade.getData().before(atividade.getFrequencia().getMonitoria().getEdital().getInicioMonitoria()) || 
 				atividade.getData().after(atividade.getFrequencia().getMonitoria().getEdital().getFimMonitoria())) {
 			
-			
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			errors.add("A data da atividade precisa ser no periodo da monitoria. Entre " + 
-						atividade.getFrequencia().getMonitoria().getEdital().getInicioMonitoria() +
+						format.format(atividade.getFrequencia().getMonitoria().getEdital().getInicioMonitoria()) +
 						" e " + 
-						atividade.getFrequencia().getMonitoria().getEdital().getFimMonitoria());
+						format.format(atividade.getFrequencia().getMonitoria().getEdital().getFimMonitoria()));
 		}
 		
 		GregorianCalendar amanha = new GregorianCalendar();

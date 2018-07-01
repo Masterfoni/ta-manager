@@ -80,5 +80,15 @@ public class FrequenciaLocalBean {
 		}
 	}
 
+	public void aprovarFrequencia(Frequencia frequencia, boolean aprovado) {
+		frequencia.setAprovado(aprovado);
+		em.merge(frequencia);
+	}
+
+	public void receberFrequencia(Frequencia frequencia) {
+		frequencia.setRecebido(true);
+		em.merge(frequencia);
+	}
+
 
 }

@@ -67,9 +67,11 @@
 						<h4>Atividades</h4>
 					</div>
 					<div class="col col-sm-6  text-right">
-						<h:commandButton value="Registrar Atividade" class="btn btn-outline-success cadastrador">
-							<f:ajax execute="@none" render="registrarAtividade" />
-						</h:commandButton>	
+						<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
+							<h:commandButton value="Registrar Atividade" class="btn btn-outline-success cadastrador">
+								<f:ajax execute="@none" render="registrarAtividade" />
+							</h:commandButton>
+						</h:panelGroup>	
 					</div>
 				</div>
 				<br />
@@ -87,15 +89,17 @@
   											</div>
   											<div class="col-sm text-right">
   												
-  												<h:commandButton value="Editar" type="submit" id="botaoEditar" class="btn btn-info editarAtividade alterador" 
-													actionListener="#{minhaMonitoriaView.setAtividadeSelecionada(atividade)}">
-														<f:ajax execute="@form" render=":formAlteracao :alterarAtividade"/>
-												</h:commandButton>
+  												<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
+  													<h:commandButton value="Editar" type="submit" id="botaoEditar" class="btn btn-info editarAtividade alterador" 
+														actionListener="#{minhaMonitoriaView.setAtividadeSelecionada(atividade)}">
+															<f:ajax execute="@form" render=":formAlteracao :alterarAtividade"/>
+													</h:commandButton>
   												
-  												<h:commandButton type="submit" id="botaoExcluir" actionListener="#{minhaMonitoriaView.removerAtividade(atividade)}"
-													class="btn btn-danger excluirAtividade" value="Excluir" >
-													<f:ajax execute="@form" render="@form"/>
-												</h:commandButton>
+	  												<h:commandButton type="submit" id="botaoExcluir" actionListener="#{minhaMonitoriaView.removerAtividade(atividade)}"
+														class="btn btn-danger excluirAtividade" value="Excluir" >
+														<f:ajax execute="@form" render="@form"/>
+													</h:commandButton>
+												</h:panelGroup>
   												
   											</div>
   										</div>
@@ -219,7 +223,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton id="alterar" value="Salvar Alterações" actionListener="#{minhaMonitoriaView.alterarAtividade()}" 
-												 update="@all" class="btn btn-info" />
+												 update="@all :formTableAtvidades" render=":formTableAtvidades" class="btn btn-info" />
 							</div>
 						</h:form>
 					</div>

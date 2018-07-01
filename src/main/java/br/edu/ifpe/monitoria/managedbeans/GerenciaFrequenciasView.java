@@ -72,6 +72,14 @@ public class GerenciaFrequenciasView {
 		alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
 	}
 
+	public void aprovacaoFrequencia(boolean aprovado) {
+		frequenciaBean.aprovarFrequencia(frequenciaSelecionada, aprovado);
+	}
+	
+	public void receberFrequencia() {
+		frequenciaBean.receberFrequencia(frequenciaSelecionada);
+	}
+	
 	public String getNomeMes(GregorianCalendar mes) {
 		Locale brazil = new Locale("pt", "BR");
 		return mes.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, brazil) + "/" + 
@@ -127,6 +135,8 @@ public class GerenciaFrequenciasView {
 	public void setAlunoSelecionado(Aluno alunoSelecionado) {
 		this.alunoSelecionado = alunoSelecionado;
 		meses = null;
+		frequenciaSelecionada = null;
+		getFrequenciaSelecionada();
 	}
 
 	public GregorianCalendar getMesSelecionado() {
@@ -190,5 +200,17 @@ public class GerenciaFrequenciasView {
 
 	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
 		this.frequenciaSelecionada = frequenciaSelecionada;
+	}
+
+	public Servidor getLoggedServidor() {
+		if(loggedServidor == null) {
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		}
+		return loggedServidor;
+	}
+
+	public void setLoggedServidor(Servidor loggedServidor) {
+		this.loggedServidor = loggedServidor;
 	}
 }
