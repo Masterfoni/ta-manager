@@ -26,7 +26,7 @@
                             </div>
                             <h:selectOneMenu id="componenteSelect" class="form-control" value="#{gerenciaRelatoriosFinaisView.componenteSelecionado}" converter="componenteConverter">
                                 <f:selectItems value="#{gerenciaRelatoriosFinaisView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-                                <f:ajax render=":formInfoMonitor" onevent="handleAjax"/>
+                                <f:ajax render=":formInfoMonitor :formDetalhes" onevent="handleAjax"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             </div>
                             <h:selectOneMenu id="alunoSelect" class="form-control" value="#{gerenciaRelatoriosFinaisView.alunoSelecionado}" converter="alunoConverter">
                                 <f:selectItems value="#{gerenciaRelatoriosFinaisView.alunos}" var="aluno" itemValue="#{aluno}" itemLabel="#{aluno.nome}"/>
-                                <f:ajax render=":formInfoMonitor" onevent="handleAjax"/>
+                                <f:ajax render=":formInfoMonitor :formDetalhes" onevent="handleAjax"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
