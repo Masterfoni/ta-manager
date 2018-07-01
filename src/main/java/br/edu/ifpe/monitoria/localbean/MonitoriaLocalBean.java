@@ -103,7 +103,7 @@ public class MonitoriaLocalBean
 		List<Monitoria> monitoria = new ArrayList<Monitoria>();
 		
 		try {
-			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoSelecionado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
