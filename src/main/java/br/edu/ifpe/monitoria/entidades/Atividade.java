@@ -129,4 +129,23 @@ public class Atividade implements Serializable{
 			}
 		}
 	}
+	
+	@Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+	
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Atividade) && (id != null) 
+             ? id.equals(((Atividade) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Atividade[ id=" + id  + " ]";
+    }
 }

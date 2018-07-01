@@ -33,6 +33,8 @@ public class AtividadeLocalBean {
 		
 		if(!resultado.hasErrors()) {
 			em.persist(atividade);
+			Frequencia frequencia = atividade.getFrequencia();
+			frequencia.addAtividade(atividade);
 			em.merge(atividade.getFrequencia());
 			em.flush();
 			resultado.result = true;
@@ -47,6 +49,8 @@ public class AtividadeLocalBean {
 			.setParameter("id", atividade.getId()).getSingleResult();
 		
 		em.remove(atv);
+		frequencia.removeAtividade(atv);
+		em.merge(frequencia);
 		em.flush();
 	}
 	

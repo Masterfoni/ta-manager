@@ -29,7 +29,8 @@ import javax.validation.Valid;
 @Table(name = "TB_FREQUENCIA")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name = "Frequencia.findByMonitoria", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria")
+	@NamedQuery(name = "Frequencia.findByMonitoria", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria"),
+	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE")
 })
 public class Frequencia implements Serializable{
 
@@ -100,4 +101,31 @@ public class Frequencia implements Serializable{
 	public Long getId() {
 		return id;
 	}
+
+	public void addAtividade(Atividade atividade) {
+		this.atividades.add(atividade);
+	}
+
+	public void removeAtividade(Atividade atividade) {
+		this.atividades.remove(atividade);
+	}
+	
+	@Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Frequencia) && (id != null) 
+             ? id.equals(((Frequencia) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Frequencia[ id=" + id  + " ]";
+    }
 }

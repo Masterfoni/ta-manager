@@ -41,9 +41,52 @@
                                 <f:ajax render="@form" />
                             </h:selectOneMenu>
                         </div>
-                    </div>
+                   	</div>
+                    <h:panelGroup rendered="#{gerenciaFrequenciasView.alunoSelecionado != null}">
+                     	<div class="col-md-12">
+                        	<div class="input-group mb-3">
+                            	<div class="input-group-prepend">
+	                                <div class="input-group-text">Mês</div>
+                            	</div>
+                            	<h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.mesSelecionado}" converter="mesConverter">
+									<f:selectItems value="#{gerenciaFrequenciasView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{gerenciaFrequenciasView.getNomeMes(mes)}"/>
+									<f:ajax render=":formTableAtvidades" onevent="handleAjax" />
+								</h:selectOneMenu>
+                        	</div>
+                    	</div>
+                  	</h:panelGroup>
+                    
                 </div>
             </h:form>
+            
+            <div class="row">
+				<div class="col-md-12">
+					<h:form id="formTableAtividades" rendered="#{gerenciaFrequenciasView.frequenciaSelecionada != null}">
+						<table class="table table-striped">
+							<thead>
+								<th scope="col">Data</th>
+								<th scope="col">Hora Entrada</th>
+								<th scope="col">Hora Saída</th>
+								<th scope="col">Atividade Desempenhada</th>
+								<th scope="col"></th>
+							</thead>
+							<tbody>
+								<ui:repeat id="repeatAtividades" value="#{gerenciaFrequenciasView.frequenciaSelecionada.atividades}" var="atividade" varStatus="atv">
+									<tr>
+										<td>#{gerenciaFrequenciasView.getData(atividade.data)}</td>
+										<td>#{gerenciaFrequenciasView.getHora(atividade.horaInicio)}</td>
+										<td>#{gerenciaFrequenciasView.getHora(atividade.horaFim)}</td>
+										<td>#{atividade.atividade}</td>
+										<td></td>
+										
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</h:form>
+				</div>
+			</div>
+            
         </div>
 			
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>

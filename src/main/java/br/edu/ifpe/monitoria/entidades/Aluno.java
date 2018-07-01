@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 	@NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id"),
 	@NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
-	@NamedQuery(name = "Aluno.findMonitoresByComponente", query = "SELECT a FROM Aluno a, Monitoria m WHERE m.planoMonitoria.cc.id = :componenteId AND m.classificado = TRUE AND a.id = m.aluno.id")  
+	@NamedQuery(name = "Aluno.findMonitoresByComponente", query = "SELECT a FROM Aluno a, Monitoria m WHERE m.planoMonitoria.cc.id = :componenteId AND m.selecionado = TRUE AND a.id = m.aluno.id AND m.edital.vigente = TRUE")  
 })
 public class Aluno extends Usuario implements Serializable {
 

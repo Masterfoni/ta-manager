@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
@@ -20,6 +21,22 @@ public class FrequenciaLocalBean {
 	
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	public FrequenciaRequestResult findByAluno(Aluno aluno) {
+		FrequenciaRequestResult resultado = new FrequenciaRequestResult();
+		
+		List<Frequencia> frequencias = em.createNamedQuery("Frequencia.findByAluno", Frequencia.class)
+				.setParameter("aluno", aluno)
+				.getResultList();
+		
+		if(frequencias.size() > 0) {
+			resultado.frequencias = frequencias;
+		} else {
+			resultado.errors.add("Não existem frequencias registradas para esse aluno");
+		}
+		
+		return resultado;
+	}
 	
 	public FrequenciaRequestResult findByMonitoria(Monitoria monitoria) {
 		
@@ -62,4 +79,6 @@ public class FrequenciaLocalBean {
 			em.persist(f);
 		}
 	}
+
+
 }
