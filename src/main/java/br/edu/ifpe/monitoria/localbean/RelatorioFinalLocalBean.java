@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import br.edu.ifpe.monitoria.entidades.RelatorioFinal;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
 
 @Stateless
@@ -73,5 +74,19 @@ public class RelatorioFinalLocalBean
 		}
 		
 		return resultado;
+	}
+	
+	public DelecaoRequestResult deletaRelatorio(Long id) {
+		DelecaoRequestResult delecao = new DelecaoRequestResult();
+		
+		RelatorioFinal relatorioDeletado = em.createNamedQuery("RelatorioFinal.findById", RelatorioFinal.class).setParameter("id", id).getSingleResult();
+
+		try {
+			em.remove(relatorioDeletado);
+		} catch (Exception e) {
+			delecao.errors.add("Problemas na remoção da entidade no banco de dados, contate o suporte.");
+		}
+				
+		return delecao;
 	}
 }

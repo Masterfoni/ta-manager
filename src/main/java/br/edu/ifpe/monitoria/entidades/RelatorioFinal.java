@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
 	@NamedQuery(name = "RelatorioFinal.findByMonitor", query = "SELECT rf FROM RelatorioFinal rf WHERE rf.monitoria.aluno.id = :monitorId AND rf.monitoria.edital.vigente = TRUE AND rf.monitoria.planoMonitoria.cc.ativo = TRUE AND rf.monitoria.planoMonitoria.cc.curso.ativo = TRUE AND rf.monitoria.edital.fimMonitoria > CURRENT_DATE"),
 	@NamedQuery(name = "RelatorioFinal.findAll", query = "SELECT rf FROM RelatorioFinal rf"),
+	@NamedQuery(name = "RelatorioFinal.findById", query = "SELECT rf FROM RelatorioFinal rf WHERE rf.id = :id")
 })
 public class RelatorioFinal {
 	@Id
