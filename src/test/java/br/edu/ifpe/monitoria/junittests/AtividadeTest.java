@@ -1,11 +1,13 @@
 package br.edu.ifpe.monitoria.junittests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,6 +22,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
+import br.edu.ifpe.monitoria.entidades.Atividade;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -30,6 +33,7 @@ import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Servidor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
+import br.edu.ifpe.monitoria.localbean.AtividadeLocalBean;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
@@ -40,10 +44,11 @@ import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.testutils.JUnitUtils;
+import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class FrequenciaTest 
+public class AtividadeTest 
 {
 	private static EJBContainer container;
 
@@ -77,6 +82,9 @@ public class FrequenciaTest
 	@EJB
 	private FrequenciaLocalBean frequenciabean;
 	
+	@EJB
+	private AtividadeLocalBean atividadebean;
+	
 	@BeforeClass
 	public static void setUpClass() throws Exception 
 	{
@@ -96,10 +104,11 @@ public class FrequenciaTest
 		alunobean = (AlunoLocalBean) JUnitUtils.getLocalBean(container, "AlunoLocalBean");
 		esquemabean = (EsquemaBolsaLocalBean) JUnitUtils.getLocalBean(container, "EsquemaBolsaLocalBean");
 		frequenciabean = (FrequenciaLocalBean) JUnitUtils.getLocalBean(container, "FrequenciaLocalBean");
+		atividadebean = (AtividadeLocalBean) JUnitUtils.getLocalBean(container, "AtividadeLocalBean");
 	}
 
 	@Test
-	public void t01_criarFrequencia() throws Exception 
+	public void t01_criarAtividade() throws Exception 
 	{
 		Servidor servidor = new Servidor();
 		servidor.setTitulacao(Titulacao.DOUTORADO);
@@ -144,6 +153,10 @@ public class FrequenciaTest
 		Edital edital = new Edital();
 		Date initialDate = new Date();
 		
+		Calendar initialCalendar = Calendar.getInstance(); 
+		initialCalendar.setTime(initialDate); 
+		initialCalendar.add(Calendar.DATE, -160);
+		
 		Calendar finalCalendar = Calendar.getInstance(); 
 		finalCalendar.setTime(initialDate); 
 		finalCalendar.add(Calendar.DATE, 160);
@@ -152,11 +165,11 @@ public class FrequenciaTest
 		edital.setNumero(999999);
 		edital.setNumeroEdital("999999/2020");
 
-		edital.setInicioInscricaoComponenteCurricular(initialDate);
-		edital.setInicioInscricaoEstudante(initialDate);
-		edital.setInicioInsercaoNota(initialDate);
-		edital.setInicioInsercaoPlano(initialDate);
-		edital.setInicioMonitoria(initialDate);
+		edital.setInicioInscricaoComponenteCurricular(initialCalendar.getTime());
+		edital.setInicioInscricaoEstudante(initialCalendar.getTime());
+		edital.setInicioInsercaoNota(initialCalendar.getTime());
+		edital.setInicioInsercaoPlano(initialCalendar.getTime());
+		edital.setInicioMonitoria(initialCalendar.getTime());
 		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
 		edital.setFimInscricaoEstudante(finalCalendar.getTime());
 		edital.setFimInsercaoNota(finalCalendar.getTime());
@@ -212,56 +225,108 @@ public class FrequenciaTest
 		
 		List<Monitoria> monitorias = monitoriabean.consultaMonitorias();
 		monitoriabean.salvarNotas(monitorias);
-				
 		monitoria = monitoriabean.consultaMonitorias().get(0);
 		
 		List <String> erros = frequenciabean.findByMonitoria(monitoria).errors;
 		assertFalse(erros.size() > 0);
-		System.out.println("KANBAN " + erros.size());
+		
+		Atividade atividade = new Atividade();
+		
+		Calendar data = new GregorianCalendar();
+		Calendar horaInicio = new GregorianCalendar();
+		Calendar horaFim = new GregorianCalendar();
+		data.setTime(initialDate);
+		data.add(Calendar.DATE, -60);
+		horaInicio.set(Calendar.HOUR_OF_DAY, 9);
+		horaInicio.set(Calendar.MINUTE, 0);
+		horaFim.set(Calendar.HOUR_OF_DAY, 10);
+		horaFim.set(Calendar.MINUTE, 0);
+		
+		atividade.setData(data.getTime());
+		atividade.setHoraInicio(horaInicio.getTime());
+		atividade.setHoraFim(horaFim.getTime());
+		atividade.setAtividade("Minha atividade");
+		atividade.setObservacao("observacao");
+		
+		erros = atividadebean.registrarAvidade(atividade, frequenciabean.findByMonitoria(monitoria).frequencias).errors;
+		assertFalse(erros.size() > 0);
+		
 	}
 	
 	@Test
-	public void t02_consultarFrequencia() throws Exception 
+	public void t02_consultarAtividade() throws Exception 
 	{
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-		
-		assertTrue(frequenciabean.findByMonitoria(monitoria).frequencias.size() > 1 );
-	}
-	
-	@Test
-	public void t03_aprovarFrequencia() throws Exception {
-		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-
 		List<Frequencia> frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
-		for (Frequencia f : frequencias) {
-			if(f.getMes() == 10) {
-				frequenciabean.aprovarFrequencia(f, true);
-			}
-		}
 		
-		frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
-		for (Frequencia f : frequencias) {
-			if(f.getMes() == 10) {
-				assertTrue(f.isAprovado());
+		Date initialDate = new Date();
+		
+		Calendar dataAtividade = Calendar.getInstance(); 
+		dataAtividade.setTime(initialDate); 
+		dataAtividade.add(Calendar.DATE, -60);
+		
+		for (Frequencia frequencia : frequencias) {
+			if(frequencia.getMes() == dataAtividade.get(Calendar.MONTH)) {
+				List<Atividade> atividade = frequencia.getAtividades();
+				assertTrue(atividade.size() > 0);
 			}
 		}
 	}
 	
 	@Test
-	public void t04_receberFrequencia() throws Exception {
+	public void t03_atualizaAtividade() throws Exception {
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-
 		List<Frequencia> frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
-		for (Frequencia f : frequencias) {
-			if(f.getMes() == 10) {
-				frequenciabean.receberFrequencia(f);
+		
+		Date initialDate = new Date();
+		
+		Calendar dataAtividade = Calendar.getInstance(); 
+		dataAtividade.setTime(initialDate); 
+		dataAtividade.add(Calendar.DATE, -60);
+		
+		for (Frequencia frequencia : frequencias) {
+			if(frequencia.getMes() == dataAtividade.get(Calendar.MONTH)) {
+				List<Atividade> atividades = frequencia.getAtividades();
+				atividades.get(0).setAtividade("KANBA");
+				AtualizacaoRequestResult result = atividadebean.atualizarAtividade(atividades.get(0));
+				assertTrue(result.result);
 			}
 		}
 		
 		frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
-		for (Frequencia f : frequencias) {
-			if(f.getMes() == 10) {
-				assertTrue(f.isRecebido());
+		
+		for (Frequencia frequencia : frequencias) {
+			if(frequencia.getMes() == dataAtividade.get(Calendar.MONTH)) {
+				List<Atividade> atividades = frequencia.getAtividades();
+				assertEquals(atividades.get(0).getAtividade(), "KANBA");
+			}
+		}
+	}
+	
+	@Test
+	public void t04_excluirAtividade() throws Exception {
+		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
+		List<Frequencia> frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
+		
+		Date initialDate = new Date();
+		
+		Calendar dataAtividade = Calendar.getInstance(); 
+		dataAtividade.setTime(initialDate); 
+		dataAtividade.add(Calendar.DATE, -60);
+		
+		for (Frequencia frequencia : frequencias) {
+			if(frequencia.getMes() == dataAtividade.get(Calendar.MONTH)) {
+				List<Atividade> atividades = frequencia.getAtividades();
+				atividadebean.removeAtividade(atividades.get(0),frequencia) ;
+			}
+		}
+		
+		frequencias = frequenciabean.findByMonitoria(monitoria).frequencias;
+		
+		for (Frequencia frequencia : frequencias) {
+			if(frequencia.getMes() == dataAtividade.get(Calendar.MONTH)) {
+				List<Atividade> atividades = frequencia.getAtividades();
+				assertTrue(atividades.isEmpty());
 			}
 		}
 	}
