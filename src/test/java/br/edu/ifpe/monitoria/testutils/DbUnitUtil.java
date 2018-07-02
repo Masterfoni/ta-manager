@@ -63,6 +63,12 @@ public class DbUnitUtil
 
             String sql;
             
+            sql = "DELETE FROM TB_ATIVIDADE";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM TB_FREQUENCIA";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM TB_RELATORIO_FINAL";
+            stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_MONITORIA";
             stmt.executeUpdate(sql);
             sql = "DELETE FROM TB_PLANO_MONITORIA";
