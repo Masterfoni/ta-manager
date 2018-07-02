@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <ui:include src="/comum/header-libs.xhtml" />
+        <link rel="stylesheet" href="../professor/gerenciaRelatoriosFinais.css"></link>
+        <title>Monitoria - IFPE</title>
+    </h:head>
+
+    <h:body>
+        <ui:include src="/comum/navbar-top.xhtml" />
+        <div class="container">
+            <div class="row">
+                <div class="col col-sm-6">
+                    <h1>Relatórios Finais</h1>
+                </div>
+            </div>
+
+            <h:form style="width: 100%">            
+                <div class="row mt-3">
+                    <div class="form-group col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Componente Curricular</div>
+                            </div>
+                            <h:selectOneMenu id="componenteSelect" class="form-control" value="#{gerenciaRelatoriosFinaisView.componenteSelecionado}" converter="componenteConverter">
+                                <f:selectItems value="#{gerenciaRelatoriosFinaisView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+                                <f:ajax render=":formInfoMonitor :formDetalhes" onevent="handleAjax"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Aluno</div>
+                            </div>
+                            <h:selectOneMenu id="alunoSelect" class="form-control" value="#{gerenciaRelatoriosFinaisView.alunoSelecionado}" converter="alunoConverter">
+                                <f:selectItems value="#{gerenciaRelatoriosFinaisView.alunos}" var="aluno" itemValue="#{aluno}" itemLabel="#{aluno.nome}"/>
+                                <f:ajax render=":formInfoMonitor :formDetalhes" onevent="handleAjax"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+            <h:form id="formInfoMonitor">
+                <h:panelGroup rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual != null}">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">
+                            <h:panelGroup rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual.homologado}">
+                                <p>
+                                    <strong id="alreadyHomologado">O relatório deste monitor já se encontra homologado!</strong>
+                                </p>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{!gerenciaRelatoriosFinaisView.relatorioAtual.homologado
+                                                    and (gerenciaRelatoriosFinaisView.relatorioAtual.atividadesDesenv == null 
+                                                    || gerenciaRelatoriosFinaisView.relatorioAtual.dificuldades == null
+                                                    || gerenciaRelatoriosFinaisView.relatorioAtual.sugestoes == null
+                                                    || gerenciaRelatoriosFinaisView.relatorioAtual.avaliacao == null)}">
+                                <p>
+                                    <strong>O monitor ainda não preencheu alguns dados: </strong>
+                                    <br></br>
+                                    <strong rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual.atividadesDesenv == null}">
+                                        Atividades desenvolvidas
+                                    </strong>
+                                    <br></br>
+                                    <strong rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual.dificuldades == null}">
+                                        Dificuldades encontradas
+                                    </strong>
+                                    <br></br>
+                                    <strong rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual.sugestoes == null}">
+                                        Sugestões para melhoria
+                                    </strong>
+                                    <br></br>
+                                    <strong rendered="#{gerenciaRelatoriosFinaisView.relatorioAtual.avaliacao == null}">
+                                        Avaliação do Orientador
+                                    </strong>
+                                </p>
+                            </h:panelGroup>
+                        </h4>
+                        
+                        <hr></hr>
+                        
+                        <p class="mb-0">
+                            Para visualizar mais detalhes e homologar o relatório, clique aqui: 
+                            <h:commandButton id="btnDetalhes" value="Detalhes" class="btn btn-outline-success detalhador">
+                                <f:ajax execute="@none" render="detalhaCurso" />
+                            </h:commandButton>
+                        </p>
+                    </div>
+                </h:panelGroup>
+            </h:form>
+
+            <!-- MODAL DE DETALHES-->
+			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detalhesTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <h:form id="formDetalhes">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detalhesTitle">Detalhes do relatório</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="detalhaRelatorio">
+                                    <p>
+                                        <strong>Atividades desenvolvidas</strong>
+                                        #{gerenciaRelatoriosFinaisView.relatorioAtual.atividadesDesenv}
+                                    </p>
+                                    <p>
+                                        <strong>Dificuldades encontradas</strong>
+                                        #{gerenciaRelatoriosFinaisView.relatorioAtual.dificuldades}
+                                    </p>
+                                    <p>
+                                        <strong>Sugestões para melhoria</strong>
+                                        #{gerenciaRelatoriosFinaisView.relatorioAtual.sugestoes}
+                                    </p>
+                                    <p>
+                                        <strong>Avaliação do aluno:</strong> #{gerenciaRelatoriosFinaisView.relatorioAtual.avaliacao}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <h:commandButton id="btnHomologar" value="Homologar" actionListener="#{gerenciaRelatoriosFinaisView.homologarRelatorio()}" 
+                                                 rendered="#{!gerenciaRelatoriosFinaisView.relatorioAtual.homologado}" 
+                                                 update="@form" class="btn btn-success"/>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+        <script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+        <script src="../comum/navbar-top.js"></script>
+        <script src="./gerenciaRelatoriosFinais.js"></script>
+    </h:body>
+</html>

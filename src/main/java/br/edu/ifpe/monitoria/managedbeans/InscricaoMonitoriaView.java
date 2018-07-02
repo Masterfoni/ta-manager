@@ -129,7 +129,7 @@ public class InscricaoMonitoriaView implements Serializable{
 	
 	public Monitoria getMonitoria() {
 		if(monitoria == null && edital != null) {
-			monitoria = monitoriaBean.consultaMonitoriaByAluno(getAluno(), getEdital());
+			monitoria = monitoriaBean.consultaMonitoriaByAlunoEdital(getAluno(), getEdital());
 		}
 		return monitoria;
 	}

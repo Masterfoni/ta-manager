@@ -9,7 +9,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "alunoConverter")
 public class AlunoConverter implements Converter {
     
-	@Override
+    @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.isEmpty()) {
             return (Aluno) component.getAttributes().get(value);

@@ -51,7 +51,14 @@ public class DbUnitUtil
 	        	XML_FILE = "dbunit/insercaoNotas.xml";
 	        	ultimo_executado = Dataset.InsercaoDeNotasCucumber;
 	        	break;
-	        	
+	        case SubmissaoRelatorioFinalCucumber:
+	        	XML_FILE = "dbunit/submissaoRelatorioFinalCucumber.xml";
+	        	ultimo_executado = Dataset.SubmissaoRelatorioFinalCucumber;
+	        	break;
+	        case HomologacaoRelatorioFinalCucumber:
+	        	XML_FILE = "dbunit/homologacaoRelatorioFinalCucumber.xml";
+	        	ultimo_executado = Dataset.HomologacaoRelatorioFinalCucumber;
+	        	break;
         }
     }
 

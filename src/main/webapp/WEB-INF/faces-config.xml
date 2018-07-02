@@ -102,20 +102,35 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>minhaMonitoria</from-outcome>
-            <to-view-id>/aluno/minhaMonitoria.xhtml</to-view-id>
-        </navigation-case>        
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>minhaMonitoria</from-outcome>
+    		<to-view-id>/aluno/minhaMonitoria.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>gerenciaFrequencias</from-outcome>
+    		<to-view-id>/professor/gerenciaFrequencias.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>relatorioFinal</from-outcome>
+    		<to-view-id>/aluno/relatorioFinal.xhtml</to-view-id>
+    	</navigation-case>
     </navigation-rule>
     
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
-            <from-outcome>gerenciaFrequencias</from-outcome>
-            <to-view-id>/professor/gerenciaFrequencias.xhtml</to-view-id>
+            <from-outcome>gerenciaRelatoriosFinais</from-outcome>
+            <to-view-id>/professor/gerenciaRelatoriosFinais.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
-    
     
 </faces-config>

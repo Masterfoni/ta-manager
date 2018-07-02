@@ -66,15 +66,17 @@ public class AlunoLocalBean
 	
 	public List<Aluno> consultaMonitoresByComponente(Long componenteId)
 	{
-		List<Aluno> alunosByComponente = new ArrayList<Aluno>();
+		List<Aluno> alunosPorComponente = new ArrayList<Aluno>();
 		
 		try {
-			alunosByComponente = em.createNamedQuery("Aluno.findMonitoresByComponente", Aluno.class).setParameter("componenteId", componenteId).getResultList();
-		} catch (NoResultException e) {
+			alunosPorComponente = em.createNamedQuery("Aluno.findMonitoresByComponente", Aluno.class)
+					.setParameter("componenteId", componenteId)
+					.getResultList();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return alunosByComponente;
+		return alunosPorComponente;
 	}
 	
 	public boolean atualizaAluno (Aluno aluno) {

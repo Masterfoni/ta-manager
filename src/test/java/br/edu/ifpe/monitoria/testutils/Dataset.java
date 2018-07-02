@@ -8,5 +8,7 @@ public enum Dataset
     PlanoMonitoriaBolsasCucumber,
     PlanoMonitoriaDistHomolCucumber,
     CandidaturaCucumber,
-    InsercaoDeNotasCucumber
+    InsercaoDeNotasCucumber,
+    SubmissaoRelatorioFinalCucumber,
+    HomologacaoRelatorioFinalCucumber,
 }

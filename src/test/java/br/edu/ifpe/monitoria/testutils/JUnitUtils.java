@@ -16,8 +16,6 @@ public class JUnitUtils {
 		
 		//properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "C:/Program Files/glassfish4/glassfish");
 		//properties.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "C:/Program Files/glassfish4/glassfish/domains/domain1/config/domain.xml");
-		//properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "C:/Program Files/glassfish4/glassfish");
-		//properties.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "C:/Program Files/glassfish4/glassfish/domains/domain1/config/domain.xml");
 		properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "C:/glassfish4/glassfish");
 		properties.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "C:/glassfish4/glassfish/domains/domain1/config/domain.xml");
 		
