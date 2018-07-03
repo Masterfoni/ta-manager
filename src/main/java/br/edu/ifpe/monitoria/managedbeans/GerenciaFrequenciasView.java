@@ -188,10 +188,12 @@ public class GerenciaFrequenciasView {
 
 	public Frequencia getFrequenciaSelecionada() {
 		if(frequenciaSelecionada == null) {
-			for (Frequencia frequencia : frequencias) {
-				if(frequencia.getMes() == getMesSelecionado().get(GregorianCalendar.MONTH)) {
-					frequenciaSelecionada = frequencia;
-					break;
+			if(frequencias != null) {
+				for (Frequencia frequencia : frequencias) {
+					if(frequencia.getMes() == getMesSelecionado().get(GregorianCalendar.MONTH)) {
+						frequenciaSelecionada = frequencia;
+						break;
+					}
 				}
 			}
 		}

@@ -56,8 +56,8 @@ public class AtividadeLocalBean {
 	}
 	
 	private void validarHorario(Atividade atividade, List<String> errors) {
-		if(atividade.getHoraInicio().after(atividade.getHoraFim())) {
-			errors.add("A hora de início da atividade deve ser antes da hora de encerramento.");
+		if(atividade.getHoraInicio().after(atividade.getHoraFim()) || atividade.getHoraInicio().equals(atividade.getHoraFim())) {
+			errors.add("A hora final da atividade deve ser depois da hora inicial.");
 		}
 	}
 	

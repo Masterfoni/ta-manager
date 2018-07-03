@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_ATIVIDADE",
 					sequenceName = "SQ_ATIVIDADE",
@@ -60,6 +62,7 @@ public class Atividade implements Serializable{
 	private Date horaFim;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.atividade}")
+	@NotBlank(message = "{mensagem.notnull}{tipo.atividade}")
 	@Column (name="TXT_ATIVIDADE")
 	private String atividade;
 
