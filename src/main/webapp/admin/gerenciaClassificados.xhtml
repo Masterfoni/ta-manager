@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <ui:include src="/comum/header-libs.xhtml" />
+        <link rel="stylesheet" href="../admin/gerenciaClassificados.css"></link>
+        <title>Monitoria - IFPE</title>
+    </h:head>
+
+    <h:body>
+        <ui:include src="/comum/navbar-top.xhtml" />
+        <div class="container">
+            <div class="row">
+                <div class="col col-sm-6">
+                    <h1>Monitores Classificados</h1>
+                </div>
+            </div>
+
+            <h:form style="width: 100%">            
+                <div class="row mt-3">
+                    <div class="form-group col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Plano</div>
+                            </div>
+                            <h:selectOneMenu id="planoSelect" class="form-control" value="#{gerenciaClassificadosView.planoSelecionado}" converter="planoConverter">
+                                <f:selectItems value="#{gerenciaClassificadosView.planos}" var="plano" itemValue="#{plano}" itemLabel="#{plano.cc.nome}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+
+        <script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+        <script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+        <script src="../comum/navbar-top.js"></script>
+        <script src="./gerenciaClassificados.js"></script>
+    </h:body>
+</html>

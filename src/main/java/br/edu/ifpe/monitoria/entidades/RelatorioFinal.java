@@ -1,7 +1,10 @@
 package br.edu.ifpe.monitoria.entidades;
 
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,9 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -57,6 +62,10 @@ public class RelatorioFinal {
 	
 	@Column (name="INT_AVALIACAO")
 	private int avaliacao;
+	
+	@Valid
+	@OneToMany(mappedBy="relatorioAssociado", cascade=CascadeType.ALL)
+	private List<Frequencia> frequencias;
 
 	public Monitoria getMonitoria() {
 		return monitoria;
@@ -108,5 +117,23 @@ public class RelatorioFinal {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public List<Frequencia> getFrequencias() {
+		return frequencias;
+	}
+
+	public void setFrequencias(List<Frequencia> frequencias) {
+		this.frequencias = frequencias;
+	}
+
+	public boolean isAprovavel() {
+		for(Frequencia freq : frequencias) {
+			if(!freq.isRecebido()) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

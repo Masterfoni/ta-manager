@@ -63,6 +63,10 @@ public class RelatorioFinalLocalBean
 			resultado.errors.add("Avaliação deve ser igual ou inferior à 10!");
 		}
 		
+		if(!relatorioFinal.isAprovavel() && relatorioFinal.isHomologado()) {
+			resultado.errors.add("Todas as frequencias da monitoria devem ser recebidas pela comissão!");
+		}
+		
 		if(!resultado.hasErrors()) {
 			try {
 				em.merge(relatorioFinal);

@@ -57,6 +57,10 @@ public class Frequencia implements Serializable{
 	
 	@Column (name="BOOL_RECEBIDO")
 	private boolean recebido;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_RELATORIO_ASSOCIADO")
+	private RelatorioFinal relatorioAssociado;
 
 	public Monitoria getMonitoria() {
 		return monitoria;
@@ -96,6 +100,14 @@ public class Frequencia implements Serializable{
 
 	public void setRecebido(boolean recebido) {
 		this.recebido = recebido;
+	}	
+
+	public RelatorioFinal getRelatorioAssociado() {
+		return relatorioAssociado;
+	}
+
+	public void setRelatorioAssociado(RelatorioFinal relatorioAssociado) {
+		this.relatorioAssociado = relatorioAssociado;
 	}
 
 	public Long getId() {
