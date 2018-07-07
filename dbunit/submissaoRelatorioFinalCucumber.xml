@@ -108,9 +108,13 @@
   		
   	<TB_MONITORIA id="99"
   		bool_bolsista="true"
+  		int_classificacao="1"
   		bool_classificado="true"
   		bool_empatado="false"
+  		double_media_componente="9"
+  		double_nota_selecao="9"
   		bool_reprovacao="false"
+  		bool_selecionado="true"
   		id_edital="665"
   		id_aluno="100"
   		id_plano_monitoria="35" />

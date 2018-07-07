@@ -68,7 +68,7 @@
 					</div>
 					<div class="col col-sm-6  text-right">
 						<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
-							<h:commandButton value="Registrar Atividade" class="btn btn-outline-success cadastrador">
+							<h:commandButton id="registrarAtividade" value="Registrar Atividade" class="btn btn-outline-success cadastrador">
 								<f:ajax execute="@none" render="registrarAtividade" />
 							</h:commandButton>
 						</h:panelGroup>	
@@ -83,9 +83,11 @@
   									<div class="card-header">
   										<div class="row">
   											<div class="col-sm text-left">
+  												<h:outputLabel id="dadosAtividade">
   												Dia: #{minhaMonitoriaView.getData(atividade.data)} | 
   												Hora inicial: #{minhaMonitoriaView.getHora(atividade.horaInicio)} | 
   												Hora final: #{minhaMonitoriaView.getHora(atividade.horaFim)}
+  												</h:outputLabel>
   											</div>
   											<div class="col-sm text-right">
   												
@@ -125,7 +127,7 @@
 							<div class="modal-body">
 								<div id="registrarAtividade">
 									<div class="form-group">
-										<input id="dataRA" class="form-control"  type="date" name="dataRA" min="2018-01-01" required="required"/>
+										<input id="dataRA" class="form-control"  type="date" name="dataRA" required="required"/>
 									</div>
 									
 									<div class="form-group row">
@@ -184,7 +186,7 @@
 								<div id="alterarAtividade">
 									<div class="form-group">
 										<input id="dataAlt" jsf:value="#{minhaMonitoriaView.getDataForm(minhaMonitoriaView.atividadeSelecionada.data)}"
-										class="form-control" type="date" name="dataAlt" min="2018-01-01" required="required" disabled="disabled"/>
+										class="form-control" type="date" name="dataAlt" required="required" disabled="disabled"/>
 									</div>
 									
 									<div class="form-group row">

@@ -59,6 +59,10 @@ public class DbUnitUtil
 	        	XML_FILE = "dbunit/homologacaoRelatorioFinalCucumber.xml";
 	        	ultimo_executado = Dataset.HomologacaoRelatorioFinalCucumber;
 	        	break;
+	        case AtaMensal:
+	        	XML_FILE = "dbunit/ataMensal.xml";
+	        	ultimo_executado = Dataset.AtaMensal;
+	        	break;
         }
     }
 

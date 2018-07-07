@@ -11,4 +11,5 @@ public enum Dataset
     InsercaoDeNotasCucumber,
     SubmissaoRelatorioFinalCucumber,
     HomologacaoRelatorioFinalCucumber,
+    AtaMensal
 }

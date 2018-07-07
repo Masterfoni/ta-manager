@@ -22,7 +22,7 @@ public class HomologacaoRelatorioFinalSteps {
 	
 	@Dado("^que o usuario esta logado como professor orientador$")
 	public void queOUsuarioEstaLogadoComoProfessorOrientador() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
 	}
 
 	@Dado("^esteja na pagina de gerencia de relatorios finais$")
@@ -32,7 +32,7 @@ public class HomologacaoRelatorioFinalSteps {
 
 	@Quando("^visualizar os detalhes de um relatorio final$")
 	public void visualizarOsDetalhesDeUmRelatorioFinal() throws Throwable {
-		BrowserManager.driver.findElement(By.id("btnDetalhes")).click();
+		BrowserManager.driver.findElement(By.id("formInfoMonitor:btnDetalhes")).click();
 		BrowserManager.esperar(1000);
 	}
 	
