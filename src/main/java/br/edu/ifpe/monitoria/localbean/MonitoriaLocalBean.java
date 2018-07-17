@@ -102,7 +102,7 @@ public class MonitoriaLocalBean
 		Monitoria monitoria = null;
 		
 		try {
-			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoSelecionado", Monitoria.class).setParameter("alunoId", monitor.getId()).getSingleResult();
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoHomologado", Monitoria.class).setParameter("alunoId", monitor.getId()).getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,7 +114,7 @@ public class MonitoriaLocalBean
 		List<Monitoria> monitoria = new ArrayList<Monitoria>();
 		
 		try {
-			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoSelecionado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoHomologado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,6 +145,12 @@ public class MonitoriaLocalBean
 		em.merge(monitoria);
 	}
 
+	public List<Monitoria> consultaMonitoriaSelecionadaByPlano(PlanoMonitoria plano) {
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findClassificadasSelecionadasByPlano", Monitoria.class)
+				  .setParameter("plano", plano).getResultList();
+
+		return monitorias;
+	}
 
 	public List<Monitoria> consultaMonitoriaByPlano(PlanoMonitoria plano) {
 		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findByPlano", Monitoria.class)

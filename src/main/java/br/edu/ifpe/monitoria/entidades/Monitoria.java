@@ -32,8 +32,11 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital"),
 	@NamedQuery(name = "Monitoria.findAtivaByAluno", query = "SELECT m FROM Monitoria m WHERE m.aluno = :aluno"),
 	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano"),
+	@NamedQuery(name = "Monitoria.findBySelecionadasPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE"),
+	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE AND (m.homologado = FALSE OR m.homologado IS NULL)"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
-	@NamedQuery(name = "Monitoria.findByAlunoClassificadoSelecionado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.selecionado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE AND m.edital.fimMonitoria > CURRENT_DATE")
+	@NamedQuery(name = "Monitoria.findByAlunoClassificadoSelecionado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.selecionado = TRUE AND m.homologado = FALSE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
+	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE AND m.edital.fimMonitoria > CURRENT_DATE")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{
@@ -82,6 +85,9 @@ public class Monitoria implements Serializable{
 	
 	@Column (name="BOOL_SELECIONADO")
 	private boolean selecionado;
+	
+	@Column (name="BOOL_HOMOLOGADO")
+	private boolean homologado;
 	
 	@Column (name="BOOL_BOLSISTA")
 	private boolean bolsista;
@@ -204,4 +210,31 @@ public class Monitoria implements Serializable{
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 	}
+
+	public boolean isHomologado() {
+		return homologado;
+	}
+
+	public void setHomologado(boolean homologado) {
+		this.homologado = homologado;
+	}
+	
+	@Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return (object instanceof Monitoria) && (id != null) 
+             ? id.equals(((Monitoria) object).getId()) 
+             : (object == this);
+    }
+    
+    @Override
+    public String toString() {
+        return "br.edu.ifpe.monitoria.entidades.Monitoria[ id=" + id + "]";
+    }
 }

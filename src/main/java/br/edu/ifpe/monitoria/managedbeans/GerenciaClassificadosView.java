@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -47,13 +48,21 @@ public class GerenciaClassificadosView implements Serializable {
 	@EJB
 	private PlanoMonitoriaLocalBean planoBean;
 
-	public GerenciaClassificadosView() {
+	@PostConstruct
+	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id")); 
 		
 		List<Edital> editaisVigentes = editalBean.consultaEditaisVigentes();
 		
 		edital = editaisVigentes.size() > 0 ? editaisVigentes.get(0) : null;
+		planos = edital != null ? planoBean.consultaPlanosByEdital(edital, true) : new ArrayList<PlanoMonitoria>();
+		planoSelecionado = planos.size() > 0 ? planos.get(0) : null;
+	}
+	
+	public void homologarMonitoria(Monitoria monitoriaClassificada) {
+		monitoriaClassificada.setHomologado(true);
+		monitoriaBean.atualizaMonitoria(monitoriaClassificada);
 	}
 
 	public Edital getEdital() {
@@ -74,7 +83,12 @@ public class GerenciaClassificadosView implements Serializable {
 	}
 
 	public List<Monitoria> getMonitorias() {
-		monitorias = edital != null ? monitoriaBean.consultaMonitoriaByPlano(planoSelecionado) : new ArrayList<Monitoria>();
+		if(edital != null) {
+			monitorias = planoSelecionado != null ? monitoriaBean.consultaMonitoriaSelecionadaByPlano(planoSelecionado) : new ArrayList<Monitoria>();
+		} else {
+			monitorias = new ArrayList<Monitoria>();
+		}
+		
 		return monitorias;
 	}
 

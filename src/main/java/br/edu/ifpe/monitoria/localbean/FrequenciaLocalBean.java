@@ -47,7 +47,7 @@ public class FrequenciaLocalBean {
 				.getResultList();
 		
 		if(frequencias.size() < 1) {
-			if(monitoria.isSelecionado()) {
+			if(monitoria.isHomologado()) {
 				Date hoje = new Date();
 				if(hoje.after(monitoria.getEdital().getInicioMonitoria()) && 
 						hoje.before(monitoria.getEdital().getFimMonitoria())) {
