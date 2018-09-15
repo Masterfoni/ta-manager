@@ -36,7 +36,13 @@ public class ServidorLocalBean
 	
 	public Servidor consultaServidorById(Long id)
 	{
-		Servidor servidorPorId = em.createNamedQuery("Servidor.findById", Servidor.class).setParameter("id", id).getSingleResult();
+		Servidor servidorPorId = null;
+		
+		List<Servidor> resultList = em.createNamedQuery("Servidor.findById", Servidor.class).setParameter("id", id).getResultList();
+		
+		if(resultList.size() > 0) {
+			servidorPorId = resultList.get(0);
+		}
 		
 		return servidorPorId;
 	}

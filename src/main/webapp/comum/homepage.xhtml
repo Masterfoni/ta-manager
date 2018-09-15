@@ -9,9 +9,49 @@
 	</h:head>
 
 	<h:body>
-		<ui:include src="/comum/navbar-top.xhtml" />	
+		<ui:include src="/comum/navbar-top.xhtml" />
+		
 		<div class="container">
+			<div class="row">
+			</div>
 			
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Relatório de frequências</h5>
+					<h6 class="card-subtitle mb-2 text-muted">Teste lorem impsum</h6>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Componente</div>
+								</div>
+								<h:selectOneMenu class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
+									<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+									<!--<f:ajax render="@form :formTableAtividades" />-->
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="col-md-12">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">Mês</div>
+									</div>
+									<h:selectOneMenu class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
+										<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
+										<!--<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />-->
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<h5>teste footer, aqui fica o botão</h5>
+				</div>
+			</div>
 		</div>
 		
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>

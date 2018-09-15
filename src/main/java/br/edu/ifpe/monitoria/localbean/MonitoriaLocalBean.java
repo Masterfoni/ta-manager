@@ -27,12 +27,6 @@ public class MonitoriaLocalBean
 {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
-
-	public List<Monitoria> consultaMonitoriasAvaliadas() {
-		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findAvaliadas", Monitoria.class).getResultList();
-
-		return monitorias;
-	}
 	
 	public List<Monitoria> consultaMonitoriasByEdital(Edital edital) {
 		List<Monitoria> monitorias = new ArrayList<Monitoria>();

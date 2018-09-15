@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Componente</div>
                             </div>
-                            <h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.alunoSelecionado}" converter="componenteConverter">
+                            <h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.componenteSelecionado}" converter="componenteConverter">
                                 <f:selectItems value="#{gerenciaFrequenciasView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
                                 <f:ajax render="@form :formTableAtividades" />
                             </h:selectOneMenu>
