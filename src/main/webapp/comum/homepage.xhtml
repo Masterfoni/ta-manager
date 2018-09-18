@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf">
 	
 	<h:head>
 		<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
@@ -19,37 +20,43 @@
 				<div class="card-body">
 					<h5 class="card-title">Relatório de frequências</h5>
 					<h6 class="card-subtitle mb-2 text-muted">Teste lorem impsum</h6>
-
-					<div class="row">
-						<div class="col-md-12">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<div class="input-group-text">Componente</div>
-								</div>
-								<h:selectOneMenu class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
-									<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-									<!--<f:ajax render="@form :formTableAtividades" />-->
-								</h:selectOneMenu>
-							</div>
-						</div>
-
-						<div class="col-md-12">
-							<div class="col-md-12">
+					
+					<h:form id="formRelatorioMensal">
+						<div class="row">
+							<div class="col-md-9">
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<div class="input-group-text">Mês</div>
+										<div class="input-group-text">Componente</div>
 									</div>
-									<h:selectOneMenu class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
-										<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
-										<!--<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />-->
+									<h:selectOneMenu class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
+										<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+										<!--<f:ajax render="@form :formTableAtividades" />-->
 									</h:selectOneMenu>
 								</div>
 							</div>
+
+							<div class="col-md-3">
+								<button type="submit" id="botaoRelatorioMensal" jsf:action="#{homePageView.gerarRelatorioMensal()}"
+										class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
+									Gerar Relatório <span class="fas fa-clipboard-list"></span>
+								</button>
+							</div>
+							
+							<div class="col-md-9">
+								<div class="col-md-12">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<div class="input-group-text">Mês</div>
+										</div>
+										<h:selectOneMenu class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
+											<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
+											<!--<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />-->
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="card-footer">
-					<h5>teste footer, aqui fica o botão</h5>
+					</h:form>
 				</div>
 			</div>
 		</div>

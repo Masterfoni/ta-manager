@@ -1,3 +1,7 @@
 .row {
     margin: auto;
 }
+
+#formRelatorioMensal {
+    width: 100%;
+}

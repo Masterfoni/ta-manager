@@ -12,11 +12,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Servidor;
-import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
@@ -34,9 +32,6 @@ public class HomePageView implements Serializable {
 	private ServidorLocalBean servidorBean;
 	
 	@EJB
-	private AlunoLocalBean alunoBean;
-	
-	@EJB
 	private ComponenteCurricularLocalBean componenteBean;
 	
 	@EJB
@@ -44,15 +39,9 @@ public class HomePageView implements Serializable {
 	
 	private Edital editalAtual;
 	
-	private List<Aluno> alunos;
-	
 	private Servidor loggedServidor;
 	
-	private List<ComponenteCurricular> componentes;
-	
 	private ComponenteCurricular componenteSelecionado;
-	
-	private List<GregorianCalendar> meses;
 	
 	private GregorianCalendar mesSelecionado;
 	
@@ -64,6 +53,17 @@ public class HomePageView implements Serializable {
 		List<Edital> consultaResult = editalBean.consultaEditaisVigentes();
 		
 		editalAtual = consultaResult.size() > 0 ? consultaResult.get(0) : null;
+	}
+	
+	public String gerarRelatorioMensal() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("componenteRelatorio", this.componenteSelecionado);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("mesRelatorio", this.mesSelecionado);
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		session.setAttribute("componenteRelatorio", this.componenteSelecionado);
+		session.setAttribute("mesRelatorio", this.mesSelecionado);
+		
+	    return "relatorioMensal";
 	}
 
 	public String back() {
@@ -96,10 +96,6 @@ public class HomePageView implements Serializable {
 	public List<ComponenteCurricular> getComponentes() {
 		return componenteBean.consultaComponentesByProfessor(loggedServidor);
 	}
-
-	public void setComponentes(List<ComponenteCurricular> componentes) {
-		this.componentes = componentes;
-	}
 	
 	public GregorianCalendar getMesSelecionado() {
 		if (mesSelecionado == null && editalAtual != null) {
@@ -123,23 +119,11 @@ public class HomePageView implements Serializable {
 				mes.get(GregorianCalendar.YEAR);
 	}
 
-	public void setMeses(List<GregorianCalendar> meses) {
-		this.meses = meses;
-	}
-
 	public Edital getEditalAtual() {
 		return editalAtual;
 	}
 
 	public void setEditalAtual(Edital editalAtual) {
 		this.editalAtual = editalAtual;
-	}
-
-	public List<Aluno> getAlunos() {
-		return alunos;
-	}
-
-	public void setAlunos(List<Aluno> alunos) {
-		this.alunos = alunos;
 	}
 }

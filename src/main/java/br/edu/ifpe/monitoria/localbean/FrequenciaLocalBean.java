@@ -68,6 +68,15 @@ public class FrequenciaLocalBean {
 		resultado.frequencias = frequencias;
 		return resultado;
 	}
+	
+	public Frequencia findSingleByMonitoriaMes(Monitoria monitoria, GregorianCalendar mes) {
+		List<Frequencia> frequencias = em.createNamedQuery("Frequencia.findByMonitoriaMes", Frequencia.class)
+				.setParameter("monitoria", monitoria)
+				.setParameter("mes", mes.get(GregorianCalendar.MONTH))
+				.getResultList();
+		
+		return frequencias.size() > 0 ? frequencias.get(0) : null;
+	}
 
 	private void criarFrequencias(Monitoria monitoria) {
 		List<GregorianCalendar> meses = monitoria.getEdital().getMesesMonitoria();

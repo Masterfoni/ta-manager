@@ -30,7 +30,8 @@ import javax.validation.Valid;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Frequencia.findByMonitoria", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria"),
-	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE")
+	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE"),
+	@NamedQuery(name = "Frequencia.findByMonitoriaMes", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria AND f.mes = :mes")
 })
 public class Frequencia implements Serializable{
 
