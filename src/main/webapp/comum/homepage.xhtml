@@ -30,7 +30,6 @@
 									</div>
 									<h:selectOneMenu class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
 										<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-										<!--<f:ajax render="@form :formTableAtividades" />-->
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -50,10 +49,38 @@
 										</div>
 										<h:selectOneMenu class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
 											<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
-											<!--<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />-->
 										</h:selectOneMenu>
 									</div>
 								</div>
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Relatórios finais entreques</h5>
+					<h6 class="card-subtitle mb-2 text-muted">Listagem de monitores que entregaram ou não o relatório final</h6>
+					
+					<h:form id="formRelatorioFinal">
+						<div class="row">
+							<div class="col-md-9">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">Componente</div>
+									</div>
+									<h:selectOneMenu class="form-control" value="#{homePageView.componenteSelecionadoRFinal}" converter="componenteConverter">
+										<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<button type="submit" id="botaoRelatorioFinal" jsf:action="#{homePageView.gerarRelatorioRFinal()}"
+										class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
+									Gerar Relatório <span class="fas fa-clipboard-list"></span>
+								</button>
 							</div>
 						</div>
 					</h:form>

@@ -41,6 +41,8 @@ public class HomePageView implements Serializable {
 	
 	private Servidor loggedServidor;
 	
+	private ComponenteCurricular componenteSelecionadoRFinal;
+	
 	private ComponenteCurricular componenteSelecionado;
 	
 	private GregorianCalendar mesSelecionado;
@@ -64,6 +66,15 @@ public class HomePageView implements Serializable {
 		session.setAttribute("mesRelatorio", this.mesSelecionado);
 		
 	    return "relatorioMensal";
+	}
+	
+	public String gerarRelatorioRFinal() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("componenteRelatorio", this.componenteSelecionadoRFinal);
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		session.setAttribute("componenteRelatorio", this.componenteSelecionadoRFinal);
+		
+	    return "relatorioFinalAvaliacao";
 	}
 
 	public String back() {
@@ -125,5 +136,13 @@ public class HomePageView implements Serializable {
 
 	public void setEditalAtual(Edital editalAtual) {
 		this.editalAtual = editalAtual;
+	}
+
+	public ComponenteCurricular getComponenteSelecionadoRFinal() {
+		return componenteSelecionadoRFinal;
+	}
+
+	public void setComponenteSelecionadoRFinal(ComponenteCurricular componenteSelecionadoRFinal) {
+		this.componenteSelecionadoRFinal = componenteSelecionadoRFinal;
 	}
 }

@@ -109,11 +109,19 @@
         </navigation-case>        
     </navigation-rule>
     
-       <navigation-rule>
+    <navigation-rule>
         <from-view-id>/comum/homepage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>relatorioMensal</from-outcome>
             <to-view-id>/professor/relatorioMensal.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/comum/homepage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>relatorioFinalAvaliacao</from-outcome>
+            <to-view-id>/professor/relatorioFinalAvaliacao.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
     
