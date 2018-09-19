@@ -30,6 +30,18 @@
     </navigation-rule>
     
     <navigation-rule>
+        <from-view-id>/publico/cadastroAluno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/comum/homepage.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/publico/cadastroAluno.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>

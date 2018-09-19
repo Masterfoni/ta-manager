@@ -149,30 +149,11 @@
 						<h2 class="text-center">GEM</h2>
 
 						<h:form id="loginform" class="login-form">
-							<div class="form-group">
-								<label for="emailUsuario" class="text-uppercase">Email</label>
-								<h:inputText id="emailUsuario" class="form-control" 
-												value="#{indexView.usuario.email}" required="true" requiredMessage="E-mail é obrigatório">
-								</h:inputText>
-							</div>
-							<div class="form-group">
-								<label for="senhaUsuario" class="text-uppercase">Senha</label>
-								<h:inputSecret id="senhaUsuario" class="form-control"
-												value="#{indexView.usuario.senha}" required="true" requiredMessage="Senha é obrigatória">
-								</h:inputSecret>
-							</div>
-							<div class="form-group">
-								<h:commandButton id="loginaluno" value="Login" action="#{indexView.loginUsuario}" class="btn btn-block btn-success"/>
-							</div>
-							<div class="form-group">
-								<h:commandButton value="Cadastre-se" class="btn btn-info btn-block cadastrador">
-									<f:ajax execute="@none" render="cadastreSe" />
-								</h:commandButton>
-							</div>
+							
 							<div class="form-group">
 								<div id="customBtn" class="customGPlusSignIn btn btn-default">
 									<span class="icon"></span>
-									<span class="buttonText">Login Servidor</span>
+									<span class="buttonText">Login com o Google</span>
 								</div>
 							</div>
 							<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">

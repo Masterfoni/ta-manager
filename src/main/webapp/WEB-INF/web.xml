@@ -10,7 +10,7 @@
 
 	<login-config>
 		<auth-method>FORM</auth-method>
-		<realm-name>saltRealm</realm-name>
+		<realm-name>gemRealm</realm-name>
 		<form-login-config>
 			<form-login-page>/publico/index.xhtml</form-login-page>
 			<form-error-page>/publico/index.xhtml</form-error-page>
@@ -126,6 +126,14 @@
 	<context-param>
 		<param-name>dominio2</param-name>
 		<param-value>gmail.com</param-value>
+	</context-param>
+	<context-param>
+		<param-name>dominiosInstituncionais</param-name>
+		<param-value>a.recife.ifpe.edu.br;cabo.ifpe.edu.br;</param-value>
+	</context-param>
+	<context-param>
+		<param-name>dominiosAlunos</param-name>
+		<param-value>gmail.com;</param-value>
 	</context-param>
 
 	<context-param>

@@ -6,8 +6,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -27,6 +25,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.Dominios;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @ManagedBean (name="googleSignInView")
@@ -48,54 +47,58 @@ public class GoogleSignInView implements Serializable{
 		
 		Payload payload = verificarIntegridade(idToken);
 		
-		List<String> dominios = new ArrayList<String>();
+		List<String> dominiosInstituncionais = new ArrayList<String>();
+		List<String> dominiosAlunos = new ArrayList<String>();
 		
-		boolean emailDoDominio = false;
+		boolean emailInstituncional = false;
+		boolean emailAluno = false;
 		
-		Map<?,?> envMap= FacesContext.getCurrentInstance().getExternalContext().getInitParameterMap();
-		Set<?> chaves = envMap.keySet();
-		for (Object chave : chaves)
-		{
-			if(chave != null) {
-				String ch = (String)chave;
-				if(ch.substring(0, 7).equals("dominio")) {
-					System.out.println(envMap.get(chave));
-					dominios.add((String) envMap.get(chave));
-				}
-			}
-		}
+		dominiosInstituncionais = Dominios.getDominiosInstituncionais();
+		dominiosAlunos = Dominios.getDominiosAlunos();
 		
-		for (String dominio : dominios) {
+		for(String dominio : dominiosInstituncionais) {
 			if(payload != null && payload.getEmail() != null && payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio))
 			{
-				LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
-				
-				ExternalContext ec = fc.getExternalContext();
-				HttpSession session = (HttpSession) ec.getSession(true);
-				
-				PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
-				HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-				
-				try {
-					request.login(payload.getEmail(), perfilMontado.getSubject());
-					
-					ec.redirect("../comum/homepage.xhtml");
-					
-				} catch (ServletException e) {
-					
-					try {
-						ec.redirect("../publico/cadastroServidor.xhtml");
-					} catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				emailInstituncional = true;
+			}
+		}
+		for(String dominio : dominiosAlunos) {
+			if(payload != null && payload.getEmail() != null && payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio))
+			{
+				emailAluno = true;
 			}
 		}
 		
-		if(!emailDoDominio)
+		LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
+		
+		ExternalContext ec = fc.getExternalContext();
+		HttpSession session = (HttpSession) ec.getSession(true);
+		
+		PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
+		session.setAttribute("isServidor", emailInstituncional);
+		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		
+		try {
+			request.login(payload.getEmail(), perfilMontado.getSubject());
+			
+			ec.redirect("../comum/homepage.xhtml");
+			
+		} catch (ServletException e) {
+			
+			try {
+				if(emailAluno)
+					ec.redirect("../publico/cadastroAluno.xhtml");
+				if(emailInstituncional)
+					ec.redirect("../publico/cadastroServidor.xhtml");
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(!emailInstituncional && !emailAluno)
 		{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Por favor, utilize seu e-mail institucional."));
 		}

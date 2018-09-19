@@ -32,4 +32,18 @@ public class PerfilGoogleLocalBean
 		
 		return true;
 	}
+	
+	public boolean persistePerfilGoogle(@NotNull @Valid PerfilGoogle perfilGoogle, boolean isAluno)
+	{
+		em.persist(perfilGoogle);
+		
+		Grupo gp2 = new Grupo();
+		gp2.setGrupo(Grupo.Grupos.ALUNO);
+		gp2.setUsuario(perfilGoogle.getUsuario());
+		gp2.setEmail(perfilGoogle.getUsuario().getEmail());
+		em.persist(gp2);
+		
+		
+		return true;
+	}
 }
