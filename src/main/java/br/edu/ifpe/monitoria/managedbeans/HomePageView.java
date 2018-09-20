@@ -47,10 +47,14 @@ public class HomePageView implements Serializable {
 	
 	private GregorianCalendar mesSelecionado;
 	
+	boolean comissao;
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		
+		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
 		List<Edital> consultaResult = editalBean.consultaEditaisVigentes();
 		
@@ -144,5 +148,14 @@ public class HomePageView implements Serializable {
 
 	public void setComponenteSelecionadoRFinal(ComponenteCurricular componenteSelecionadoRFinal) {
 		this.componenteSelecionadoRFinal = componenteSelecionadoRFinal;
+	}
+	
+
+	public boolean isComissao() {
+		return comissao;
+	}
+
+	public void setComissao(boolean comissao) {
+		this.comissao = comissao;
 	}
 }
