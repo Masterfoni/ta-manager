@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -90,6 +91,23 @@ public class CadastroServidorView implements Serializable{
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		HttpSession session = (HttpSession)ec.getSession(true);
+		
+		if(session.getAttribute("perfilGoogle") == null) {
+			try {
+				ec.redirect("../publico/index.xhtml");
+				return;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(!(boolean)session.getAttribute("isServidor")) {
+			try {
+				ec.redirect("../publico/cadastroAluno.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
 		email= (String)session.getAttribute("email");
 		nome = (String)session.getAttribute("nome");
