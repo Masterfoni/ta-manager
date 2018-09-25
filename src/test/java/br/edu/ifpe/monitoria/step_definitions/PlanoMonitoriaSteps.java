@@ -24,7 +24,7 @@ public class PlanoMonitoriaSteps {
 	
 	@Dado("^que o usuario esta logado como professor$")
 	public void queOUsuarioEstaLogadoComoProfessor() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de submissao de plano de monitoria$")

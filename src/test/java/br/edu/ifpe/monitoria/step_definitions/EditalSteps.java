@@ -23,7 +23,7 @@ public class EditalSteps {
 	
 	@Dado("^que o usuario esta logado com perfil da comissao$")
 	public void queOUsuarioEstaLogadoComPerfilDaComissao() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia de editais$")

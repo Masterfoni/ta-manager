@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import br.edu.ifpe.monitoria.testutils.BrowserManager;
 import br.edu.ifpe.monitoria.testutils.Dataset;
 import br.edu.ifpe.monitoria.testutils.DbUnitUtil;
-import cucumber.api.PendingException;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
@@ -26,7 +25,7 @@ public class InsercaoDeNotasSteps {
 	
 	@Dado("^que o usuario esta logado com perfil de professor$")
 	public void queOUsuarioEstaLogadoComPerfilDeProfessor() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia dos planos de monitoria$")

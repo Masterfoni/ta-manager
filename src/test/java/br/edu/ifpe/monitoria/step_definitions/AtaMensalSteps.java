@@ -25,7 +25,7 @@ public class AtaMensalSteps {
 	
 	@Dado("^que o usuario esta logado como aluno monitor de um componente$")
 	public void queOUsuarioEstaLogadoComoAlunoMonitorDeUmComponente() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.ALUNO, "danilo@gmail.com", "draco123");
+		LoginSteps.logar("joaovitor8891879@gmail.com", "");
 	}
 
 	@Dado("^esteja na pagina minha monitoria$")

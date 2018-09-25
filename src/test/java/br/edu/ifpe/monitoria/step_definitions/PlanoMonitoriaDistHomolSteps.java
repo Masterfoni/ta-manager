@@ -22,7 +22,7 @@ public class PlanoMonitoriaDistHomolSteps {
 
 	@Dado("^que o usuario esta logado como coordenador e comissao$")
 	public void queOUsuarioEstaLogadoComoCoordenadorEComissao() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia de planos$")

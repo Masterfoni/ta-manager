@@ -115,7 +115,7 @@ public class DbUnitUtil
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "postgres");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/monitoria", "postgres", "root");
             db_conn = new DatabaseConnection(conn);
             limpaBase(conn);
 

@@ -24,7 +24,7 @@ public class SubmissaoRelatorioFinalSteps {
 	
 	@Dado("^que o usuario esta logado como aluno monitor$")
 	public void queOUsuarioEstaLogadoComoAlunoMonitor() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.ALUNO, "danilo@gmail.com", "draco123");
+		LoginSteps.logar("joaovitor8891879@gmail.com", "");
 	}
 
 	@Dado("^esteja na pagina de relatorio final$")

@@ -22,7 +22,7 @@ public class HomologacaoRelatorioFinalSteps {
 	
 	@Dado("^que o usuario esta logado como professor orientador$")
 	public void queOUsuarioEstaLogadoComoProfessorOrientador() throws Throwable {
-		LoginSteps.logar(LoginSteps.Tipo.PROFESSOR, "fal@a.recife.ifpe.edu.br", "draco123#?");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina de gerencia de relatorios finais$")

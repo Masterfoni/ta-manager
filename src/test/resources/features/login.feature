@@ -4,30 +4,21 @@ Funcionalidade: Realizar login
   
   Contexto:
     Dado que o usuario esteja na tela de login do sistema
-  	E o usuario informa o email e senha
+  	E o usuario clica para se logar com o google
   
-  Cenario: Servidor logando pela primeira vez
-  	Quando utilizar o email instituncional 
-    E o sistema verificar que o usuario nao esta cadastrado
-    Entao redireciona para a tela de cadastro de servidor
+  Cenario: Usuario logando pela primeira vez
+  	Quando utilizar um email e senha corretos do google 
+    E o sistema receber a autenticação
+    Entao redireciona para a tela de cadastro de servidor ou de aluno
   
-  Cenario: Servidor logando o sistema
-  	Quando utilizar o email instituncional
+  Cenario: Usuario logando o sistema
+  	Quando um email do google
     E o sistema verificar que o usuario possui cadastro
-    Entao redireciona para a pagina de home do servidor
-
-  Cenario: Aluno realiza login
-	E o sistema autentica o usuario
-	Entao redireciona para a pagina home do aluno
-
-  Cenario: Aluno tenta realizar login com credenciais invalidas
-    Quando informar um email e ou senha invalida
-	E sistema nao autentica o usuario
-	Entao informa mensagem de erro
+    Entao redireciona para a pagina de home do usuario
 
 #	Exemplos:
 #	| email							| senha		| home					|
-#	| "joaovitor_179@hotmail.com"	| "123456"	| "HomeAluno"			|
+#	| "joaovitor_179@gmail.com"		| "123456"	| "HomeAluno"			|
 #	| "fal@a.recife.ifpe.edu.br"	| "1234588" | "HomeProfessor"		|
 #	| "jval@a.recife.ifpe.edu.br"	| "8891879" | "HomeComissao"		|
 

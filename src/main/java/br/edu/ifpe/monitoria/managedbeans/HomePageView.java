@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -125,7 +126,7 @@ public class HomePageView implements Serializable {
 	}
 	
 	public List<GregorianCalendar> getMeses() {
-		return editalAtual.getMesesMonitoria();
+		return editalAtual != null ? editalAtual.getMesesMonitoria() : new ArrayList<GregorianCalendar>();
 	}
 	
 	public String getNomeMes(GregorianCalendar mes) {

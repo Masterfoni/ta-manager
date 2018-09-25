@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <dataset>
-
 	<TB_USUARIO id="1"
 		disc_usuario="SERVIDOR"
 		txt_cpf="102.503.234-94"
