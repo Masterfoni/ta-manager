@@ -63,6 +63,14 @@ public class DbUnitUtil
 	        	XML_FILE = "dbunit/ataMensal.xml";
 	        	ultimo_executado = Dataset.AtaMensal;
 	        	break;
+	        case RelatorioFrequenciaMensal:
+	        	XML_FILE = "dbunit/relatorioFrequenciaMensal.xml";
+	        	ultimo_executado = Dataset.RelatorioFrequenciaMensal;
+	        	break;
+	        case RelatorioFinal:
+	        	XML_FILE = "dbunit/relatorioFinal.xml";
+	        	ultimo_executado = Dataset.RelatorioFinal;
+	        	break;
         }
     }
 

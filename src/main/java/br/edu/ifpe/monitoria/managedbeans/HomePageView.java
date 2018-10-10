@@ -55,7 +55,7 @@ public class HomePageView implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
 		
-		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
+		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
 		
 		List<Edital> consultaResult = editalBean.consultaEditaisVigentes();
 		
