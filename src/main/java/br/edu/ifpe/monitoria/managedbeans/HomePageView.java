@@ -59,7 +59,7 @@ public class HomePageView implements Serializable {
 		
 		List<Edital> consultaResult = editalBean.consultaEditaisVigentes();
 		
-		editalAtual = consultaResult.size() > 0 ? consultaResult.get(0) : null;
+		editalAtual = consultaResult.size() > 0 ? consultaResult.get(0) : null;		
 	}
 	
 	public String gerarRelatorioMensal() {

@@ -9,45 +9,63 @@
         </button>
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="mainMenu">
                 <li class="nav-item">
                     <h:link href="#" class="nav-link" outcome="home">Home</h:link>
                 </li>
-                <li>
-                    <h:link href="#" class="nav-link" outcome="inscricao">Inscrição de Candidato</h:link>
-                </li>
-                <li>
-                    <h:link href="#" class="nav-link" outcome="relatorioFinal">Relatório Final</h:link>
-                </li>
-                <li>
-                    <h:link href="#" class="nav-link" outcome="edital">Edital</h:link>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropMonitoria" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Gerencia de Monitoria
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropMonitoria">
-                        <h:link class="dropdown-item" href="#" outcome="planos">Plano de Monitoria</h:link>
-                        <h:link class="dropdown-item" href="#" outcome="gerenciaRelatoriosFinais">Gerencia de Relatórios</h:link>
-                        <h:link class="dropdown-item" href="#" outcome="gerenciaClassificados">Gerencia de Classificados</h:link>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Gerencia de Cursos
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <h:link class="dropdown-item" href="#" outcome="cursos">Cursos</h:link>
-                        <h:link class="dropdown-item" href="#" outcome="componentes">Componentes Curriculares</h:link>
-                    </div>
-                </li>
+                <h:panelGroup rendered="#{menuView.aluno}">
+                    <li>
+                        <h:link href="#" class="nav-link" outcome="inscricao">Inscrição de Candidato</h:link>
+                    </li>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{menuView.aluno}">
+                    <li>
+                        <h:link href="#" class="nav-link" outcome="relatorioFinal">Relatório Final</h:link>
+                    </li>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{menuView.comissao || menuView.professor}">
+                    <li>
+                        <h:link href="#" class="nav-link" outcome="edital">Edital</h:link>
+                    </li>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{menuView.comissao || menuView.professor}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropMonitoria" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Gerencia de Monitoria
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropMonitoria">
+                            <h:link class="dropdown-item" href="#" outcome="planos">Plano de Monitoria</h:link>
+                            <h:link class="dropdown-item" href="#" outcome="gerenciaRelatoriosFinais">Gerencia de Relatórios</h:link>
+                            <h:link class="dropdown-item" href="#" outcome="gerenciaClassificados">Gerencia de Classificados</h:link>
+                        </div>
+                    </li>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{menuView.comissao || menuView.professor}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Gerencia de Cursos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <h:link class="dropdown-item" href="#" outcome="cursos" rendered="#{menuView.comissao}">
+                                Cursos
+                            </h:link>
+                            <h:link class="dropdown-item" href="#" outcome="componentes">
+                                Componentes Curriculares
+                            </h:link>
+                        </div>
+                    </li>
+                </h:panelGroup>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropFreq" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Frequências
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropFreq">
-                        <h:link href="#" class="dropdown-item" outcome="minhaMonitoria">Minha Monitoria</h:link>
-                        <h:link href="#" class="dropdown-item" outcome="gerenciaFrequencias">Gerenciamento de Frequencias</h:link>
+                        <h:link href="#" class="dropdown-item" outcome="minhaMonitoria" rendered="#{menuView.aluno}">
+                            Minha Monitoria
+                        </h:link>
+                        <h:link href="#" class="dropdown-item" outcome="gerenciaFrequencias" rendered="#{menuView.professor || menuView.comissao}">
+                            Gerenciamento de Frequencias
+                        </h:link>
                     </div>
                 </li>
             </ul>
