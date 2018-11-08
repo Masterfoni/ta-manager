@@ -13,6 +13,11 @@
                 <li class="nav-item">
                     <h:link href="#" class="nav-link" outcome="home">Home</h:link>
                 </li>
+                <h:panelGroup rendered="#{menuView.comissao}">
+                    <li>
+                        <h:link href="#" class="nav-link" outcome="comissao">Gerencia de Comissão</h:link>
+                    </li>
+                </h:panelGroup>
                 <h:panelGroup rendered="#{menuView.aluno}">
                     <li>
                         <h:link href="#" class="nav-link" outcome="inscricao">Inscrição de Candidato</h:link>

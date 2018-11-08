@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContextType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ifpe.monitoria.entidades.Grupo;
+import br.edu.ifpe.monitoria.entidades.Grupo.Grupos;
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
@@ -27,6 +29,63 @@ public class UsuarioLocalBean
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
 		
 		return usuarios;
+	}
+	
+	public boolean checaComissao(Usuario usuario)
+	{
+		boolean isComissao = false;
+		
+		List<Grupo> grupos = em.createQuery("SELECT g FROM Grupo g WHERE g.usuario = :usuario", Grupo.class)
+				.setParameter("usuario", usuario)
+				.getResultList();
+		
+		for(int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getGrupo().equals(Grupos.COMISSAO)) {
+				isComissao = true;
+			}
+		}
+		
+		return isComissao;
+	}
+	
+	public void revokeComissao(Usuario usuario)
+	{
+		List<Grupo> grupos = usuario.getGrupos();
+		
+		for(int i = 0; i < grupos.size(); i++) {
+			Grupo grupo = grupos.get(i);
+			
+			if(grupo.getGrupo().equals(Grupos.COMISSAO)) {
+				usuario.getGrupos().remove(grupo);
+			}
+		}
+		
+		em.merge(usuario);
+	}
+	
+	public void grantComissao(Usuario usuario)
+	{
+		List<Grupo> grupos = usuario.getGrupos();
+		boolean anyComissao = false;
+		
+		for(int i = 0; i < grupos.size(); i++) {
+			Grupo grupo = grupos.get(i);
+			
+			if(grupo.getGrupo().equals(Grupos.COMISSAO)) {
+				anyComissao = true;
+			}
+		}
+		
+		if(!anyComissao) {
+			Grupo newComissao = new Grupo();
+			newComissao.setEmail(usuario.getEmail());
+			newComissao.setGrupo(Grupos.COMISSAO);
+			newComissao.setUsuario(usuario);
+			
+			usuario.getGrupos().add(newComissao);
+			
+			em.merge(usuario);
+		}
 	}
 	
 	public boolean atualizaUsuario(Usuario usuario)

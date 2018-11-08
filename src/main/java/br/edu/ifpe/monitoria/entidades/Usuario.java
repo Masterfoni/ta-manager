@@ -7,10 +7,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -25,9 +27,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -98,10 +102,14 @@ public class Usuario implements Serializable
 	@CollectionTable(name = "TB_TELEFONE",
 					 joinColumns = @JoinColumn(name="ID_USUARIO", nullable = true))
 	private Collection<String> telefones;
+	
+	@Valid
+	@OneToMany(mappedBy="usuario", cascade=CascadeType.ALL)
+	private List<Grupo> grupos;
 
-	 @PrePersist
-	 public void gerarHash() {
-		 try {
+	@PrePersist
+	public void gerarHash() {
+		try {
 			 gerarSal();
 	         MessageDigest digest = MessageDigest.getInstance("SHA-256");
 	         setSenha(sal + senha);
@@ -199,5 +207,13 @@ public class Usuario implements Serializable
 
 	public void setSal(String sal) {
 		this.sal = sal;
+	}
+
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 }

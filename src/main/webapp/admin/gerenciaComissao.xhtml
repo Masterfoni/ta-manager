@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<ui:include src="/comum/header-libs.xhtml"/>
+		<link rel="stylesheet" href="../admin/gerenciaComissao.css"/>
+		<title>Administração de Membros da Comissão</title>
+	</h:head>
+	
+	<h:body>
+		<ui:include src="/comum/navbar-top.xhtml" />
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col col-sm-12">
+					<h1>Professores</h1>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<h:messages/>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							  <span aria-hidden="true">x</span>
+							</button>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+
+			<h:form>
+				<div class="card-columns">
+					<ui:repeat id="repeatServidores" value="#{gerenciaComissaoView.servidores}" var="servidor">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">#{servidor.nome}</h5>
+								<p></p>
+							</div>
+							<div class="card-footer">
+								<div class="btn-group" role="group">
+									<h:commandButton actionListener="#{gerenciaComissaoView.toggleGrupo(servidor)}"
+													 value="#{gerenciaComissaoView.checkComissao(servidor) ? 'Retirar da comisssão' : 'Adicionar à comissão'}" update="@all"
+													 class="#{gerenciaComissaoView.checkComissao(servidor) ? 'btn btn-success' : 'btn btn-danger'}">
+									</h:commandButton>
+								</div>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</h:form>
+		</div>
+		
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+	</h:body>
+</html>
