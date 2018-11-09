@@ -32,18 +32,31 @@
 			</div>
 
 			<h:form>
-				<div class="card-columns">
+				<div class="row">
 					<ui:repeat id="repeatServidores" value="#{gerenciaComissaoView.servidores}" var="servidor">
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">#{servidor.nome}</h5>
-								<p></p>
-							</div>
-							<div class="card-footer">
-								<div class="btn-group" role="group">
+						<div class="col-md-4">
+							<div class="card">
+								<h:panelGroup layout="block" rendered="#{servidor.sexo == 'Masculino'}">
+									<img class="card-img-top" src="../resources/images/avatar-male.jpg" 
+										 height="250" alt="Avatar">
+									</img>
+								</h:panelGroup>
+								<h:panelGroup layout="block" rendered="#{servidor.sexo == 'Feminino'}">
+									<img class="card-img-top" src="../resources/images/avatar-female.jpg" 
+									     height="250" alt="Avatar">
+									</img>
+								</h:panelGroup>
+								<div class="card-body">
+									<h5 class="card-title">#{servidor.nome}</h5>
+									<p>
+										<strong>Siape:</strong> #{servidor.siape}<br></br>
+										<strong>CPF:</strong> #{servidor.cpf}
+									</p>
+								</div>
+								<div class="card-footer">
 									<h:commandButton actionListener="#{gerenciaComissaoView.toggleGrupo(servidor)}"
 													 value="#{gerenciaComissaoView.checkComissao(servidor) ? 'Retirar da comisssão' : 'Adicionar à comissão'}" update="@all"
-													 class="#{gerenciaComissaoView.checkComissao(servidor) ? 'btn btn-success' : 'btn btn-danger'}">
+													 class="#{gerenciaComissaoView.checkComissao(servidor) ? 'btn btn-block btn-success' : 'btn btn-block btn-danger'}">
 									</h:commandButton>
 								</div>
 							</div>

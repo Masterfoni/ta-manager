@@ -57,10 +57,17 @@ public class UsuarioLocalBean
 			
 			if(grupo.getGrupo().equals(Grupos.COMISSAO)) {
 				usuario.getGrupos().remove(grupo);
+				
+				if(!em.contains(grupo)) {
+					grupo = em.merge(grupo); 
+				}
+				
+				em.remove(grupo);
 			}
 		}
 		
 		em.merge(usuario);
+		em.flush();
 	}
 	
 	public void grantComissao(Usuario usuario)
@@ -81,6 +88,8 @@ public class UsuarioLocalBean
 			newComissao.setEmail(usuario.getEmail());
 			newComissao.setGrupo(Grupos.COMISSAO);
 			newComissao.setUsuario(usuario);
+			
+			em.persist(newComissao);
 			
 			usuario.getGrupos().add(newComissao);
 			

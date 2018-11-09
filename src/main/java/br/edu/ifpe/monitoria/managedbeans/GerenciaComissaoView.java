@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
@@ -26,6 +28,8 @@ public class GerenciaComissaoView implements Serializable {
 
 	public List<Servidor> servidores;
 	
+	public Servidor loggedServidor;
+	
 	public String nomeBusca;
 	
 	public GerenciaComissaoView() {
@@ -34,15 +38,20 @@ public class GerenciaComissaoView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		
 		buscaServidores();
 	}
 	
 	public void buscaServidores() {
 		if(nomeBusca.isEmpty()) {
-			this.servidores = servidorBean.consultaServidores();			
+			this.servidores = servidorBean.consultaServidores();
 		} else {
 			//this.servidores = servidorBean.consultaServidoresByName("%"+nomeBusca+"%");			
 		}
+		
+		this.servidores.remove(loggedServidor);
 	}
 	
 	public void toggleGrupo(Servidor servidor) {
