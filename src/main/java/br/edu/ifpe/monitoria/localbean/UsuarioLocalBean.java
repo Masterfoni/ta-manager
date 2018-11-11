@@ -17,6 +17,13 @@ import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
+/**
+* Classe responsável pela execução de operações sobre a entidade Usuário
+* 
+* @author João Vitor
+* @author Felipe Araújo
+* 
+*/
 @Stateless
 @LocalBean
 public class UsuarioLocalBean 
@@ -24,6 +31,11 @@ public class UsuarioLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
+	/**
+	 * <p>Método responsável por trazer todos os usuários cadastrados na base do sistema de monitoria
+	 * </p>
+	 * @return uma lista de objetos do tipo {@code Usuário} representando os vários usuários cadastrados na base de dados
+	 */
 	public List<Usuario> consultaUsuarios()
 	{
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
@@ -31,6 +43,12 @@ public class UsuarioLocalBean
 		return usuarios;
 	}
 	
+	/**
+	 * <p>Método que valida se um determinado usuário pertence ao grupo COMISSAO de permissões
+	 * </p>
+	 * @param usuario Objeto do tipo {@code Usuário} que representa o usuário à ser consultado
+	 * @return {@code true} para o caso do usuário estar no grupo COMISSAO ou {@code false} caso o contrário
+	 */
 	public boolean checaComissao(Usuario usuario)
 	{
 		boolean isComissao = false;
@@ -48,6 +66,11 @@ public class UsuarioLocalBean
 		return isComissao;
 	}
 	
+	/**
+	 * <p>Método responsável por retirar um determinado usuário do grupo COMISSAO
+	 * </p>
+	 * @param usuario Objeto do tipo {@code Usuário} que representa o usuário à ser excluído do grupo COMISSAO
+	 */
 	public void revokeComissao(Usuario usuario)
 	{
 		List<Grupo> grupos = usuario.getGrupos();
@@ -70,6 +93,11 @@ public class UsuarioLocalBean
 		em.flush();
 	}
 	
+	/**
+	 * <p>Método que concede permissões de COMISSAO à um usuário, por meio da adição do mesmo ao grupo COMISSAO
+	 * </p>
+	 * @param usuario Objeto do tipo {@code Usuário} que representa o usuário à ser incluído na comissão
+	 */
 	public void grantComissao(Usuario usuario)
 	{
 		List<Grupo> grupos = usuario.getGrupos();
