@@ -36,16 +36,6 @@
 					<ui:repeat id="repeatServidores" value="#{gerenciaComissaoView.servidores}" var="servidor">
 						<div class="col-md-4">
 							<div class="card">
-								<h:panelGroup layout="block" rendered="#{servidor.sexo == 'Masculino'}">
-									<img class="card-img-top" src="../resources/images/avatar-male.jpg" 
-										 height="250" alt="Avatar">
-									</img>
-								</h:panelGroup>
-								<h:panelGroup layout="block" rendered="#{servidor.sexo == 'Feminino'}">
-									<img class="card-img-top" src="../resources/images/avatar-female.jpg" 
-									     height="250" alt="Avatar">
-									</img>
-								</h:panelGroup>
 								<div class="card-body">
 									<h5 class="card-title">#{servidor.nome}</h5>
 									<p>
