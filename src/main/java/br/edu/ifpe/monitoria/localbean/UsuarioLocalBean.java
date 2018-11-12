@@ -18,16 +18,17 @@ import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 /**
-* Classe responsável pela execução de operações sobre a entidade Usuário
-* 
+* Classe responsável pela execução de operações sobre a entidade Usuário,
+* utilizando o {@code EntityManager} como interface para interagir com a base.
+* <p> Contexto de persistencia: <strong>monitoria</strong></p>
+*  
 * @author João Vitor
 * @author Felipe Araújo
 * 
 */
 @Stateless
 @LocalBean
-public class UsuarioLocalBean 
-{
+public class UsuarioLocalBean {
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
@@ -125,20 +126,37 @@ public class UsuarioLocalBean
 		}
 	}
 	
+	/**
+	 * <p>Método que atualiza informações de um usuário, especificamente: Email, nome e senha.
+	 * </p>
+	 * @param usuario Objeto do tipo {@code Usuário} que representa o usuário com as informações atualizadas
+	 * @return {@code true} para o caso da operação bem sucedida ou {@code false} caso o contrário
+	 */
 	public boolean atualizaUsuario(Usuario usuario)
 	{
-		Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
-		
-		usuarioAtualizar.setEmail(usuario.getEmail());
-		usuarioAtualizar.setNome(usuario.getNome());
-		usuarioAtualizar.setSenha(usuario.getSenha());
-		
-		em.merge(usuarioAtualizar);
-		
-		return true;
+		try {
+			Usuario usuarioAtualizar = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", usuario.getId()).getSingleResult();
+			
+			usuarioAtualizar.setEmail(usuario.getEmail());
+			usuarioAtualizar.setNome(usuario.getNome());
+			usuarioAtualizar.setSenha(usuario.getSenha());
+			
+			em.merge(usuarioAtualizar);			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
-	public Usuario consultaUsuarioPorEmailSenha(String email, String senha)
+	/**
+	 * <p>Método que busca um determinado usuário através do seu email e sua senha
+	 * </p>
+	 * @param email Objeto do tipo {@code String} representando o e-mail
+	 * @param senha Objeto do tipo {@code String} representando a senha
+	 * @return {@code Usuario} o usuário encontrado
+	 * @exception NoResultException quando não existir um usuário cadastrado com esta combinação de e-mail e senha
+	 */
+	public Usuario consultaUsuarioPorEmailSenha(String email, String senha) throws NoResultException
 	{
 		Usuario userResult = new Usuario();
 		
@@ -148,12 +166,20 @@ public class UsuarioLocalBean
 																					   .getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return userResult;
 	}
 	
-	public Usuario consultaUsuarioPorEmail(String email)
+	/**
+	 * <p>Método que busca um determinado usuário através apenas do seu e-mail
+	 * </p>
+	 * @param email Objeto do tipo {@code String} representando o e-mail
+	 * @return {@code Usuario} o usuário encontrado
+	 * @exception NoResultException quando não existir um usuário cadastrado com este e-mail
+	 */
+	public Usuario consultaUsuarioPorEmail(String email) throws NoResultException
 	{
 		Usuario userResult = null;
 		
@@ -161,12 +187,20 @@ public class UsuarioLocalBean
 			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return userResult;
 	}
 	
-	public Usuario consultaUsuarioPorRg(String rg)
+	/**
+	 * <p>Método que busca um determinado usuário através apenas do seu RG
+	 * </p>
+	 * @param rg Objeto do tipo {@code String} representando o rg
+	 * @return {@code Usuario} o usuário encontrado
+	 * @exception NoResultException quando não existir um usuário cadastrado com este rg
+	 */
+	public Usuario consultaUsuarioPorRg(String rg) throws NoResultException
 	{
 		Usuario userResult = null;
 		
@@ -174,12 +208,20 @@ public class UsuarioLocalBean
 			userResult = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return userResult;
 	}
 	
-	public Usuario consultaUsuarioPorCpf(String cpf)
+	/**
+	 * <p>Método que busca um determinado usuário através apenas do cpf
+	 * </p>
+	 * @param cpf Objeto do tipo {@code String} representando o cpf
+	 * @return {@code Usuario} o usuário encontrado
+	 * @exception NoResultException quando não existir um usuário cadastrado com este cpf
+	 */
+	public Usuario consultaUsuarioPorCpf(String cpf) throws NoResultException
 	{
 		Usuario userResult = null;
 		
@@ -187,12 +229,20 @@ public class UsuarioLocalBean
 			userResult = em.createNamedQuery("Usuario.findByCpf", Usuario.class).setParameter("cpf", cpf).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return userResult;
 	}
 	
-	public Usuario consultaUsuarioById(Long id)
+	/**
+	 * <p>Método que busca um determinado usuário através do ID
+	 * </p>
+	 * @param id Objeto do tipo {@code Long} representando o cpf
+	 * @return {@code Usuario} o usuário encontrado
+	 * @exception NoResultException quando não existir um usuário cadastrado com este id
+	 */
+	public Usuario consultaUsuarioById(Long id) throws NoResultException
 	{
 		Usuario usuarioPorId = null;
 
@@ -200,11 +250,18 @@ public class UsuarioLocalBean
 			usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return usuarioPorId;
 	}
 	
+	/**
+	 * <p>Método que busca usuários por um determinado nome, no caso desses metodos a palavra inteira tem de ser igual, ignorando apenas uppercase.
+	 * </p>
+	 * @param nome Objeto do tipo {@code String} representando o nome
+	 * @return {@code List<Usuario>} lista de usuários encontrados com aquele nome
+	 */
 	public List<Usuario> consultaUsuarioByName(String nome)
 	{
 		List<Usuario> usuarios = em.createNamedQuery("Usuario.findByNome", Usuario.class).setParameter("nome", nome).getResultList();
@@ -212,6 +269,12 @@ public class UsuarioLocalBean
 		return usuarios;
 	}
 	
+	/**
+	 * <p>Método que busca o ID de um usuário pelo e-mail
+	 * </p>
+	 * @param email Objeto do tipo {@code String} representando o email
+	 * @return {@code LongRequestResult} objeto contendo o ID do usuário no caso de sucesso ou contendo uma lista de mensagens de erros.
+	 */
 	public LongRequestResult consultarIdByEmail(String email)
 	{
 		LongRequestResult result = new LongRequestResult();
@@ -225,6 +288,13 @@ public class UsuarioLocalBean
 		return result;
 	}
 	
+	/**
+	 * <p>Método que deleta o usuário da base por meio do seu identificador único
+	 * </p>
+	 * @param id Objeto do tipo {@code Long} representando o identificador único do usuário
+	 * @return {@code DelecaoRequestResult} objeto contendo {@code true} na variável {@code data} no caso de sucesso ou
+	 * contendo {@code false} na variável {@code data} aliado à uma lista de mensagens de erro.
+	 */
 	public DelecaoRequestResult deletaUsuario(Long id)
 	{
 		DelecaoRequestResult resultado = new DelecaoRequestResult();
@@ -243,6 +313,12 @@ public class UsuarioLocalBean
 		return resultado;
 	}
 	
+	/**
+	 * <p>Método que persiste um determinado usuário na base
+	 * </p>
+	 * @param usuario Objeto do tipo {@code Usuario} à ser persistido
+	 * @return {@code true} ao persistir com sucesso
+	 */
 	public boolean persisteUsuario(@NotNull @Valid Usuario usuario)
 	{
 		em.persist(usuario);
