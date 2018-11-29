@@ -153,10 +153,9 @@ public class UsuarioLocalBean {
 	 * </p>
 	 * @param email Objeto do tipo {@code String} representando o e-mail
 	 * @param senha Objeto do tipo {@code String} representando a senha
-	 * @return {@code Usuario} o usuário encontrado
-	 * @exception NoResultException quando não existir um usuário cadastrado com esta combinação de e-mail e senha
+	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
 	 */
-	public Usuario consultaUsuarioPorEmailSenha(String email, String senha) throws NoResultException
+	public Usuario consultaUsuarioPorEmailSenha(String email, String senha)
 	{
 		Usuario userResult = new Usuario();
 		
@@ -166,7 +165,6 @@ public class UsuarioLocalBean {
 																					   .getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		
 		return userResult;
@@ -176,10 +174,9 @@ public class UsuarioLocalBean {
 	 * <p>Método que busca um determinado usuário através apenas do seu e-mail
 	 * </p>
 	 * @param email Objeto do tipo {@code String} representando o e-mail
-	 * @return {@code Usuario} o usuário encontrado
-	 * @exception NoResultException quando não existir um usuário cadastrado com este e-mail
+	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
 	 */
-	public Usuario consultaUsuarioPorEmail(String email) throws NoResultException
+	public Usuario consultaUsuarioPorEmail(String email)
 	{
 		Usuario userResult = null;
 		
@@ -187,7 +184,6 @@ public class UsuarioLocalBean {
 			userResult = em.createNamedQuery("Usuario.findByEmail", Usuario.class).setParameter("email", email).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		
 		return userResult;
@@ -197,10 +193,9 @@ public class UsuarioLocalBean {
 	 * <p>Método que busca um determinado usuário através apenas do seu RG
 	 * </p>
 	 * @param rg Objeto do tipo {@code String} representando o rg
-	 * @return {@code Usuario} o usuário encontrado
-	 * @exception NoResultException quando não existir um usuário cadastrado com este rg
+	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
 	 */
-	public Usuario consultaUsuarioPorRg(String rg) throws NoResultException
+	public Usuario consultaUsuarioPorRg(String rg)
 	{
 		Usuario userResult = null;
 		
@@ -208,7 +203,6 @@ public class UsuarioLocalBean {
 			userResult = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		
 		return userResult;
@@ -218,10 +212,9 @@ public class UsuarioLocalBean {
 	 * <p>Método que busca um determinado usuário através apenas do cpf
 	 * </p>
 	 * @param cpf Objeto do tipo {@code String} representando o cpf
-	 * @return {@code Usuario} o usuário encontrado
-	 * @exception NoResultException quando não existir um usuário cadastrado com este cpf
+	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
 	 */
-	public Usuario consultaUsuarioPorCpf(String cpf) throws NoResultException
+	public Usuario consultaUsuarioPorCpf(String cpf)
 	{
 		Usuario userResult = null;
 		
@@ -229,7 +222,6 @@ public class UsuarioLocalBean {
 			userResult = em.createNamedQuery("Usuario.findByCpf", Usuario.class).setParameter("cpf", cpf).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		
 		return userResult;
@@ -239,10 +231,9 @@ public class UsuarioLocalBean {
 	 * <p>Método que busca um determinado usuário através do ID
 	 * </p>
 	 * @param id Objeto do tipo {@code Long} representando o cpf
-	 * @return {@code Usuario} o usuário encontrado
-	 * @exception NoResultException quando não existir um usuário cadastrado com este id
+	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
 	 */
-	public Usuario consultaUsuarioById(Long id) throws NoResultException
+	public Usuario consultaUsuarioById(Long id)
 	{
 		Usuario usuarioPorId = null;
 
@@ -250,7 +241,6 @@ public class UsuarioLocalBean {
 			usuarioPorId = em.createNamedQuery("Usuario.findById", Usuario.class).setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		
 		return usuarioPorId;

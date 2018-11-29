@@ -33,7 +33,7 @@
 			<h2>Finalização do cadastro de Servidor</h2>
 
 			<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-				<div class="alert alert-warning alert-dismissable fade in">
+				<div class="alert alert-warning alert-dismissable">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
 					<h:messages/>
 				</div>
@@ -107,14 +107,6 @@
 								<f:selectItems value="#{cadastroServidorView.titulos}" var="titu" itemValue="#{titu}" itemLabel="#{titu.label}" />
 							</h:selectOneMenu>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="senhaCadastro">Senha</label>
-						<h:inputSecret id="senhaCadastro" class="form-control" value="#{cadastroServidorView.servidor.senha}"
-									   aria-describedby="senhaDesc" required="true" requiredMessage="Senha é obrigatória">
-						</h:inputSecret>
-						<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com numeros e letras. Esta senha será utilizada na assinatura de documentos.</small>
 					</div>
 
 					<h:commandButton value="Finalizar Cadastro" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info btn-block" update="growlProfessor" />
