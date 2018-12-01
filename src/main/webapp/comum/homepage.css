@@ -1,7 +1,9 @@
-.row {
-    margin: auto;
+.container.with-footer {
+    padding-top: 8px;
+    min-height: calc(100vh - 82px);
 }
 
-#formRelatorioMensal {
-    width: 100%;
+.footer {
+    background-color: black;
+    color: white;
 }

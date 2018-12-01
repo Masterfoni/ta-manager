@@ -6,15 +6,16 @@
 	<h:head>
 		<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
 		<ui:include src="/comum/header-libs.xhtml"/>
+		<link rel="stylesheet" href="../comum/homepage.css"/>
 		<title>Monitoria - IFPE</title>
 	</h:head>
 
 	<h:body>
 		<ui:include src="/comum/navbar-top.xhtml" />
 		
-		<div class="container">			
+		<div class="container with-footer">			
 			<h:panelGroup rendered="#{homePageView.comissao}">
-				<div class="card mb-2 mt-2">
+				<div class="card mb-2">
 					<div class="card-body">
 						<h5 class="card-title">Relatório de frequências</h5>
 						<h6 class="card-subtitle mb-2 text-muted">Estudantes que entregaram frequência</h6>
@@ -54,7 +55,7 @@
 					</div>
 				</div>
 
-				<div class="card mb-2">
+				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Relatórios finais entregues</h5>
 						<h6 class="card-subtitle mb-2 text-muted">Listagem de monitores que entregaram ou não o relatório final</h6>
@@ -91,4 +92,10 @@
 		<script src="../comum/navbar-top.js"></script>
 		<script src="../comum/homepage.js"></script>
 	</h:body>
+
+	<footer class="footer">
+		<div class="container text-center">
+			<span>Encontrou algum problema? Entre em contato pelo e-mail <a>gem@recife.ifpe.edu.br</a></span>
+		</div>
+	</footer>
 </html>
