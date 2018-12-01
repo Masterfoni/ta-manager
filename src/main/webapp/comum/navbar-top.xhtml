@@ -60,19 +60,21 @@
                         </div>
                     </li>
                 </h:panelGroup>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropFreq" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Frequências
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropFreq">
-                        <h:link href="#" class="dropdown-item" outcome="minhaMonitoria" rendered="#{menuView.aluno}">
-                            Minha Monitoria
-                        </h:link>
-                        <h:link href="#" class="dropdown-item" outcome="gerenciaFrequencias" rendered="#{menuView.professor || menuView.comissao}">
-                            Gerenciamento de Frequencias
-                        </h:link>
-                    </div>
-                </li>
+                <h:panelGroup rendered="#{menuView.professor || menuView.monitor}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropFreq" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Frequências
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropFreq">
+                            <h:link href="#" class="dropdown-item" outcome="minhaMonitoria" rendered="#{menuView.aluno and menuView.monitor}">
+                                Minha Monitoria
+                            </h:link>
+                            <h:link href="#" class="dropdown-item" outcome="gerenciaFrequencias" rendered="#{menuView.professor || menuView.comissao}">
+                                Gerenciamento de Frequencias
+                            </h:link>
+                        </div>
+                    </li>
+                </h:panelGroup>
             </ul>
             <h:form id="navbar-top">
                 <ul class="nav navbar-nav navbar-right">
