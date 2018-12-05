@@ -110,9 +110,11 @@
 									
 									<div class="form-group">
 										<label>Período</label>
-										<h:inputText class="form-control periodo" 
-														value="#{gerenciaComponenteCurricularView.componentePersistido.periodo}">
+										<h:inputText id="periodoNew" class="form-control periodo" 
+													 value="#{gerenciaComponenteCurricularView.componentePersistido.periodo}"
+													 aria-describedby="periodoDescNew">
 										</h:inputText>
+										<small id="periodoDescNew" class="form-text text-muted">Utilize o formato ANO/SEMESTRE</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>
@@ -179,9 +181,11 @@
 									
 									<div class="form-group">
 										<label>Período</label>
-										<h:inputText class="form-control periodo" 
-														value="#{gerenciaComponenteCurricularView.componenteAtualizado.periodo}">
+										<h:inputText id="periodoUp" class="form-control periodo" 
+													 value="#{gerenciaComponenteCurricularView.componenteAtualizado.periodo}"
+													 aria-describedby="periodoDescUp">
 										</h:inputText>
+										<small id="periodoDescUp" class="form-text text-muted">Utilize o formato ANO/SEMESTRE</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>

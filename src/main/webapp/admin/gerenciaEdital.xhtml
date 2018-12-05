@@ -18,7 +18,7 @@
 				</div>
 				<div class="col col-sm-6  text-right">	
 					<h:commandButton value="Criar novo Edital" class="btn btn-outline-success cadastrador">
-						<f:ajax execute="@none" render="cadastraEdital" />
+						<f:ajax execute="@none" render="cadastraEdital" onevent="handleAjax"/>
 					</h:commandButton>	
 				</div>
 			</div>
@@ -65,7 +65,7 @@
 																	value="Deletar" update="@form" class="btn btn-danger" />
 												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
 																	value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" />
+													<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" onevent="handleAjax" />
 												</h:commandButton>
 												<button type="button" class="btn btn-secondary colapsador"
 														jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
@@ -102,7 +102,7 @@
 
 				<div class="col-md-12">
 					<h:form id="globalform">
-						<h:panelGroup layout="block" class="card-group">
+						<h:panelGroup layout="block" class="row">
 							<ui:repeat id="repeatEsquemas" value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
 								<div class="col-md-4">
 									<div class="card">
@@ -110,17 +110,13 @@
 											#{esquemaEdital.curso.nome}
 										</div>
 										<div class="card-footer">
-											<div class="input-group mb-3">
-												<div class="input-group-append">
-													<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
-														<f:convertNumber integerOnly="true"/>
-													</h:inputText>
-													<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-outline-success">
-														<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
-																listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
-													</h:commandButton>
-												</div> 
-											</div>
+											<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
+												<f:convertNumber integerOnly="true"/>
+											</h:inputText>
+											<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-outline-success btn-block">
+												<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
+														listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
+											</h:commandButton>
 										</div>
 									</div>
 								</div>
@@ -146,16 +142,15 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastro">Numero</label>
-											<h:inputText type="number" id="numeroCadastro" class="form-control ano" 
+											<h:inputText type="text" id="numeroCadastro" class="form-control ano" 
 														value="#{gerenciaEditalView.editalAtualizado.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastro">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastro" class="form-control ano" 
-														value="#{gerenciaEditalView.editalAtualizado.ano}">
-												<f:convertNumber integerOnly="true"/>
+											<h:inputText id="anoCadastro" class="form-control ano" 
+														 value="#{gerenciaEditalView.editalAtualizado.ano}">
 											</h:inputText>
 										</div>
 									</div>
@@ -313,16 +308,15 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastroE">Numero</label>
-											<h:inputText type="number" id="numeroCadastroE" class="form-control ano" 
+											<h:inputText type="text" id="numeroCadastroE" class="form-control ano" 
 														value="#{gerenciaEditalView.editalPersistido.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastroE">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastroE" class="form-control ano" 
-														value="#{gerenciaEditalView.editalPersistido.ano}">
-												<f:convertNumber integerOnly="true"/>
+											<h:inputText min="2010" max="2100" id="anoCadastroE" class="form-control ano" 
+														 value="#{gerenciaEditalView.editalPersistido.ano}">
 											</h:inputText>
 										</div>
 									</div>
