@@ -44,6 +44,8 @@ public class EditalSteps {
 		BrowserManager.driver.findElement(By.id("formcadastro:fimCompE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniPME")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimPME")).sendKeys("02-06-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:iniProvaE")).sendKeys("02-02-2018");
+		BrowserManager.driver.findElement(By.id("formcadastro:fimProvaE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniAlunoE")).sendKeys("02-02-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:fimAlunoE")).sendKeys("02-06-2018");
 		BrowserManager.driver.findElement(By.id("formcadastro:iniNotaE")).sendKeys("02-02-2018");
@@ -94,9 +96,6 @@ public class EditalSteps {
 		WebElement lista = mensagem.findElement(By.tagName("ul"));
 		assertEquals("A data para o fim de Inserção do Componente Curricular deve ser depois da data de início.", lista.findElement(By.tagName("li")).getText());
 		BrowserManager.esperar(5000);
-//		BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
-//		BrowserManager.driver.close();
-//		BrowserManager.driver = null;
 	}
 
 

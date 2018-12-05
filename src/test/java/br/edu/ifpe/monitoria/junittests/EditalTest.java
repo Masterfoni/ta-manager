@@ -48,11 +48,13 @@ public class EditalTest extends JUnitUtils {
 		edital.setNumeroEdital("999999/2020");
 		edital.setFimInscricaoComponenteCurricular(new Date());
 		edital.setFimInscricaoEstudante(new Date());
+		edital.setFimRealizacaoProvas(new Date());
 		edital.setFimInsercaoNota(new Date());
 		edital.setFimInsercaoPlano(new Date());
 		edital.setFimMonitoria(new Date());
 		edital.setInicioInscricaoComponenteCurricular(new Date());
 		edital.setInicioInscricaoEstudante(new Date());
+		edital.setInicioRealizacaoProvas(new Date());
 		edital.setInicioInsercaoNota(new Date());
 		edital.setInicioInsercaoPlano(new Date());
 		edital.setInicioMonitoria(new Date());

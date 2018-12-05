@@ -67,7 +67,17 @@ public class Edital implements Serializable {
 	@Column(name = "BOOL_VIGENTE")
 	private boolean vigente;
 	
-	@NotNull(message = "{mensagem.todos}{tipo.periodo.componente}{data.inicial}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.provas}{data.inicial}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_INI_PROVAS")
+	private Date inicioRealizacaoProvas;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.provas}{data.final}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_FIM_PROVAS")
+	private Date fimRealizacaoProvas;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.componente}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
@@ -267,6 +277,22 @@ public class Edital implements Serializable {
 
 	public void setEsquemas(List<EsquemaBolsa> esquemas) {
 		this.esquemas = esquemas;
+	}
+
+	public Date getInicioRealizacaoProvas() {
+		return inicioRealizacaoProvas;
+	}
+
+	public void setInicioRealizacaoProvas(Date inicioRealizacaoProvas) {
+		this.inicioRealizacaoProvas = inicioRealizacaoProvas;
+	}
+
+	public Date getFimRealizacaoProvas() {
+		return fimRealizacaoProvas;
+	}
+
+	public void setFimRealizacaoProvas(Date fimRealizacaoProvas) {
+		this.fimRealizacaoProvas = fimRealizacaoProvas;
 	}
 
 	@Override
