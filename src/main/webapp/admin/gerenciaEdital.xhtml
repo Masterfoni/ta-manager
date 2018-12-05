@@ -61,8 +61,6 @@
 										</td>
 										<td class="right">
 											<div class="btn-group" role="group">
-												<h:commandButton actionListener="#{gerenciaEditalView.deletaEdital(edital)}"
-																	value="Deletar" update="@form" class="btn btn-danger" />
 												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
 																	value="Alterar" class="btn btn-info alterador">
 													<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" onevent="handleAjax" />

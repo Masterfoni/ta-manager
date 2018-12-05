@@ -55,7 +55,7 @@
 						<ui:repeat value="#{divulgacaoClassificadosView.editais}" var="edital" varStatus="varedital">
 							<hr></hr>
 							<h3>
-								Edital: #{edital.numeroEdital} | <i>Campus: </i>
+								Edital: #{edital.numeroEdital}
 							</h3>
 							
 							<ui:repeat id="repeatPlanos" value="#{divulgacaoClassificadosView.planos.get(varedital.index)}" var="plano" varStatus="varplano">
