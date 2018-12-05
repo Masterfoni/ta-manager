@@ -123,12 +123,15 @@ public class EditalLocalBean
 
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEdital", EsquemaBolsa.class).setParameter("idEdital", edital.getId()).getResultList();
 		
-		for(EsquemaBolsa esquema : esquemas) {
-			if(!esquema.isDistribuido()) {
-				resultado.errors.add("Você deve explicitar o número de bolsas para cada curso!");
-				break;
+		if(edital.isVigente()) {
+			for(EsquemaBolsa esquema : esquemas) {
+				if(!esquema.isDistribuido()) {
+					resultado.errors.add("Você deve explicitar o número de bolsas para cada curso!");
+					break;
+				}
 			}
 		}
+		
 		
 		if(!resultado.hasErrors())
 		{

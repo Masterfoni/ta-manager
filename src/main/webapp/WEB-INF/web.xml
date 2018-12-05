@@ -120,16 +120,8 @@
 		<param-value>Development</param-value>
 	</context-param>
 	<context-param>
-		<param-name>dominio1</param-name>
-		<param-value>a.recife.ifpe.edu.br</param-value>
-	</context-param>
-	<context-param>
-		<param-name>dominio2</param-name>
-		<param-value>gmail.com</param-value>
-	</context-param>
-	<context-param>
 		<param-name>dominiosInstituncionais</param-name>
-		<param-value>a.recife.ifpe.edu.br;cabo.ifpe.edu.br;</param-value>
+		<param-value>a.recife.ifpe.edu.br;</param-value>
 	</context-param>
 	<context-param>
 		<param-name>dominiosAlunos</param-name>
@@ -150,6 +142,13 @@
 		<param-name>PRIVATE_CAPTCHA_KEY</param-name>
 		<param-value>6LcwZFgUAAAAAGx2Lwens72Yd4yREx5CZGMJN1GW</param-value>
 	</context-param>
+	
+	<context-param>
+        <param-name>
+            javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE
+        </param-name>
+        <param-value>true</param-value>
+    </context-param>
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>

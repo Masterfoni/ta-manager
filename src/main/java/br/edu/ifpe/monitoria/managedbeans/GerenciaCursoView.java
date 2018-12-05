@@ -135,6 +135,9 @@ public class GerenciaCursoView implements Serializable {
 	}
 	
 	public void persisteAlteracao() {
+		if(cursoAtualizado.getCoordenador().getId() == -1L) {
+			cursoAtualizado.setCoordenador(null);
+		}
 		cursobean.atualizaCurso(cursoAtualizado);
 	}
 }

@@ -2,6 +2,9 @@ package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -223,6 +226,7 @@ public class GerenciaEditalView implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		editalPersistido.setNumeroEdital(editalPersistido.getNumero() + "/" + editalPersistido.getAno());
+		carregarDatasCadastro();
 		
 		CriacaoRequestResult resultado = editalbean.persisteEdital(editalPersistido);
 		
@@ -240,8 +244,37 @@ public class GerenciaEditalView implements Serializable {
 		}
 	}
 	
+	/** Carrega as Datas inseridas no Cadastro do Edital
+	 * Busca as informações inseridas nos input html type="date"
+     */
+	private void carregarDatasCadastro() {
+		String dataString = "";
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniCompE");
+		editalPersistido.setInicioInscricaoComponenteCurricular(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimCompE");
+		editalPersistido.setFimInscricaoComponenteCurricular(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniPME");
+		editalPersistido.setInicioInsercaoPlano(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimPME");
+		editalPersistido.setFimInsercaoPlano(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniProvaE");
+		editalPersistido.setInicioRealizacaoProvas(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimProvaE");
+		editalPersistido.setFimRealizacaoProvas(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniAlunoE");
+		editalPersistido.setInicioInscricaoEstudante(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimAlunoE");
+		editalPersistido.setFimInscricaoEstudante(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniNotaE");
+		editalPersistido.setInicioInsercaoNota(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimNotaE");
+		editalPersistido.setFimInsercaoNota(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniMonE");
+		editalPersistido.setInicioMonitoria(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimMonE");
+		editalPersistido.setFimMonitoria(convertData(dataString));
+	}
 
-	
 	/** Exclui o edital informado do sistema 
 	 * @param edital Edital
      */
@@ -278,8 +311,8 @@ public class GerenciaEditalView implements Serializable {
      */
 	public void persisteAlteracao() {
 		editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
+		//carregarDatasAlteracao();
 		AtualizacaoRequestResult resultado = editalbean.atualizaEdital(editalAtualizado);
-
 		if(resultado.hasErrors())
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -288,5 +321,17 @@ public class GerenciaEditalView implements Serializable {
 				context.addMessage(null, new FacesMessage(erro));
 			}
 		}
+	}
+
+	/** Converte String em Date
+	 * Converte a string retornada de um input html type="date" em um objeto java.util.Date
+	 * @param data String
+     */
+	private Date convertData(String data) {
+		Calendar dataCalendar = new GregorianCalendar();
+		dataCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.substring(8, 10)));
+		dataCalendar.set(Calendar.MONTH, (Integer.parseInt(data.substring(5, 7))-1 ));
+		dataCalendar.set(Calendar.YEAR, Integer.parseInt(data.substring(0, 4)));
+		return dataCalendar.getTime();
 	}
 }

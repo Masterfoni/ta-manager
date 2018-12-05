@@ -57,7 +57,7 @@
 												</h:commandButton>
 												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
 																  value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" />
+													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" onevent="handleAjax"/>
 												</h:commandButton>
 											</div>
 										</td>
@@ -97,8 +97,10 @@
 									<div class="form-group">
 										<label>Carga Horaria</label>
 										<h:inputText class="form-control numero2" 
-														value="#{gerenciaComponenteCurricularView.componentePersistido.cargaHoraria}">
+														value="#{gerenciaComponenteCurricularView.componentePersistido.cargaHoraria}"
+														aria-describedby="chDescNew">
 										</h:inputText>
+										<small id="chDescNew" class="form-text text-muted">Apenas números</small>
 									</div>
 									<div class="form-group">
 										<label>Turno</label>
@@ -114,7 +116,7 @@
 													 value="#{gerenciaComponenteCurricularView.componentePersistido.periodo}"
 													 aria-describedby="periodoDescNew">
 										</h:inputText>
-										<small id="periodoDescNew" class="form-text text-muted">Utilize o formato ANO/SEMESTRE</small>
+										<small id="periodoDescNew" class="form-text text-muted">Utilize o formato ANO/SEMESTRE: (2018/1)</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>
@@ -168,8 +170,10 @@
 									<div class="form-group">
 										<label>Carga Horaria</label>
 										<h:inputText class="form-control numero2" 
-														value="#{gerenciaComponenteCurricularView.componenteAtualizado.cargaHoraria}">
+														value="#{gerenciaComponenteCurricularView.componenteAtualizado.cargaHoraria}"
+														aria-describedby="chDescUp">
 										</h:inputText>
+										<small id="chDescUp" class="form-text text-muted">Apenas números</small>
 									</div>
 									<div class="form-group">
 										<label>Turno</label>
@@ -185,7 +189,7 @@
 													 value="#{gerenciaComponenteCurricularView.componenteAtualizado.periodo}"
 													 aria-describedby="periodoDescUp">
 										</h:inputText>
-										<small id="periodoDescUp" class="form-text text-muted">Utilize o formato ANO/SEMESTRE</small>
+										<small id="periodoDescUp" class="form-text text-muted">Utilize o formato ANO/SEMESTRE: (2018/1)</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>
@@ -217,7 +221,7 @@
 		</div>
 		
 		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
+		<script src="../resources//libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaComponenteCurricular.js"></script>
 	</h:body>

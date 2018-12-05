@@ -68,7 +68,7 @@
 					</div>
 					<div class="col col-sm-6  text-right">
 						<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
-							<h:commandButton id="registrarAtividade" value="Registrar Atividade" class="btn btn-outline-success cadastrador">
+							<h:commandButton rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}" id="registrarAtividade" value="Registrar Atividade" class="btn btn-outline-success cadastrador">
 								<f:ajax execute="@none" render="registrarAtividade" />
 							</h:commandButton>
 						</h:panelGroup>	
