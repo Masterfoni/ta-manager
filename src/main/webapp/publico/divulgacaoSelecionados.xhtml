@@ -35,31 +35,31 @@
 		<div class="container" >
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Divulgação de Alunos Classificados</h2>
+					<h2>Divulgação de Alunos Selecionados</h2>
 				</div>
 			</div>
 			
 			
-			<h:form rendered="#{not divulgacaoClassificadosView.captchaValidado}">
+			<h:form rendered="#{not divulgacaoSelecionadosView.captchaValidado}">
 				<div class="row justify-content-md-center">
 					<div class="g-recaptcha " data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"></div>
 				</div>
 				<div class="row justify-content-md-center mb-5">
-					<h:commandButton update="@all" id="btn" value="Acessar listagem" action="#{divulgacaoClassificadosView.validarCaptcha}" class="btn btn-success"/>
+					<h:commandButton update="@all" id="btn" value="Acessar listagem" action="#{divulgacaoSelecionadosView.validarCaptcha}" class="btn btn-success"/>
 				</div>
 			</h:form>
 			
-			<h:panelGroup layout="block" rendered="#{divulgacaoClassificadosView.captchaValidado}">
+			<h:panelGroup layout="block" rendered="#{divulgacaoSelecionadosView.captchaValidado}">
 				<div class="row">
 					<div class="col-md-12">
-						<ui:repeat value="#{divulgacaoClassificadosView.editais}" var="edital" varStatus="varedital">
+						<ui:repeat value="#{divulgacaoSelecionadosView.editais}" var="edital" varStatus="varedital">
 							<hr></hr>
 							<h3>
 								Edital: #{edital.numeroEdital}
 							</h3>
 							
-							<ui:repeat id="repeatPlanos" value="#{divulgacaoClassificadosView.planos.get(varedital.index)}" var="plano" varStatus="varplano">
-								<h:panelGroup rendered="#{divulgacaoClassificadosView.monitorias.get(varedital.index).get(varplano.index).size() gt 0}">
+							<ui:repeat id="repeatPlanos" value="#{divulgacaoSelecionadosView.planos.get(varedital.index)}" var="plano" varStatus="varplano">
+								<h:panelGroup rendered="#{divulgacaoSelecionadosView.monitorias.get(varedital.index).get(varplano.index).size() gt 0}">
 								<h4>
 									Componente Curricular: #{plano.cc.nome}
 								</h4>
@@ -72,17 +72,17 @@
 										<th scope="col">Bolsista</th>
 									</thead>
 									<tbody>
-										<ui:repeat id="repeatMonitoria" value="#{divulgacaoClassificadosView.monitorias.get(varedital.index).get(varplano.index)}" 
+										<ui:repeat id="repeatMonitoria" value="#{divulgacaoSelecionadosView.monitorias.get(varedital.index).get(varplano.index)}" 
 												var="monitoria" varStatus="myStatus">
 											<tr>
 												<td>#{monitoria.classificacao}</td>
 												<td>#{monitoria.aluno.nome}</td>
 												<td>
-													<h:outputLabel class="badge badge-success" rendered="#{monitoria.selecionado}">
-														Classificado
+													<h:outputLabel class="badge badge-success" rendered="#{monitoria.homologado}">
+														Selecionado
 													</h:outputLabel>
-													<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.selecionado}">
-														Desclassificado
+													<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.homologado}">
+														Não homologado
 													</h:outputLabel>
 												</td>
 												<td>

@@ -16,8 +16,8 @@ import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.utils.RecaptchaService;
 
-@ManagedBean  (name="divulgacaoClassificadosView")
-public class DivulgacaoClassificadosView {
+@ManagedBean  (name="divulgacaoSelecionadosView")
+public class DivulgacaoSelecionadosView {
 	
 	private boolean captchaValidado;
 	
@@ -34,7 +34,7 @@ public class DivulgacaoClassificadosView {
 	@EJB
 	private MonitoriaLocalBean monitoriabean;
 	
-	public DivulgacaoClassificadosView() {
+	public DivulgacaoSelecionadosView() {
 		captchaValidado = false;
 	}
 	
@@ -58,7 +58,7 @@ public class DivulgacaoClassificadosView {
 			editais = new ArrayList<>();
 			
 			for (Edital edital : vigentes) {
-				if(new Date().after(edital.getPublicacaoAlunosClassificados())) {
+				if(new Date().after(edital.getPublicacaoAlunosSelecionados())) {
 					editais.add(edital);
 				}
 			}
@@ -94,9 +94,17 @@ public class DivulgacaoClassificadosView {
 				monitoriasPorEdital = new ArrayList<List<Monitoria>>();
 				for (List<PlanoMonitoria> planinhos : planos) {
 					for (PlanoMonitoria planinho : planinhos) {
-						List<Monitoria> monitinha = monitoriabean.consultaMonitoriaByPlano(planinho);
-						monitinha = monitoriabean.ordenar(monitinha);
+						List<Monitoria> ordenada = monitoriabean.consultaMonitoriaByPlano(planinho);
+						List<Monitoria> monitinha = new ArrayList<>();
+						ordenada = monitoriabean.ordenar(ordenada);
+						for (Monitoria m: ordenada) {
+							if(m.isHomologado()) {
+								monitinha.add(m);
+							}
+						}
+						
 						monitoriasPorEdital.add(monitinha);
+						
 					}
 				}
 				monitorias.add(monitoriasPorEdital);
