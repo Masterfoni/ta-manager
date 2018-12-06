@@ -20,6 +20,7 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
+import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 
 @Stateless
 @LocalBean
@@ -257,32 +258,37 @@ public class MonitoriaLocalBean
 		int classificacao = 1;
 		int vagasVoluntario = monitorias.get(0).getPlanoMonitoria().getVoluntarios();
 		int vagasBolsista = monitorias.get(0).getPlanoMonitoria().getBolsas();
+		boolean vagaDisponivel;
+		ModalidadeMonitoria modalidade;
 		
 		for (Monitoria monitoria : monitorias) {
-			System.out.println(monitoria.getAluno().getNome());
+			modalidade = ModalidadeMonitoria.INVALIDADA;
+			vagaDisponivel = false;
+			
 			if(monitoria.isClassificado()) {
 				monitoria.setClassificacao(classificacao);
 				classificacao++;
 				
 				if(monitoria.isBolsista()) {
 					if(vagasBolsista > 0) {
-						monitoria.setSelecionado(true);
+						vagaDisponivel = true;
 						vagasBolsista--;
-					} else {
-						monitoria.setSelecionado(false);
+						modalidade = ModalidadeMonitoria.BOLSISTA;
 					}
-				} else {
+				} else if (monitoria.isVoluntario() && !vagaDisponivel) {
 					if(vagasVoluntario > 0) {
-						monitoria.setSelecionado(true);
+						vagaDisponivel = true;
 						vagasVoluntario--;
-					} else {
-						monitoria.setSelecionado(false);
+						modalidade = ModalidadeMonitoria.VOLUNTARIO;
 					}
 				}
-			}
-			else {
+				
+				monitoria.setSelecionado(vagaDisponivel);
+				monitoria.setModalidade(modalidade);
+			} else {
 				monitoria.setClassificacao(null);
 				monitoria.setSelecionado(false);
+				monitoria.setModalidade(modalidade);
 			}
 		}
 		return monitorias;

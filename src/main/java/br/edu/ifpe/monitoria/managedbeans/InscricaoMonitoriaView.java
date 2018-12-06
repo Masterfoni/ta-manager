@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -58,20 +59,26 @@ public class InscricaoMonitoriaView implements Serializable{
 	private List<Edital> editais;
 	
 	private Edital edital;
+	
+	boolean bolsista;
+	
+	boolean voluntario;
 
 	public InscricaoMonitoriaView() {
 		planos = new ArrayList<PlanoMonitoria>();
+		bolsista = false;
+		voluntario = false;
 	}
 	
-	public void selecionarPlanoVoluntario(PlanoMonitoria plano) {	
-		salvarMonitoria(plano, false);
+	@PostConstruct
+	public void init() {
+		editais = editalBean.consultaEditaisVigentes();
+		if (editais != null && editais.size() > 0) {
+			edital = editais.get(0);
+		}
 	}
 	
-	public void selecionarPlanoComBolsa(PlanoMonitoria plano) {
-		salvarMonitoria(plano, true);
-	}
-	
-	private void salvarMonitoria(PlanoMonitoria plano, boolean bolsista) {
+	public void salvarMonitoria(PlanoMonitoria plano) {
 		boolean alteracao = true;
 		
 		if(monitoria == null) {
@@ -83,6 +90,7 @@ public class InscricaoMonitoriaView implements Serializable{
 		monitoria.setAluno(aluno);
 		monitoria.setEdital(getEdital());
 		monitoria.setBolsista(bolsista);
+		monitoria.setVoluntario(voluntario);
 		
 		if(alteracao) {
 			monitoriaBean.atualizaMonitoria(monitoria);
@@ -94,17 +102,6 @@ public class InscricaoMonitoriaView implements Serializable{
 	public void alterarCurso() {	
 		aluno.setCurso(curso);
 		alunoBean.atualizaAluno(aluno);
-	}
-	
-	public boolean temBolsa(PlanoMonitoria plano) {
-		if(plano.getBolsas() > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	public void selecionarEdital(Edital edital) {
-
 	}
 	
 	public List<PlanoMonitoria> getPlanos() {
@@ -199,5 +196,21 @@ public class InscricaoMonitoriaView implements Serializable{
 
 	public void setEdital(Edital edital) {
 		this.edital = edital;
+	}
+
+	public boolean isBolsista() {
+		return bolsista;
+	}
+
+	public void setBolsista(boolean bolsista) {
+		this.bolsista = bolsista;
+	}
+
+	public boolean isVoluntario() {
+		return voluntario;
+	}
+
+	public void setVoluntario(boolean voluntario) {
+		this.voluntario = voluntario;
 	}	
 }

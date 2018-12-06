@@ -6,6 +6,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_MONITORIA",
@@ -91,6 +95,13 @@ public class Monitoria implements Serializable{
 	
 	@Column (name="BOOL_BOLSISTA")
 	private boolean bolsista;
+	
+	@Column (name="BOOL_VOLUNTARIO")
+	private boolean voluntario;
+	
+	@Enumerated(EnumType.STRING)
+	@Column (name="TXT_MODALIDADE")
+	private ModalidadeMonitoria modalidade;
 	
 	public Long getId() {
 		return id;
@@ -219,6 +230,22 @@ public class Monitoria implements Serializable{
 		this.homologado = homologado;
 	}
 	
+	public boolean isVoluntario() {
+		return voluntario;
+	}
+
+	public void setVoluntario(boolean voluntario) {
+		this.voluntario = voluntario;
+	}
+
+	public ModalidadeMonitoria getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(ModalidadeMonitoria modalidade) {
+		this.modalidade = modalidade;
+	}
+
 	@Override
     public int hashCode() {
         int hash = 0;
