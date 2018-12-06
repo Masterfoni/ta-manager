@@ -2,6 +2,7 @@ package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class InscricaoMonitoriaView implements Serializable{
 	boolean bolsista;
 	
 	boolean voluntario;
+	
+	boolean periodoCerto;
 
 	public InscricaoMonitoriaView() {
 		planos = new ArrayList<PlanoMonitoria>();
@@ -75,6 +78,18 @@ public class InscricaoMonitoriaView implements Serializable{
 		editais = editalBean.consultaEditaisVigentes();
 		if (editais != null && editais.size() > 0) {
 			edital = editais.get(0);
+		}
+		
+		periodoCerto = false;
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		for (Edital edital : editais) {
+			fim.setTime(edital.getFimInscricaoEstudante());
+			fim.add(Calendar.DAY_OF_MONTH, 1);
+			if(hoje.after(edital.getInicioInscricaoEstudante()) && 
+					hoje.before(fim.getTime())) {
+				periodoCerto = true;
+			} 
 		}
 	}
 	
@@ -107,7 +122,7 @@ public class InscricaoMonitoriaView implements Serializable{
 	public List<PlanoMonitoria> getPlanos() {
 		planos = null;
 		if(getEdital() != null) {
-			planos = planoBean.consultaPlanosByEditaleCurso(edital, getAluno().getCurso(), true);
+			planos = planoBean.consultaPlanosByEditaleCurso(edital, getCurso(), true);
 		}
 		if(planos == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -163,7 +178,11 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 
 	public Curso getCurso() {
-		curso = getAluno().getCurso();
+		if(curso == null) {
+			if (getCursos() != null && getCursos().size() > 0) {
+				curso = getCursos().get(0);
+			}
+		}
 		return curso;
 	}
 
@@ -175,10 +194,13 @@ public class InscricaoMonitoriaView implements Serializable{
 		if(editais == null) {
 			List<Edital> editaisVigentes = editalBean.consultaEditaisVigentes();
 			editais = new ArrayList<Edital>();
-			Date dataAtual = new Date();
+			Date hoje = new Date();
+			Calendar fim = Calendar.getInstance();
 			for (Edital ed : editaisVigentes) {
-				if(dataAtual.before(ed.getFimInscricaoEstudante()) &&
-						dataAtual.after(ed.getInicioInscricaoEstudante())) {
+				fim.setTime(edital.getFimInscricaoEstudante());
+				fim.add(Calendar.DAY_OF_MONTH, 1);
+				if(hoje.after(edital.getInicioInscricaoEstudante()) && 
+						hoje.before(fim.getTime())) {
 					editais.add(ed);
 				}
 			}
@@ -212,5 +234,13 @@ public class InscricaoMonitoriaView implements Serializable{
 
 	public void setVoluntario(boolean voluntario) {
 		this.voluntario = voluntario;
+	}
+
+	public boolean isPeriodoCerto() {
+		return periodoCerto;
+	}
+
+	public void setPeriodoCerto(boolean periodoCerto) {
+		this.periodoCerto = periodoCerto;
 	}	
 }

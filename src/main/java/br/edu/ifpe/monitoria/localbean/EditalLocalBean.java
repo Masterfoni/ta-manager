@@ -190,6 +190,10 @@ public class EditalLocalBean
 		{
 			validationFailures.add("A data para o fim de Inscrição dos Alunos deve ser depois da data de início.");
 		}
+		if (edital.getInicioRealizacaoProvas().after(edital.getFimRealizacaoProvas())) 
+		{
+			validationFailures.add("A data para o fim da Realização das Provas deve ser depois da data de início.");
+		}
 		if (edital.getInicioInsercaoNota().after(edital.getFimInsercaoNota())) 
 		{
 			validationFailures.add("A data para o fim de Inserção das Notas deve ser depois da data de início.");

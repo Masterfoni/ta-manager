@@ -54,6 +54,11 @@
 									<p>Você ainda não esta inscrito para nenhuma monitoria.</p>
 								</h4>
 							</h:panelGroup>
+							<h:panelGroup layout="block" rendered="#{!inscricaoMonitoriaView.periodoCerto}">
+								<h4 class="alert-heading">
+									<p>Não há edital com periodo de inscrição de monitoria aberto.</p>
+								</h4>
+							</h:panelGroup>
 						</div>
 					</h:panelGroup>
 				</div>
@@ -94,7 +99,7 @@
 				</div>
 			</h:panelGroup>
 		
-			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.aluno.curso and not empty inscricaoMonitoriaView.edital}">
+			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital and inscricaoMonitoriaView.periodoCerto}">
 				<div class="row">
 					<div class="col col-lg-12">
 						<h:form id="escolhaplano">

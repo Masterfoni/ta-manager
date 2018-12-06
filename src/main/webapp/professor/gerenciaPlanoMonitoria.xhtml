@@ -14,10 +14,13 @@
 				<div class="col col-sm-6">
 					<h1>Planos de Monitoria</h1>
 				</div>
-				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Cadastrar novo plano" class="btn btn-outline-success cadastrador">
+				<div class="col col-sm-6  text-right">
+					<h:form id="formCadastrar">	
+					<h:commandButton id="btnCadastrar" value="Cadastrar novo plano" class="btn btn-outline-success cadastrador" 
+						rendered="#{gerenciaPlanoMonitoriaView.periodoCerto || gerenciaPlanoMonitoriaView.comissao}">
 						<f:ajax execute="@none" render="cadastraPlano" />
 					</h:commandButton>	
+					</h:form>
 				</div>
 			</div>
 
@@ -91,7 +94,7 @@
 							</div>
 							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
 								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-								<f:ajax render=":formTablePlanos :detalheCoordInfo" onevent="handleAjax"/>
+								<f:ajax render=":formTablePlanos :detalheCoordInfo :formCadastrar" onevent="handleAjax"/>
 							</h:selectOneMenu>
 						</div>
 
@@ -121,6 +124,7 @@
 								<th scope="col">Status</th>
 								<th scope="col">Bolsas Solicitadas</th>
 								<th scope="col">Bolsas Disponibilizadas</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
@@ -174,10 +178,18 @@
 										</td>
 										
 										<td class="right">
-											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano)}">
+											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas}">
 											<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
 												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
 												<span class="fas fa-clipboard-list"></span>
+											</button>
+											</h:panelGroup>
+										</td>
+										<td class="right">
+											<h:panelGroup>
+											<button type="submit" id="botaoVerALunos" jsf:action="#{gerenciaPlanoMonitoriaView.verAlunos(plano)}" 
+												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Ver Inscritos">
+												<span class="fas fa-eye"></span>
 											</button>
 											</h:panelGroup>
 										</td>
@@ -283,7 +295,7 @@
 									<div class="form-group">
 										<label>Edital</label>
 										<h:selectOneMenu id="edital" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editaisAceitandoPlano}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">

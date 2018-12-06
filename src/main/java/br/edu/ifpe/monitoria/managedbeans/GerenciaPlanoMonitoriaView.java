@@ -2,6 +2,8 @@ package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -62,6 +64,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public List<Edital> editais;
 	
+	public List<Edital> editaisAceitandoPlano;
+	
 	public PlanoMonitoria planoPersistido;
 	
 	public PlanoMonitoria planoAtualizado;
@@ -77,6 +81,10 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public Curso cursoSelecionado;
 	
 	public boolean comissao;
+	
+	public boolean periodoCerto;
+	
+	public boolean periodoNotas;
 	
 	@PostConstruct
 	public void init() {
@@ -225,6 +233,27 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		return editais;
 	}
 
+	public List<Edital> getEditaisAceitandoPlano() {
+		if(editaisAceitandoPlano == null) {
+			editaisAceitandoPlano = new ArrayList<>();
+			Date hoje = new Date();
+			Calendar fim = Calendar.getInstance();
+			for (Edital edital : editais) {
+				fim.setTime(edital.getFimInsercaoPlano());
+				fim.add(Calendar.DAY_OF_MONTH, 1);
+				if(hoje.after(edital.getInicioInsercaoPlano()) && 
+						hoje.before(fim.getTime()) && edital.isVigente()) {
+					editaisAceitandoPlano.add(edital);
+				} 
+			}
+		}
+		return editaisAceitandoPlano;
+	}
+
+	public void setEditaisAceitandoPlano(List<Edital> editaisAceitandoPlano) {
+		this.editaisAceitandoPlano = editaisAceitandoPlano;
+	}
+
 	public PlanoMonitoria getPlanoPersistido() {
 		return planoPersistido;
 	}
@@ -247,6 +276,44 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 
 	public void setComissao(boolean comissao) {
 		this.comissao = comissao;
+	}
+
+	public boolean isPeriodoCerto() {
+		periodoCerto = false;
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		for (Edital edital : editais) {
+			fim.setTime(edital.getFimInsercaoPlano());
+			fim.add(Calendar.DAY_OF_MONTH, 1);
+			if(hoje.after(edital.getInicioInsercaoPlano()) && 
+					hoje.before(fim.getTime()) && edital.isVigente()) {
+				periodoCerto = true;
+			} 
+		}
+		return periodoCerto;
+	}
+
+	public void setPeriodoCerto(boolean periodoCerto) {
+		this.periodoCerto = periodoCerto;
+	}
+
+	public boolean isPeriodoNotas() {
+		periodoNotas = false;
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		for (Edital edital : editais) {
+			fim.setTime(edital.getFimInsercaoNota());
+			fim.add(Calendar.DAY_OF_MONTH, 1);
+			if(hoje.after(edital.getInicioInsercaoNota()) && 
+					hoje.before(fim.getTime()) && edital.isVigente()) {
+				periodoNotas = true;
+			} 
+		}
+		return periodoNotas;
+	}
+
+	public void setPeriodoNotas(boolean periodoNotas) {
+		this.periodoNotas = periodoNotas;
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
@@ -315,6 +382,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	    return "inserirNotas?faces-redirect=true";
 	}
 
+	public String verAlunos(PlanoMonitoria plano) {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		session.setAttribute("plano", plano);
+		
+	    return "verInscritos?faces-redirect=true";
+	}
+	
 	public boolean isProfessorDe(PlanoMonitoria plano) {
 		if(plano.getCc().getProfessor().getId() == this.loggedServidor.getId())
 			return true;

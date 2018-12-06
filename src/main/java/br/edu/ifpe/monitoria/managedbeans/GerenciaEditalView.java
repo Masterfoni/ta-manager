@@ -269,6 +269,10 @@ public class GerenciaEditalView implements Serializable {
 		editalPersistido.setInicioInsercaoNota(convertData(dataString));
 		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimNotaE");
 		editalPersistido.setFimInsercaoNota(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("publiClassE");
+		editalPersistido.setPublicacaoAlunosClassificados(convertData(dataString));
+		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("publiSelecE");
+		editalPersistido.setPublicacaoAlunosSelecionados(convertData(dataString));
 		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("iniMonE");
 		editalPersistido.setInicioMonitoria(convertData(dataString));
 		dataString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("fimMonE");

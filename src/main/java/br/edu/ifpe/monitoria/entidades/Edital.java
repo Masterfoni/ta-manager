@@ -117,6 +117,16 @@ public class Edital implements Serializable {
 	@Column(name = "DT_FIM_INSCERCAO_NT")
 	private Date fimInsercaoNota;
 	
+	@NotNull(message = "{mensagem.notnull}{tipo.data.publicacao.classificados}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_PUB_ALUN_CLASS")
+	private Date publicacaoAlunosClassificados;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.data.publicacao.selecionados}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_PUB_ALUN_SELEC")
+	private Date publicacaoAlunosSelecionados;
+	
 	@NotNull(message = "{mensagem.notnull}{tipo.periodo.monitoria}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_MONITORIA")
@@ -293,6 +303,22 @@ public class Edital implements Serializable {
 
 	public void setFimRealizacaoProvas(Date fimRealizacaoProvas) {
 		this.fimRealizacaoProvas = fimRealizacaoProvas;
+	}
+	
+	public Date getPublicacaoAlunosClassificados() {
+		return publicacaoAlunosClassificados;
+	}
+
+	public void setPublicacaoAlunosClassificados(Date publicacaoAlunosClassificados) {
+		this.publicacaoAlunosClassificados = publicacaoAlunosClassificados;
+	}
+
+	public Date getPublicacaoAlunosSelecionados() {
+		return publicacaoAlunosSelecionados;
+	}
+
+	public void setPublicacaoAlunosSelecionados(Date publicacaoAlunosSelecionados) {
+		this.publicacaoAlunosSelecionados = publicacaoAlunosSelecionados;
 	}
 
 	@Override

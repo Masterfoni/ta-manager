@@ -261,6 +261,32 @@
 									
 									<div class="form-group row">
 										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes classificados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<h:inputText id="publiClass" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.publicacaoAlunosClassificados}">
+												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:passThroughAttribute name="placeholder" value="INICIO" />
+											</h:inputText>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes selecionados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<h:inputText id="publiSelec" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.publicacaoAlunosSelecionados}">
+												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:passThroughAttribute name="placeholder" value="INICIO" />
+											</h:inputText>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
 											<label>Periodo de Monitoria</label>
 										</div>
 										<div class="col-sm-5">
@@ -408,6 +434,24 @@
 										<div class="col-sm-1"><span>à</span></div>
 										<div class="col-sm-5">
 											<input id="fimNotaE" class="form-control" type="date" name="fimNotaE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes classificados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<input id="publiClassE" class="form-control" type="date" name="publiClassE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes selecionados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<input id="publiSelecE" class="form-control" type="date" name="publiSelecE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
 									

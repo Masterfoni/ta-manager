@@ -122,6 +122,15 @@
     </navigation-rule>
     
     <navigation-rule>
+        <from-view-id>/professor/gerenciaPlanoMonitoria.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>verInscritos</from-outcome>
+            <to-view-id>/professor/verInscritos.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/comum/homepage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>relatorioMensal</from-outcome>
