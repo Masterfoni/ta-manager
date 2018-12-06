@@ -1,9 +1,0 @@
-.container.with-footer {
-    padding-top: 8px;
-    min-height: calc(100vh - 82px);
-}
-
-.footer {
-    background-color: black;
-    color: white;
-}
