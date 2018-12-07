@@ -1,3 +1,9 @@
+.detail-text {
+  color: white;
+  margin-top: 8px;
+  margin-right: 1rem;
+}
+
 .navbar {
     background-color: #000000;
   }
