@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,6 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
-import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
@@ -26,7 +26,14 @@ public class GerenciaClassificadosView implements Serializable {
 
 	private static final long serialVersionUID = -3536843049471998334L;
 	
-	private Edital edital;
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
+	private Edital editalGlobal;
 	
 	private List<PlanoMonitoria> planos;
 	
@@ -39,9 +46,6 @@ public class GerenciaClassificadosView implements Serializable {
 	@EJB
 	private MonitoriaLocalBean monitoriaBean;
 	
-	@EJB
-	private EditalLocalBean editalBean;
-	
 	@EJB 
 	private ServidorLocalBean servidorBean;
 	
@@ -52,11 +56,9 @@ public class GerenciaClassificadosView implements Serializable {
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id")); 
+		editalGlobal = sharedMenuView.getEditalGlobal();
 		
-		List<Edital> editaisVigentes = editalBean.consultaEditaisVigentes();
-		
-		edital = editaisVigentes.size() > 0 ? editaisVigentes.get(0) : null;
-		planos = edital != null ? planoBean.consultaPlanosByEdital(edital, true) : new ArrayList<PlanoMonitoria>();
+		planos = editalGlobal != null ? planoBean.consultaPlanosByEdital(editalGlobal, true) : new ArrayList<PlanoMonitoria>();
 		planoSelecionado = planos.size() > 0 ? planos.get(0) : null;
 	}
 	
@@ -65,16 +67,8 @@ public class GerenciaClassificadosView implements Serializable {
 		monitoriaBean.atualizaMonitoria(monitoriaClassificada);
 	}
 
-	public Edital getEdital() {
-		return edital;
-	}
-
-	public void setEdital(Edital edital) {
-		this.edital = edital;
-	}
-
 	public List<PlanoMonitoria> getPlanos() {
-		planos = edital != null ? planoBean.consultaPlanosByEdital(edital, true) : new ArrayList<PlanoMonitoria>();
+		planos = editalGlobal != null ? planoBean.consultaPlanosByEdital(editalGlobal, true) : new ArrayList<PlanoMonitoria>();
 		return planos;
 	}
 
@@ -83,7 +77,7 @@ public class GerenciaClassificadosView implements Serializable {
 	}
 
 	public List<Monitoria> getMonitorias() {
-		if(edital != null) {
+		if(editalGlobal != null) {
 			monitorias = planoSelecionado != null ? monitoriaBean.consultaMonitoriaSelecionadaByPlano(planoSelecionado) : new ArrayList<Monitoria>();
 		} else {
 			monitorias = new ArrayList<Monitoria>();

@@ -49,7 +49,7 @@
 									</p>
 									<p>
 										Para o edital:
-										<strong>#{gerenciaPlanoMonitoriaView.editalSelecionado.numeroEdital}</strong>										
+										<strong>#{menuView.editalGlobal.numeroEdital}</strong>										
 									</p>
 								</h4>
 								
@@ -70,7 +70,7 @@
 									</p>
 									<p>
 										Para o edital:
-										<strong>#{gerenciaPlanoMonitoriaView.editalSelecionado.numeroEdital}</strong>										
+										<strong>#{menuView.editalGlobal.numeroEdital}</strong>										
 									</p>
 								</h4>
 								
@@ -88,16 +88,6 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h:form id="editalForm">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<div class="input-group-text">Edital</div>
-							</div>
-							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
-								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-								<f:ajax render=":formTablePlanos :detalheCoordInfo :formCadastrar" onevent="handleAjax"/>
-							</h:selectOneMenu>
-						</div>
-
 						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao}">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -179,10 +169,10 @@
 										
 										<td class="right">
 											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas}">
-											<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
-												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
-												<span class="fas fa-clipboard-list"></span>
-											</button>
+												<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
+													class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
+													<span class="fas fa-clipboard-list"></span>
+												</button>
 											</h:panelGroup>
 										</td>
 										<td class="right">
@@ -214,12 +204,6 @@
 							</div>
 							<div class="modal-body">
 								<div id="atualizaPlano">
-									<div class="form-group">
-										<label>Edital</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}" converter="editalConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-										</h:selectOneMenu>
-									</div>
 									<div class="form-group">
 										<label>Componente Curricular</label>
 										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc}" converter="componenteConverter">
@@ -292,12 +276,6 @@
 							</div>
 							<div class="modal-body">
 								<div id="cadastraPlano">
-									<div class="form-group">
-										<label>Edital</label>
-										<h:selectOneMenu id="edital" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editaisAceitandoPlano}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-										</h:selectOneMenu>
-									</div>
 									<div class="form-group">
 										<label>Componente Curricular</label>
 										<h:selectOneMenu id="cc" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">

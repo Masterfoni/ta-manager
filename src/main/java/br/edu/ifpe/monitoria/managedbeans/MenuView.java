@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -9,7 +10,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
+import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 
 @ManagedBean (name="menuView")
@@ -23,6 +26,11 @@ public class MenuView implements Serializable {
 	
 	@EJB
 	AlunoLocalBean alunoBean;
+	
+	@EJB
+	private EditalLocalBean editalBean;
+	
+	private Edital editalGlobal;
 	
 	boolean comissao;
 	
@@ -39,12 +47,25 @@ public class MenuView implements Serializable {
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		aluno = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("aluno");
 		professor = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
+		editalGlobal = editalBean.consultaEditaisVigentes().size() > 0 ?  editalBean.consultaEditaisVigentes().get(0) : null;
 		
 		if (aluno) {
 			monitor = monitoriaBean.isCurrentMonitor(alunoBean.consultaAlunoById((Long)session.getAttribute("id")));
 		} else {
 			monitor = false;
 		}
+	}
+	
+	public Edital getEditalGlobal() {
+		return editalGlobal;
+	}
+
+	public void setEditalGlobal(Edital editalGlobal) {
+		this.editalGlobal = editalGlobal;
+	}
+
+	public List<Edital> getEditais() {
+		return editalBean.consultaEditaisVigentes();
 	}
 
 	public boolean isComissao() {

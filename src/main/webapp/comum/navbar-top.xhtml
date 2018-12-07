@@ -78,6 +78,9 @@
             </ul>
             <h:form id="navbar-top">
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="detail-text">
+                        Edital selecionado: #{menuView.editalGlobal != null ? menuView.editalGlobal.numeroEdital : 'NENHUM'}
+                    </li>
                     <li>
                         <h:commandLink id="logout" class="nav-link" action="#{logoutView.logout}" value="Sair  ">
                             <span class="fa fa-power-off"></span>

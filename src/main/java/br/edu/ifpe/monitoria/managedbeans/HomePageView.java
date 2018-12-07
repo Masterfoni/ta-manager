@@ -9,12 +9,13 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
-import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
@@ -22,9 +23,17 @@ import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 
 @ManagedBean (name="homePageView")
+@ViewScoped
 public class HomePageView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
 
 	@EJB
 	private MonitoriaLocalBean monitoriaBean;
@@ -37,8 +46,6 @@ public class HomePageView implements Serializable {
 	
 	@EJB
 	private EditalLocalBean editalBean;
-	
-	private Edital editalAtual;
 	
 	private Servidor loggedServidor;
 	
@@ -54,12 +61,7 @@ public class HomePageView implements Serializable {
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
-		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
-		
-		List<Edital> consultaResult = editalBean.consultaEditaisVigentes();
-		
-		editalAtual = consultaResult.size() > 0 ? consultaResult.get(0) : null;		
 	}
 	
 	public String gerarRelatorioMensal() {
@@ -114,7 +116,7 @@ public class HomePageView implements Serializable {
 	}
 	
 	public GregorianCalendar getMesSelecionado() {
-		if (mesSelecionado == null && editalAtual != null) {
+		if (mesSelecionado == null && sharedMenuView.getEditalGlobal() != null) {
 			mesSelecionado = getMeses().get(0);	
 		}
 		
@@ -126,21 +128,13 @@ public class HomePageView implements Serializable {
 	}
 	
 	public List<GregorianCalendar> getMeses() {
-		return editalAtual != null ? editalAtual.getMesesMonitoria() : new ArrayList<GregorianCalendar>();
+		return sharedMenuView.getEditalGlobal() != null ? sharedMenuView.getEditalGlobal().getMesesMonitoria() : new ArrayList<GregorianCalendar>();
 	}
 	
 	public String getNomeMes(GregorianCalendar mes) {
 		Locale brazil = new Locale("pt", "BR");
 		return mes.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, brazil) + "/" + 
 				mes.get(GregorianCalendar.YEAR);
-	}
-
-	public Edital getEditalAtual() {
-		return editalAtual;
-	}
-
-	public void setEditalAtual(Edital editalAtual) {
-		this.editalAtual = editalAtual;
 	}
 
 	public ComponenteCurricular getComponenteSelecionadoRFinal() {
