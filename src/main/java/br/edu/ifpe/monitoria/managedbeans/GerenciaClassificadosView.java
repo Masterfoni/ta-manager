@@ -59,7 +59,7 @@ public class GerenciaClassificadosView implements Serializable {
 		editalGlobal = sharedMenuView.getEditalGlobal();
 		
 		planos = editalGlobal != null ? planoBean.consultaPlanosByEdital(editalGlobal, true) : new ArrayList<PlanoMonitoria>();
-		planoSelecionado = planos.size() > 0 ? planos.get(0) : null;
+		//planoSelecionado = planos.size() > 0 ? planos.get(0) : null;
 	}
 	
 	public void homologarMonitoria(Monitoria monitoriaClassificada) {

@@ -52,6 +52,11 @@
 			<h:panelGroup layout="block" rendered="#{divulgacaoEditaisView.captchaValidado}">
 				<div class="row">
 					<div class="col-md-12">
+						<h:panelGroup rendered="#{empty divulgacaoEditaisView.editais}">
+							<h4 class="alert alert-primary"> Não existem editais vigentes divulgados</h4>
+						</h:panelGroup>
+					</div>
+					<div class="col-md-12">
 						<ui:repeat value="#{divulgacaoEditaisView.editais}" var="edital" varStatus="varedital">
 							<hr />
 							<br />

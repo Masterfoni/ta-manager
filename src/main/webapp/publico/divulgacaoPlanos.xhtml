@@ -52,11 +52,21 @@
 			<h:panelGroup layout="block" rendered="#{divulgacaoPlanosView.captchaValidado}">
 				<div class="row">
 					<div class="col-md-12">
+						<h:panelGroup rendered="#{empty divulgacaoPlanosView.editais}">
+							<h6 class="alert alert-warning"> Não existem editais vigentes divulgados</h6>
+						</h:panelGroup>
+					</div>
+					<div class="col-md-12">
 						<ui:repeat value="#{divulgacaoPlanosView.editais}" var="edital" varStatus="varedital">
+							<br/>
 							<h4>
 								Edital: #{edital.numeroEdital}
 							</h4>
-							<table class="table table-striped mb-5">
+							<h:panelGroup rendered="#{divulgacaoPlanosView.planos.get(varedital.index).size() == 0}">
+								<h6 class="alert alert-warning"> Não existem vagas disponíveis nesse Edital.</h6>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{divulgacaoPlanosView.planos.get(varedital.index).size() > 0}">
+							<table class="table table-striped mb-5 table-sm">
 								<thead>
 									<th scope="col">Componente Curricular</th>
 									<th scope="col">Professor</th>
@@ -76,6 +86,7 @@
 									</ui:repeat>
 								</tbody>
 							</table>
+							</h:panelGroup>
 						</ui:repeat>
 					</div>
 				</div>

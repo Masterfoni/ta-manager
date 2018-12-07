@@ -58,6 +58,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	@EJB
 	private EsquemaBolsaLocalBean esquemabean;
 	
+	private Edital editalGlobal;
+	
 	public List<ComponenteCurricular> componentes;
 	
 	public List<Curso> cursos;
@@ -91,6 +93,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
+		editalGlobal = sharedMenuView.getEditalGlobal();
+		
 		cursos = cursobean.consultaCursos();
 		servidores = servidorbean.consultaServidores();
 		planos = new ArrayList<PlanoMonitoria>();
@@ -119,7 +123,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public EsquemaBolsa getEsquemaAtual() {
-		esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(sharedMenuView.getEditalGlobal(), getCursoCoordenado()).result;
+		if(editalGlobal != null) {
+			esquemaAtual = esquemabean.consultaEsquemaByEditalCurso(editalGlobal, getCursoCoordenado()).result;
+		}
 		return esquemaAtual;
 	}
 
@@ -168,11 +174,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 */
 	public List<PlanoMonitoria> getPlanos() {
 		if(comissao) {
-			if(sharedMenuView.getEditalGlobal() != null) {
+			if(editalGlobal != null) {
 				if(cursoSelecionado != null) {
-					planos = planobean.consultaPlanosByEditaleCurso(sharedMenuView.getEditalGlobal(), cursoSelecionado, false);
+					planos = planobean.consultaPlanosByEditaleCurso(editalGlobal, cursoSelecionado, false);
 				} else {
-					planos = planobean.consultaPlanosByEdital(sharedMenuView.getEditalGlobal(), false);
+					planos = planobean.consultaPlanosByEdital(editalGlobal, false);
 				}
 			} else {
 				planos = planobean.consultaPlanos(); 
@@ -182,9 +188,9 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		{
 			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
 
-			if(sharedMenuView.getEditalGlobal() != null) {
+			if(editalGlobal != null) {
 				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
-				planos.retainAll(planobean.consultaPlanosByEdital(sharedMenuView.getEditalGlobal(), false));
+				planos.retainAll(planobean.consultaPlanosByEdital(editalGlobal, false));
 			}
 			else {
 				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
@@ -238,14 +244,16 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public boolean isPeriodoCerto() {
-		Date hoje = new Date();
-		Calendar fim = Calendar.getInstance();
-		Edital editalGlobal = sharedMenuView.getEditalGlobal();
+		if(editalGlobal != null) {
+			Date hoje = new Date();
+			Calendar fim = Calendar.getInstance();
+			
+			fim.setTime(editalGlobal.getFimInsercaoPlano());
+			fim.add(Calendar.DAY_OF_MONTH, 1);
 		
-		fim.setTime(editalGlobal.getFimInsercaoPlano());
-		fim.add(Calendar.DAY_OF_MONTH, 1);
-		
-		return hoje.after(editalGlobal.getInicioInsercaoPlano()) && hoje.before(fim.getTime());
+			return hoje.after(editalGlobal.getInicioInsercaoPlano()) && hoje.before(fim.getTime());
+		}
+		return false;
 	}
 
 	public void setPeriodoCerto(boolean periodoCerto) {
@@ -253,14 +261,16 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 
 	public boolean isPeriodoNotas() {
-		Date hoje = new Date();
-		Calendar fim = Calendar.getInstance();
-		Edital editalGlobal = sharedMenuView.getEditalGlobal();
+		if(editalGlobal != null) {
+			Date hoje = new Date();
+			Calendar fim = Calendar.getInstance();
 		
-		fim.setTime(editalGlobal.getFimInsercaoNota());
-		fim.add(Calendar.DAY_OF_MONTH, 1);
+			fim.setTime(editalGlobal.getFimInsercaoNota());
+			fim.add(Calendar.DAY_OF_MONTH, 1);
 		
-		return hoje.after(editalGlobal.getInicioInsercaoNota()) && hoje.before(fim.getTime());
+			return hoje.after(editalGlobal.getInicioInsercaoNota()) && hoje.before(fim.getTime());
+		}
+		return false;
 	}
 
 	public void setPeriodoNotas(boolean periodoNotas) {
@@ -306,19 +316,22 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	 */
 	public void cadastrarPlano()
 	{
-		CriacaoRequestResult resultadoPlano = planobean.persistePlanoMonitoria(planoPersistido); 
-		FacesContext context = FacesContext.getCurrentInstance();
-		
-		if(!resultadoPlano.hasErrors())
-		{
-			context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
-			planoPersistido = new PlanoMonitoria();
-		}
-		else
-		{
-			for(String erro : resultadoPlano.errors) {
-				context.addMessage(null, new FacesMessage(erro));
+		if(editalGlobal != null) {
+			planoPersistido.setEdital(editalGlobal);
+			CriacaoRequestResult resultadoPlano = planobean.persistePlanoMonitoria(planoPersistido);
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			if(!resultadoPlano.hasErrors())
+			{
+				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
+				planoPersistido = new PlanoMonitoria();
 			}
+			else
+			{
+				for(String erro : resultadoPlano.errors) {
+					context.addMessage(null, new FacesMessage(erro));
+				}
+		}
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -61,11 +62,21 @@ public class MenuView implements Serializable {
 	}
 
 	public void setEditalGlobal(Edital editalGlobal) {
-		this.editalGlobal = editalGlobal;
+		if(editalGlobal != null && editalGlobal.getNumeroEdital().equals("Selecione um Edital")) {
+			this.editalGlobal = null;
+		}else {
+			this.editalGlobal = editalGlobal;
+		}
 	}
 
 	public List<Edital> getEditais() {
-		return editalBean.consultaEditaisVigentes();
+		List<Edital> editais = new ArrayList<>();
+		Edital fake = new Edital();
+		fake.setNumeroEdital("Selecione um Edital");
+		fake.setId(-1L);
+		editais.add(fake);
+		editais.addAll(editalBean.consultaEditaisVigentes());
+		return editais;
 	}
 
 	public boolean isComissao() {

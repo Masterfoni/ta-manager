@@ -22,14 +22,14 @@
 							<h:form id="formEditalGlobal" style="width: 100%">
 								<h:selectOneMenu id="editalGlobalSelector" class="form-control" value="#{menuView.editalGlobal}" converter="editalConverter">
 									<f:selectItems value="#{menuView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-									<f:ajax render="@form"></f:ajax>
+									<f:ajax render="@form :navbar-top"></f:ajax>
 								</h:selectOneMenu>
 							</h:form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<h:panelGroup rendered="#{homePageView.comissao}">
+			<h:panelGroup id="panelRelatorios" rendered="#{homePageView.comissao and not empty menuView.editalGlobal}">
 				<div class="card mb-2">
 					<div class="card-body">
 						<h5 class="card-title">Relatório de frequências</h5>

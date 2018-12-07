@@ -4,6 +4,7 @@
     xmlns:p="http://primefaces.org/ui">
 	
 	<h:head>
+		<!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' netdna.bootstrapcdn.com use.fontawesome.com https://accounts.google.com/; script-src 'self' 'unsafe-inline' https://apis.google.com https://ssl.gstatic.com/; connect-src 'self'; img-src 'self'; style-src 'self' netdna.bootstrapcdn.com use.fontawesome.com;" /> -->
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../publico/index.css"></link>
 		<title>Monitoria - IFPE</title>
@@ -14,8 +15,9 @@
 			<p:remoteCommand name="login" actionListener="#{googleSignInView.loginGoogle}" />
 		</h:form>
 
-		<!-- BOTÃO ESCONDIDO QUE ATIVA O MODAL -->
+		<!-- BOTÃO ESCONDIDO QUE ATIVA O MODAL
 		<button id="loginErrorButton" style="display: none" type="button" data-toggle="modal" data-target="#modalLoginError">Open Modal</button>
+		 -->
 
 		<!-- MODAL DE ERRO ESPECÍFICO DE LOGIN -->
 		<div id="modalDefaultErrors" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoginError" aria-hidden="true">
@@ -53,91 +55,6 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
 					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- MODAL DE CADASTRO NOVO-->
-		<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<h:form class="dialogSignup">
-						<div class="modal-header">
-							<h5 class="modal-title" id="cadastroTitle">Cadastre-se</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">x</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div id="cadastreSe">
-								<div class="form-group row">
-									<div class="col-sm-6">
-										<label for="nomeCadastro">Nome</label>
-										<h:inputText id="nomeCadastro" class="form-control" value="#{indexView.aluno.nome}"></h:inputText>
-									</div>
-									<div class="col-sm-6">
-										<label for="sexoCadastro">Sexo</label>
-										<h:selectOneMenu id="sexoCadastro" class="form-control" value="#{indexView.aluno.sexo}">
-											<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
-											<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-											<f:selectItem itemValue="Outros" itemLabel="Outros" />
-										</h:selectOneMenu>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label for="matriculaCadastro">Matricula</label>
-									<h:inputText id="matriculaCadastro" class="form-control" value="#{indexView.aluno.matricula}" 
-												aria-describedby="matriculaDesc">
-									</h:inputText>
-									<small id="matriculaDesc" class="form-text text-muted">Utilize o formato 99999A9-AA9999</small>
-								</div>
-
-								<div class="form-group">
-									<label for="cpfCadastro">CPF</label>
-									<h:inputText id="cpfCadastro" class="form-control cpf" value="#{indexView.aluno.cpf}"
-												aria-describedby="cpfDesc">
-									</h:inputText>
-									<small id="cpfDesc" class="form-text text-muted">Utilize apenas números</small>
-								</div>
-
-								<div class="form-group row">
-									<div class="col-sm-6">
-										<label for="rgCadastro">RG</label>
-										<h:inputText id="rgCadastro" class="form-control" value="#{indexView.aluno.rg}"></h:inputText>
-									</div>
-									<div class="col-sm-6">
-										<label for="emissorCadastro">Orgao expedidor</label>
-										<h:inputText id="emissorCadastro" class="form-control expedidor" value="#{indexView.aluno.rgEmissor}"
-													aria-describedby="emissorDesc">
-										</h:inputText>
-										<small id="emissorDesc" class="form-text text-muted">Formato seguindo o ex.: SDS/PE</small>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label for="emailCadastro">Email</label>
-									<h:inputText id="emailCadastro" class="form-control" value="#{indexView.aluno.email}"
-												aria-describedby="emailDesc">
-									</h:inputText>
-									<small id="emailDesc" class="form-text text-muted">Utilize o formato EMAIL@DOMINIO</small>
-								</div>
-								
-								<div class="form-group">
-									<label for="senhaCadastro">Senha</label>
-									<h:inputSecret id="senhaCadastro" class="form-control" value="#{indexView.aluno.senha}"
-												aria-describedby="senhaDesc">
-									</h:inputSecret>
-									<small id="senhaDesc" class="form-text text-muted">É recomendado utilizar uma senha com números e letras</small>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							<h:commandButton value="Cadastrar" actionListener="#{indexView.cadastrarAluno()}" 
-												update="@form" class="btn btn-info" />
-						</div>
-					</h:form>
 				</div>
 			</div>
 		</div>

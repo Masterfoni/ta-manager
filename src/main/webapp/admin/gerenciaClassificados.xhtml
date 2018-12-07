@@ -26,6 +26,7 @@
                             </div>
                             <h:selectOneMenu id="planoSelect" class="form-control" value="#{gerenciaClassificadosView.planoSelecionado}" converter="planoConverter">
                                 <f:selectItems value="#{gerenciaClassificadosView.planos}" var="plano" itemValue="#{plano}" itemLabel="#{plano.cc.nome}"/>
+                                <f:ajax execute="@none" render=":formAlunos" />
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -33,7 +34,7 @@
             </h:form>
 
             <div class="row">
-                <h:form style="width: 100%">
+                <h:form id="formAlunos" style="width: 100%">
                     <table class="table table-hover">
                         <thead>
                             <th scope="col" class="text-center">Aluno</th>

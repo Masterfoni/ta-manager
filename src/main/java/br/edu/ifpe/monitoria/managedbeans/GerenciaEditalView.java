@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -29,6 +31,15 @@ public class GerenciaEditalView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
+	private Edital editalGlobal;
+	
 	@EJB
 	private EditalLocalBean editalbean;
 	
@@ -51,6 +62,11 @@ public class GerenciaEditalView implements Serializable {
 	public Edital editalExpandido;
 	
 	public Curso cursoSelecionado;
+	
+	@PostConstruct
+	public void init() {
+		editalGlobal = sharedMenuView.getEditalGlobal();
+	}
 	
 	/** Retorna todos os editais criados no sistema
      * @return List<Edital> - Lista de editais
@@ -315,7 +331,6 @@ public class GerenciaEditalView implements Serializable {
      */
 	public void persisteAlteracao() {
 		editalAtualizado.setNumeroEdital(editalAtualizado.getNumero() + "/" + editalAtualizado.getAno());
-		//carregarDatasAlteracao();
 		AtualizacaoRequestResult resultado = editalbean.atualizaEdital(editalAtualizado);
 		if(resultado.hasErrors())
 		{
@@ -323,6 +338,15 @@ public class GerenciaEditalView implements Serializable {
 			
 			for (String erro : resultado.errors) {
 				context.addMessage(null, new FacesMessage(erro));
+			}
+		} else {
+			if(editalGlobal != null) {
+				if(editalAtualizado.getId() == editalGlobal.getId() && !editalAtualizado.isVigente()) {
+					if(!editalAtualizado.isVigente())
+						sharedMenuView.setEditalGlobal(null);
+					else 
+						sharedMenuView.setEditalGlobal(editalAtualizado);
+				}
 			}
 		}
 	}

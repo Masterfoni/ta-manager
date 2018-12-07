@@ -281,6 +281,10 @@ public class Edital implements Serializable {
 		return id;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public List<EsquemaBolsa> getEsquemas() {
 		return esquemas;
 	}
