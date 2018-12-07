@@ -31,7 +31,7 @@
 
 			<div class="row focus-panel">
 				<div class="col-md-12">
-					<h:panelGroup id="inscrito" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
+					<h:panelGroup id="inscrito" layout="block" rendered="#{not empty menuView.editalGlobal}">
 						<div class="alert alert-info" role="alert">
 							<h:panelGroup layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria}">
 								<h4 class="alert-heading">
@@ -63,24 +63,8 @@
 					</h:panelGroup>
 				</div>
 			</div>		
-
-			<div class="row row-m-5">
-				<div class="col-lg-12">
-					<h:form id="escolhaedital">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<div class="input-group-text">Edital</div>
-							</div>
-							<h:selectOneMenu id="selectEdital" styleClass="form-control" value="#{inscricaoMonitoriaView.edital}" converter="editalConverter">
-								<f:selectItems value="#{inscricaoMonitoriaView.editais}" var="ed" itemValue="#{ed}" itemLabel="#{ed.numeroEdital}"/>
-								<f:ajax render=":escolhaedital :inscrito :cursos"/>
-							</h:selectOneMenu>
-						</div>
-					</h:form>
-				</div>
-			</div>
 					
-			<h:panelGroup id="cursos" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital}">
+			<h:panelGroup id="cursos" layout="block" rendered="#{not empty menuView.editalGlobal}">
 				<div class="row row-m-5">
 					<div class="col-lg-12">
 						<h:form id="escolhacurso">
@@ -99,7 +83,7 @@
 				</div>
 			</h:panelGroup>
 		
-			<h:panelGroup id="plano" layout="block" rendered="#{not empty inscricaoMonitoriaView.edital and inscricaoMonitoriaView.periodoCerto}">
+			<h:panelGroup id="plano" layout="block" rendered="#{not empty menuView.editalGlobal and inscricaoMonitoriaView.periodoCerto}">
 				<div class="row">
 					<div class="col col-lg-12">
 						<h:form id="escolhaplano">
@@ -109,7 +93,6 @@
 									<th scope="col">Componente Curricular</th>
 									<th scope="col">Turno</th>
 									<th scope="col">Modalidade</th>
-									<th scope="col"></th>
 								</thead>
 								<tbody>
 									<ui:repeat id="repeatPlanos" value="#{inscricaoMonitoriaView.planos}" var="plano" varStatus="myStatus">
@@ -118,12 +101,20 @@
 											<td>#{plano.cc.nome}</td>
 											<td>#{plano.cc.turno}</td>
 											<td>
-												<h:selectBooleanCheckbox value="#{inscricaoMonitoriaView.bolsista}" /> Bolsista
-												<h:selectBooleanCheckbox value="#{inscricaoMonitoriaView.voluntario}" /> Voluntário
-											</td>
-											<td>
-												<h:commandButton actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano)}" id="btnInscreverSe" value="Inscrever-se" update="@form" class="btn btn-info">
-												</h:commandButton>
+												<div class="btn-group" role="group" aria-label="bntsActions">
+													<h:commandButton id="botaoVoluntario" value="Bolsista" class="btn btn-secondary"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, false, true)}">
+														<f:ajax execute="@form :inscrito" render="@form" onevent="handleAjax"/>
+													</h:commandButton>
+													<h:commandButton id="botaoAmbos" value="Ambos" class="btn btn-success"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, true)}">
+														<f:ajax execute="@form :inscrito" render="@form" onevent="handleAjax"/>
+													</h:commandButton>
+													<h:commandButton id="botaoBolsista" value="Voluntario" class="btn btn-info"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, false)}">
+														<f:ajax execute="@form :inscrito" render="@form" onevent="handleAjax"/>
+													</h:commandButton>
+												</div>
 											</td>
 										</tr>
 									</ui:repeat>
