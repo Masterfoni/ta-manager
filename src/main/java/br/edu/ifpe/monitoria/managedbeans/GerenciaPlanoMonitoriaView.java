@@ -180,20 +180,13 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 				} else {
 					planos = planobean.consultaPlanosByEdital(editalGlobal, false);
 				}
-			} else {
-				planos = planobean.consultaPlanos(); 
 			}
-		} 
-		else
-		{
+		} else {
 			List<PlanoMonitoria> planosByServidor = planobean.consultaPlanosByServidor(this.loggedServidor.getId());
 
 			if(editalGlobal != null) {
 				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 				planos.retainAll(planobean.consultaPlanosByEdital(editalGlobal, false));
-			}
-			else {
-				planos = new ArrayList<PlanoMonitoria>(planosByServidor);
 			}
 			
 			ArrayList<PlanoMonitoria> planinhosCoordenados = new ArrayList<PlanoMonitoria>();
@@ -247,11 +240,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		if(editalGlobal != null) {
 			Date hoje = new Date();
 			Calendar fim = Calendar.getInstance();
+			Calendar inicio = Calendar.getInstance();
 			
 			fim.setTime(editalGlobal.getFimInsercaoPlano());
-			fim.add(Calendar.DAY_OF_MONTH, 1);
+			
+			inicio.setTime(editalGlobal.getInicioInsercaoPlano());
+			inicio.add(Calendar.DAY_OF_YEAR, -1);
 		
-			return hoje.after(editalGlobal.getInicioInsercaoPlano()) && hoje.before(fim.getTime());
+			return hoje.after(inicio.getTime()) && hoje.before(fim.getTime());
 		}
 		return false;
 	}
@@ -264,11 +260,15 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		if(editalGlobal != null) {
 			Date hoje = new Date();
 			Calendar fim = Calendar.getInstance();
+			Calendar inicio = Calendar.getInstance();
 		
 			fim.setTime(editalGlobal.getFimInsercaoNota());
-			fim.add(Calendar.DAY_OF_MONTH, 1);
+			fim.add(Calendar.DAY_OF_YEAR, 1);
+			
+			inicio.setTime(editalGlobal.getInicioInsercaoNota());
+			inicio.add(Calendar.DAY_OF_YEAR, -1);
 		
-			return hoje.after(editalGlobal.getInicioInsercaoNota()) && hoje.before(fim.getTime());
+			return hoje.after(inicio.getTime()) && hoje.before(fim.getTime());
 		}
 		return false;
 	}
@@ -281,8 +281,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		if(comissao) {
 			componentes = componentebean.consultaComponentesCurriculares();
-		} 
-		else  {
+		} else  {
 			Curso curso = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
 
 			Set<ComponenteCurricular> cursosNaoRepetidos = new HashSet<ComponenteCurricular>();
@@ -321,17 +320,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			CriacaoRequestResult resultadoPlano = planobean.persistePlanoMonitoria(planoPersistido);
 			FacesContext context = FacesContext.getCurrentInstance();
 			
-			if(!resultadoPlano.hasErrors())
-			{
+			if(!resultadoPlano.hasErrors()) {
 				context.addMessage(null, new FacesMessage("Cadastro realizado com sucesso!"));
 				planoPersistido = new PlanoMonitoria();
-			}
-			else
-			{
+			} else {
 				for(String erro : resultadoPlano.errors) {
 					context.addMessage(null, new FacesMessage(erro));
 				}
-		}
+			}
 		}
 	}
 	
@@ -354,10 +350,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	}
 	
 	public boolean isProfessorDe(PlanoMonitoria plano) {
-		if(plano.getCc().getProfessor().getId() == this.loggedServidor.getId())
-			return true;
-		else
-			return false;
+		return plano.getCc().getProfessor().getId() == this.loggedServidor.getId();
 	}
 	
 	public void modificarBolsas(boolean isIncremento, PlanoMonitoria plano)

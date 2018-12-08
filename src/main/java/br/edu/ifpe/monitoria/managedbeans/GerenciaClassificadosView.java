@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -24,7 +24,7 @@ import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 @ViewScoped
 public class GerenciaClassificadosView implements Serializable {
 
-	private static final long serialVersionUID = -3536843049471998334L;
+	private static final long serialVersionUID = 1L;
 	
 	@ManagedProperty(value="#{menuView}")
 	private MenuView sharedMenuView;
@@ -32,6 +32,15 @@ public class GerenciaClassificadosView implements Serializable {
 	public void setSharedMenuView(MenuView sharedMenuView) {
 		this.sharedMenuView = sharedMenuView;
 	}
+	
+	@EJB
+	private MonitoriaLocalBean monitoriaBean;
+	
+	@EJB 
+	private ServidorLocalBean servidorBean;
+	
+	@EJB
+	private PlanoMonitoriaLocalBean planoBean;
 	
 	private Edital editalGlobal;
 	
@@ -42,15 +51,6 @@ public class GerenciaClassificadosView implements Serializable {
 	private PlanoMonitoria planoSelecionado;	
 	
 	private Servidor loggedServidor;
-	
-	@EJB
-	private MonitoriaLocalBean monitoriaBean;
-	
-	@EJB 
-	private ServidorLocalBean servidorBean;
-	
-	@EJB
-	private PlanoMonitoriaLocalBean planoBean;
 
 	@PostConstruct
 	public void init() {
@@ -59,7 +59,7 @@ public class GerenciaClassificadosView implements Serializable {
 		editalGlobal = sharedMenuView.getEditalGlobal();
 		
 		planos = editalGlobal != null ? planoBean.consultaPlanosByEdital(editalGlobal, true) : new ArrayList<PlanoMonitoria>();
-		//planoSelecionado = planos.size() > 0 ? planos.get(0) : null;
+		planoSelecionado = planos.size() > 0 ? planos.get(0) : new PlanoMonitoria();
 	}
 	
 	public void homologarMonitoria(Monitoria monitoriaClassificada) {
