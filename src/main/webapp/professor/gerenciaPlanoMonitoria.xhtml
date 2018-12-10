@@ -168,7 +168,7 @@
 										</td>
 										
 										<td class="right">
-											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas}">
+											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao or (gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas)}">
 												<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
 													class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
 													<span class="fas fa-clipboard-list"></span>

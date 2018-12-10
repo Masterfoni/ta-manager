@@ -22,7 +22,7 @@
 							<h:form id="formEditalGlobal" style="width: 100%">
 								<h:selectOneMenu id="editalGlobalSelector" class="form-control" value="#{menuView.editalGlobal}" converter="editalConverter">
 									<f:selectItems value="#{menuView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-									<f:ajax render="@form :navbar-top"></f:ajax>
+									<f:ajax render="@all"></f:ajax>
 								</h:selectOneMenu>
 							</h:form>
 						</div>
@@ -43,7 +43,7 @@
 											<div class="input-group-text">Componente</div>
 										</div>
 										<h:selectOneMenu id="componenteSelector" class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
-											<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+											<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome} | #{comp.curso.nome}"/>
 										</h:selectOneMenu>
 									</div>
 								</div>

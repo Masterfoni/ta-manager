@@ -53,13 +53,15 @@
                     <h:form id="formAlunos">
                         <table class="table table-hover">
                             <thead>
-                                <th scope="col" class="text-center">Aluno</th>
+                            	<th scope="col" class="text-left">Matricula</th>	
+                                <th scope="col" class="text-left">Aluno</th>
                                 <th scope="col"></th>
                             </thead>
                             <tbody>
                                 <ui:repeat id="repeatMonitores" value="#{gerenciaClassificadosView.monitorias}" var="monitoria" varStatus="myStatus">
                                     <tr>
-                                        <td class="text-center">#{monitoria.aluno.nome}</td>
+                                    	<td class="text-left">#{monitoria.aluno.matricula}</td>
+                                        <td class="text-left">#{monitoria.aluno.nome}</td>
                                         <td class="text-right">
                                             <h:commandButton id="botaoHomologar" value="Homologar" class="btn btn-success"
                                                              actionListener="#{gerenciaClassificadosView.homologarMonitoria(monitoria)}">

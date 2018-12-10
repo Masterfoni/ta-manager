@@ -112,7 +112,9 @@ public class HomePageView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		return componenteBean.consultaComponentesByProfessor(loggedServidor);
+		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao") ? 
+				componenteBean.consultaComponentesCurriculares() :
+				 componenteBean.consultaComponentesByProfessor(loggedServidor);
 	}
 	
 	public GregorianCalendar getMesSelecionado() {
