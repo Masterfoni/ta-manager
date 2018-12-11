@@ -71,19 +71,12 @@ public class InscricaoMonitoriaView implements Serializable{
 
 	public InscricaoMonitoriaView() {
 		planos = new ArrayList<PlanoMonitoria>();
+		periodoCerto = false;
 	}
 	
 	@PostConstruct
 	public void init() {		
-		periodoCerto = false;
 		editalGlobal = sharedMenuView.getEditalGlobal();
-		
-		Date hoje = new Date();
-		Calendar fim = Calendar.getInstance();
-		
-		fim.setTime(editalGlobal.getFimInscricaoEstudante());
-		fim.add(Calendar.DAY_OF_MONTH, 1);
-		periodoCerto = hoje.after(editalGlobal.getInicioInscricaoEstudante()) && hoje.before(fim.getTime());
 	}
 	
 	public void salvarMonitoria(PlanoMonitoria plano, boolean voluntario, boolean bolsista) {
@@ -122,10 +115,6 @@ public class InscricaoMonitoriaView implements Serializable{
 			context.addMessage(null, new FacesMessage("Não existe programa de monitoria disponivel para inscrição."));
 		} 
 		return planos;
-	}
-
-	public void setPlanos(ArrayList<PlanoMonitoria> planos) {
-		this.planos = planos;
 	}
 
 	public void setPlanos(List<PlanoMonitoria> planos) {
@@ -184,7 +173,13 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 
 	public boolean isPeriodoCerto() {
-		return periodoCerto;
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		
+		fim.setTime(editalGlobal.getFimInscricaoEstudante());
+		fim.add(Calendar.DAY_OF_MONTH, 1);
+
+		return hoje.after(editalGlobal.getInicioInscricaoEstudante()) && hoje.before(fim.getTime());
 	}
 
 	public void setPeriodoCerto(boolean periodoCerto) {

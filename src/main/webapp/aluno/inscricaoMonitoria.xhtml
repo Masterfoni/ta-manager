@@ -66,7 +66,7 @@
 			</div>		
 					
 			
-			<h:panelGroup layout="block" rendered="#{not empty inscricaoMonitoriaView.monitoria and empty inscricaoMonitoriaView.monitoria.classificacao}">
+			<h:panelGroup layout="block" rendered="#{empty inscricaoMonitoriaView.monitoria or empty inscricaoMonitoriaView.monitoria.classificacao}">
 				<h:panelGroup id="cursos" layout="block" rendered="#{not empty menuView.editalGlobal}">
 					<div class="row row-m-5">
 						<div class="col-lg-12">
