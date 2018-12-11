@@ -193,7 +193,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			ArrayList<PlanoMonitoria> planinhosLecionados = new ArrayList<PlanoMonitoria>();
 			
 			for(PlanoMonitoria planinho : planos) {
-				if(planinho.getCc().getCurso().getCoordenador().getId() == this.loggedServidor.getId()) {
+				if(planinho.getCc().getCurso().getCoordenador() != null && 
+						planinho.getCc().getCurso().getCoordenador().getId() == this.loggedServidor.getId()) {
 					planinhosCoordenados.add(planinho);
 				} else if(planinho.getCc().getProfessor().getId() == this.loggedServidor.getId()) {
 					planinhosLecionados.add(planinho);
@@ -243,6 +244,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 			Calendar inicio = Calendar.getInstance();
 			
 			fim.setTime(editalGlobal.getFimInsercaoPlano());
+			fim.add(Calendar.DAY_OF_YEAR, 1);
 			
 			inicio.setTime(editalGlobal.getInicioInsercaoPlano());
 			inicio.add(Calendar.DAY_OF_YEAR, -1);
