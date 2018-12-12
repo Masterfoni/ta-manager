@@ -80,6 +80,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	public Curso cursoSelecionado;
 	
+	public Curso cursoNovoPlano;
+	
 	public boolean comissao;
 	
 	public boolean periodoCerto;
@@ -101,10 +103,11 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		
 		cursoCoordenado = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
 		
+		List<Curso> cursosConsultados = cursobean.consultaCursos();
 		if(comissao) {
-			List<Curso> cursosConsultados = cursobean.consultaCursos();
 			cursoSelecionado = cursosConsultados.isEmpty() ? new Curso() : cursosConsultados.get(0);
 		}
+		cursoNovoPlano =  cursosConsultados.isEmpty() ? new Curso() : cursosConsultados.get(0);
 		
 		planoAtualizado = new PlanoMonitoria();
 		planoPersistido = new PlanoMonitoria();
@@ -282,18 +285,22 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	public List<ComponenteCurricular> getComponentes() {
 		
 		if(comissao) {
-			componentes = componentebean.consultaComponentesCurriculares();
+			componentes = componentebean.consultaComponentesByCurso(cursoNovoPlano.getId());
 		} else  {
 			Curso curso = cursobean.consultaCursoByCoordenador(loggedServidor.getId());
 
 			Set<ComponenteCurricular> cursosNaoRepetidos = new HashSet<ComponenteCurricular>();
 			
-			List<ComponenteCurricular> componentesByProfessor = componentebean.consultaComponentesByProfessor(this.loggedServidor);
-			List<ComponenteCurricular> componentesByCurso = componentebean.consultaComponentesByCurso(curso.getId());
+			List<ComponenteCurricular> componentesByProfessorECurso = componentebean.consultaComponentesByProfessorECurso(this.loggedServidor, cursoNovoPlano);
+			
+			List<ComponenteCurricular> componentesByCurso = new ArrayList<>();
+			if(curso.getId() == cursoNovoPlano.getId()) {
+				componentesByCurso = componentebean.consultaComponentesByCurso(curso.getId());
+			}
 
-			if(!componentesByProfessor.isEmpty())
+			if(!componentesByProfessorECurso.isEmpty())
 			{
-				cursosNaoRepetidos.addAll(componentesByProfessor);
+				cursosNaoRepetidos.addAll(componentesByProfessorECurso);
 			}
 			if(!componentesByCurso.isEmpty())
 			{
@@ -333,6 +340,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		}
 	}
 	
+	public Curso getCursoNovoPlano() {
+		return cursoNovoPlano;
+	}
+
+	public void setCursoNovoPlano(Curso cursoNovoPlano) {
+		this.cursoNovoPlano = cursoNovoPlano;
+	}
+
 	public String lancarNotas(PlanoMonitoria plano) {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
 		

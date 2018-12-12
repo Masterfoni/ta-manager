@@ -276,6 +276,15 @@
 							</div>
 							<div class="modal-body">
 								<div id="cadastraPlano">
+								
+									<div class="form-group">
+										<label>Curso</label>
+										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.cursoNovoPlano}" converter="cursoConverter">
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
+											<f:ajax render="@form" onevent="handleAjax"/>
+										</h:selectOneMenu>
+									</div>
+									
 									<div class="form-group">
 										<label>Componente Curricular</label>
 										<h:selectOneMenu id="cc" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">

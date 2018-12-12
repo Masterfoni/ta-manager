@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.Curso;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
@@ -126,6 +127,16 @@ public class ComponenteCurricularLocalBean
 		
 		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByProfessor", ComponenteCurricular.class)
 				 .setParameter("professorId", servidor.getId()).getResultList();
+		
+		return componentes;
+	}
+	
+	public List<ComponenteCurricular> consultaComponentesByProfessorECurso(Servidor servidor, Curso curso) {
+		
+		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findByProfessorAndCurso", ComponenteCurricular.class)
+				 .setParameter("professorId", servidor.getId())
+				 .setParameter("cursoId", curso.getId())
+				 .getResultList();
 		
 		return componentes;
 	}

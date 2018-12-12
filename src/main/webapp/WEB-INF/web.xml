@@ -114,6 +114,11 @@
 		<error-code>403</error-code>
 		<location>/publico/nao-autorizado.xhtml</location>
 	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/publico/falha-interna.xhtml</location>
+	</error-page>
 
 	<context-param>
 		<param-name>javax.faces.webapp.PROJECT_STAGE</param-name>
