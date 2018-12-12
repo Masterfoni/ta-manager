@@ -62,8 +62,8 @@ public class GerenciaClassificadosView implements Serializable {
 		planoSelecionado = planos.size() > 0 ? planos.get(0) : new PlanoMonitoria();
 	}
 	
-	public void homologarMonitoria(Monitoria monitoriaClassificada) {
-		monitoriaClassificada.setHomologado(true);
+	public void homologarMonitoria(Monitoria monitoriaClassificada, boolean homologa) {
+		monitoriaClassificada.setHomologado(homologa);
 		monitoriaBean.atualizaMonitoria(monitoriaClassificada);
 	}
 

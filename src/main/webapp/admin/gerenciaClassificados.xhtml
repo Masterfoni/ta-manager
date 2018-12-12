@@ -63,10 +63,18 @@
                                     	<td class="text-left">#{monitoria.aluno.matricula}</td>
                                         <td class="text-left">#{monitoria.aluno.nome}</td>
                                         <td class="text-right">
-                                            <h:commandButton id="botaoHomologar" value="Homologar" class="btn btn-success"
-                                                             actionListener="#{gerenciaClassificadosView.homologarMonitoria(monitoria)}">
-                                                <f:ajax execute="@form" render="@all"/>
-                                            </h:commandButton>
+                                        	<h:panelGroup rendered="#{!monitoria.homologado or empty monitoria.homologado}">
+                                            	<h:commandButton id="botaoHomologar" value="Homologar" class="btn btn-success"
+                                                             actionListener="#{gerenciaClassificadosView.homologarMonitoria(monitoria, true)}">
+                                                	<f:ajax execute="@form" render="@form"/>
+                                            	</h:commandButton>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{monitoria.homologado}">
+                                            	<h:commandButton id="botaoNaoHomologar" value="Indeferir" class="btn btn-danger"
+                                                             actionListener="#{gerenciaClassificadosView.homologarMonitoria(monitoria, false)}">
+                                                	<f:ajax execute="@form" render="@form"/>
+                                            	</h:commandButton>
+                                        	</h:panelGroup>
                                         </td>
                                     </tr>
                                 </ui:repeat>

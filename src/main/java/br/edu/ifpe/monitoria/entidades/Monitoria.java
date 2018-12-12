@@ -37,7 +37,7 @@ import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 	@NamedQuery(name = "Monitoria.findAtivaByAluno", query = "SELECT m FROM Monitoria m WHERE m.aluno = :aluno"),
 	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano"),
 	@NamedQuery(name = "Monitoria.findBySelecionadasPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE"),
-	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE AND (m.homologado = FALSE OR m.homologado IS NULL)"),
+	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE ORDER BY m.aluno.nome"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificadoSelecionado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.selecionado = TRUE AND m.homologado = FALSE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE")

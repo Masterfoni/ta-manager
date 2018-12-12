@@ -254,9 +254,14 @@
 								</h:panelGroup>
 								
 								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
-									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
+									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano(true)}"
 													 id="homologar" update="@form" class="btn btn-success"/>
 								</h:panelGroup>
+								<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
+									<h:commandButton value="Indeferir" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano(false)}"
+													 id="btnIndeferir" update="@form" class="btn btn-secondary"/>
+								</h:panelGroup>
+								
 							</div>
 						</h:form>
 					</div>

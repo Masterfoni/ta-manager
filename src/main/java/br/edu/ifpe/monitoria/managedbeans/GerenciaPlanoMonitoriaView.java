@@ -387,8 +387,8 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 		planoAtualizado = plano;
 	}
 	
-	public void homologarPlano() {
-		planoAtualizado.setHomologado(true);
+	public void homologarPlano(boolean homologa) {
+		planoAtualizado.setHomologado(homologa);
 		planobean.atualizaPlanoMonitoria(planoAtualizado);
 	}
 	
