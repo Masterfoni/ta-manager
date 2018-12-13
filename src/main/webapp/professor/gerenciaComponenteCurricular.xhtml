@@ -15,7 +15,7 @@
 					<h1>Componentes Curriculares</h1>
 				</div>
 				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Adicionar novo componente curricular" class="btn  btn-outline-success cadastrador">
+					<h:commandButton value="Adicionar novo componente curricular" class="btn  btn-success cadastrador">
 						<f:ajax execute="@none" render="cadastraComponente" />
 					</h:commandButton>	
 				</div>
@@ -37,11 +37,12 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h:form>
-						<table class="table table-striped">
+						<table class="table table-hover">
 							<thead>
 								<th scope="col">Componente Curricular</th>
 								<th scope="col">Professor</th>
 								<th scope="col">Curso</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
 							<tbody>
@@ -51,15 +52,15 @@
 										<td>#{componente.professor.nome}</td>
 										<td>#{componente.curso.nome}</td>
 										<td>
-											<div class="btn-group" role="group">
-												<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
-																 update="@form" class="btn btn-danger">
-												</h:commandButton>
-												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
-																  value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" onevent="handleAjax"/>
-												</h:commandButton>
-											</div>
+											<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
+																update="@form" class="btn btn-danger">
+											</h:commandButton>
+										</td>
+										<td>
+											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
+																value="Alterar" class="btn btn-success alterador">
+												<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" onevent="handleAjax"/>
+											</h:commandButton>
 										</td>
 									</tr>
 								</ui:repeat>
@@ -135,7 +136,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaComponenteCurricularView.cadastrarComponente()}" 
-									             update="@form" class="btn btn-info" />
+									             update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -212,7 +213,7 @@
 												 update="@form" class="btn btn-danger" />
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaComponenteCurricularView.persisteAlteracao()}" 
-													update="@form" class="btn btn-info" />
+													update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>

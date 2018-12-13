@@ -17,7 +17,7 @@
 					<h1>Cursos</h1>
 				</div>
 				<div class="col col-sm-6  text-right">		
-					<h:commandButton value="Adicionar novo Curso" class="btn btn-outline-success cadastrador">
+					<h:commandButton value="Adicionar novo Curso" class="btn btn-success cadastrador">
 						<f:ajax execute="@none" render="cadastraCurso" />
 					</h:commandButton>
 				</div>
@@ -48,15 +48,22 @@
 								</p>
 							</div>
 							<div class="card-footer">
-								<div class="btn-group" role="group">
-									<h:commandButton actionListener="#{gerenciaCursoView.toggleCursoAtivacao(curso)}"
-													 value="#{curso.ativo ? 'Desativar' : 'Ativar'}" update="@form"
-													 class="#{curso.ativo ? 'btn btn-danger' : 'btn btn-success'}">
-									</h:commandButton>
-									<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
-													 value="Alterar" class="btn btn-info alterador">
-										<f:ajax execute="@form" render=":formAtualizador :atualizaCurso" />
-									</h:commandButton>
+								<div class="row no-gutters">
+									<div class="col-md-5 text-center">
+										<h:commandButton actionListener="#{gerenciaCursoView.toggleCursoAtivacao(curso)}"
+														 value="#{curso.ativo ? 'Desativar' : 'Ativar'}" update="@form"
+														 class="#{curso.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}">
+										</h:commandButton>
+									</div>
+									<div class="col-md-2">
+
+									</div>
+									<div class="col-md-5 text-center">
+										<h:commandButton id="botaoUpdate" actionListener="#{gerenciaCursoView.alteraCurso(curso)}" 
+														 value="Alterar" class="btn btn-block btn-success alterador">
+											<f:ajax execute="@form" render=":formAtualizador :atualizaCurso" />
+										</h:commandButton>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -112,9 +119,9 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaCursoView.persisteAlteracao()}" 
-													update="@form" class="btn btn-info" />
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaCursoView.persisteAlteracao()}" 
+													update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -171,7 +178,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaCursoView.cadastrarCurso()}" 
-												 update="@form" class="btn btn-info" />
+												 update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>

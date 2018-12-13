@@ -93,7 +93,7 @@
 										<th scope="col">Edital</th>
 										<th scope="col">Componente Curricular</th>
 										<th scope="col">Turno</th>
-										<th scope="col">Modalidade</th>
+										<th scope="col"></th>
 									</thead>
 									<tbody>
 										<ui:repeat id="repeatPlanos" value="#{inscricaoMonitoriaView.planos}" var="plano" varStatus="myStatus">
@@ -101,21 +101,21 @@
 												<td>#{plano.edital.numeroEdital}</td>
 												<td>#{plano.cc.nome}</td>
 												<td>#{plano.cc.turno}</td>
-												<td>
-													<div class="btn-group" role="group" aria-label="bntsActions">
-														<h:commandButton id="botaoVoluntario" value="Bolsista" class="btn btn-secondary"
-															actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, false, true)}">
-															<f:ajax execute="@form" render=":inscrito"/>
-														</h:commandButton>
-														<h:commandButton id="botaoAmbos" value="Ambos" class="btn btn-success"
-															actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, true)}">
-															<f:ajax execute="@form" render=":inscrito"/>
-														</h:commandButton>
-														<h:commandButton id="botaoBolsista" value="Voluntario" class="btn btn-info"
-															actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, false)}">
-															<f:ajax execute="@form" render=":inscrito"/>
-														</h:commandButton>
-													</div>
+												<td class="text-right">
+													<h:commandButton id="botaoVoluntario" value="Bolsista" class="btn btn-info mr-2"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, false, true)}">
+														<f:ajax execute="@form" render=":inscrito"/>
+													</h:commandButton>
+
+													<h:commandButton id="botaoAmbos" value="Ambos" class="btn btn-secondary mr-2"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, true)}">
+														<f:ajax execute="@form" render=":inscrito"/>
+													</h:commandButton>
+													
+													<h:commandButton id="botaoBolsista" value="Voluntario" class="btn btn-success"
+														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, false)}">
+														<f:ajax execute="@form" render=":inscrito"/>
+													</h:commandButton>
 												</td>
 											</tr>
 										</ui:repeat>

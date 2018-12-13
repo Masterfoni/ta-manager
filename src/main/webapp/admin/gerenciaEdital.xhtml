@@ -17,7 +17,7 @@
 					<h1>Editais</h1>
 				</div>
 				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Criar novo Edital" class="btn btn-outline-success cadastrador">
+					<h:commandButton value="Criar novo Edital" class="btn btn-success cadastrador">
 						<f:ajax execute="@none" render="cadastraEdital" onevent="handleAjax"/>
 					</h:commandButton>	
 				</div>
@@ -40,7 +40,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table table-striped">
+					<table class="table table-hover">
 						<thead>
 							<th scope="col">Numero</th>
 							<th scope="col">Vigencia</th>
@@ -60,18 +60,16 @@
 											</h:panelGroup>
 										</td>
 										<td class="right">
-											<div class="btn-group" role="group">
-												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
-																	value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :formAtualizadorTrue :atualizaEdital" onevent="handleAjax" />
-												</h:commandButton>
-												<button type="button" class="btn btn-secondary colapsador"
-														jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
-													<f:ajax execute="@form" render=":collapsibleCursos :globalform"/>
-													Gerenciar Bolsas
-													<i class="fa fa-caret-down"></i>
-												</button>
-											</div>
+											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
+																value="Alterar" class="btn btn-success alterador mr-2">
+												<f:ajax execute="@form" render=":formAtualizador :formAtualizadorTrue :atualizaEdital" onevent="handleAjax" />
+											</h:commandButton>
+
+											<button type="button" class="btn btn-success colapsador" jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
+												<f:ajax execute="@form" render=":collapsibleCursos :globalform"/>
+												Gerenciar Bolsas
+												<i class="fa fa-caret-down"></i>
+											</button>
 										</td>
 									</tr>
 								</h:form>
@@ -105,13 +103,15 @@
 								<div class="col-md-4">
 									<div class="card">
 										<div id="esquemaTituloCC" class="card-body">
-											#{esquemaEdital.curso.nome}
+											<strong>#{esquemaEdital.curso.nome}</strong> <br></br>
+											Total de bolsas: #{esquemaEdital.quantidade}
 										</div>
 										<div class="card-footer">
 											<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
-											<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-outline-success btn-block">
+											<br></br>
+											<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-success btn-block">
 												<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
 														listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
 											</h:commandButton>
@@ -336,7 +336,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaEditalView.persisteAlteracao()}" 
-									id="salvarAlteracao" update="@form" class="btn btn-info" />
+									id="salvarAlteracao" update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -461,12 +461,10 @@
 										</div>
 										<div class="col-sm-5">
 											 <input id="iniMonE" class="form-control" type="date" name="iniMonE" required="required" max="2100-12-31" min="2018-11-30"/>
-											 <!-- <small id="iniMonEHelp" class="form-text text-muted">Início</small>  -->
 										</div>
 										<div class="col-sm-1"></div>
 										<div class="col-sm-5">
 											 <input id="fimMonE" class="form-control" type="date" name="fimMonE" required="required" max="2100-12-31" min="2018-11-30"/>
-											  <!-- <small id="fimMonEHelp" class="form-text text-muted">Fim</small>  -->
 										</div>
 									</div>
 									
@@ -493,7 +491,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaEditalView.cadastrarEdital()}" 
-												 id="btnCadastrar" update="@form :navbar-top" class="btn btn-info" />
+												 id="btnCadastrar" update="@form :navbar-top" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>

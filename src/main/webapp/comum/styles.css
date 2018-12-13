@@ -1,0 +1,31 @@
+.gem-secondary-btn {
+    background-color: #2F97C1 !important;
+    border-color: #2F97C1 !important;
+    color: white;
+}
+
+.gem-danger {
+    color: #FFC09F;
+}
+
+.gem-info {
+    color: #FFEE93;
+}
+
+.gem-light-info {
+    color: #FCF5C7;
+}
+
+.badge-info {
+    background-color: #2F97C1 !important;
+}
+
+.badge-succes {
+    background-color: #53DD6C !important;
+}
+
+table {
+    border: 1px;
+    border-color: inherit !important;
+    border-style: inset !important;
+}
