@@ -31,7 +31,10 @@
 				</ul>
 			</div>
 		</nav>
-
+		<div class="sticky-top float-left mt-2 ml-2">
+			<a href="/"><button class="btn btn-secondary btn-sm"><i class="fas fa-angle-left"></i> Voltar</button></a>
+		</div>
+		
 		<div class="container" >
 			<div class="row">
 				<div class="col-md-12">
@@ -49,54 +52,56 @@
 				</div>
 			</h:form>
 			
-			<h:panelGroup layout="block" rendered="#{divulgacaoClassificadosView.captchaValidado}">
+			<h:panelGroup layout="block" rendered="#{divulgacaoClassificadosView.captchaValidado}"> 
 				<div class="row">
 					<div class="col-md-12">
 						<ui:repeat value="#{divulgacaoClassificadosView.editais}" var="edital" varStatus="varedital">
 							<hr></hr>
 							<h3>
-								Edital: #{edital.numeroEdital}
+								Edital: #{edital.numeroEdital}<br />
 							</h3>
 							
 							<ui:repeat id="repeatPlanos" value="#{divulgacaoClassificadosView.planos.get(varedital.index)}" var="plano" varStatus="varplano">
 								<h:panelGroup rendered="#{divulgacaoClassificadosView.monitorias.get(varedital.index).get(varplano.index).size() gt 0}">
-								<h4>
-									Componente Curricular: #{plano.cc.nome}
-								</h4>
-								<h5>Bolsistas: #{plano.bolsas}  | Voluntários: #{plano.voluntarios} </h5>
-								<table class="table table-striped mb-5 table-sm">
-									<thead>
-										<th scope="col">Classificação</th>
-										<th scope="col">Aluno</th>
-										<th scope="col">Situação</th>
-										<th scope="col">Bolsista</th>
-									</thead>
-									<tbody>
-										<ui:repeat id="repeatMonitoria" value="#{divulgacaoClassificadosView.monitorias.get(varedital.index).get(varplano.index)}" 
-												var="monitoria" varStatus="myStatus">
-											<tr>
-												<td>#{monitoria.classificacao}</td>
-												<td>#{monitoria.aluno.nome}</td>
-												<td>
-													<h:outputLabel class="badge badge-success" rendered="#{monitoria.selecionado}">
-														Classificado
-													</h:outputLabel>
-													<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.selecionado}">
-														Desclassificado
-													</h:outputLabel>
-												</td>
-												<td>
-													<h:outputLabel class="badge badge-success" rendered="#{monitoria.bolsista}">
-														Bolsista
-													</h:outputLabel>
-													<h:outputLabel class="badge badge-info" rendered="#{not monitoria.bolsista}">
-														Voluntário
-													</h:outputLabel>
-												</td>
-											</tr>
-										</ui:repeat>
-									</tbody>
-								</table>
+									<h4>
+										Componente Curricular: #{plano.cc.nome}
+									</h4>
+									
+									<h5>Bolsistas: #{plano.bolsas}  | Voluntários: #{plano.voluntarios} </h5>
+									<table class="table table-hover mb-5 table-sm">
+										<thead>
+											<th scope="col">Classificação</th>
+											<th scope="col">Aluno</th>
+											<th scope="col">Situação</th>
+											<th scope="col">Bolsista</th>
+										</thead>
+										<tbody>
+											<ui:repeat id="repeatMonitoria" value="#{divulgacaoClassificadosView.monitorias.get(varedital.index).get(varplano.index)}" 
+													var="monitoria" varStatus="varMonitoria">
+												<tr>
+													<td>#{monitoria.classificacao}</td>
+													<td>#{monitoria.aluno.nome}</td>
+													<td>
+														<h:outputLabel class="badge badge-success" rendered="#{monitoria.selecionado}">
+															Classificado
+														</h:outputLabel>
+														<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.selecionado}">
+															Desclassificado
+														</h:outputLabel>
+													</td>
+													<td>
+														<h:outputLabel class="badge badge-success" rendered="#{monitoria.bolsista}">
+															Bolsista
+														</h:outputLabel>
+														<h:outputLabel class="badge badge-info" rendered="#{not monitoria.bolsista}">
+															Voluntário
+														</h:outputLabel>
+													</td>
+												</tr>
+											</ui:repeat>
+										</tbody>
+									</table>
+								
 								</h:panelGroup>
 							</ui:repeat>
 						</ui:repeat>

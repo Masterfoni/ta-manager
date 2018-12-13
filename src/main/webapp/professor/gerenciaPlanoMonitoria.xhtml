@@ -206,9 +206,9 @@
 								<div id="atualizaPlano">
 									<div class="form-group">
 										<label>Componente Curricular</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc}" converter="componenteConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-										</h:selectOneMenu>
+										<h:inputText class="form-control numero2 disable" disabled="true"
+													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc.nome}">
+										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Bolsas Solicitadas</label>

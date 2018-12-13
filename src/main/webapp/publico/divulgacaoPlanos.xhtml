@@ -32,6 +32,9 @@
 				</ul>
 			</div>
 		</nav>
+		<div class="sticky-top float-left mt-2 ml-2">
+			<a href="/"><button class="btn btn-secondary btn-sm"><i class="fas fa-angle-left"></i> Voltar</button></a>
+		</div>
 
 		<div class="container" >
 			<div class="row">
@@ -66,7 +69,7 @@
 								<h6 class="alert alert-warning"> Não existem vagas disponíveis nesse Edital.</h6>
 							</h:panelGroup>
 							<h:panelGroup rendered="#{divulgacaoPlanosView.planos.get(varedital.index).size() > 0}">
-							<table class="table table-striped mb-5 table-sm">
+							<table class="table table-hover mb-5 table-sm">
 								<thead>
 									<th scope="col">Componente Curricular</th>
 									<th scope="col">Professor</th>

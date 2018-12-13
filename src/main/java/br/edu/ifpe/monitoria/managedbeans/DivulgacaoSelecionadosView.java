@@ -87,31 +87,29 @@ public class DivulgacaoSelecionadosView {
 
 
 	public List<List<List<Monitoria>>> getMonitorias() {
-		List<List<Monitoria>> monitoriasPorEdital;
-		if(monitorias == null) {
+		List<List<Monitoria>> planos = new ArrayList<>();
+		
+		if(this.monitorias == null) {
 			monitorias = new ArrayList<>();
-			for(int i=0;i<editais.size();i++) {
-				monitoriasPorEdital = new ArrayList<List<Monitoria>>();
-				for (List<PlanoMonitoria> planinhos : planos) {
-					for (PlanoMonitoria planinho : planinhos) {
-						List<Monitoria> ordenada = monitoriabean.consultaMonitoriaByPlano(planinho);
-						List<Monitoria> monitinha = new ArrayList<>();
-						ordenada = monitoriabean.ordenar(ordenada);
-						for (Monitoria m: ordenada) {
-							if(m.isHomologado()) {
-								monitinha.add(m);
-							}
+			for(int i=0;i<this.editais.size();i++) {
+				for (PlanoMonitoria plano : this.planos.get(i)) {
+					List<Monitoria> ordenadas = monitoriabean.consultaMonitoriaByPlano(plano);
+					List<Monitoria> selecionadas = new ArrayList<>();
+					ordenadas = monitoriabean.ordenar(ordenadas);
+					for (Monitoria m: ordenadas) {
+						if(m.isSelecionado()) {
+							selecionadas.add(m);
 						}
-						
-						monitoriasPorEdital.add(monitinha);
-						
 					}
+					planos.add(selecionadas);
 				}
-				monitorias.add(monitoriasPorEdital);
+				this.monitorias.add(planos);
+				planos = new ArrayList<>();
 			}
+			
 		}
 		
-		return monitorias;
+		return this.monitorias;
 	}
 
 
