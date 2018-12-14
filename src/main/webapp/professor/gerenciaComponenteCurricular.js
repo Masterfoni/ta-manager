@@ -10,9 +10,11 @@ $(document).ready(function () {
 
 	$(".numero2").mask("99");
 	$(".periodo").mask("9999/9");
+
+	jsf.ajax.addOnEvent(handleAjaxComponenteCurricular);
 });
 
-function handleAjax(data) {
+function handleAjaxComponenteCurricular(data) {
     var status = data.status;
 
        switch(status) {

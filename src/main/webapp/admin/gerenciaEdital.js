@@ -14,10 +14,12 @@ $(document).ready(function () {
     $(".colapsador").click(function(e){
         $("#collapsibleCursos").collapse();
     });
+
+    jsf.ajax.addOnEvent(handleAjaxGerenciaEdital);
 });
 
 
-function handleAjax(data) {
+function handleAjaxGerenciaEdital(data) {
     var status = data.status;
 
        switch(status) {

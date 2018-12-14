@@ -8,9 +8,11 @@ $(function () {
     });
     
     $(".excluirAtividade").tooltip();
+
+    jsf.ajax.addOnEvent(handleAjaxGerenciaEdital);
 });
 
-function handleAjax(data) {
+function handleAjaxMinhaMonitoria(data) {
 	 var status = data.status;
 
 	    switch(status) {

@@ -10,7 +10,9 @@ $(".numero2").mask("99");
 $(".periodo").mask("9999/9");
 $(".inserirNotas").tooltip();
 
-function handleAjax(data) {
+jsf.ajax.addOnEvent(handleAjaxPlanoMonitoria);
+
+function handleAjaxPlanoMonitoria(data) {
     var status = data.status;
 
     switch(status) {

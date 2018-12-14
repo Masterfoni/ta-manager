@@ -40,6 +40,8 @@ public class MenuView implements Serializable {
 	boolean professor;
 	
 	boolean monitor;
+	
+	boolean isLoading;
 
 	@PostConstruct
 	public void init() {
@@ -109,5 +111,13 @@ public class MenuView implements Serializable {
 
 	public void setMonitor(boolean monitor) {
 		this.monitor = monitor;
+	}
+
+	public boolean isLoading() {
+		return isLoading;
+	}
+
+	public void setLoading(boolean isLoading) {
+		this.isLoading = isLoading;
 	}
 }
