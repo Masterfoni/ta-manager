@@ -26,8 +26,8 @@
                                 <div class="input-group-text">Componente</div>
                             </div>
                             <h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.componenteSelecionado}" converter="componenteConverter">
-                                <f:selectItems value="#{gerenciaFrequenciasView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-                                <f:ajax render="@form :formTableAtividades" />
+                                	<f:selectItems value="#{gerenciaFrequenciasView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
+                                <f:ajax render="@form :formTableAtividades" onevent="handleAjax" />
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -38,24 +38,21 @@
                             </div>
                             <h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.alunoSelecionado}" converter="alunoConverter">
                                 <f:selectItems value="#{gerenciaFrequenciasView.alunos}" var="aluno" itemValue="#{aluno}" itemLabel="#{aluno.nome}"/>
-                                <f:ajax render="@form :formTableAtividades" />
+                                <f:ajax render="@form :formTableAtividades" onevent="handleAjax"/>
                             </h:selectOneMenu>
                         </div>
                    	</div>
-                    <h:panelGroup rendered="#{gerenciaFrequenciasView.alunoSelecionado != null}">
-                     	<div class="col-md-12">
-                        	<div class="input-group mb-3">
-                            	<div class="input-group-prepend">
-	                                <div class="input-group-text">Mês</div>
-                            	</div>
-                            	<h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.mesSelecionado}" converter="mesConverter">
-									<f:selectItems value="#{gerenciaFrequenciasView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{gerenciaFrequenciasView.getNomeMes(mes)}"/>
-									<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />
-								</h:selectOneMenu>
-                        	</div>
-                    	</div>
-                  	</h:panelGroup>
-                    
+					<div class="col-md-12">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Mês</div>
+							</div>
+							<h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.mesSelecionado}" converter="mesConverter">
+								<f:selectItems value="#{gerenciaFrequenciasView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{gerenciaFrequenciasView.getNomeMes(mes)}"/>
+								<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />
+							</h:selectOneMenu>
+						</div>
+					</div>
                 </div>
             </h:form>
             
@@ -86,7 +83,6 @@
 										<td>#{gerenciaFrequenciasView.getHora(atividade.horaFim)}</td>
 										<td>#{atividade.atividade}</td>
 										<td></td>
-										
 									</tr>
 								</ui:repeat>
 							</tbody>
@@ -123,5 +119,6 @@
 		<script src="../resources//libs/jquery-mask/jquery.mask.min.js"></script>
 		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
 		<script src="../professor/gerenciaFrequencias.js"></script>	
+		<script src="../comum/utils.js"></script>
 	</h:body>
 </html>

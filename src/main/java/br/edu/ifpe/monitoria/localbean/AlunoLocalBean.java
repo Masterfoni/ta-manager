@@ -79,6 +79,21 @@ public class AlunoLocalBean
 		return alunosPorComponente;
 	}
 	
+	public List<Aluno> consultaMonitoresByComponenteEdital(Long componenteId, Long editalId) {
+		List<Aluno> alunosPorComponenteEdital = new ArrayList<Aluno>();
+		
+		try {
+			alunosPorComponenteEdital = em.createNamedQuery("Aluno.findMonitoresByComponenteEdital", Aluno.class)
+					.setParameter("editalId", editalId)
+					.setParameter("componenteId", componenteId)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return alunosPorComponenteEdital;
+	}
+	
 	public boolean atualizaAluno (Aluno aluno) {
 		
 		em.merge(aluno);

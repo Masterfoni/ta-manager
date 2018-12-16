@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -28,7 +30,16 @@ import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
 
 @ManagedBean (name="gerenciaFrequenciasView")
 @ViewScoped
-public class GerenciaFrequenciasView {
+public class GerenciaFrequenciasView implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
 
 	@EJB
 	private ComponenteCurricularLocalBean componenteBean;
@@ -68,7 +79,9 @@ public class GerenciaFrequenciasView {
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id")); 
 		
 		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
-		alunos = componentes != null && componentes.size() > 0 ? alunoBean.consultaMonitoresByComponente(componentes.get(0).getId()) : new ArrayList<Aluno>();
+		componenteSelecionado = componentes != null && componentes.size() > 0 ? componentes.get(0) : null;
+		
+		alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componentes.get(0).getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
 		alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
 	}
 
@@ -115,13 +128,12 @@ public class GerenciaFrequenciasView {
 	}
 
 	public void setComponenteSelecionado(ComponenteCurricular componenteSelecionado) {
+		resetMesesFrequencias();
 		this.componenteSelecionado = componenteSelecionado;
-		alunos = this.componenteSelecionado != null ? alunoBean.consultaMonitoresByComponente(this.componenteSelecionado.getId()) : new ArrayList<Aluno>();
-		alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
 	}
 
 	public List<Aluno> getAlunos() {
-		return alunos;
+		return componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
 	}
 
 	public void setAlunos(List<Aluno> alunos) {
@@ -133,9 +145,8 @@ public class GerenciaFrequenciasView {
 	}
 
 	public void setAlunoSelecionado(Aluno alunoSelecionado) {
+		resetMesesFrequencias();
 		this.alunoSelecionado = alunoSelecionado;
-		meses = null;
-		frequenciaSelecionada = null;
 		getFrequenciaSelecionada();
 	}
 
@@ -214,5 +225,12 @@ public class GerenciaFrequenciasView {
 
 	public void setLoggedServidor(Servidor loggedServidor) {
 		this.loggedServidor = loggedServidor;
+	}
+	
+	private void resetMesesFrequencias() {
+		meses = null;
+		mesSelecionado = null;
+		frequencias = null;
+		frequenciaSelecionada = null;
 	}
 }
