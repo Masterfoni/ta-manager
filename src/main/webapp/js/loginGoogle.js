@@ -1,3 +1,7 @@
+jQuery(function () {
+    jQuery.noConflict();
+});
+
 onload = startApp;
 
 var googleUser = {};
@@ -9,6 +13,7 @@ function startApp(){
       cookiepolicy: 'single_host_origin',
     });
     attachSignin(document.getElementById('customBtn'));
+    console.log("app started");
   });
 };
 
@@ -19,7 +24,7 @@ function attachSignin(element) {
         onSignIn(googleUser);
       }, 
       function(error) {
-        //alert(JSON.stringify(error, undefined, 2));
+        console.log(error);
       });
 }
 
@@ -38,6 +43,7 @@ function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  
+	  console.log("call managed bean");
 	  login([{name:'idToken', value:id_token}]);
 }
 

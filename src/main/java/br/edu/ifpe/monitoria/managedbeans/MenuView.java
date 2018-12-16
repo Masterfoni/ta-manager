@@ -64,21 +64,11 @@ public class MenuView implements Serializable {
 	}
 
 	public void setEditalGlobal(Edital editalGlobal) {
-		if(editalGlobal != null && editalGlobal.getNumeroEdital().equals("Selecione um Edital")) {
-			this.editalGlobal = null;
-		}else {
-			this.editalGlobal = editalGlobal;
-		}
+		this.editalGlobal = editalGlobal;
 	}
 
 	public List<Edital> getEditais() {
-		List<Edital> editais = new ArrayList<>();
-		Edital fake = new Edital();
-		fake.setNumeroEdital("Selecione um Edital");
-		fake.setId(-1L);
-		editais.add(fake);
-		editais.addAll(editalBean.consultaEditaisVigentes());
-		return editais;
+		return editalBean.consultaEditaisVigentes();
 	}
 
 	public boolean isComissao() {

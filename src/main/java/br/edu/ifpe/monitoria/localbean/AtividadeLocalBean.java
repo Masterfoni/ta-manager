@@ -1,7 +1,6 @@
 package br.edu.ifpe.monitoria.localbean;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -80,7 +79,6 @@ public class AtividadeLocalBean {
 		
 		GregorianCalendar amanha = new GregorianCalendar();
 		amanha.setTime(new Date());
-		amanha.set(Calendar.DAY_OF_MONTH, amanha.get(Calendar.DAY_OF_MONTH) + 1);
 		if(atividade.getData().after(amanha.getTime())) {
 			errors.add("Só é possível adicionar atividades que já ocorreram.");
 		}

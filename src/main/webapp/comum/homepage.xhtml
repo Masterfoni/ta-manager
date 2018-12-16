@@ -22,6 +22,7 @@
 						<div class="col-md-12">
 							<h:form id="formEditalGlobal" style="width: 100%">
 								<h:selectOneMenu id="editalGlobalSelector" class="form-control" value="#{menuView.editalGlobal}" converter="editalConverter">
+									<f:selectItem itemValue="#{null}" itemLabel="Selecione um edital" />
 									<f:selectItems value="#{menuView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
 									<f:ajax render="@all"></f:ajax>
 								</h:selectOneMenu>

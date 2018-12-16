@@ -7,8 +7,6 @@ $(function () {
         $("#modalAlterarAtividade").modal();
     });
     
-    $(".excluirAtividade").tooltip();
-
     jsf.ajax.addOnEvent(handleAjaxGerenciaEdital);
 });
 
@@ -33,7 +31,4 @@ function updateAlteradorFunction() {
 	$(".editarAtividade").click(function(e) {
 		 $("#modalAlterarAtividade").modal();
 	});
-
-	
-    $(".excluirAtividade").tooltip();
 }

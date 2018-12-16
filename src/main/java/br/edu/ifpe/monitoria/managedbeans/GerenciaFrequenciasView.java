@@ -100,10 +100,20 @@ public class GerenciaFrequenciasView implements Serializable {
 
 	public void setComponenteSelecionado(ComponenteCurricular componenteSelecionado) {
 		this.componenteSelecionado = componenteSelecionado;
+		frequenciaSelecionada = null;
+		alunoSelecionado = null;
+		frequencias = null;
 	}
 
 	public List<Aluno> getAlunos() {
-		return componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
+		if(componenteSelecionado != null) {
+			alunos = alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId());
+		}
+		else {
+			alunos = new ArrayList<Aluno>();
+		}
+			
+		return alunos;
 	}
 
 	public void setAlunos(List<Aluno> alunos) {
@@ -115,22 +125,28 @@ public class GerenciaFrequenciasView implements Serializable {
 	}
 
 	public void setAlunoSelecionado(Aluno alunoSelecionado) {
-		this.alunoSelecionado = alunoSelecionado;
+		if(alunoSelecionado.getId() == -1L) {
+			alunoSelecionado = null;
+		}else {
+			this.alunoSelecionado = alunoSelecionado;
+		}
+		frequenciaSelecionada = null;
 	}
 	
 	public List<Frequencia> getFrequencias() {
-		FrequenciaRequestResult resultado = frequenciaBean.findByAluno(alunoSelecionado);
-		
-		if(resultado.hasErrors()) {
-			frequencias = new ArrayList<Frequencia>();
-			FacesContext context = FacesContext.getCurrentInstance();
-			for (String erro : resultado.errors) {
-				context.addMessage(null, new FacesMessage(erro));
+		if(alunoSelecionado != null) {
+			FrequenciaRequestResult resultado = frequenciaBean.findByAluno(alunoSelecionado);
+			
+			if(resultado.hasErrors()) {
+				frequencias = new ArrayList<Frequencia>();
+				FacesContext context = FacesContext.getCurrentInstance();
+				for (String erro : resultado.errors) {
+					context.addMessage(null, new FacesMessage(erro));
+				}
+			} else {
+				frequencias = resultado.frequencias;
 			}
-		} else {
-			frequencias = resultado.frequencias;
 		}
-		
 		return frequencias;
 	}
 
@@ -143,7 +159,11 @@ public class GerenciaFrequenciasView implements Serializable {
 	}
 
 	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
-		this.frequenciaSelecionada = frequenciaSelecionada;
+		if(frequenciaSelecionada.getMes() == -1) {
+			frequenciaSelecionada = null;
+		}else {
+			this.frequenciaSelecionada = frequenciaSelecionada;
+		}
 	}
 
 	public Servidor getLoggedServidor() {

@@ -137,6 +137,9 @@ public class Frequencia implements Serializable {
 		}
 		
 		Locale brazil = new Locale("pt", "BR");
+		
+		if(mes == -1) return "Selecione um mês";
+		
 		return mesEmQuestao != null ? mesEmQuestao.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, brazil) + "/" + 
 			   mesEmQuestao.get(GregorianCalendar.YEAR) : "MÊS NÃO IDENTIFICADO";
 	}

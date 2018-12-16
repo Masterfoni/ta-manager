@@ -98,6 +98,16 @@ public class PlanoMonitoriaLocalBean
 		return planos;
 	}
 	
+	public List<PlanoMonitoria> consultaPlanosByEditalServidor(Long servidor, Long edital)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditalServidor", PlanoMonitoria.class).
+				setParameter("servidorId", servidor).
+				setParameter("editalId", edital).
+				getResultList();
+		
+		return planos;
+	}
+	
 	/**
 	 * Método responsável por listar todos os planos cadastrados no sistema
 	 *
