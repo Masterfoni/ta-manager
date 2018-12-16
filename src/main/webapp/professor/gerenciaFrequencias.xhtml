@@ -62,7 +62,7 @@
 								<div class="input-group-text">Mês</div>
 							</div>
 							<h:selectOneMenu class="form-control" value="#{gerenciaFrequenciasView.frequenciaSelecionada}" converter="frequenciaConverter">
-								 <f:selectItem itemValue="#{null}" itemLabel="Selecione um mês" />
+								<f:selectItem itemValue="#{null}" itemLabel="Selecione um mês" />
 								<f:selectItems value="#{gerenciaFrequenciasView.frequencias}" var="freq" itemValue="#{freq}" itemLabel="#{freq.getNomeMes()}"/>
 								<f:ajax render="@form :formTableAtividades" onevent="handleAjax" />
 							</h:selectOneMenu>

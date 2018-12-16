@@ -13,14 +13,20 @@
 }
 
 .printed-text-content {
-    margin-bottom: 100px;
+    margin-bottom: 5rem;
 }
 
 .printed-text-title {
-    margin-bottom: 50px;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 @media print {
+    body {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
     .print-only {
         display: block;
     }
@@ -45,5 +51,9 @@
 
     .p-break-after-me {
         page-break-after: always;
+    }
+
+    .bigger-font {
+        font-size: 5rem;
     }
 }

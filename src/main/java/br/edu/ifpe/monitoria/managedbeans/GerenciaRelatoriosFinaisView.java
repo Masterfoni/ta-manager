@@ -7,12 +7,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.RelatorioFinal;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
@@ -27,6 +29,13 @@ import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
 public class GerenciaRelatoriosFinaisView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
 
 	@EJB
 	private RelatorioFinalLocalBean relatorioFinalBean;
@@ -54,8 +63,6 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	private List<Aluno> alunos;
 	
 	private Aluno alunoSelecionado;
-	
-	private boolean comissao;
 
 	@PostConstruct
 	public void init() {
@@ -64,10 +71,14 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 		
 		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
 		
-		if(componentes.size() > 0) {
+		Edital editalGlobal = sharedMenuView.getEditalGlobal(); 
+		
+		if(componentes.size() > 0 && editalGlobal != null) {
 			componenteSelecionado = componentes.get(0);
-			alunos = alunoBean.consultaMonitoresByComponente(componenteSelecionado.getId());
+			alunos = alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), editalGlobal.getId());
 			alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
+			RelatorioFinalRequestResult consResult = relatorioFinalBean.consultaRelatorioFinalPorMonitor(alunoSelecionado.getId());
+			relatorioAtual = consResult.hasErrors() ? null : consResult.result;
 		}
 	}
 	
@@ -80,6 +91,8 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 		if(alunoSelecionado != null) {
 			RelatorioFinalRequestResult consResult = relatorioFinalBean.consultaRelatorioFinalPorMonitor(alunoSelecionado.getId());
 			relatorioAtual = consResult.hasErrors() ? null : consResult.result;
+		} else {
+			relatorioAtual = null;
 		}
 		
 		return relatorioAtual;
@@ -116,7 +129,9 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public List<Aluno> getAlunos() {
-		alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponente(componenteSelecionado.getId()) : new ArrayList<Aluno>();
+		Edital editalGlobal = sharedMenuView.getEditalGlobal(); 
+		alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), editalGlobal.getId()) : new ArrayList<Aluno>();
+
 		return alunos;
 	}
 
@@ -125,18 +140,14 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public Aluno getAlunoSelecionado() {
+		if(alunos.size() == 0) {
+			alunoSelecionado = null;
+		}
+		
 		return alunoSelecionado;
 	}
 
 	public void setAlunoSelecionado(Aluno alunoSelecionado) {
 		this.alunoSelecionado = alunoSelecionado;
-	}
-
-	public boolean isComissao() {
-		return comissao;
-	}
-
-	public void setComissao(boolean comissao) {
-		this.comissao = comissao;
 	}
 }

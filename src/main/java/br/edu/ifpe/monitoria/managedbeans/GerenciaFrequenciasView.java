@@ -27,7 +27,6 @@ import br.edu.ifpe.monitoria.localbean.FrequenciaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
 
-
 @ManagedBean (name="gerenciaFrequenciasView")
 @ViewScoped
 public class GerenciaFrequenciasView implements Serializable {
@@ -159,9 +158,9 @@ public class GerenciaFrequenciasView implements Serializable {
 	}
 
 	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
-		if(frequenciaSelecionada.getMes() == -1) {
-			frequenciaSelecionada = null;
-		}else {
+		if (frequenciaSelecionada == null || frequenciaSelecionada.getMes() == -1) {
+			this.frequenciaSelecionada = null;
+		} else {
 			this.frequenciaSelecionada = frequenciaSelecionada;
 		}
 	}

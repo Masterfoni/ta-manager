@@ -2,7 +2,9 @@ $(".detalhador").click(function(e){
     $("#myModal").modal();
 });
 
-function handleAjax(data) {
+jsf.ajax.addOnEvent(handleAjaxGerenciaRelatoriosFinais);
+
+function handleAjaxGerenciaRelatoriosFinais(data) {
     var status = data.status;
 
     switch(status) {
