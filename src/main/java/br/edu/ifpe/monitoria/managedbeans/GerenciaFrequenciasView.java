@@ -59,10 +59,6 @@ public class GerenciaFrequenciasView implements Serializable {
 	
 	private List<Frequencia> frequencias;
 	
-	private List<GregorianCalendar> meses;
-	
-	private GregorianCalendar mesSelecionado;
-	
 	private ComponenteCurricular componenteSelecionado;
 	
 	private Aluno alunoSelecionado;
@@ -83,8 +79,85 @@ public class GerenciaFrequenciasView implements Serializable {
 		
 		alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componentes.get(0).getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
 		alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
+		
+		if (alunoSelecionado != null) {
+			getFrequencias();
+			frequenciaSelecionada = frequencias.size() > 0 ? frequencias.get(0) : null;
+		}
+	}
+	
+	public List<ComponenteCurricular> getComponentes() {
+		return componenteBean.consultaComponentesByProfessor(loggedServidor);
 	}
 
+	public void setComponentes(List<ComponenteCurricular> componentes) {
+		this.componentes = componentes;
+	}
+
+	public ComponenteCurricular getComponenteSelecionado() {
+		return componenteSelecionado;
+	}
+
+	public void setComponenteSelecionado(ComponenteCurricular componenteSelecionado) {
+		this.componenteSelecionado = componenteSelecionado;
+	}
+
+	public List<Aluno> getAlunos() {
+		return componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+
+	public Aluno getAlunoSelecionado() {
+		return alunoSelecionado;
+	}
+
+	public void setAlunoSelecionado(Aluno alunoSelecionado) {
+		this.alunoSelecionado = alunoSelecionado;
+	}
+	
+	public List<Frequencia> getFrequencias() {
+		FrequenciaRequestResult resultado = frequenciaBean.findByAluno(alunoSelecionado);
+		
+		if(resultado.hasErrors()) {
+			frequencias = new ArrayList<Frequencia>();
+			FacesContext context = FacesContext.getCurrentInstance();
+			for (String erro : resultado.errors) {
+				context.addMessage(null, new FacesMessage(erro));
+			}
+		} else {
+			frequencias = resultado.frequencias;
+		}
+		
+		return frequencias;
+	}
+
+	public void setFrequencias(List<Frequencia> frequencias) {
+		this.frequencias = frequencias;
+	}
+
+	public Frequencia getFrequenciaSelecionada() {
+		return frequenciaSelecionada;
+	}
+
+	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
+		this.frequenciaSelecionada = frequenciaSelecionada;
+	}
+
+	public Servidor getLoggedServidor() {
+		if(loggedServidor == null) {
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		}
+		return loggedServidor;
+	}
+
+	public void setLoggedServidor(Servidor loggedServidor) {
+		this.loggedServidor = loggedServidor;
+	}
+	
 	public void aprovacaoFrequencia(boolean aprovado) {
 		frequenciaBean.aprovarFrequencia(frequenciaSelecionada, aprovado);
 	}
@@ -113,124 +186,5 @@ public class GerenciaFrequenciasView implements Serializable {
 	    	return format.format(data);
 		}
 		return "";
-	}
-	
-	public List<ComponenteCurricular> getComponentes() {
-		return componenteBean.consultaComponentesByProfessor(loggedServidor);
-	}
-
-	public void setComponentes(List<ComponenteCurricular> componentes) {
-		this.componentes = componentes;
-	}
-
-	public ComponenteCurricular getComponenteSelecionado() {
-		return componenteSelecionado;
-	}
-
-	public void setComponenteSelecionado(ComponenteCurricular componenteSelecionado) {
-		resetMesesFrequencias();
-		this.componenteSelecionado = componenteSelecionado;
-	}
-
-	public List<Aluno> getAlunos() {
-		return componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
-	}
-
-	public void setAlunos(List<Aluno> alunos) {
-		this.alunos = alunos;
-	}
-
-	public Aluno getAlunoSelecionado() {
-		return alunoSelecionado;
-	}
-
-	public void setAlunoSelecionado(Aluno alunoSelecionado) {
-		resetMesesFrequencias();
-		this.alunoSelecionado = alunoSelecionado;
-		getFrequenciaSelecionada();
-	}
-
-	public GregorianCalendar getMesSelecionado() {
-		if (mesSelecionado == null) {
-			mesSelecionado = getMeses().get(0);
-		}
-		return mesSelecionado;
-	}
-
-	public void setMesSelecionado(GregorianCalendar mesSelecionado) {
-		for (Frequencia frequencia : frequencias) {
-			if(frequencia.getMes() == mesSelecionado.get(GregorianCalendar.MONTH)) {
-				frequenciaSelecionada = frequencia;
-				break;
-			}
-		}
-		this.mesSelecionado = mesSelecionado;
-	}
-
-	public List<GregorianCalendar> getMeses() {
-		if(meses == null) {
-			if(getFrequencias().size() > 0)
-				meses = frequencias.get(0).getMonitoria().getEdital().getMesesMonitoria();
-		}
-		return meses;
-	}
-
-	public void setMeses(List<GregorianCalendar> meses) {
-		this.meses = meses;
-	}
-
-	public List<Frequencia> getFrequencias() {
-		FrequenciaRequestResult resultado = frequenciaBean.findByAluno(alunoSelecionado);
-		if(resultado.hasErrors()) {
-			frequencias = new ArrayList<Frequencia>();
-			FacesContext context = FacesContext.getCurrentInstance();
-			for (String erro : resultado.errors) {
-				context.addMessage(null, new FacesMessage(erro));
-			}
-		} else {
-			frequencias = resultado.frequencias;
-		}
-		return frequencias;
-	}
-
-	public void setFrequencias(List<Frequencia> frequencias) {
-		this.frequencias = frequencias;
-	}
-
-	public Frequencia getFrequenciaSelecionada() {
-		if(frequenciaSelecionada == null) {
-			if(frequencias != null) {
-				for (Frequencia frequencia : frequencias) {
-					if(frequencia.getMes() == getMesSelecionado().get(GregorianCalendar.MONTH)) {
-						frequenciaSelecionada = frequencia;
-						break;
-					}
-				}
-			}
-		}
-		return frequenciaSelecionada;
-	}
-
-	public void setFrequenciaSelecionada(Frequencia frequenciaSelecionada) {
-		this.frequenciaSelecionada = frequenciaSelecionada;
-	}
-
-	public Servidor getLoggedServidor() {
-		if(loggedServidor == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
-		}
-		return loggedServidor;
-	}
-
-	public void setLoggedServidor(Servidor loggedServidor) {
-		this.loggedServidor = loggedServidor;
-	}
-	
-	private void resetMesesFrequencias() {
-		meses = null;
-		mesSelecionado = null;
-		frequencias = null;
-		frequenciaSelecionada = null;
 	}
 }

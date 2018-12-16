@@ -1,7 +1,9 @@
 package br.edu.ifpe.monitoria.entidades;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -30,10 +32,10 @@ import javax.validation.Valid;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "Frequencia.findByMonitoria", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria"),
-	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE"),
+	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE ORDER BY f.id"),
 	@NamedQuery(name = "Frequencia.findByMonitoriaMes", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria AND f.mes = :mes")
 })
-public class Frequencia implements Serializable{
+public class Frequencia implements Serializable {
 
 	private static final long serialVersionUID = 3671440051695351979L;
 
@@ -121,6 +123,22 @@ public class Frequencia implements Serializable{
 
 	public void removeAtividade(Atividade atividade) {
 		this.atividades.remove(atividade);
+	}
+	
+	public String getNomeMes() {
+		List<GregorianCalendar> mesesMonitoria = monitoria.getEdital().getMesesMonitoria();
+		GregorianCalendar mesEmQuestao = null;
+		
+		for (GregorianCalendar mesMonitoria : mesesMonitoria) {
+			if(mesMonitoria.get(GregorianCalendar.MONTH) == mes) {
+				mesEmQuestao = mesMonitoria;
+				break;
+			}
+		}
+		
+		Locale brazil = new Locale("pt", "BR");
+		return mesEmQuestao != null ? mesEmQuestao.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, brazil) + "/" + 
+			   mesEmQuestao.get(GregorianCalendar.YEAR) : "MÊS NÃO IDENTIFICADO";
 	}
 	
 	@Override

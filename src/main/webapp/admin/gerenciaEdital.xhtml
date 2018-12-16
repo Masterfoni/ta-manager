@@ -64,7 +64,7 @@
 										</td>
 										<td class="right">
 											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
-																value="Alterar" class="btn btn-success alterador mr-2">
+																value="Alterar" class="btn btn-info alterador mr-2">
 												<f:ajax execute="@form" render=":formAtualizador :formAtualizadorTrue :atualizaEdital" onevent="handleAjax" />
 											</h:commandButton>
 
@@ -106,8 +106,8 @@
 								<div class="col-md-4">
 									<div class="card">
 										<div id="esquemaTituloCC" class="card-body">
-											<strong>#{esquemaEdital.curso.nome}</strong> <br></br>
-											Total de bolsas: #{esquemaEdital.quantidade}
+											<strong>Curso: </strong>#{esquemaEdital.curso.nome}<br></br>
+											<strong>Total de bolsas: </strong>#{esquemaEdital.quantidade}
 										</div>
 										<div class="card-footer">
 											<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
