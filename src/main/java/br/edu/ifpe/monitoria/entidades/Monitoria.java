@@ -40,7 +40,8 @@ import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE ORDER BY m.aluno.nome"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificadoSelecionado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.selecionado = TRUE AND m.homologado = FALSE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
-	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE")
+	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE"),
+	@NamedQuery(name = "Monitoria.findByAlunoHomologadoeEdital", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.id = :editalId")
 })
 @Access(AccessType.FIELD)
 public class Monitoria implements Serializable{

@@ -105,11 +105,14 @@ public class MonitoriaLocalBean
 		return monitoria;
 	}
 	
-	public boolean isCurrentMonitor(Aluno aluno) {
+	public boolean isCurrentMonitor(Aluno aluno, Edital edital) {
 		List<Monitoria> monitoria = new ArrayList<Monitoria>();
 		
 		try {
-			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoHomologado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
+			monitoria = em.createNamedQuery("Monitoria.findByAlunoHomologadoeEdital", Monitoria.class).
+					setParameter("alunoId", aluno.getId()).
+					setParameter("editalId", edital.getId()).
+					getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

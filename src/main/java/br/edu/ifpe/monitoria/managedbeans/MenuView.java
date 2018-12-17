@@ -42,6 +42,8 @@ public class MenuView implements Serializable {
 	
 	boolean isLoading;
 
+	private Long usuario;
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -50,9 +52,10 @@ public class MenuView implements Serializable {
 		aluno = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("aluno");
 		professor = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
 		editalGlobal = editalBean.consultaEditaisVigentes().size() > 0 ?  editalBean.consultaEditaisVigentes().get(0) : null;
+		usuario = (Long)session.getAttribute("id");
 		
 		if (aluno) {
-			monitor = monitoriaBean.isCurrentMonitor(alunoBean.consultaAlunoById((Long)session.getAttribute("id")));
+			monitor = monitoriaBean.isCurrentMonitor(alunoBean.consultaAlunoById(usuario), editalGlobal);
 		} else {
 			monitor = false;
 		}
@@ -95,6 +98,11 @@ public class MenuView implements Serializable {
 	}
 
 	public boolean isMonitor() {
+		if (aluno) {
+			monitor = monitoriaBean.isCurrentMonitor(alunoBean.consultaAlunoById(usuario), editalGlobal);
+		} else {
+			monitor = false;
+		}
 		return monitor;
 	}
 

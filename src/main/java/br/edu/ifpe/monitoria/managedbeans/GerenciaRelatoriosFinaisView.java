@@ -77,8 +77,10 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 			componenteSelecionado = componentes.get(0);
 			alunos = alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), editalGlobal.getId());
 			alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
-			RelatorioFinalRequestResult consResult = relatorioFinalBean.consultaRelatorioFinalPorMonitor(alunoSelecionado.getId());
-			relatorioAtual = consResult.hasErrors() ? null : consResult.result;
+			if(alunoSelecionado != null) {
+				RelatorioFinalRequestResult consResult = relatorioFinalBean.consultaRelatorioFinalPorMonitor(alunoSelecionado.getId());
+				relatorioAtual = consResult.hasErrors() ? null : consResult.result;
+			}
 		}
 	}
 	

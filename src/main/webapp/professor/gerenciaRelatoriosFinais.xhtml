@@ -58,7 +58,7 @@
                             <h:selectOneMenu id="alunoSelect" class="form-control" value="#{gerenciaRelatoriosFinaisView.alunoSelecionado}" converter="alunoConverter">
                                 <f:selectItem itemValue="#{null}" itemLabel="Selecione um aluno" />
                                 <f:selectItems value="#{gerenciaRelatoriosFinaisView.alunos}" var="aluno" itemValue="#{aluno}" itemLabel="#{aluno.nome}"/>
-                                <f:ajax render=":formInfoMonitor" onevent="handleAjax"/>
+                                <f:ajax render=":formInfoMonitor :formDetalhes" onevent="handleAjax"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -142,14 +142,20 @@
                                 <div id="detalhaRelatorio">
                                     <p>
                                         <strong>Atividades desenvolvidas</strong>
-                                        #{gerenciaRelatoriosFinaisView.relatorioAtual.atividadesDesenv}
                                     </p>
                                     <p>
+                                        #{gerenciaRelatoriosFinaisView.relatorioAtual.atividadesDesenv}
+                                   	</p>
+                                    <p>
                                         <strong>Dificuldades encontradas</strong>
+                                    </p>
+                                    <p>
                                         #{gerenciaRelatoriosFinaisView.relatorioAtual.dificuldades}
                                     </p>
                                     <p>
                                         <strong>Sugestões para melhoria</strong>
+                                    </p>
+                                    <p>
                                         #{gerenciaRelatoriosFinaisView.relatorioAtual.sugestoes}
                                     </p>
                                     <p>
