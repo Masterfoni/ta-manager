@@ -10,7 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
@@ -29,13 +29,13 @@ import br.edu.ifpe.monitoria.utils.Dominios;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @ManagedBean (name="googleSignInView")
+@ViewScoped
 public class GoogleSignInView implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private static final JacksonFactory jacksonFactory = new JacksonFactory();
 	
-	@ManagedProperty("#{param.idToken}")
 	private String idToken;
 	
 	@EJB

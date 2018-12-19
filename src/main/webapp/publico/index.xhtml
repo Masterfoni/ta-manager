@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
@@ -11,8 +10,11 @@
 	
 	<h:body class="my-login-page">
 		<div class="loading-bar loading-bar--active"></div>
-		<h:form>
-			<p:remoteCommand name="login" actionListener="#{googleSignInView.loginGoogle}" />
+		
+		<h:form id="loginForm" styleClass="invisible">
+    		<h:inputHidden id="loginToken" value="#{googleSignInView.idToken}" />
+    		<h:commandButton id="loginSubmit" actionListener="#{googleSignInView.loginGoogle()}"> 
+			</h:commandButton>	
 		</h:form>
 		
 		<section class="login-block">

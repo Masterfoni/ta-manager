@@ -44,7 +44,9 @@ function onSignIn(googleUser) {
 	  var id_token = googleUser.getAuthResponse().id_token;
 	  
 	  console.log("call managed bean");
-	  login([{name:'idToken', value:id_token}]);
+	  document.getElementById("loginForm:loginToken").value = id_token;
+	  document.getElementById("loginForm:loginSubmit").click();
+	  
 }
 
 function handleComplete(xhr, status, args) {
