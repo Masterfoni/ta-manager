@@ -92,7 +92,7 @@
 									<th scope="col">Observações</th>
 								</thead>
 								<tbody>
-									<ui:repeat id="repeatAtividades" value="#{gerenciaFrequenciasView.frequenciaSelecionada.atividades}" var="atividade" varStatus="atv">
+									<ui:repeat id="repeatAtividades" value="#{gerenciaFrequenciasView.atividades}" var="atividade" varStatus="atv">
 										<tr>
 											<td>#{gerenciaFrequenciasView.getData(atividade.data)}</td>
 											<td>#{gerenciaFrequenciasView.getHora(atividade.horaInicio)}</td>

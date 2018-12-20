@@ -49,7 +49,7 @@ public class Frequencia implements Serializable {
 	private Monitoria monitoria;
 	
 	@Valid
-	@OneToMany(mappedBy="frequencia", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="frequencia", cascade=CascadeType.ALL)
 	private List<Atividade> atividades;
 	
 	@Column (name="INT_MES")

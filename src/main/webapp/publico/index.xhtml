@@ -34,7 +34,12 @@
 								</div>
 							</div>
 							<h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
-								<button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modalFacesErrors">Existem erros no login</button>
+								<div class="alert alert-warning alert-dismissible fade show" role="alert">
+									<h:messages/>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">x</span>
+									</button>
+								</div>
 							</h:panelGroup>
 						</h:form>
 						<div class="copy-text"><span>Encontrou algum problema? Entre em contato pelo e-mail: <strong>gem@recife.ifpe.edu.br</strong></span></div>

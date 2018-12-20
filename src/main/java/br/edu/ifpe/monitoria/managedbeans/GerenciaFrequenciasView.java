@@ -18,7 +18,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
+import br.edu.ifpe.monitoria.entidades.Atividade;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
@@ -58,6 +60,8 @@ public class GerenciaFrequenciasView implements Serializable {
 	
 	private List<Frequencia> frequencias;
 	
+	private List<Atividade> atividades;
+	
 	private ComponenteCurricular componenteSelecionado;
 	
 	private Aluno alunoSelecionado;
@@ -66,6 +70,8 @@ public class GerenciaFrequenciasView implements Serializable {
 	
 	public Servidor loggedServidor;
 
+	private Edital editalglobal;
+	
 	public GerenciaFrequenciasView() {}
 	
 	@PostConstruct
@@ -76,8 +82,12 @@ public class GerenciaFrequenciasView implements Serializable {
 		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
 		componenteSelecionado = componentes != null && componentes.size() > 0 ? componentes.get(0) : null;
 		
-		alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componentes.get(0).getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
-		alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
+		editalglobal = sharedMenuView.getEditalGlobal();
+		
+		if(editalglobal != null) {
+			alunos = componenteSelecionado != null ? alunoBean.consultaMonitoresByComponenteEdital(componentes.get(0).getId(), sharedMenuView.getEditalGlobal().getId()) : new ArrayList<Aluno>();
+			alunoSelecionado = alunos.size() > 0 ? alunos.get(0) : null;
+		}
 		
 		if (alunoSelecionado != null) {
 			getFrequencias();
@@ -105,7 +115,7 @@ public class GerenciaFrequenciasView implements Serializable {
 	}
 
 	public List<Aluno> getAlunos() {
-		if(componenteSelecionado != null) {
+		if(componenteSelecionado != null  && editalglobal != null) {
 			alunos = alunoBean.consultaMonitoresByComponenteEdital(componenteSelecionado.getId(), sharedMenuView.getEditalGlobal().getId());
 		}
 		else {
@@ -144,6 +154,10 @@ public class GerenciaFrequenciasView implements Serializable {
 				}
 			} else {
 				frequencias = resultado.frequencias;
+				for (Frequencia f : frequencias) {
+					f.getAtividades().size();
+					f.getMonitoria().getPlanoMonitoria().getCc().getProfessor().getId();
+				}
 			}
 		}
 		return frequencias;
@@ -162,6 +176,7 @@ public class GerenciaFrequenciasView implements Serializable {
 			this.frequenciaSelecionada = null;
 		} else {
 			this.frequenciaSelecionada = frequenciaSelecionada;
+			this.atividades = frequenciaSelecionada.getAtividades();
 		}
 	}
 
@@ -177,6 +192,17 @@ public class GerenciaFrequenciasView implements Serializable {
 		this.loggedServidor = loggedServidor;
 	}
 	
+	public List<Atividade> getAtividades() {
+		if(atividades == null) {
+			atividades = frequenciaSelecionada.getAtividades();
+		}
+		return atividades;
+	}
+
+	public void setAtividades(List<Atividade> atividades) {
+		this.atividades = atividades;
+	}
+
 	public void aprovacaoFrequencia(boolean aprovado) {
 		frequenciaBean.aprovarFrequencia(frequenciaSelecionada, aprovado);
 	}
