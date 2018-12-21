@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -19,7 +20,8 @@ import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
-@ManagedBean  (name="cadastroAlunoView")
+@ManagedBean (name="cadastroAlunoView")
+@ViewScoped
 public class CadastroAlunoView implements Serializable {
 
 	private static final long serialVersionUID = 8504345217031427227L;
@@ -28,6 +30,11 @@ public class CadastroAlunoView implements Serializable {
 	private PerfilGoogle perfilGoogle;
 	private String email;
 	private String nome;
+	
+	private String cpf;
+	private String rg;
+	private String orgao;
+	private String matricula;
 
 	FacesContext facesContext;
 	
@@ -70,7 +77,7 @@ public class CadastroAlunoView implements Serializable {
 	}
 
 	public String salvarAluno() {
-
+		
 		String result = "falha";
 		
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -141,5 +148,37 @@ public class CadastroAlunoView implements Serializable {
 
 	public void setPerfilGoogle(PerfilGoogle perfilGoogle) {
 		this.perfilGoogle = perfilGoogle;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getOrgao() {
+		return orgao;
+	}
+
+	public void setOrgao(String orgao) {
+		this.orgao = orgao;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 }

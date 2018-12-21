@@ -64,7 +64,7 @@
 
 					<div class="form-group">
 						<label for="sexo">Sexo: </label>
-						<h:selectOneMenu class="form-control" id="sexo" value="#{cadastroServidorView.servidor.sexo}">
+						<h:selectOneMenu class="form-control" id="sexo" value="#{cadastroServidorView.servidor.sexo}"  converter="sexoConverter">
 							<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
 							<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
 							<f:selectItem itemValue="Outros" itemLabel="Outros" />

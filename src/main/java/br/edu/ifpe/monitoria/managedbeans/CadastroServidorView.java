@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -20,7 +21,8 @@ import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
-@ManagedBean  (name="cadastroServidorView")
+@ManagedBean (name="cadastroServidorView")
+@ViewScoped
 public class CadastroServidorView implements Serializable{
 
 	private static final long serialVersionUID = 5746606365793540925L;
