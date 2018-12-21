@@ -8,11 +8,13 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
@@ -27,6 +29,13 @@ import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 public class RelatorioMensalView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
 	
 	private ComponenteCurricular componenteRelatorio;
 	
@@ -49,6 +58,10 @@ public class RelatorioMensalView implements Serializable {
 	
 	@EJB
 	private ServidorLocalBean servidorBean;
+	
+	private boolean comissao;
+
+	private Edital editalGlobal;
 
 	public RelatorioMensalView() {
 		if(componenteRelatorio == null) {
@@ -67,12 +80,22 @@ public class RelatorioMensalView implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
 		
-		List<PlanoMonitoria> consultaPlanosByServidor = planoBean.consultaPlanosByServidor(loggedServidor.getId());
+		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
-		for (int i = 0; i < consultaPlanosByServidor.size(); i++) {
-			PlanoMonitoria planoMonitoria = consultaPlanosByServidor.get(i);
+		editalGlobal = sharedMenuView.getEditalGlobal();
+		
+		List<PlanoMonitoria> planos;
+		
+		if(comissao) {
+			planos = planoBean.consultaPlanosByEdital(editalGlobal, true); 
+		}else {
+			planos = planoBean.consultaPlanosByEditalServidor(loggedServidor.getId(), editalGlobal.getId());
+		}
+		
+		for (int i = 0; i < planos.size(); i++) {
+			PlanoMonitoria planoMonitoria = planos.get(i);
 			
-			if (planoMonitoria.getCc().getId() == componenteRelatorio.getId()) {
+			if (planoMonitoria.getCc().getId().equals(componenteRelatorio.getId())) {
 				planoRelatorio = planoMonitoria;
 				break;
 			}
@@ -87,7 +110,7 @@ public class RelatorioMensalView implements Serializable {
 
 	public List<Monitoria> getMonitorias() {
 		if (monitorias == null) {
-			monitorias = monitoriaBean.consultaMonitoriaByPlano(planoRelatorio);
+			monitorias = monitoriaBean.consultaMonitoriaSelecionadaByPlano(planoRelatorio);
 		}
 		
 		return monitorias;

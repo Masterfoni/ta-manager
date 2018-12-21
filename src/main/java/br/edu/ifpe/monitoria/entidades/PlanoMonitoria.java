@@ -58,7 +58,7 @@ public class PlanoMonitoria implements Serializable {
 	private Edital edital;
 	
 	@NotNull(message = "{mensagem.associacao}{tipo.cc}")
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@OneToOne (fetch = FetchType.EAGER, optional = false)
 	@JoinColumn (name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular cc;
 	

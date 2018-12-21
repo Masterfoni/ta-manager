@@ -92,7 +92,7 @@ public class ComponenteCurricular implements Serializable{
 	private String periodo;
 
 	@Valid
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@OneToOne (fetch = FetchType.EAGER, optional = false)
 	@JoinColumn (name = "ID_CURSO", referencedColumnName = "ID")
 	private Curso curso;
 
