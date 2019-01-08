@@ -157,11 +157,15 @@ public class RelatorioFinalTest {
 		edital.setInicioInsercaoNota(initialDate);
 		edital.setInicioInsercaoPlano(initialDate);
 		edital.setInicioMonitoria(initialDate);
+		edital.setInicioRealizacaoProvas(initialDate);
 		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
 		edital.setFimInscricaoEstudante(finalCalendar.getTime());
 		edital.setFimInsercaoNota(finalCalendar.getTime());
 		edital.setFimInsercaoPlano(finalCalendar.getTime());
 		edital.setFimMonitoria(finalCalendar.getTime());
+		edital.setFimRealizacaoProvas(finalCalendar.getTime());
+		edital.setPublicacaoAlunosClassificados(finalCalendar.getTime());
+		edital.setPublicacaoAlunosSelecionados(finalCalendar.getTime());
 		edital.setMediaMinimaCC(7.0);
 		edital.setNotaMinimaSelecao(7.0);
 		edital.setVigente(true);
@@ -202,6 +206,7 @@ public class RelatorioFinalTest {
 		monitoria.setEdital(edital);
 		monitoria.setPlanoMonitoria(plano);
 		monitoria.setSelecionado(true);
+		monitoria.setHomologado(true);
 		monitoria.setNotaSelecao(7.0);
 		monitoria.setMediaComponente(7.0);
 		

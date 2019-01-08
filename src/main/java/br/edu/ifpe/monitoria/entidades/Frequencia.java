@@ -31,6 +31,7 @@ import javax.validation.Valid;
 @Table(name = "TB_FREQUENCIA")
 @Access(AccessType.FIELD)
 @NamedQueries({
+	@NamedQuery(name = "Frequencia.findById", query = "SELECT f FROM Frequencia f WHERE f.id = :id"),
 	@NamedQuery(name = "Frequencia.findByMonitoria", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria"),
 	@NamedQuery(name = "Frequencia.findByAluno", query = "SELECT f FROM Frequencia f WHERE f.monitoria.aluno = :aluno AND f.monitoria.edital.vigente = TRUE ORDER BY f.id"),
 	@NamedQuery(name = "Frequencia.findByMonitoriaMes", query = "SELECT f FROM Frequencia f WHERE f.monitoria = :monitoria AND f.mes = :mes")

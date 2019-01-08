@@ -51,13 +51,17 @@ public class EditalTest extends JUnitUtils {
 		edital.setFimRealizacaoProvas(new Date());
 		edital.setFimInsercaoNota(new Date());
 		edital.setFimInsercaoPlano(new Date());
+		edital.setFimRealizacaoProvas(new Date());
 		edital.setFimMonitoria(new Date());
 		edital.setInicioInscricaoComponenteCurricular(new Date());
 		edital.setInicioInscricaoEstudante(new Date());
 		edital.setInicioRealizacaoProvas(new Date());
 		edital.setInicioInsercaoNota(new Date());
 		edital.setInicioInsercaoPlano(new Date());
+		edital.setInicioRealizacaoProvas(new Date());
 		edital.setInicioMonitoria(new Date());
+		edital.setPublicacaoAlunosClassificados(new Date());
+		edital.setPublicacaoAlunosSelecionados(new Date());
 		edital.setNotaMinimaSelecao(7.0);
 		edital.setMediaMinimaCC(7.0);
 		edital.setVigente(true);

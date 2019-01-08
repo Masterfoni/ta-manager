@@ -30,6 +30,7 @@ import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.entidades.Servidor;
+import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular.Turno;
 import br.edu.ifpe.monitoria.entidades.Servidor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
@@ -46,6 +47,7 @@ import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.testutils.JUnitUtils;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AtividadeTest 
@@ -77,13 +79,13 @@ public class AtividadeTest
 	private AlunoLocalBean alunobean;
 
 	@EJB
-	private EsquemaBolsaLocalBean esquemabean;
-	
-	@EJB
 	private FrequenciaLocalBean frequenciabean;
 	
 	@EJB
 	private AtividadeLocalBean atividadebean;
+	
+	@EJB
+	private EsquemaBolsaLocalBean esquemabean;
 	
 	@BeforeClass
 	public static void setUpClass() throws Exception 
@@ -102,9 +104,9 @@ public class AtividadeTest
 		editalbean = (EditalLocalBean) JUnitUtils.getLocalBean(container, "EditalLocalBean");
 		monitoriabean = (MonitoriaLocalBean) JUnitUtils.getLocalBean(container, "MonitoriaLocalBean");
 		alunobean = (AlunoLocalBean) JUnitUtils.getLocalBean(container, "AlunoLocalBean");
-		esquemabean = (EsquemaBolsaLocalBean) JUnitUtils.getLocalBean(container, "EsquemaBolsaLocalBean");
 		frequenciabean = (FrequenciaLocalBean) JUnitUtils.getLocalBean(container, "FrequenciaLocalBean");
 		atividadebean = (AtividadeLocalBean) JUnitUtils.getLocalBean(container, "AtividadeLocalBean");
+		esquemabean = (EsquemaBolsaLocalBean) JUnitUtils.getLocalBean(container, "EsquemaBolsaLocalBean");
 	}
 
 	@Test
@@ -170,13 +172,17 @@ public class AtividadeTest
 		edital.setInicioInsercaoNota(initialCalendar.getTime());
 		edital.setInicioInsercaoPlano(initialCalendar.getTime());
 		edital.setInicioMonitoria(initialCalendar.getTime());
+		edital.setInicioRealizacaoProvas(initialCalendar.getTime());
 		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
 		edital.setFimInscricaoEstudante(finalCalendar.getTime());
 		edital.setFimInsercaoNota(finalCalendar.getTime());
 		edital.setFimInsercaoPlano(finalCalendar.getTime());
 		edital.setFimMonitoria(finalCalendar.getTime());
+		edital.setFimRealizacaoProvas(finalCalendar.getTime());
 		edital.setMediaMinimaCC(7.0);
 		edital.setNotaMinimaSelecao(7.0);
+		edital.setPublicacaoAlunosClassificados(finalCalendar.getTime());
+		edital.setPublicacaoAlunosSelecionados(finalCalendar.getTime());
 		edital.setVigente(true);
 
 		editalbean.persisteEdital(edital);
@@ -216,7 +222,7 @@ public class AtividadeTest
 		monitoria.setEdital(edital);
 		monitoria.setPlanoMonitoria(plano);
 		monitoria.setBolsista(false);
-		
+		monitoria.setHomologado(true);		
 		monitoria.setNotaSelecao(7.0);
 		monitoria.setMediaComponente(7.0);
 		
@@ -328,7 +334,43 @@ public class AtividadeTest
 				List<Atividade> atividades = frequencia.getAtividades();
 				assertTrue(atividades.isEmpty());
 			}
+			
+			assertFalse(frequenciabean.deletaFrequencia(frequencia.getId()).hasErrors());
 		}
+		
+		monitoriabean.deletaMonitoria(monitoria.getId());
+		
+		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
+		
+		Long esquemaId = esquemabean.consultaEsquemaByCurso(curso).get(0).getId();
+
+		DelecaoRequestResult deletaEsquema = esquemabean.deletaEsquema(esquemaId);
+		
+		assertFalse(deletaEsquema.hasErrors());
+			
+		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
+
+		DelecaoRequestResult resultadoCc = componentebean.deletaComponenteCurricular(cc.getId());
+		
+		assertFalse(resultadoCc.hasErrors());
+		
+		Usuario usuarioAluno = usuariobean.consultaUsuarioPorEmail("emailjackaluno@a.recife.ifpe.edu.br");
+		
+		assertFalse(usuariobean.deletaUsuario(usuarioAluno.getId()).hasErrors());
+
+		DelecaoRequestResult resultado = cursobean.deletaCurso(curso.getId());
+		
+		assertFalse(resultado.hasErrors());
+		
+		Edital edital = editalbean.consultaEditalByNumero("999999/2020");
+		
+		DelecaoRequestResult resultadoEdital = editalbean.deletaEdital(edital.getId());
+		
+		assertFalse(resultadoEdital.hasErrors());
+		
+		Usuario usuarioServidor = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");
+		
+		assertFalse(usuariobean.deletaUsuario(usuarioServidor.getId()).hasErrors());
 	}
 	
 	@AfterClass
