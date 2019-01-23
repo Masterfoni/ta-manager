@@ -12,7 +12,7 @@ public class BrowserManager {
 
     public static void openFirefox(String url)
     {
-        System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver2.exe");
         if (driver == null)
         {
             driver = new FirefoxDriver();
