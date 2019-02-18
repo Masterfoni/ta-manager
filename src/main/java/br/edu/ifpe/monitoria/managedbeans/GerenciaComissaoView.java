@@ -7,12 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Servidor;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="gerenciaComissaoView")
 @ViewScoped
@@ -38,8 +37,7 @@ public class GerenciaComissaoView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		
 		buscaServidores();
 	}

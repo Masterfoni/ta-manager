@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Atividade;
@@ -28,6 +27,7 @@ import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.utils.AtualizacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="minhaMonitoriaView")
 @ViewScoped
@@ -78,7 +78,6 @@ public class MinhaMonitoriaView {
 	public void init() {
 		editalGlobal = sharedMenuView.getEditalGlobal();
 	}
-	
 	
 	public MinhaMonitoriaView() {
 		novaAtividade = new Atividade();
@@ -203,9 +202,9 @@ public class MinhaMonitoriaView {
 
 	public Aluno getAluno() {
 		if(aluno == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			aluno = alunoBean.consultaAlunoById((Long)session.getAttribute("id"));
+			aluno = alunoBean.consultaAlunoById((Long)SessionContext.getInstance().getAttribute("id"));
 		}
+		
 		return aluno;
 	}
 

@@ -7,18 +7,19 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="cadastroAlunoView")
 @ViewScoped
@@ -26,17 +27,28 @@ public class CadastroAlunoView implements Serializable {
 
 	private static final long serialVersionUID = 8504345217031427227L;
 	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
 	private Aluno aluno;
+	
 	private PerfilGoogle perfilGoogle;
+	
 	private String email;
+	
 	private String nome;
 	
 	private String cpf;
+	
 	private String rg;
+	
 	private String orgao;
+	
 	private String matricula;
-
-	FacesContext facesContext;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
@@ -48,21 +60,17 @@ public class CadastroAlunoView implements Serializable {
 	private AlunoLocalBean alunoBean;
 	
 	@PostConstruct
-	public void carregarInfo()
-	{
+	public void carregarInfo() {
+		aluno = new Aluno();
+		perfilGoogle = new PerfilGoogle();
+		SessionContext sessionContext = SessionContext.getInstance();
+
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
 		
-		if(session.getAttribute("perfilGoogle") == null) {
-			try {
-				ec.redirect("../publico/index.xhtml");
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if((boolean)session.getAttribute("isServidor")) {
+		Boolean isServidor = (Boolean) sessionContext.getAttribute("isServidor");
+		
+		if(isServidor != null && isServidor) {
 			try {
 				ec.redirect("../publico/cadastroServidor.xhtml");
 			} catch (IOException e) {
@@ -70,52 +78,61 @@ public class CadastroAlunoView implements Serializable {
 			}
 		}
 		
-		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
-		email= (String)session.getAttribute("email");
-		nome = (String)session.getAttribute("nome");
-		aluno = new Aluno();
+		perfilGoogle = (PerfilGoogle) sessionContext.getAttribute("perfilGoogle");
+		email = (String) sessionContext.getAttribute("email");
+		nome = (String) sessionContext.getAttribute("nome");
+		
+		if (perfilGoogle != null) {
+			sharedMenuView.setMyPerfilGoogle(perfilGoogle);
+		}
+		
+		if (email != null) {
+			sharedMenuView.setMyEmail(email);
+		}	
 	}
 
-	public String salvarAluno() {
-		
-		String result = "falha";
-		
+	public void salvarAluno() {		
 		FacesContext context = FacesContext.getCurrentInstance();
+		SessionContext sessionContext = SessionContext.getInstance();
 		
-		if(usuarioBean.consultaUsuarioPorCpf(aluno.getCpf()) != null)
-		{
+		if (usuarioBean.consultaUsuarioPorCpf(aluno.getCpf()) != null) {
 			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
-		}
-		else if(usuarioBean.consultaUsuarioPorRg(aluno.getRg()) != null)
-		{
+		} else if (usuarioBean.consultaUsuarioPorRg(aluno.getRg()) != null) {
 			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
-		}else if(alunoBean.consultaAlunoByMatricula(aluno.getMatricula()) != null)
-		{
+		} else if (alunoBean.consultaAlunoByMatricula(aluno.getMatricula()) != null) {
 			context.addMessage(null, new FacesMessage("Matricula já cadastrado!"));
-		}
-		else {
+		} else {
+			ExternalContext ec = context.getExternalContext();
+			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+
+			
+			System.out.println("Setando um servidor com email: " + sharedMenuView.getMyEmail() + " e nome: " + nome);
+			System.out.println("Meu perfilGoogle da property: " + sharedMenuView.getMyPerfilGoogle());
+			System.out.println("Meu perfilGoogle do bean: " + perfilGoogle);
+			
+			if(perfilGoogle == null) {
+				perfilGoogle = sharedMenuView.getMyPerfilGoogle();
+			}
+			
 			aluno.setEmail(email);
 			aluno.setNome(nome);
 			perfilGoogle.setUsuario(aluno);
 			pglBean.persistePerfilGoogle(perfilGoogle, true);
 			
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession)ec.getSession(true);
-			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+			sharedMenuView.setLastUsuario(aluno);
 			
 			try {
 				request.login(email, perfilGoogle.getSubject());
-				session.setAttribute("usuario", aluno);
-				session.setAttribute("id", aluno.getId());
+				sessionContext.setAttribute("usuario", aluno);
+				sessionContext.setAttribute("id", aluno.getId());
 				
-				result = "sucesso";
+				ec.dispatch("../comum/homepage.xhtml");
 			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		return result;
 	}
 	
 	public Aluno getAluno() {

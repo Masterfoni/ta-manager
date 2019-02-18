@@ -11,9 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Servidor;
@@ -21,6 +19,7 @@ import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="homePageView")
 @ViewScoped
@@ -59,8 +58,7 @@ public class HomePageView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
 	}
 	
@@ -68,31 +66,18 @@ public class HomePageView implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("componenteRelatorio", this.componenteSelecionado);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("mesRelatorio", this.mesSelecionado);
 		
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		session.setAttribute("componenteRelatorio", this.componenteSelecionado);
-		session.setAttribute("mesRelatorio", this.mesSelecionado);
+		SessionContext sessionContext = SessionContext.getInstance();
+		sessionContext.setAttribute("componenteRelatorio", this.componenteSelecionado);
+		sessionContext.setAttribute("mesRelatorio", this.mesSelecionado);
 		
 	    return "relatorioMensal";
 	}
 	
 	public String gerarRelatorioRFinal() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("componenteRelatorio", this.componenteSelecionadoRFinal);
-		
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		session.setAttribute("componenteRelatorio", this.componenteSelecionadoRFinal);
+		SessionContext.getInstance().setAttribute("componenteRelatorio", this.componenteSelecionadoRFinal);
 		
 	    return "relatorioFinalAvaliacao";
-	}
-
-	public String back() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext(); 
-		HttpSession session = (HttpSession) ec.getSession(false);
-		
-		if(session != null)
-			return "homepage";
-		else
-			return "";
 	}
 	
 	public Servidor getLoggedServidor() {

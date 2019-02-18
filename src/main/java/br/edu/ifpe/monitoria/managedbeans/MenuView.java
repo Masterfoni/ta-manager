@@ -10,10 +10,15 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Edital;
+import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
+import br.edu.ifpe.monitoria.entidades.Servidor;
+import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="menuView")
 @SessionScoped
@@ -43,17 +48,30 @@ public class MenuView implements Serializable {
 	boolean isLoading;
 
 	private Long usuario;
+	
+	private Usuario lastUsuario;
+	
+	private PerfilGoogle myPerfilGoogle;
+	
+	private String myEmail;
 
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		SessionContext sessionContext = SessionContext.getInstance();
 		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		aluno = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("aluno");
 		professor = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("professor");
 		editalGlobal = editalBean.consultaEditaisVigentes().size() > 0 ?  editalBean.consultaEditaisVigentes().get(0) : null;
-		usuario = (Long)session.getAttribute("id");
 		
+		if((Long) sessionContext.getAttribute("id") != null) {
+			usuario = (Long)sessionContext.getAttribute("id");
+		}
+
+		checkMonitor();
+	}
+	
+	public void checkMonitor() {
 		if (aluno) {
 			monitor = monitoriaBean.isCurrentMonitor(alunoBean.consultaAlunoById(usuario), editalGlobal);
 		} else {
@@ -116,5 +134,41 @@ public class MenuView implements Serializable {
 
 	public void setLoading(boolean isLoading) {
 		this.isLoading = isLoading;
+	}
+
+	public Usuario getLastUsuario() {
+		return lastUsuario;
+	}
+
+	public void setLastUsuario(Usuario lastUsuario) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		
+		if (lastUsuario instanceof Aluno) {
+			setAluno(true);
+		} else if (lastUsuario instanceof Servidor) {
+			setProfessor(true);
+		}
+		
+		session.setAttribute("usuario", lastUsuario);
+		session.setAttribute("id", lastUsuario.getId());
+		usuario = (Long)session.getAttribute("id");
+		
+		this.lastUsuario = lastUsuario;
+	}
+
+	public PerfilGoogle getMyPerfilGoogle() {
+		return myPerfilGoogle;
+	}
+
+	public void setMyPerfilGoogle(PerfilGoogle myPerfilGoogle) {
+		this.myPerfilGoogle = myPerfilGoogle;
+	}
+
+	public String getMyEmail() {
+		return myEmail;
+	}
+
+	public void setMyEmail(String myEmail) {
+		this.myEmail = myEmail;
 	}
 }

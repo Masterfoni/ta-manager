@@ -7,12 +7,12 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Servidor;
@@ -20,19 +20,28 @@ import br.edu.ifpe.monitoria.entidades.Servidor.Titulacao;
 import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="cadastroServidorView")
 @ViewScoped
-public class CadastroServidorView implements Serializable{
+public class CadastroServidorView implements Serializable {
 
 	private static final long serialVersionUID = 5746606365793540925L;
 	
-	private Servidor servidor;
-	private PerfilGoogle perfilGoogle;
-	private String email;
-	private String nome;
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
 	
-	FacesContext facesContext;
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
+	private Servidor servidor;
+	
+	private PerfilGoogle perfilGoogle;
+	
+	private String email;
+	
+	private String nome;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
@@ -43,66 +52,18 @@ public class CadastroServidorView implements Serializable{
 	@EJB
 	private ServidorLocalBean servidorBean;
 	
-	public String salvarProfessor()
-	{
-		String result = "falha";
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		
-		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null)
-		{
-			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
-		}
-		else if(usuarioBean.consultaUsuarioPorRg(servidor.getRg()) != null)
-		{
-			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
-		}
-		else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null)
-		{
-			context.addMessage(null, new FacesMessage("SIAPE já cadastrado!"));
-		}
-		else 
-		{
-			servidor.setEmail(email);
-			servidor.setNome(nome);
-			perfilGoogle.setUsuario(servidor);
-			pglBean.persistePerfilGoogle(perfilGoogle);
-			
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession)ec.getSession(true);
-			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-			
-			try {
-				request.login(email, perfilGoogle.getSubject());
-				session.setAttribute("usuario", servidor);
-				session.setAttribute("id", servidor.getId());
-				
-				result = "sucesso";
-			} catch (ServletException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
-	}
-	
 	@PostConstruct
-	public void carregarInfo()
-	{
+	public void carregarInfo() {
+		servidor = new Servidor();
+		perfilGoogle = new PerfilGoogle();
+		SessionContext sessionContext = SessionContext.getInstance();
+		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
 		
-		if(session.getAttribute("perfilGoogle") == null) {
-			try {
-				ec.redirect("../publico/index.xhtml");
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if(!(boolean)session.getAttribute("isServidor")) {
+		Boolean isServidor = (Boolean) sessionContext.getAttribute("isServidor");
+		
+		if(isServidor != null && !isServidor) {
 			try {
 				ec.redirect("../publico/cadastroAluno.xhtml");
 			} catch (IOException e) {
@@ -110,10 +71,60 @@ public class CadastroServidorView implements Serializable{
 			}
 		}
 		
-		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
-		email= (String)session.getAttribute("email");
-		nome = (String)session.getAttribute("nome");
-		servidor = new Servidor();
+		perfilGoogle = (PerfilGoogle) sessionContext.getAttribute("perfilGoogle");
+		email = (String) sessionContext.getAttribute("email");
+		nome = (String) sessionContext.getAttribute("nome");
+		
+		if (perfilGoogle != null) {
+			sharedMenuView.setMyPerfilGoogle(perfilGoogle);
+		}
+		
+		if (email != null) {
+			sharedMenuView.setMyEmail(email);
+		}		
+	}
+	
+	public void salvarProfessor() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		SessionContext sessionContext = SessionContext.getInstance();
+		
+		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null) {
+			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
+		} else if(usuarioBean.consultaUsuarioPorRg(servidor.getRg()) != null) {
+			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
+		} else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null) {
+			context.addMessage(null, new FacesMessage("SIAPE já cadastrado!"));
+		} else {
+			ExternalContext ec = context.getExternalContext();
+			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+			
+			System.out.println("Setando um servidor com email: " + sharedMenuView.getMyEmail() + " e nome: " + nome);
+			System.out.println("Meu perfilGoogle da property: " + sharedMenuView.getMyPerfilGoogle());
+			System.out.println("Meu perfilGoogle do bean: " + perfilGoogle);
+			
+			if(perfilGoogle == null) {
+				perfilGoogle = sharedMenuView.getMyPerfilGoogle();
+			}
+			
+			servidor.setEmail(sharedMenuView.getMyEmail());
+			servidor.setNome(nome);
+			perfilGoogle.setUsuario(servidor);
+			pglBean.persistePerfilGoogle(perfilGoogle);
+			
+			sharedMenuView.setLastUsuario(servidor);
+			
+			try {
+				request.login(email, perfilGoogle.getSubject());
+				sessionContext.setAttribute("usuario", servidor);
+				sessionContext.setAttribute("id", servidor.getId());
+				
+				ec.dispatch("../comum/homepage.xhtml");
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public Servidor getServidor() {

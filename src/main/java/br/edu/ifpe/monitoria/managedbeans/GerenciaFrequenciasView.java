@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Atividade;
@@ -28,6 +27,7 @@ import br.edu.ifpe.monitoria.localbean.ComponenteCurricularLocalBean;
 import br.edu.ifpe.monitoria.localbean.FrequenciaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="gerenciaFrequenciasView")
 @ViewScoped
@@ -76,8 +76,7 @@ public class GerenciaFrequenciasView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id")); 
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id")); 
 		
 		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
 		componenteSelecionado = componentes != null && componentes.size() > 0 ? componentes.get(0) : null;
@@ -182,8 +181,7 @@ public class GerenciaFrequenciasView implements Serializable {
 
 	public Servidor getLoggedServidor() {
 		if(loggedServidor == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+			loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		}
 		return loggedServidor;
 	}

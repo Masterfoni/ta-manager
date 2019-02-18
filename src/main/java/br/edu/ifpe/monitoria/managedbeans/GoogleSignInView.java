@@ -15,7 +15,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
@@ -27,6 +26,7 @@ import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.utils.Dominios;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="googleSignInView")
 @ViewScoped
@@ -72,10 +72,10 @@ public class GoogleSignInView implements Serializable{
 		LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
 		
 		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession) ec.getSession(true);
+		SessionContext sessionContext = SessionContext.getInstance();
 		
-		PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
-		session.setAttribute("isServidor", emailInstituncional);
+		PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, idResult.data);
+		sessionContext.setAttribute("isServidor", emailInstituncional);
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 		
 		try {
@@ -104,8 +104,9 @@ public class GoogleSignInView implements Serializable{
 		}
 	}
 	
-	private PerfilGoogle prepareSessionForLoginServidor(Payload payload, HttpSession session, Long userId)
-	{
+	private PerfilGoogle prepareSessionForLoginServidor(Payload payload, Long userId) {
+		SessionContext sessionContext = SessionContext.getInstance();
+		
 		PerfilGoogle perfilGoogle = new PerfilGoogle();
 		perfilGoogle.setFamilyName((String) payload.get("family_name"));
 		perfilGoogle.setGivenName((String) payload.get("given_name"));
@@ -116,10 +117,10 @@ public class GoogleSignInView implements Serializable{
 		String email = payload.getEmail();
 		String nome = (String) payload.get("name");
 		
-		session.setAttribute("perfilGoogle", perfilGoogle);
-		session.setAttribute("nome", nome);
-		session.setAttribute("email", email);
-		session.setAttribute("id", userId);
+		sessionContext.setAttribute("perfilGoogle", perfilGoogle);
+		sessionContext.setAttribute("nome", nome);
+		sessionContext.setAttribute("email", email);
+		sessionContext.setAttribute("id", userId);
 		
 		return perfilGoogle;
 	}

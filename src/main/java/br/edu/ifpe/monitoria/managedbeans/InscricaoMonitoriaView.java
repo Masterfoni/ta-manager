@@ -12,9 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Curso;
@@ -26,6 +24,7 @@ import br.edu.ifpe.monitoria.localbean.CursoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="inscricaoMonitoriaView")
 @ViewScoped
@@ -133,12 +132,8 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 
 	public Aluno getAluno() {
-		if(aluno == null) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext(); 
-			HttpSession session = (HttpSession) ec.getSession(false);
-		
-			Long id = (Long) session.getAttribute("id");
+		if(aluno == null) {		
+			Long id = (Long) SessionContext.getInstance().getAttribute("id");
 			aluno = alunoBean.consultaAlunoById(id);
 		}
 		return aluno;

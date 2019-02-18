@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -23,6 +22,7 @@ import br.edu.ifpe.monitoria.localbean.FrequenciaLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="relatorioMensalView")
 @ViewScoped
@@ -65,20 +65,17 @@ public class RelatorioMensalView implements Serializable {
 
 	public RelatorioMensalView() {
 		if(componenteRelatorio == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			componenteRelatorio = (ComponenteCurricular) session.getAttribute("componenteRelatorio");
+			componenteRelatorio = (ComponenteCurricular) SessionContext.getInstance().getAttribute("componenteRelatorio");
 		}
 		
 		if(mesRelatorio == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			mesRelatorio = (GregorianCalendar) session.getAttribute("mesRelatorio");
+			mesRelatorio = (GregorianCalendar) SessionContext.getInstance().getAttribute("mesRelatorio");
 		}
 	}
 	
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		

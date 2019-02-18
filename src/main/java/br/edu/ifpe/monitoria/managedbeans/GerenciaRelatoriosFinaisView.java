@@ -9,8 +9,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
@@ -23,6 +21,7 @@ import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.RelatorioFinalLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="gerenciaRelatoriosFinaisView")
 @ViewScoped
@@ -66,8 +65,7 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		
 		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
 		

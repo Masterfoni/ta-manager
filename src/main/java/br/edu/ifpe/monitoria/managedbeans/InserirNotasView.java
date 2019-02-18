@@ -8,23 +8,26 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpSession;
-import javax.faces.context.FacesContext;
 
 import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="inserirNotasView")
 @ViewScoped
 public class InserirNotasView implements Serializable{
 
 	private static final long serialVersionUID = -3536843049471998334L;
+	
 	private PlanoMonitoria plano;
+	
 	private List<Monitoria> monitorias;
+	
 	private boolean periodoDeInsercaoNotas;
+	
 	private Edital edital;
 	
 	@EJB
@@ -35,8 +38,7 @@ public class InserirNotasView implements Serializable{
 
 	public InserirNotasView() {
 		if(plano == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			plano = (PlanoMonitoria) session.getAttribute("plano");
+			plano = (PlanoMonitoria) SessionContext.getInstance().getAttribute("plano");
 		}
 	}
 

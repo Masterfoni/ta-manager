@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Edital;
@@ -21,6 +20,7 @@ import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.RelatorioFinalLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.utils.RelatorioFinalRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="relatorioFinalAvaliacaoView")
 @ViewScoped
@@ -61,15 +61,13 @@ public class RelatorioFinalAvaliacaoView implements Serializable {
 
 	public RelatorioFinalAvaliacaoView() {
 		if(componenteRelatorio == null) {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			componenteRelatorio = (ComponenteCurricular) session.getAttribute("componenteRelatorio");
+			componenteRelatorio = (ComponenteCurricular) SessionContext.getInstance().getAttribute("componenteRelatorio");
 		}
 	}
 	
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
+		loggedServidor = servidorBean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id"));
 		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
@@ -79,7 +77,7 @@ public class RelatorioFinalAvaliacaoView implements Serializable {
 		
 		if(comissao) {
 			planos = planoBean.consultaPlanosByEdital(editalGlobal, true); 
-		}else {
+		} else {
 			planos = planoBean.consultaPlanosByEditalServidor(loggedServidor.getId(), editalGlobal.getId());
 		}
 		

@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.ComponenteCurricular;
 import br.edu.ifpe.monitoria.entidades.Curso;
@@ -29,6 +28,7 @@ import br.edu.ifpe.monitoria.localbean.EsquemaBolsaLocalBean;
 import br.edu.ifpe.monitoria.localbean.PlanoMonitoriaLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.utils.CriacaoRequestResult;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="gerenciaPlanoMonitoriaView")
 @ViewScoped
@@ -90,8 +90,7 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		loggedServidor = servidorbean.consultaServidorById((Long)session.getAttribute("id")); 
+		loggedServidor = servidorbean.consultaServidorById((Long)SessionContext.getInstance().getAttribute("id")); 
 		
 		comissao = FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao");
 		
@@ -350,18 +349,14 @@ public class GerenciaPlanoMonitoriaView implements Serializable {
 
 	public String lancarNotas(PlanoMonitoria plano) {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
-		
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		session.setAttribute("plano", plano);
+		SessionContext.getInstance().setAttribute("plano", plano);
 		
 	    return "inserirNotas?faces-redirect=true";
 	}
 
 	public String verAlunos(PlanoMonitoria plano) {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("plano", plano);
-		
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		session.setAttribute("plano", plano);
+		SessionContext.getInstance().setAttribute("plano", plano);
 		
 	    return "verInscritos?faces-redirect=true";
 	}

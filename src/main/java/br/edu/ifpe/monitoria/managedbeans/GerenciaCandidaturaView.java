@@ -7,12 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
+import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="gerenciaCandidaturaView")
 @ViewScoped
@@ -34,14 +32,8 @@ public class GerenciaCandidaturaView implements Serializable {
 	}
 
 	@PostConstruct
-	public void init() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		 
-		ExternalContext ec = fc.getExternalContext(); 
-		 
-		HttpSession session = (HttpSession) ec.getSession(false);
-		  
-		monitorias = monitoriabean.consultaMonitoriaByProfessor((long)session.getAttribute("id"));
+	public void init() {		  
+		monitorias = monitoriabean.consultaMonitoriaByProfessor((long)SessionContext.getInstance().getAttribute("id"));
 	}
 	
 //	public String defereMonitoria(Monitoria monitoria) {
