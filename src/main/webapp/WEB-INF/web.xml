@@ -126,7 +126,7 @@
 	</context-param>
 	<context-param>
 		<param-name>dominiosInstituncionais</param-name>
-		<param-value>recife.ifpe.edu.br;</param-value>
+		<param-value>cabo.ifpe.edu.br;a.recife.ifpe.edu.br;</param-value>
 	</context-param>
 	<context-param>
 		<param-name>dominiosAlunos</param-name>
@@ -157,7 +157,7 @@
     
     <context-param>
     	<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    	<param-value>client</param-value>
+    	<param-value>server</param-value>
 	</context-param>
 
 	<servlet>
@@ -168,6 +168,10 @@
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>
@@ -183,4 +187,9 @@
 		<servlet-name>Jersey REST Service</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
 </web-app>

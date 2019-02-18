@@ -3,6 +3,7 @@ package br.edu.ifpe.monitoria.managedbeans;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.ejb.Remove;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -15,6 +16,7 @@ public class LogoutView implements Serializable{
 
 	private static final long serialVersionUID = -2212283148264161669L;
 
+	@Remove
 	public void logout() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();

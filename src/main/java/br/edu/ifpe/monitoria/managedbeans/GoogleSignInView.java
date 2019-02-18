@@ -9,10 +9,10 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,8 +28,8 @@ import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.utils.Dominios;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
-@ManagedBean (name="googleSignInView")
-@ViewScoped
+@Named ("googleSignInView")
+@SessionScoped
 public class GoogleSignInView implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -38,11 +38,19 @@ public class GoogleSignInView implements Serializable{
 	
 	private String idToken;
 	
+	private HttpSession session;
+	
+	public GoogleSignInView() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		session = (HttpSession) ec.getSession(true);
+		session.setMaxInactiveInterval(20*60);
+	}
+	
 	@EJB
 	private UsuarioLocalBean usuarioBean;
 	
-	public void loginGoogle() 
-	{
+	public String loginGoogle() throws IOException 	{
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
 		Payload payload = verificarIntegridade(idToken);
@@ -72,7 +80,12 @@ public class GoogleSignInView implements Serializable{
 		LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
 		
 		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession) ec.getSession(true);
+		//HttpSession session = (HttpSession) ec.getSession(false);
+		
+		if (session != null)
+			session.invalidate();
+		
+		session = (HttpSession) ec.getSession(true);
 		
 		PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
 		session.setAttribute("isServidor", emailInstituncional);
@@ -80,28 +93,27 @@ public class GoogleSignInView implements Serializable{
 		
 		try {
 			request.login(payload.getEmail(), perfilMontado.getSubject());
-			
-			ec.redirect("../comum/homepage.xhtml");
-			
+
+			ec.redirect("/comum/homepage.xhtml");
+			return "sucesso";
+
 		} catch (ServletException e) {
-			
-			try {
-				if(emailAluno)
-					ec.redirect("../publico/cadastroAluno.xhtml");
-				if(emailInstituncional)
-					ec.redirect("../publico/cadastroServidor.xhtml");
-			} catch (IOException ioException) {
-				ioException.printStackTrace();
+			if(emailAluno) {
+				ec.redirect("/publico/cadastroAluno.xhtml");
+				//return "../publico/cadastroAluno.xhtml";
 			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			if(emailInstituncional) {
+				ec.redirect("/publico/cadastroServidor.xhtml");
+				//return "../publico/cadastroServidor.xhtml";
+			}
+
+		} 
 		
 		if(!emailInstituncional && !emailAluno)
 		{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Por favor, utilize seu e-mail institucional."));
 		}
+		return "";
 	}
 	
 	private PerfilGoogle prepareSessionForLoginServidor(Payload payload, HttpSession session, Long userId)

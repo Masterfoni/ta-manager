@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../publico/cadastroAluno.css"></link>
@@ -101,7 +102,11 @@
 						<small id="matriculaDesc" class="form-text text-muted">Utilize o formato 99999A9-AA9999</small>
 					</div>
 
-					<h:commandButton value="Finalizar Cadastro" action="#{cadastroAlunoView.salvarAluno()}" styleClass="btn btn-info btn-block" update="growlAluno" />
+					
+					<button type="submit" id="cadastrar" jsf:action="#{cadastroAlunoView.salvarAluno()}" 
+						class="btn btn-success btn-block">
+							Finalizar Cadastro
+					</button>
 				</h:form>
 			</div>
 		</div>

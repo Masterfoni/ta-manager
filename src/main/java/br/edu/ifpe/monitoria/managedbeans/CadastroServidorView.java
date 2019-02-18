@@ -6,13 +6,14 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Servidor;
@@ -21,8 +22,8 @@ import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
-@ManagedBean (name="cadastroServidorView")
-@ViewScoped
+@Named ("cadastroServidorView")
+@SessionScoped
 public class CadastroServidorView implements Serializable{
 
 	private static final long serialVersionUID = 5746606365793540925L;
@@ -43,7 +44,38 @@ public class CadastroServidorView implements Serializable{
 	@EJB
 	private ServidorLocalBean servidorBean;
 	
-	public String salvarProfessor()
+	@PostConstruct
+	public void init()
+	{
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		
+		HttpSession session = (HttpSession)ec.getSession(false);
+		
+		servidor = new Servidor();
+		
+		if(session.getAttribute("perfilGoogle") == null && perfilGoogle == null) {
+			try {
+				ec.redirect("/publico/index.xhtml");
+				return;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(!(boolean)session.getAttribute("isServidor")) {
+			try {
+				ec.redirect("/publico/cadastroAluno.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
+		email= (String)session.getAttribute("email");
+		nome = (String)session.getAttribute("nome");
+	}
+	
+	public String salvarProfessor() throws ServletException
 	{
 		String result = "falha";
 		
@@ -80,40 +112,11 @@ public class CadastroServidorView implements Serializable{
 				
 				result = "sucesso";
 			} catch (ServletException e) {
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		
 		return result;
-	}
-	
-	@PostConstruct
-	public void carregarInfo()
-	{
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpSession session = (HttpSession)ec.getSession(true);
-		
-		if(session.getAttribute("perfilGoogle") == null) {
-			try {
-				ec.redirect("../publico/index.xhtml");
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if(!(boolean)session.getAttribute("isServidor")) {
-			try {
-				ec.redirect("../publico/cadastroAluno.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
-		email= (String)session.getAttribute("email");
-		nome = (String)session.getAttribute("nome");
-		servidor = new Servidor();
 	}
 	
 	public Servidor getServidor() {

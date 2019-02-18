@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../publico/cadastroServidor.css"></link>
@@ -109,8 +110,12 @@
 						</div>
 					</div>
 
-					<h:commandButton value="Finalizar Cadastro" action="#{cadastroServidorView.salvarProfessor()}" styleClass="btn btn-info btn-block" update="growlProfessor" />
+					<button type="submit" id="cadastrar" jsf:action="#{cadastroServidorView.salvarProfessor()}" 
+						class="btn btn-info btn-block">
+							Finalizar Cadastro
+					</button>
 				</h:form>
+
 			</div>
 		</div>
 

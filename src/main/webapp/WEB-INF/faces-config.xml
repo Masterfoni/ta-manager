@@ -5,6 +5,10 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
     
+    <!-- application>
+    	<view-handler>br.edu.ifpe.monitoria.utils.CustomViewHandler</view-handler>
+    </application> -->
+    
     <navigation-rule>
         <from-view-id>/publico/index.xhtml</from-view-id>
         <navigation-case>
@@ -12,8 +16,11 @@
             <to-view-id>/comum/homepage.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>falha</from-outcome>
-            <to-view-id>/publico/index.xhtml</to-view-id>
+            <from-outcome>cadaluno</from-outcome>
+            <to-view-id>/publico/cadastroAluno.xhtml</to-view-id>
+        </navigation-case><navigation-case>
+            <from-outcome>cadservidor</from-outcome>
+            <to-view-id>/publico/cadastroServidor.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
@@ -101,7 +108,7 @@
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
-            <to-view-id>/publico/index.xhtml</to-view-id>
+            <to-view-id>/welcome.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>   
     
