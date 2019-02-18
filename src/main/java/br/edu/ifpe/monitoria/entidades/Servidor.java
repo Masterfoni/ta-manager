@@ -37,8 +37,8 @@ public class Servidor extends Usuario implements Serializable {
 	private Titulacao titulacao;
 	
 	public enum Titulacao {
-		GRADUAÇÃO("Graduado"),
-		ESPECIALIZAÇÃO("Especialista"),
+		GRADUACAO("Graduado"),
+		ESPECIALIZACAO("Especialista"),
 		MESTRADO("Mestre"),
 		DOUTORADO("Doutor");
 		

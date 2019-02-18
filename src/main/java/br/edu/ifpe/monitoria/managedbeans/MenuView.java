@@ -8,13 +8,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
-import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Edital;
-import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
-import br.edu.ifpe.monitoria.entidades.Servidor;
-import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
 import br.edu.ifpe.monitoria.localbean.EditalLocalBean;
 import br.edu.ifpe.monitoria.localbean.MonitoriaLocalBean;
@@ -48,12 +43,6 @@ public class MenuView implements Serializable {
 	boolean isLoading;
 
 	private Long usuario;
-	
-	private Usuario lastUsuario;
-	
-	private PerfilGoogle myPerfilGoogle;
-	
-	private String myEmail;
 
 	@PostConstruct
 	public void init() {
@@ -134,41 +123,5 @@ public class MenuView implements Serializable {
 
 	public void setLoading(boolean isLoading) {
 		this.isLoading = isLoading;
-	}
-
-	public Usuario getLastUsuario() {
-		return lastUsuario;
-	}
-
-	public void setLastUsuario(Usuario lastUsuario) {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		
-		if (lastUsuario instanceof Aluno) {
-			setAluno(true);
-		} else if (lastUsuario instanceof Servidor) {
-			setProfessor(true);
-		}
-		
-		session.setAttribute("usuario", lastUsuario);
-		session.setAttribute("id", lastUsuario.getId());
-		usuario = (Long)session.getAttribute("id");
-		
-		this.lastUsuario = lastUsuario;
-	}
-
-	public PerfilGoogle getMyPerfilGoogle() {
-		return myPerfilGoogle;
-	}
-
-	public void setMyPerfilGoogle(PerfilGoogle myPerfilGoogle) {
-		this.myPerfilGoogle = myPerfilGoogle;
-	}
-
-	public String getMyEmail() {
-		return myEmail;
-	}
-
-	public void setMyEmail(String myEmail) {
-		this.myEmail = myEmail;
 	}
 }

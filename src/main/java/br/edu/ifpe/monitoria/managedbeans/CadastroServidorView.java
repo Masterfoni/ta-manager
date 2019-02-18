@@ -8,7 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="cadastroServidorView")
-@ViewScoped
+@SessionScoped
 public class CadastroServidorView implements Serializable {
 
 	private static final long serialVersionUID = 5746606365793540925L;
@@ -74,14 +74,6 @@ public class CadastroServidorView implements Serializable {
 		perfilGoogle = (PerfilGoogle) sessionContext.getAttribute("perfilGoogle");
 		email = (String) sessionContext.getAttribute("email");
 		nome = (String) sessionContext.getAttribute("nome");
-		
-		if (perfilGoogle != null) {
-			sharedMenuView.setMyPerfilGoogle(perfilGoogle);
-		}
-		
-		if (email != null) {
-			sharedMenuView.setMyEmail(email);
-		}		
 	}
 	
 	public void salvarProfessor() {
@@ -98,20 +90,9 @@ public class CadastroServidorView implements Serializable {
 			ExternalContext ec = context.getExternalContext();
 			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 			
-			System.out.println("Setando um servidor com email: " + sharedMenuView.getMyEmail() + " e nome: " + nome);
-			System.out.println("Meu perfilGoogle da property: " + sharedMenuView.getMyPerfilGoogle());
-			System.out.println("Meu perfilGoogle do bean: " + perfilGoogle);
-			
-			if(perfilGoogle == null) {
-				perfilGoogle = sharedMenuView.getMyPerfilGoogle();
-			}
-			
-			servidor.setEmail(sharedMenuView.getMyEmail());
 			servidor.setNome(nome);
 			perfilGoogle.setUsuario(servidor);
 			pglBean.persistePerfilGoogle(perfilGoogle);
-			
-			sharedMenuView.setLastUsuario(servidor);
 			
 			try {
 				request.login(email, perfilGoogle.getSubject());

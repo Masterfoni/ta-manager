@@ -8,7 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 import br.edu.ifpe.monitoria.utils.SessionContext;
 
 @ManagedBean (name="cadastroAlunoView")
-@ViewScoped
+@SessionScoped
 public class CadastroAlunoView implements Serializable {
 
 	private static final long serialVersionUID = 8504345217031427227L;
@@ -81,14 +81,6 @@ public class CadastroAlunoView implements Serializable {
 		perfilGoogle = (PerfilGoogle) sessionContext.getAttribute("perfilGoogle");
 		email = (String) sessionContext.getAttribute("email");
 		nome = (String) sessionContext.getAttribute("nome");
-		
-		if (perfilGoogle != null) {
-			sharedMenuView.setMyPerfilGoogle(perfilGoogle);
-		}
-		
-		if (email != null) {
-			sharedMenuView.setMyEmail(email);
-		}	
 	}
 
 	public void salvarAluno() {		
@@ -104,22 +96,11 @@ public class CadastroAlunoView implements Serializable {
 		} else {
 			ExternalContext ec = context.getExternalContext();
 			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-
-			
-			System.out.println("Setando um servidor com email: " + sharedMenuView.getMyEmail() + " e nome: " + nome);
-			System.out.println("Meu perfilGoogle da property: " + sharedMenuView.getMyPerfilGoogle());
-			System.out.println("Meu perfilGoogle do bean: " + perfilGoogle);
-			
-			if(perfilGoogle == null) {
-				perfilGoogle = sharedMenuView.getMyPerfilGoogle();
-			}
 			
 			aluno.setEmail(email);
 			aluno.setNome(nome);
 			perfilGoogle.setUsuario(aluno);
 			pglBean.persistePerfilGoogle(perfilGoogle, true);
-			
-			sharedMenuView.setLastUsuario(aluno);
 			
 			try {
 				request.login(email, perfilGoogle.getSubject());
