@@ -1,6 +1,4 @@
-jQuery(function () {
-    jQuery.noConflict();
-});
+
 
 onload = startApp;
 

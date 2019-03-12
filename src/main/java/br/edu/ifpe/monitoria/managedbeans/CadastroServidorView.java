@@ -6,14 +6,12 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
 import br.edu.ifpe.monitoria.entidades.Servidor;
@@ -22,7 +20,7 @@ import br.edu.ifpe.monitoria.localbean.PerfilGoogleLocalBean;
 import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
-@Named ("cadastroServidorView")
+@ManagedBean (name="cadastroServidorView")
 @SessionScoped
 public class CadastroServidorView implements Serializable{
 
@@ -102,18 +100,18 @@ public class CadastroServidorView implements Serializable{
 			
 			FacesContext fc = FacesContext.getCurrentInstance();
 			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession)ec.getSession(true);
-			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+			HttpSession session = (HttpSession)ec.getSession(false);
 			
-			try {
-				request.login(email, perfilGoogle.getSubject());
-				session.setAttribute("usuario", servidor);
-				session.setAttribute("id", servidor.getId());
-				
-				result = "sucesso";
-			} catch (ServletException e) {
-				throw e;
-			}
+			session.setAttribute("usuario", servidor);
+			session.setAttribute("id", servidor.getId());
+			
+			result = "sucesso";
+			
+//			try {
+//				request.login(email, perfilGoogle.getSubject());
+//			} catch (ServletException e) {
+//				throw e;
+//			}
 		}
 		
 		return result;
