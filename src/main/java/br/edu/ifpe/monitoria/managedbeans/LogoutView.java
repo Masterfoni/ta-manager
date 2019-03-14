@@ -17,7 +17,7 @@ public class LogoutView implements Serializable {
 	private static final long serialVersionUID = -2212283148264161669L;
 
 	@Remove
-	public String logout() throws ServletException, IOException {
+	public void logout() throws ServletException, IOException {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		HttpSession session = (HttpSession) ec.getSession(false);
@@ -28,7 +28,7 @@ public class LogoutView implements Serializable {
 
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 		request.logout();
-		return "/publico/logout.xhtml";
+		ec.redirect("/");
 	}
 
 }

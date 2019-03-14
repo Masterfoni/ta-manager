@@ -52,7 +52,7 @@ public class CadastroAlunoView implements Serializable {
 
 		if (session.getAttribute("perfilGoogle") == null && perfilGoogle == null) {
 			try {
-				ec.redirect("/publico/index.xhtml");
+				ec.redirect("/welcome.xhtml");
 				return;
 			} catch (IOException e) {
 				e.printStackTrace();

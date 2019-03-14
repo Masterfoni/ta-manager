@@ -12,8 +12,8 @@
 		<auth-method>FORM</auth-method>
 		<realm-name>gemRealm</realm-name>
 		<form-login-config>
-			<form-login-page>/publico/index.xhtml</form-login-page>
-			<form-error-page>/publico/index.xhtml</form-error-page>
+			<form-login-page>/welcome.xhtml</form-login-page>
+			<form-error-page>/welcome.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
 

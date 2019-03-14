@@ -10,21 +10,6 @@
     </application> -->
     
     <navigation-rule>
-        <from-view-id>/publico/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>sucesso</from-outcome>
-            <to-view-id>/comum/homepage.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>cadaluno</from-outcome>
-            <to-view-id>/publico/cadastroAluno.xhtml</to-view-id>
-        </navigation-case><navigation-case>
-            <from-outcome>cadservidor</from-outcome>
-            <to-view-id>/publico/cadastroServidor.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
         <from-view-id>/publico/cadastroServidor.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>sucesso</from-outcome>

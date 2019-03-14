@@ -7,8 +7,6 @@ function initClient () {
 	    auth2 = gapi.auth2.init();
 	    console.log("app started");
 	  });
-    
-    signOut();
 };
 
 /**
@@ -34,6 +32,4 @@ function signOut() {
     	console.log('User signed out.');
     	});
 	}
-	
-	window.location = "http://localhost:8080/";
 }
