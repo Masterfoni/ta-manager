@@ -232,7 +232,7 @@ public class MonitoriaTest
 	public void t04_deletarMonitoria() throws Exception 
 	{
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999").result;
 		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
 		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
 		Usuario usuario = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");

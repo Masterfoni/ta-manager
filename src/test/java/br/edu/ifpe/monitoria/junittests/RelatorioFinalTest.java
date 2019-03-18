@@ -227,13 +227,13 @@ public class RelatorioFinalTest {
 	@Test
 	public void t02_buscarRelatorioFinal() throws Exception 
 	{
-		Aluno monitor = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		Aluno monitor = alunobean.consultaAlunoByMatricula("20132Y6-RC9999").result;
 		assertTrue(relatoriobean.consultaRelatorioFinalPorMonitor(monitor.getId()).result != null);
 	}
 	
 	@Test
 	public void t03_alterarRelatorioFinal() throws Exception {
-		Aluno monitor = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		Aluno monitor = alunobean.consultaAlunoByMatricula("20132Y6-RC9999").result;
 		RelatorioFinal relatorio = relatoriobean.consultaRelatorioFinalPorMonitor(monitor.getId()).result;
 		
 		relatorio.setDificuldades("DIFICULDOUDS");
@@ -249,7 +249,7 @@ public class RelatorioFinalTest {
 	public void t04_deletarRelatorioFinal() throws Exception 
 	{
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999").result;
 		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
 		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
 		Usuario usuario = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");

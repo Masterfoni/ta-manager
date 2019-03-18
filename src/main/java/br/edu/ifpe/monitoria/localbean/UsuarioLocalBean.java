@@ -16,6 +16,7 @@ import br.edu.ifpe.monitoria.entidades.Grupo.Grupos;
 import br.edu.ifpe.monitoria.entidades.Usuario;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
+import br.edu.ifpe.monitoria.utils.UsuarioRequestResult;
 
 /**
 * Classe responsável pela execução de operações sobre a entidade Usuário,
@@ -193,16 +194,17 @@ public class UsuarioLocalBean {
 	 * <p>Método que busca um determinado usuário através apenas do seu RG
 	 * </p>
 	 * @param rg Objeto do tipo {@code String} representando o rg
-	 * @return {@code Usuario} o usuário encontrado ou {@code null} caso não encontre nenhum
+	 * @return {@code UsuarioRequestResult} um objeto contendo o usuário encontrado ou {@code null} caso não encontre nenhum dentro da propriedade result
 	 */
-	public Usuario consultaUsuarioPorRg(String rg)
-	{
-		Usuario userResult = null;
+	public UsuarioRequestResult consultaUsuarioPorRg(String rg) {
+		
+		UsuarioRequestResult userResult = new UsuarioRequestResult();
 		
 		try {
-			userResult = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
+			userResult.result = em.createNamedQuery("Usuario.findByRg", Usuario.class).setParameter("rg", rg).getSingleResult();
 		} catch (NoResultException e) {
 			e.printStackTrace();
+			userResult.errors.add("Nenhum usuário encontrado com este RG");
 		}
 		
 		return userResult;

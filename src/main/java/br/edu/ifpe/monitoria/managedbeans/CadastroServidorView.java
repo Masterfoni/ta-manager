@@ -7,10 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.PerfilGoogle;
@@ -21,8 +22,8 @@ import br.edu.ifpe.monitoria.localbean.ServidorLocalBean;
 import br.edu.ifpe.monitoria.localbean.UsuarioLocalBean;
 
 @ManagedBean (name="cadastroServidorView")
-@SessionScoped
-public class CadastroServidorView implements Serializable{
+@ViewScoped
+public class CadastroServidorView implements Serializable {
 
 	private static final long serialVersionUID = 5746606365793540925L;
 	
@@ -30,8 +31,6 @@ public class CadastroServidorView implements Serializable{
 	private PerfilGoogle perfilGoogle;
 	private String email;
 	private String nome;
-	
-	FacesContext facesContext;
 	
 	@EJB
 	private PerfilGoogleLocalBean pglBean;
@@ -43,8 +42,7 @@ public class CadastroServidorView implements Serializable{
 	private ServidorLocalBean servidorBean;
 	
 	@PostConstruct
-	public void init()
-	{
+	public void init() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		
@@ -53,19 +51,11 @@ public class CadastroServidorView implements Serializable{
 		servidor = new Servidor();
 		
 		if(session.getAttribute("perfilGoogle") == null && perfilGoogle == null) {
-			try {
-				ec.redirect("/welcome.xhtml");
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if(!(boolean)session.getAttribute("isServidor")) {
-			try {
-				ec.redirect("/publico/cadastroAluno.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			String uri = "/welcome.xhtml?faces-redirect=true";
+			fc.getApplication().getNavigationHandler().handleNavigation(fc, null, uri);
+		} else if(!(boolean)session.getAttribute("isServidor")) {
+			String uri = "/publico/cadastroAluno.xhtml?faces-redirect=true";
+			fc.getApplication().getNavigationHandler().handleNavigation(fc, null, uri);
 		}
 		
 		perfilGoogle = (PerfilGoogle)session.getAttribute("perfilGoogle");
@@ -73,45 +63,52 @@ public class CadastroServidorView implements Serializable{
 		nome = (String)session.getAttribute("nome");
 	}
 	
-	public String salvarProfessor() throws ServletException
-	{
-		String result = "falha";
+	public void salvarProfessor() throws ServletException, IOException {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		
-		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null)
-		{
-			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
-		}
-		else if(usuarioBean.consultaUsuarioPorRg(servidor.getRg()) != null)
-		{
-			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
-		}
-		else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null)
-		{
-			context.addMessage(null, new FacesMessage("SIAPE já cadastrado!"));
-		}
-		else 
-		{
+		if(isProfessorValido()) {
 			servidor.setEmail(email);
 			servidor.setNome(nome);
 			perfilGoogle.setUsuario(servidor);
 			pglBean.persistePerfilGoogle(perfilGoogle);
 			
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext();
-			HttpSession session = (HttpSession)ec.getSession(false);
-			
+			HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+			request.logout();
+
+			HttpSession session = reconstruirSessao();
 			session.setAttribute("usuario", servidor);
 			session.setAttribute("id", servidor.getId());
 			
-			result = "sucesso";
-			
-//			try {
-//				request.login(email, perfilGoogle.getSubject());
-//			} catch (ServletException e) {
-//				throw e;
-//			}
+			request.login(email, perfilGoogle.getSubject());
+
+			fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/comum/homepage.xhtml?faces-redirect=true");
+		}
+	}
+	
+	private HttpSession reconstruirSessao() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		
+		HttpSession session = (HttpSession)ec.getSession(false);
+		session.invalidate();
+		
+		return (HttpSession)ec.getSession(true);
+	}
+	
+	private boolean isProfessorValido() {
+		boolean result = true;
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(usuarioBean.consultaUsuarioPorCpf(servidor.getCpf()) != null) {
+			context.addMessage(null, new FacesMessage("CPF já cadastrado!"));
+			result = false;
+		} else if(usuarioBean.consultaUsuarioPorRg(servidor.getRg()).result != null) {
+			context.addMessage(null, new FacesMessage("RG já cadastrado!"));
+			result = false;
+		} else if(servidorBean.findServidorBySiape(servidor.getSiape()) != null) {
+			context.addMessage(null, new FacesMessage("SIAPE já cadastrado!"));
+			result = false;
 		}
 		
 		return result;

@@ -10,7 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ import br.edu.ifpe.monitoria.utils.Dominios;
 import br.edu.ifpe.monitoria.utils.LongRequestResult;
 
 @ManagedBean(name = "googleSignInView")
-@SessionScoped
+@ViewScoped
 public class GoogleSignInView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,13 +40,6 @@ public class GoogleSignInView implements Serializable {
 
 	private HttpSession session;
 
-//	public GoogleSignInView() {
-//		FacesContext fc = FacesContext.getCurrentInstance();
-//		ExternalContext ec = fc.getExternalContext();
-//		session = (HttpSession) ec.getSession(true);
-//		session.setMaxInactiveInterval(20*60);
-//	}
-
 	@EJB
 	private UsuarioLocalBean usuarioBean;
 	
@@ -55,27 +48,20 @@ public class GoogleSignInView implements Serializable {
 
 		Payload payload = verificarIntegridade(idToken);
 
-		List<String> dominiosInstituncionais = new ArrayList<String>();
-		List<String> dominiosAlunos = new ArrayList<String>();
-
-		boolean emailInstituncional = false;
-		boolean emailAluno = false;
-
-		dominiosInstituncionais = Dominios.getDominiosInstituncionais();
-		dominiosAlunos = Dominios.getDominiosAlunos();
-
-		for (String dominio : dominiosInstituncionais) {
-			if (payload != null && payload.getEmail() != null
-					&& payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio)) {
-				emailInstituncional = true;
-			}
-		}
-		for (String dominio : dominiosAlunos) {
-			if (payload != null && payload.getEmail() != null
-					&& payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio)) {
-				emailAluno = true;
-			}
-		}
+		List<String> dominiosInstitucionais = new ArrayList<String>(Dominios.getDominiosInstituncionais());
+		List<String> dominiosAlunos = new ArrayList<String>(Dominios.getDominiosAlunos());
+		
+		boolean emailInstitucional = dominiosInstitucionais.stream().anyMatch(dominio -> {
+			return payload != null 
+					&& payload.getEmail() != null 
+					&& payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio);
+		});
+		
+		boolean emailAluno = dominiosAlunos.stream().anyMatch(dominio -> {
+			return payload != null 
+					&& payload.getEmail() != null 
+					&& payload.getEmail().substring(payload.getEmail().indexOf("@")).equals("@" + dominio);
+		});
 
 		LongRequestResult idResult = usuarioBean.consultarIdByEmail(payload.getEmail());
 
@@ -87,52 +73,30 @@ public class GoogleSignInView implements Serializable {
 		session = (HttpSession) ec.getSession(true);
 
 		PerfilGoogle perfilMontado = prepareSessionForLoginServidor(payload, session, idResult.data);
-		session.setAttribute("isServidor", emailInstituncional);
+		session.setAttribute("isServidor", emailInstitucional);
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-		//HttpServletResponse response = (HttpServletResponse) ec.getResponse();
 
-		try {
-			request.login(payload.getEmail(), perfilMontado.getSubject());
-		} catch (ServletException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Por favor, utilize seu e-mail institucional."));
-		}
-
-		if (!emailInstituncional && !emailAluno) {
+		if (!emailInstitucional && !emailAluno) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Por favor, utilize seu e-mail institucional."));
 		} else {
+			try {
+				request.login(payload.getEmail(), perfilMontado.getSubject());
+			} catch (ServletException e) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage("Não foi possível realizar o login na aplicação, contate o suporte."));
+			}
+			
 			if (idResult.data != null) {
-				// ec.redirect("/comum/homepage.xhtml");
-				///String redirect = response.encodeRedirectURL(request.getContextPath() + "/comum/homepage.xhtml");
-				//System.out.println(redirect + "*******************");
-				//response.sendRedirect(redirect);
-				//return "/comum/homepage.xhtml";
-				
-				String uri = "/comum/homepage.xhtml";
-				FacesContext.getCurrentInstance().getExternalContext().dispatch(uri);
+				String uri = "/comum/homepage.xhtml?faces-redirect=true";
+				fc.getApplication().getNavigationHandler().handleNavigation(fc, null, uri);
 			} else {
 				if (emailAluno) {
-					// ec.redirect("/publico/cadastroAluno.xhtml");
-					String uri = "/publico/cadastroAluno.xhtml";
-					 FacesContext.getCurrentInstance().getExternalContext().dispatch(uri);
-
-					//String redirect = response.encodeRedirectURL(request.getContextPath() + uri);
-					//System.out.println(redirect + "*******************");
-					//response.sendRedirect(redirect);
-					
-					//return "/publico/cadastroAluno.xhtml";
-				}
-				if (emailInstituncional) {
-					// ec.redirect("/publico/cadastroServidor.xhtml");
-					String uri = "/publico/cadastroServidor.xhtml";
-					FacesContext.getCurrentInstance().getExternalContext().dispatch(uri);
-
-					//String redirect = response.encodeRedirectURL(request.getContextPath() + uri);
-					//System.out.println(redirect + "*******************");
-					//response.sendRedirect(redirect);
-					
-					//return "/publico/cadastroServidor.xhtml";
+					String uri = "/publico/cadastroAluno.xhtml?faces-redirect=true";
+					fc.getApplication().getNavigationHandler().handleNavigation(fc, null, uri);
+				} else if (emailInstitucional) {
+					String uri = "/publico/cadastroServidor.xhtml?faces-redirect=true";
+					fc.getApplication().getNavigationHandler().handleNavigation(fc, null, uri);
 				}
 			}
 		}
