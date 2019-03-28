@@ -1,16 +1,17 @@
-$(".cadastrador").click(function(e){
-    $("#myModal2").modal();
+$(document).ready(function () {
+    $(".cadastrador").click(function(e){
+        $("#myModal2").modal();
+    });
+
+    $(".alterador").click(function(e) {
+        $("#myModal").modal();
+    });
+
+    $(".numero2").mask("99");
+    $(".periodo").mask("9999/9");
+   
+    jsf.ajax.addOnEvent(handleAjaxPlanoMonitoria);
 });
-
-$(".alterador").click(function(e) {
-    $("#myModal").modal();
-});
-
-$(".numero2").mask("99");
-$(".periodo").mask("9999/9");
-$(".inserirNotas").tooltip();
-
-jsf.ajax.addOnEvent(handleAjaxPlanoMonitoria);
 
 function handleAjaxPlanoMonitoria(data) {
     var status = data.status;
@@ -36,5 +37,4 @@ function updateAlteradorFunction() {
     
     $(".numero2").mask("99");
     $(".periodo").mask("9999/9");
-    $(".inserirNotas").tooltip();
 }

@@ -159,6 +159,12 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 
+	public List<Monitoria> consultaClassificadosByPlano(PlanoMonitoria plano) {
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findClassificadosByPlano", Monitoria.class)
+				  .setParameter("plano", plano).getResultList();
+
+		return monitorias;
+	}
 
 	public void salvarNotas(List<Monitoria> monitorias) {
 		monitorias = verificarEmpates(monitorias);

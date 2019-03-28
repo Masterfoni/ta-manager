@@ -170,7 +170,7 @@
 										<td class="right">
 											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao or (gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas)}">
 												<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
-													class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
+														class="btn btn-success inserirNotas">
 													<span class="fas fa-clipboard-list"></span>
 												</button>
 											</h:panelGroup>
@@ -178,7 +178,7 @@
 										<td class="right">
 											<h:panelGroup>
 											<button type="submit" id="botaoVerALunos" jsf:action="#{gerenciaPlanoMonitoriaView.verAlunos(plano)}" 
-												class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Ver Inscritos">
+												class="btn btn-success inserirNotas">
 												<span class="fas fa-eye"></span>
 											</button>
 											</h:panelGroup>
@@ -224,21 +224,21 @@
 									</div>
 									<div class="form-group">
 										<label>Justificativa</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.justificativa}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Objetivo</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoAtualizado.objetivo}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Lista de Atividades</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoAtualizado.listaAtividades}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 								</div>
 							</div>
@@ -307,21 +307,21 @@
 									</div>
 									<div class="form-group">
 										<label>Justificativa</label>
-										<h:inputText id="justificativa" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="justificativa" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.justificativa}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Objetivo</label>
-										<h:inputText id="objetivo" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="objetivo" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.objetivo}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Lista de Atividades</label>
-										<h:inputText id="atividades" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="atividades" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.listaAtividades}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 								</div>
 							</div>
@@ -338,7 +338,6 @@
 		</div>
 
 		<ui:include src="/comum/footer-scripts.xhtml"/>
-		<script src="../resources/libs/popper/popper.min.js"></script>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>
 </html>
