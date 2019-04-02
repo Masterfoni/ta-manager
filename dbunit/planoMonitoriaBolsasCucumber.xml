@@ -38,7 +38,8 @@
   		txt_coordenacao="CTADS"
   		txt_departamento="DASE"
   		txt_nome="Tecnologia em Análise e Desenvolvimento de Sistemas"
-  		txt_sigla="TADS" />
+  		txt_sigla="TADS" 
+  		bool_ativo="true"/>
   	
   	<TB_COMP_CURRICULAR id="1"
   		int_carga_horaria="36"
@@ -47,5 +48,6 @@
   		txt_periodo="2018/1"
   		txt_turno="NOTURNO"
   		id_curso="1"
-  		id_servidor="1" />
+  		id_servidor="1" 
+  		bool_ativo="true"/>
 </dataset>
