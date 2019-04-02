@@ -17,10 +17,10 @@ import cucumber.api.java.pt.Quando;
 public class InsercaoDeNotasSteps {
 	
 	public InsercaoDeNotasSteps() {
-		//if(DbUnitUtil.ultimo_executado != Dataset.InsercaoDeNotasCucumber) {
+		if(DbUnitUtil.ultimo_executado != Dataset.InsercaoDeNotasCucumber) {
 			 DbUnitUtil.selecionaDataset(Dataset.InsercaoDeNotasCucumber);
 	         DbUnitUtil.inserirDados();
-		//}
+		}
 	}
 	
 	@Dado("^que o usuario esta logado com perfil de professor$")

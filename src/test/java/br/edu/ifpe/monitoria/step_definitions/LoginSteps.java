@@ -26,4 +26,11 @@ public class LoginSteps {
 		
 		BrowserManager.driver.switchTo().window(mainHandle);
 	}
+	
+	public static void deslogar() {
+	    BrowserManager.esperar(2500);
+	    BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
+		BrowserManager.driver.close();
+		BrowserManager.driver = null;
+	}
 }
