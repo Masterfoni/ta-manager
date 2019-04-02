@@ -102,7 +102,7 @@
 												<td>#{plano.cc.nome}</td>
 												<td>#{plano.cc.turno}</td>
 												<td class="text-right">
-													<h:commandButton id="botaoVoluntario" value="Bolsista" class="btn btn-info mr-2"
+													<h:commandButton id="botaoBolsista" value="Bolsista" class="btn btn-info mr-2"
 														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, false, true)}">
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>
@@ -112,7 +112,7 @@
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>
 													
-													<h:commandButton id="botaoBolsista" value="Voluntario" class="btn btn-success"
+													<h:commandButton id="botaoVoluntario" value="Voluntario" class="btn btn-success"
 														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, false)}">
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>
