@@ -49,7 +49,7 @@ public class RelatorioFinalSteps {
 	@Entao("^o sistema deve mostrar quais monitores entregaram ou nao o relatorio final de monitoria$")
 	public void oSistemaDeveMostrarQuaisMonitoresEntregaramOuNaoORelatorioFinalDeMonitoria() throws Throwable {
 		List<WebElement> alunos = BrowserManager.driver.findElements(By.tagName("td"));
-		assertTrue(alunos.size() == 8);
+		assertTrue(alunos.size() == 4);
 	}
 }
 
