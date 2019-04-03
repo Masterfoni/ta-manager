@@ -26,7 +26,7 @@ public class RelatorioFrequenciaMensalSteps {
 	
 	@Dado("^que o usuario esta logado como um professor$")
 	public void queOUsuarioEstaLogadoComoUmProfessor() throws Throwable {
-		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "FALaifpe//95");
+		LoginSteps.logar("fal@a.recife.ifpe.edu.br", "");
 	}
 
 	@Dado("^esteja na pagina inicial$")
