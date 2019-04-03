@@ -35,7 +35,7 @@ public class InsercaoDeNotasSteps {
 
 	@Dado("^seleciona a opcao de inserir notas$")
 	public void selecionaAOpcaoDeInserirNotas() throws Throwable {
-		BrowserManager.driver.findElement(By.className("inserirNotas")).click();
+		BrowserManager.driver.findElement(By.id("botaoNotas")).click();
 	}
 
 	@Quando("^o professor inserir as notas de selecao e as medias e salvar$")

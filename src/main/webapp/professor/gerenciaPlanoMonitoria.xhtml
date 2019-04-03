@@ -170,7 +170,7 @@
 										<td class="right">
 											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao or (gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas)}">
 												<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
-														class="btn btn-success inserirNotas">
+														class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="top" title="Inserir Notas">
 													<span class="fas fa-clipboard-list"></span>
 												</button>
 											</h:panelGroup>
@@ -178,7 +178,7 @@
 										<td class="right">
 											<h:panelGroup>
 											<button type="submit" id="botaoVerALunos" jsf:action="#{gerenciaPlanoMonitoriaView.verAlunos(plano)}" 
-												class="btn btn-success inserirNotas">
+												class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="top" title="Ver Inscritos">
 												<span class="fas fa-eye"></span>
 											</button>
 											</h:panelGroup>
@@ -337,6 +337,7 @@
 			</div>
 		</div>
 
+		<script src="../resources/libs/popper/popper.min.js"></script>
 		<ui:include src="/comum/footer-scripts.xhtml"/>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>

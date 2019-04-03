@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     $(".numero2").mask("99");
     $(".periodo").mask("9999/9");
+    $(".inserirNotas").tooltip();
    
     jsf.ajax.addOnEvent(handleAjaxPlanoMonitoria);
 });
@@ -37,4 +38,5 @@ function updateAlteradorFunction() {
     
     $(".numero2").mask("99");
     $(".periodo").mask("9999/9");
+    $(".inserirNotas").tooltip();
 }
