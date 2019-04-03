@@ -7,7 +7,7 @@ $(function () {
         $("#modalAlterarAtividade").modal();
     });
     
-    jsf.ajax.addOnEvent(handleAjaxGerenciaEdital);
+    jsf.ajax.addOnEvent(handleAjaxMinhaMonitoria);
 });
 
 function handleAjaxMinhaMonitoria(data) {
