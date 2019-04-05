@@ -69,31 +69,26 @@
 								<h5>Bolsistas: #{plano.bolsas}  | Voluntários: #{plano.voluntarios} </h5>
 								<table class="table table-hover mb-5 table-sm">
 									<thead>
-										<th scope="col">Classificação</th>
 										<th scope="col">Aluno</th>
 										<th scope="col">Situação</th>
-										<th scope="col">Bolsista</th>
+										<th scope="col">Modalidade</th>
 									</thead>
 									<tbody>
 										<ui:repeat id="repeatMonitoria" value="#{divulgacaoSelecionadosView.monitorias.get(varedital.index).get(varplano.index)}" 
 												var="monitoria" varStatus="myStatus">
 											<tr>
-												<td>#{monitoria.classificacao}</td>
 												<td>#{monitoria.aluno.nome}</td>
 												<td>
 													<h:outputLabel class="badge badge-success" rendered="#{monitoria.homologado}">
-														Selecionado
+														Homologado
 													</h:outputLabel>
 													<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.homologado}">
 														Não homologado
 													</h:outputLabel>
 												</td>
 												<td>
-													<h:outputLabel class="badge badge-success" rendered="#{monitoria.bolsista}">
-														Bolsista
-													</h:outputLabel>
-													<h:outputLabel class="badge badge-info" rendered="#{not monitoria.bolsista}">
-														Voluntário
+													<h:outputLabel class="badge badge-success">
+														#{monitoria.modalidade}
 													</h:outputLabel>
 												</td>
 											</tr>

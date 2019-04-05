@@ -269,12 +269,12 @@ public class MonitoriaLocalBean
 		int classificacao = 1;
 		int vagasVoluntario = monitorias.get(0).getPlanoMonitoria().getVoluntarios();
 		int vagasBolsista = monitorias.get(0).getPlanoMonitoria().getBolsas();
-		boolean vagaDisponivel;
+		boolean selecioando;
 		ModalidadeMonitoria modalidade;
 		
 		for (Monitoria monitoria : monitorias) {
 			modalidade = ModalidadeMonitoria.INVALIDADA;
-			vagaDisponivel = false;
+			selecioando = false;
 			
 			if(monitoria.isClassificado()) {
 				monitoria.setClassificacao(classificacao);
@@ -282,19 +282,20 @@ public class MonitoriaLocalBean
 				
 				if(monitoria.isBolsista()) {
 					if(vagasBolsista > 0) {
-						vagaDisponivel = true;
+						selecioando = true;
 						vagasBolsista--;
 						modalidade = ModalidadeMonitoria.BOLSISTA;
 					}
-				} else if (monitoria.isVoluntario() && !vagaDisponivel) {
+				} 
+				if (monitoria.isVoluntario() && !selecioando) {
 					if(vagasVoluntario > 0) {
-						vagaDisponivel = true;
+						selecioando = true;
 						vagasVoluntario--;
 						modalidade = ModalidadeMonitoria.VOLUNTARIO;
 					}
 				}
 				
-				monitoria.setSelecionado(vagaDisponivel);
+				monitoria.setSelecionado(selecioando);
 				monitoria.setModalidade(modalidade);
 			} else {
 				monitoria.setClassificacao(null);

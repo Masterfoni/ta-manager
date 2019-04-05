@@ -93,7 +93,7 @@ public class DivulgacaoClassificadosView {
 			monitorias = new ArrayList<>();
 			for (int i=0; i < this.editais.size(); i++) {
 				for (PlanoMonitoria plano : this.planos.get(i)) {
-					List<Monitoria> monitorias = monitoriabean.consultaClassificadosByPlano(plano);
+					List<Monitoria> monitorias = monitoriabean.consultaMonitoriaSelecionadaByPlano(plano);
 					monitorias = monitoriabean.ordenar(monitorias);
 					planos.add(monitorias);
 				}
