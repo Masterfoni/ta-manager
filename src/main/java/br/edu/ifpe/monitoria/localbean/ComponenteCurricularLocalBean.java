@@ -24,9 +24,11 @@ public class ComponenteCurricularLocalBean
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 	
-	public List<ComponenteCurricular> consultaComponentesCurriculares()
+	public List<ComponenteCurricular> consultaComponentesCurriculares(boolean allComponents)
 	{
-		List<ComponenteCurricular> componentes = em.createNamedQuery("ComponenteCurricular.findAll", ComponenteCurricular.class).getResultList();
+		String query = allComponents ? "ComponenteCurricular.findAllWithInactives" : "ComponenteCurricular.findAll";
+		
+		List<ComponenteCurricular> componentes = em.createNamedQuery(query, ComponenteCurricular.class).getResultList();
 		
 		return componentes;
 	}
@@ -92,11 +94,11 @@ public class ComponenteCurricularLocalBean
 		return result;
 	}
 	
-	public AtualizacaoRequestResult inativaComponenteCurricular(ComponenteCurricular componente)
+	public AtualizacaoRequestResult toggleAtivacaoComponenteCurricular(ComponenteCurricular componente)
 	{
 		AtualizacaoRequestResult inativacaoResult = new AtualizacaoRequestResult();
 		
-		componente.setAtivo(false);
+		componente.setAtivo(!componente.isAtivo());
 		
 		try {
 			em.merge(componente);

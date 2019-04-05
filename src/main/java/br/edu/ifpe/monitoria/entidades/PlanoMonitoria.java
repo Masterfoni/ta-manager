@@ -36,8 +36,8 @@ import org.hibernate.validator.constraints.NotBlank;
 	@NamedQuery(name = "PlanoMonitoria.findByServidor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :servidorId OR p.cc.professor.id = :servidorId ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalServidor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.professor.id = :servidorId AND p.edital.id = :editalId ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id ORDER BY p.cc.curso, p.cc.nome"),
-	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
-	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso.nome, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso.nome, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital.id = :editalId AND p.cc.id = :ccId ORDER BY p.cc.curso, p.cc.nome")

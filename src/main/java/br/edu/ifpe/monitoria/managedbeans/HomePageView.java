@@ -113,7 +113,7 @@ public class HomePageView implements Serializable {
 
 	public List<ComponenteCurricular> getComponentes() {
 		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("comissao") ? 
-				componenteBean.consultaComponentesCurriculares() :
+				componenteBean.consultaComponentesCurriculares(false) :
 				 componenteBean.consultaComponentesByProfessor(loggedServidor);
 	}
 	

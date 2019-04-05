@@ -41,6 +41,7 @@
 								<th scope="col">Componente Curricular</th>
 								<th scope="col">Professor</th>
 								<th scope="col">Curso</th>
+								<th scope="col">Status</th>
 								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
@@ -50,6 +51,9 @@
 										<td>#{componente.nome}</td>
 										<td>#{componente.professor.nome}</td>
 										<td>#{componente.curso.nome}</td>
+										<td>
+											<span class="#{componente.ativo ? 'center badge badge-pill badge-success' : 'center badge badge-pill badge-danger'}">#{componente.ativo ? 'ATIVO' : 'INATIVO'}</span>
+										</td>
 										<td>
 											<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
 																update="@form" class="btn btn-danger">
@@ -208,8 +212,9 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
-								<h:commandButton value="Desativar" actionListener="#{gerenciaComponenteCurricularView.inativaComponente()}"
-												 update="@form" class="btn btn-danger" />
+								<h:commandButton value="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'Desativar' : 'Ativar'}" 
+												 actionListener="#{gerenciaComponenteCurricularView.toggleComponente()}"
+												 update="@form" class="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}" />
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaComponenteCurricularView.persisteAlteracao()}" 
 													update="@form" class="btn btn-success" />

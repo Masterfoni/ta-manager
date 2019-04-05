@@ -35,6 +35,7 @@ import br.edu.ifpe.monitoria.validacao.ValidaPeriodo;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name = "ComponenteCurricular.findAll", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.ativo = TRUE AND c.ativo = TRUE ORDER BY c.nome"),
+	@NamedQuery(name = "ComponenteCurricular.findAllWithInactives", query = "SELECT c FROM ComponenteCurricular c WHERE c.curso.ativo = TRUE ORDER BY c.nome, c.ativo, c.curso.nome"),
 	@NamedQuery(name = "ComponenteCurricular.findById", query = "SELECT c FROM ComponenteCurricular c WHERE c.id = :id AND c.curso.ativo = TRUE AND c.ativo = TRUE"),
 	@NamedQuery(name = "ComponenteCurricular.findByProfessor", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor.id = :professorId AND c.curso.ativo = TRUE AND c.ativo = true ORDER BY c.nome"),
 	@NamedQuery(name = "ComponenteCurricular.findByProfessorAndCurso", query = "SELECT c FROM ComponenteCurricular c WHERE c.professor.id = :professorId AND c.curso.id = :cursoId AND c.curso.ativo = TRUE AND c.ativo = true ORDER BY c.nome"),

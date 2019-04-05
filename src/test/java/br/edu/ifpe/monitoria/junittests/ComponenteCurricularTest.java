@@ -102,7 +102,7 @@ public class ComponenteCurricularTest {
 	
 	@Test
 	public void t02_consultarComponenteCurricular() throws Exception {
-		assertTrue(componentebean.consultaComponentesCurriculares().size() > 0);
+		assertTrue(componentebean.consultaComponentesCurriculares(false).size() > 0);
 	}
 	
 	@Test
