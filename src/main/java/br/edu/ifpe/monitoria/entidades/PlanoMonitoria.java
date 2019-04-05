@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -77,14 +78,17 @@ public class PlanoMonitoria implements Serializable {
 	@Column (name="INT_VOLUNTARIOS")
 	private Integer voluntarios;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.justificativa}")
 	@Column (name="TXT_JUSTIFICATIVA")
 	private String justificativa;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.objetivo}")
 	@Column (name="TXT_OBJETIVO")
 	private String objetivo;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.atividades}")
 	@Column (name="TXT_LISTA_ATIVIDADES")
 	private String listaAtividades;

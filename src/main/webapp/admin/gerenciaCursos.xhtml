@@ -49,9 +49,9 @@
 							<div class="card-footer">
 								<div class="row no-gutters">
 									<div class="col-md-5 text-center">
-										<h:commandButton actionListener="#{gerenciaCursoView.toggleCursoAtivacao(curso)}"
-														 value="#{curso.ativo ? 'Desativar' : 'Ativar'}" update="@form"
-														 class="#{curso.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}">
+										<h:commandButton value="#{curso.ativo ? 'Desativar' : 'Ativar'}" actionListener="#{gerenciaCursoView.alteraCurrentCurso(curso)}"
+														 class="#{curso.ativo ? 'btn btn-block btn-danger togglador' : 'btn btn-block btn-success togglador'}">
+											<f:ajax execute="@form" render=":formConfirmador :currentModal" />
 										</h:commandButton>
 									</div>
 									<div class="col-md-2">
@@ -70,6 +70,34 @@
 				</div>
 			</h:form>
 			
+			<div id="confirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<h:form id="formConfirmador" class="dialogSignup">
+							<div id="currentModal">
+								<div class="modal-header">
+									<h5 class="modal-title" id="confirmModalLabel">#{gerenciaCursoView.currentCurso.ativo ? 'Desativação'  : 'Ativação'} de curso</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">x</span>
+									</button>
+								</div>
+
+								<div class="modal-body">
+									<p><strong>Tem certeza que deseja #{gerenciaCursoView.currentCurso.ativo ? 'desativar'  : 'ativar'} este curso?</strong></p>
+								</div>
+
+								<div class="modal-footer text-right">
+									<h:commandButton actionListener="#{gerenciaCursoView.toggleCursoAtivacao()}"
+										value="#{gerenciaCursoView.currentCurso.ativo ? 'Desativar' : 'Ativar'}" update="@form"
+										class="#{gerenciaCursoView.currentCurso.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}">
+									</h:commandButton>	
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+
 			<!-- MODAL DE ATUALIZACAO -->
 			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="atualizacaoModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">

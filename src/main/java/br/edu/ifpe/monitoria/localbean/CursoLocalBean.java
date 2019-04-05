@@ -67,7 +67,7 @@ public class CursoLocalBean
 	{
 		AtualizacaoRequestResult toggleResult = new AtualizacaoRequestResult();
 		
-		Curso curso = em.createNamedQuery("Curso.findById", Curso.class).setParameter("id", id).getSingleResult();
+		Curso curso = em.createNamedQuery("Curso.findByIdAll", Curso.class).setParameter("id", id).getSingleResult();
 		curso.setAtivo(ativo);
 		
 		try {
