@@ -43,7 +43,6 @@
 								<th scope="col">Curso</th>
 								<th scope="col">Status</th>
 								<th scope="col"></th>
-								<th scope="col"></th>
 							</thead>
 							<tbody>
 								<ui:repeat id="repeatComponentes" value="#{gerenciaComponenteCurricularView.componentes}" var="componente" varStatus="myStatus">
@@ -53,11 +52,6 @@
 										<td>#{componente.curso.nome}</td>
 										<td>
 											<span class="#{componente.ativo ? 'center badge badge-pill badge-success' : 'center badge badge-pill badge-danger'}">#{componente.ativo ? 'ATIVO' : 'INATIVO'}</span>
-										</td>
-										<td>
-											<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
-																update="@form" class="btn btn-danger">
-											</h:commandButton>
 										</td>
 										<td>
 											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
