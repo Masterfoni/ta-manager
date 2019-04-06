@@ -69,7 +69,11 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id"));
 		
-		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
+		if(sharedMenuView.comissao) {
+			componentes = componenteBean.consultaComponentesCurriculares(false);			
+		} else {
+			componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);			
+		}
 		
 		Edital editalGlobal = sharedMenuView.getEditalGlobal(); 
 		
@@ -116,9 +120,7 @@ public class GerenciaRelatoriosFinaisView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
-		
-		return componentes;
+		return sharedMenuView.comissao ? componenteBean.consultaComponentesCurriculares(false) :componenteBean.consultaComponentesByProfessor(loggedServidor);
 	}
 
 	public void setComponentes(List<ComponenteCurricular> componentes) {

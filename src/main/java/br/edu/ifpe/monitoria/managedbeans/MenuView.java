@@ -117,4 +117,12 @@ public class MenuView implements Serializable {
 	public void setLoading(boolean isLoading) {
 		this.isLoading = isLoading;
 	}
+
+	public Long getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Long usuario) {
+		this.usuario = usuario;
+	}
 }

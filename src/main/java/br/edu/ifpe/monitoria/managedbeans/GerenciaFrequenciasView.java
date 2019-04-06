@@ -79,7 +79,12 @@ public class GerenciaFrequenciasView implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedServidor = servidorBean.consultaServidorById((Long)session.getAttribute("id")); 
 		
-		componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);
+		if(sharedMenuView.comissao) {
+			componentes = componenteBean.consultaComponentesCurriculares(false);			
+		} else {
+			componentes = componenteBean.consultaComponentesByProfessor(loggedServidor);			
+		}
+		
 		componenteSelecionado = componentes != null && componentes.size() > 0 ? componentes.get(0) : null;
 		
 		editalglobal = sharedMenuView.getEditalGlobal();
@@ -96,7 +101,7 @@ public class GerenciaFrequenciasView implements Serializable {
 	}
 	
 	public List<ComponenteCurricular> getComponentes() {
-		return componenteBean.consultaComponentesByProfessor(loggedServidor);
+		return sharedMenuView.comissao ? componenteBean.consultaComponentesCurriculares(false) :componenteBean.consultaComponentesByProfessor(loggedServidor); 
 	}
 
 	public void setComponentes(List<ComponenteCurricular> componentes) {

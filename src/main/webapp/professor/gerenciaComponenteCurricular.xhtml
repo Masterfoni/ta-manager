@@ -206,7 +206,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
-								<h:commandButton value="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'Desativar' : 'Ativar'}" 
+								<h:commandButton rendered="#{menuView.comissao || gerenciaComponenteCurricularView.componenteAtualizado.curso.coordenador.id == menuView.usuario}"
+												 value="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'Desativar' : 'Ativar'}" 
 												 actionListener="#{gerenciaComponenteCurricularView.toggleComponente()}"
 												 update="@form" class="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}" />
 								<span>  </span>
