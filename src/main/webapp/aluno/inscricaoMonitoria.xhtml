@@ -93,6 +93,8 @@
 										<th scope="col">Edital</th>
 										<th scope="col">Componente Curricular</th>
 										<th scope="col">Turno</th>
+										<th scope="col">Vagas Bolsista</th>
+										<th scope="col">Vagas Voluntário</th>
 										<th scope="col"></th>
 									</thead>
 									<tbody>
@@ -101,8 +103,10 @@
 												<td>#{plano.edital.numeroEdital}</td>
 												<td>#{plano.cc.nome}</td>
 												<td>#{plano.cc.turno}</td>
+												<td>#{plano.bolsas}</td>
+												<td>#{plano.voluntarios}</td>
 												<td class="text-right">
-													<h:commandButton id="botaoBolsista" value="Bolsista" class="btn btn-info mr-2"
+													<h:commandButton id="botaoBolsista" value="Bolsista" class="btn btn-info mr-2" rendered="#{plano.bolsas > 0}"
 														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, false, true)}">
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>
@@ -112,7 +116,7 @@
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>
 													
-													<h:commandButton id="botaoVoluntario" value="Voluntario" class="btn btn-success"
+													<h:commandButton id="botaoVoluntario" value="Voluntario" class="btn btn-success" rendered="#{plano.voluntarios > 0}"
 														actionListener="#{inscricaoMonitoriaView.salvarMonitoria(plano, true, false)}">
 														<f:ajax execute="@form" render=":inscrito"/>
 													</h:commandButton>

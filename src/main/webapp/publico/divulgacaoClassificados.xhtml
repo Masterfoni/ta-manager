@@ -52,7 +52,7 @@
 				</div>
 			</h:form>
 			
-			<h:panelGroup layout="block"> 
+			<h:panelGroup layout="block" rendered="#{divulgacaoClassificadosView.captchaValidado}"> 
 				<div class="row">
 					<div class="col-md-12">
 						<ui:repeat value="#{divulgacaoClassificadosView.editais}" var="edital" varStatus="varedital">
