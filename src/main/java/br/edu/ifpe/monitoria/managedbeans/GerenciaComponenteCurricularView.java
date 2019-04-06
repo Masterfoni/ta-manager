@@ -78,7 +78,7 @@ public class GerenciaComponenteCurricularView implements Serializable {
 	}
 
 	public List<ComponenteCurricular> getComponentes() {
-		componentes = componentebean.consultaComponentesCurriculares();
+		componentes = componentebean.consultaComponentesCurriculares(true);
 		return componentes;
 	}
 	
@@ -89,7 +89,7 @@ public class GerenciaComponenteCurricularView implements Serializable {
 	@PostConstruct
 	public void init() {
 		cursos = cursobean.consultaCursos();
-		componentes = componentebean.consultaComponentesCurriculares();
+		componentes = componentebean.consultaComponentesCurriculares(true);
 		professores = servidorbean.consultaServidores();
 		componentePersistido = new ComponenteCurricular();
 		componenteAtualizado = new ComponenteCurricular();
@@ -99,16 +99,13 @@ public class GerenciaComponenteCurricularView implements Serializable {
 		componenteAtualizado = componente;
 	}
 	
-	public void inativaComponente() 
-	{
-		AtualizacaoRequestResult inativacaoResult = componentebean.inativaComponenteCurricular(componenteAtualizado);
+	public void toggleComponente() {
+		AtualizacaoRequestResult inativacaoResult = componentebean.toggleAtivacaoComponenteCurricular(componenteAtualizado);
 		
-		if(inativacaoResult.hasErrors())
-		{
+		if(inativacaoResult.hasErrors()) {
 			FacesContext context = FacesContext.getCurrentInstance();
 
-			for(String error : inativacaoResult.errors)
-			{	
+			for(String error : inativacaoResult.errors) {	
 				context.addMessage(null, new FacesMessage(error));				
 			}
 		}

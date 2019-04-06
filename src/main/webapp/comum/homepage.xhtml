@@ -2,66 +2,84 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:jsf="http://xmlns.jcp.org/jsf">
-	
+
+	  
 	<h:head>
-		<meta name="google-signin-client_id" content="835716531913-m3mt3905k8itbmflg8t7mlqabgjcruce.apps.googleusercontent.com" />
 		<ui:include src="/comum/header-libs.xhtml"/>
+		<link rel="stylesheet" href="../comum/homepage.css"/>
 		<title>Monitoria - IFPE</title>
 	</h:head>
-
+		
 	<h:body>
 		<ui:include src="/comum/navbar-top.xhtml" />
 		
 		<div class="container">			
-			<h:panelGroup rendered="#{homePageView.comissao}">
-				<div class="card mb-2 mt-2">
-					<div class="card-body">
-						<h5 class="card-title">Relatório de frequências</h5>
-						<h6 class="card-subtitle mb-2 text-muted">Estudantes que entregaram frequência</h6>
-						
-						<h:form id="formRelatorioMensal">
-							<div class="row">
-								<div class="col-md-9">
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<div class="input-group-text">Componente</div>
-										</div>
-										<h:selectOneMenu id="componenteSelector" class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
-											<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-										</h:selectOneMenu>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<button type="submit" id="botaoRelatorioMensal" jsf:action="#{homePageView.gerarRelatorioMensal()}"
-											class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
-										Gerar Relatório <span class="fas fa-clipboard-list"></span>
-									</button>
-								</div>
-								
-								<div class="col-md-9">
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<div class="input-group-text">Mês</div>
-										</div>
-										<h:selectOneMenu id="mesSelector" class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
-											<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
-										</h:selectOneMenu>
-									</div>
-								</div>
-							</div>
-						</h:form>
+			<div class="card mb-2 mt-2">
+				<div class="card-body">
+					<h5 class="card-title">Edital</h5>
+					<div class="row">
+						<div class="col-md-12">
+							<h:form id="formEditalGlobal" style="width: 100%">
+								<h:selectOneMenu id="editalGlobalSelector" class="form-control" value="#{menuView.editalGlobal}" converter="editalConverter">
+									<f:selectItem itemValue="#{null}" itemLabel="Selecione um edital" />
+									<f:selectItems value="#{menuView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+									<f:ajax render="@all"></f:ajax>
+								</h:selectOneMenu>
+							</h:form>
+						</div>
 					</div>
 				</div>
-
-				<div class="card mb-2">
-					<div class="card-body">
-						<h5 class="card-title">Relatórios finais entregues</h5>
-						<h6 class="card-subtitle mb-2 text-muted">Listagem de monitores que entregaram ou não o relatório final</h6>
-						
-						<h:form id="formRelatorioFinal">
+			</div>
+			<h:panelGroup id="panelRelatorios" rendered="#{homePageView.comissao and not empty menuView.editalGlobal}">
+				<h:form id="formRelatorioMensal">
+					<div class="card mb-2">
+						<div class="card-body">
+							<h5 class="card-title">Relatório de frequências</h5>
+							<h6 class="card-subtitle mb-2 text-muted">Estudantes que entregaram frequência</h6>
+							
+							
+								<div class="row">
+									<div class="col-md-12">
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text">Componente</div>
+											</div>
+											<h:selectOneMenu id="componenteSelector" class="form-control" value="#{homePageView.componenteSelecionado}" converter="componenteConverter">
+												<f:selectItems value="#{homePageView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome} | #{comp.curso.nome}"/>
+											</h:selectOneMenu>
+										</div>
+									</div>
+									
+									<div class="col-md-12">
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text">Mês</div>
+											</div>
+											<h:selectOneMenu id="mesSelector" class="form-control" value="#{homePageView.mesSelecionado}" converter="mesConverter">
+												<f:selectItems value="#{homePageView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{homePageView.getNomeMes(mes)}"/>
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+							
+						</div>
+						<div class="card-footer">
+							<button type="submit" id="botaoRelatorioMensal" jsf:action="#{homePageView.gerarRelatorioMensal()}"
+									class="btn btn-block btn-success" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
+								Gerar Relatório <span class="fas fa-clipboard-list"></span>
+							</button>
+						</div>
+					</div>
+				</h:form>
+				
+				<h:form id="formRelatorioFinal">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Relatórios finais entregues</h5>
+							<h6 class="card-subtitle mb-2 text-muted">Listagem de monitores que entregaram ou não o relatório final</h6>
+							
 							<div class="row">
-								<div class="col-md-9">
+								<div class="col-md-12">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<div class="input-group-text">Componente</div>
@@ -71,24 +89,20 @@
 										</h:selectOneMenu>
 									</div>
 								</div>
-
-								<div class="col-md-3">
-									<button type="submit" id="botaoRelatorioFinal" jsf:action="#{homePageView.gerarRelatorioRFinal()}"
-											class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
-										Gerar Relatório <span class="fas fa-clipboard-list"></span>
-									</button>
-								</div>
 							</div>
-						</h:form>
+						</div>
+						<div class="card-footer">
+							<button type="submit" id="botaoRelatorioFinal" jsf:action="#{homePageView.gerarRelatorioRFinal()}"
+									class="btn btn-block btn-success" data-toggle="tooltip" data-placement="bottom" title="Gerar Relatório">
+								Gerar Relatório <span class="fas fa-clipboard-list"></span>
+							</button>
+						</div>
 					</div>
-				</div>
+				</h:form>
 			</h:panelGroup>
-			
 		</div>
 		
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
-		<script src="../comum/navbar-top.js"></script>
 		<script src="../comum/homepage.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 	</h:body>
 </html>

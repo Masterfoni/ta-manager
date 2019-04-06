@@ -138,11 +138,15 @@ public class PlanoMonitoriaTest {
 		edital.setInicioInsercaoNota(initialDate);
 		edital.setInicioInsercaoPlano(initialDate);
 		edital.setInicioMonitoria(initialDate);
+		edital.setInicioRealizacaoProvas(initialDate);
 		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
 		edital.setFimInscricaoEstudante(finalCalendar.getTime());
 		edital.setFimInsercaoNota(finalCalendar.getTime());
 		edital.setFimInsercaoPlano(finalCalendar.getTime());
 		edital.setFimMonitoria(finalCalendar.getTime());
+		edital.setFimRealizacaoProvas(finalCalendar.getTime());
+		edital.setPublicacaoAlunosClassificados(finalCalendar.getTime());
+		edital.setPublicacaoAlunosSelecionados(finalCalendar.getTime());
 		edital.setNotaMinimaSelecao(7.0);
 		edital.setMediaMinimaCC(7.0);
 		edital.setVigente(true);
@@ -161,7 +165,6 @@ public class PlanoMonitoriaTest {
 		plano.setVoluntarios(2);
 		
 		CriacaoRequestResult persistePlanoMonitoria = planobean.persistePlanoMonitoria(plano);
-		System.out.println(persistePlanoMonitoria.errors);
 		assertFalse(persistePlanoMonitoria.hasErrors());
 	}
 	

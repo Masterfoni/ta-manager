@@ -17,10 +17,10 @@ import cucumber.api.java.pt.Quando;
 public class InsercaoDeNotasSteps {
 	
 	public InsercaoDeNotasSteps() {
-		//if(DbUnitUtil.ultimo_executado != Dataset.InsercaoDeNotasCucumber) {
+		if(DbUnitUtil.ultimo_executado != Dataset.InsercaoDeNotasCucumber) {
 			 DbUnitUtil.selecionaDataset(Dataset.InsercaoDeNotasCucumber);
 	         DbUnitUtil.inserirDados();
-		//}
+		}
 	}
 	
 	@Dado("^que o usuario esta logado com perfil de professor$")
@@ -35,7 +35,7 @@ public class InsercaoDeNotasSteps {
 
 	@Dado("^seleciona a opcao de inserir notas$")
 	public void selecionaAOpcaoDeInserirNotas() throws Throwable {
-		BrowserManager.driver.findElement(By.className("inserirNotas")).click();
+		BrowserManager.driver.findElement(By.id("botaoNotas")).click();
 	}
 
 	@Quando("^o professor inserir as notas de selecao e as medias e salvar$")

@@ -153,11 +153,15 @@ public class MonitoriaTest
 		edital.setInicioInsercaoNota(initialDate);
 		edital.setInicioInsercaoPlano(initialDate);
 		edital.setInicioMonitoria(initialDate);
+		edital.setInicioRealizacaoProvas(initialDate);
 		edital.setFimInscricaoComponenteCurricular(finalCalendar.getTime());
 		edital.setFimInscricaoEstudante(finalCalendar.getTime());
 		edital.setFimInsercaoNota(finalCalendar.getTime());
 		edital.setFimInsercaoPlano(finalCalendar.getTime());
 		edital.setFimMonitoria(finalCalendar.getTime());
+		edital.setFimRealizacaoProvas(finalCalendar.getTime());
+		edital.setPublicacaoAlunosClassificados(finalCalendar.getTime());
+		edital.setPublicacaoAlunosSelecionados(finalCalendar.getTime());
 		edital.setMediaMinimaCC(7.0);
 		edital.setNotaMinimaSelecao(7.0);
 		edital.setVigente(true);
@@ -228,7 +232,7 @@ public class MonitoriaTest
 	public void t04_deletarMonitoria() throws Exception 
 	{
 		Monitoria monitoria = monitoriabean.consultaMonitorias().get(0);
-		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999");
+		Aluno aluno = alunobean.consultaAlunoByMatricula("20132Y6-RC9999").result;
 		ComponenteCurricular cc = componentebean.consultaComponenteByName("TEORIA SINFONICA");
 		Curso curso = cursobean.consultaCursoByName("CURSOTESTE");
 		Usuario usuario = usuariobean.consultaUsuarioPorEmail("emailjack@a.recife.ifpe.edu.br");

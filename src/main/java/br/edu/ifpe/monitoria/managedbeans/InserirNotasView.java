@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,11 +74,17 @@ public class InserirNotasView implements Serializable{
 	public boolean isPeriodoDeInsercaoNotas() {
 		if(edital == null)
 			edital = editalBean.consultaEditalById(plano.getEdital().getId());
-		if(new Date().after(edital.getInicioInsercaoNota()) && 
-				new Date().before(edital.getFimInsercaoNota()))
-			setPeriodoDeInsercaoNotas(true);
-		else
-			setPeriodoDeInsercaoNotas(false);
+		
+		periodoDeInsercaoNotas = false;
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		fim.setTime(edital.getFimInsercaoNota());
+		fim.add(Calendar.DAY_OF_MONTH, 1);
+		if(hoje.after(edital.getInicioInsercaoNota()) && 
+				hoje.before(fim.getTime())) {
+			periodoDeInsercaoNotas = true;
+		} 
+
 		return periodoDeInsercaoNotas;
 	}
 

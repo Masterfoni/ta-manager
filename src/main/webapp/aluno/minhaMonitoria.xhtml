@@ -8,7 +8,7 @@
 		<title>Minha Monitoria</title>
 	</h:head>
 	
-	<h:body>
+<h:body>
 		<ui:include src="/comum/navbar-top.xhtml" />
 		<div class="container"> 
 			<div class="row align-items-center">
@@ -30,213 +30,222 @@
 				</div>
 			</div>
 			
-			<div class="row">
-				<div class="col-md-12">
-					<h:panelGroup rendered="#{minhaMonitoriaView.frequencias != null}">
-					<div class="alert alert-info" role="alert">
-							<p>Edital: <strong> #{minhaMonitoriaView.monitoria.edital.numeroEdital} </strong><br/>
-							Curso: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.curso.nome}</strong><br/>
-							Componente: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.nome}</strong><br/>
-							Orientador: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.professor.nome}</strong></p>
-						</div>
-					</h:panelGroup>
+			<h:panelGroup rendered="#{!minhaMonitoriaView.monitoria.homologado}">
+				<div class="alert alert-info" role="alert">
+					<p> Você não foi selecionado no programa de monitoria do edital selecionado.</p>
 				</div>
-			</div>
+			</h:panelGroup>
 			
-			<div class="row">
-				<div class="col-md-12">
-					<h:panelGroup  rendered="#{minhaMonitoriaView.frequencias != null}">
-						<h:form id="editalForm">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<div class="input-group-text">Mês</div>
-								</div>
-								<h:selectOneMenu class="form-control" value="#{minhaMonitoriaView.mesSelecionado}" converter="mesConverter">
-									<f:selectItems value="#{minhaMonitoriaView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{minhaMonitoriaView.getNomeMes(mes)}"/>
-									<f:ajax render=":formTableAtvidades" onevent="handleAjax"/>
-								</h:selectOneMenu>
-							</div>
-						</h:form>
-					</h:panelGroup>
-				</div>
-			</div>
-			
-			<h:panelGroup rendered="#{minhaMonitoriaView.frequencias != null}">	
-				<div class="row">
-					<div class="col col-sm-6">
-						<h4>Atividades</h4>
-					</div>
-					<div class="col col-sm-6  text-right">
-						<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
-							<h:commandButton id="registrarAtividade" value="Registrar Atividade" class="btn btn-outline-success cadastrador">
-								<f:ajax execute="@none" render="registrarAtividade" />
-							</h:commandButton>
-						</h:panelGroup>	
-					</div>
-				</div>
-				<br />
+			<h:panelGroup rendered="#{minhaMonitoriaView.monitoria.homologado}">
 				<div class="row">
 					<div class="col-md-12">
-						<h:form id="formTableAtvidades">
-							<ui:repeat id="repeatAtividades" value="#{minhaMonitoriaView.frequenciaSelecionada.atividades}" var="atividade" varStatus="atvdd">
-								<div class="card">
-  									<div class="card-header">
-  										<div class="row">
-  											<div class="col-sm text-left">
-  												<h:outputLabel id="dadosAtividade">
-  												Dia: #{minhaMonitoriaView.getData(atividade.data)} | 
-  												Hora inicial: #{minhaMonitoriaView.getHora(atividade.horaInicio)} | 
-  												Hora final: #{minhaMonitoriaView.getHora(atividade.horaFim)}
-  												</h:outputLabel>
-  											</div>
-  											<div class="col-sm text-right">
-  												
-  												<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
-  													<h:commandButton value="Editar" type="submit" id="botaoEditar" class="btn btn-info editarAtividade alterador" 
-														actionListener="#{minhaMonitoriaView.setAtividadeSelecionada(atividade)}">
-															<f:ajax execute="@form" render=":formAlteracao :alterarAtividade"/>
-													</h:commandButton>
-  												
-	  												<h:commandButton type="submit" id="botaoExcluir" actionListener="#{minhaMonitoriaView.removerAtividade(atividade)}"
-														class="btn btn-danger excluirAtividade" value="Excluir" >
-														<f:ajax execute="@form" render="@form"/>
-													</h:commandButton>
-												</h:panelGroup>
-  												
-  											</div>
-  										</div>
-  									</div>
+						<h:panelGroup rendered="#{minhaMonitoriaView.frequencias != null}">
+							<div class="alert alert-info" role="alert">
+								<p>Edital: <strong> #{minhaMonitoriaView.monitoria.edital.numeroEdital} </strong><br/>
+								Curso: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.curso.nome}</strong><br/>
+								Componente: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.nome}</strong><br/>
+								Orientador: <strong>#{minhaMonitoriaView.monitoria.planoMonitoria.cc.professor.nome}</strong></p>
+							</div>
+						</h:panelGroup>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<h:panelGroup  rendered="#{minhaMonitoriaView.frequencias != null}">
+							<h:form id="editalForm">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">Mês</div>
+									</div>
+									<h:selectOneMenu class="form-control" value="#{minhaMonitoriaView.mesSelecionado}" converter="mesConverter">
+										<f:selectItems value="#{minhaMonitoriaView.meses}" var="mes" itemValue="#{mes}" itemLabel="#{minhaMonitoriaView.getNomeMes(mes)}"/>
+										<f:ajax render=":formTableAtvidades" onevent="handleAjax"/>
+									</h:selectOneMenu>
 								</div>
-							</ui:repeat>
-						</h:form>
+							</h:form>
+						</h:panelGroup>
+					</div>
+				</div>
+				
+				<h:panelGroup rendered="#{minhaMonitoriaView.frequencias != null}">	
+					<div class="row">
+						<div class="col col-sm-6">
+							<h4>Atividades</h4>
+						</div>
+						<div class="col col-sm-6  text-right">
+							<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
+								<h:commandButton rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}" id="registrarAtividade" value="Registrar Atividade" class="btn btn-outline-success cadastrador">
+									<f:ajax execute="@none" render="registrarAtividade" />
+								</h:commandButton>
+							</h:panelGroup>	
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-md-12">
+							<h:form id="formTableAtvidades">
+								
+								<table class="table table-hover table-sm">
+									<thead>
+										<th scope="col">Dia</th>
+										<th scope="col">Hora inicial</th>
+										<th scope="col">Hora final</th>
+										<th scope="col"></th>
+									</thead>
+									<tbody>
+										<ui:repeat id="repeatAtividades" value="#{minhaMonitoriaView.frequenciaSelecionada.atividades}" var="atividade" varStatus="atvdd">
+											<tr>
+												<td>#{minhaMonitoriaView.getData(atividade.data)}</td>
+												<td>#{minhaMonitoriaView.getHora(atividade.horaInicio)}</td>
+												<td>#{minhaMonitoriaView.getHora(atividade.horaFim)}</td>
+												<td class="text-right">
+													<h:panelGroup rendered="#{not minhaMonitoriaView.frequenciaSelecionada.aprovado}">
+													
+	  													<h:commandButton value="Editar" type="submit" id="botaoEditar" class="btn btn-info editarAtividade alterador mr-2" 
+															actionListener="#{minhaMonitoriaView.setAtividadeSelecionada(atividade)}">
+															<f:ajax render=":formAlteracao :alterarAtividade"/>
+														</h:commandButton>
+	  												
+		  												<h:commandButton value="Excluir" type="submit" id="botaoExcluir" class="btn btn-danger excluirAtividade" 
+															 actionListener="#{minhaMonitoriaView.removerAtividade(atividade)}">
+															<f:ajax render=":formTableAtvidades"/>
+														</h:commandButton>
+													</h:panelGroup>
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</h:form>
+						</div>
+					</div>
+				</h:panelGroup>
+				
+				<!-- MODAL DE CADASTRO -->
+				<div id="modalRegistroAtividade" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<h:form id="cadastro" class="dialogSignup">
+								<div class="modal-header">
+									<h5 class="modal-title" id="cadastroTitle">Registrar Atividade</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">x</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div id="registrarAtividade">
+										<div class="form-group">
+											<input id="dataRA" class="form-control"  type="date" name="dataRA" required="required"/>
+										</div>
+										
+										<div class="form-group row">
+											<div class="col-sm-12">	
+												<label>Horários</label>
+											</div>
+											<div class="col-sm-6">
+												<label>Ínicio: </label>
+												<input type="time" id="entradaRA" name="entradaRA" class="form-control" required="required"/>
+											</div>
+											<div class="col-sm-6">
+												<label>Fim: </label>
+												 <input type="time" id="saidaRA" name="saidaRA" class="form-control" required="required"/>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label>Atividade Desempenhada:</label>
+											<h:inputTextarea id="atividadeRA" class="form-control" 
+														rows="3" value="#{minhaMonitoriaView.novaAtividade.atividade}">
+											</h:inputTextarea>
+										</div>
+										
+										<div class="form-group">
+											<label>Observações:</label>
+											<h:inputTextarea id="observacaoRA" class="form-control" 
+														rows="3" value="#{minhaMonitoriaView.novaAtividade.observacao}">
+											</h:inputTextarea>
+										</div>
+										
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+									<span>  </span>
+									<h:commandButton id="cadastrar" value="Registrar" actionListener="#{minhaMonitoriaView.registrarAtividade()}" 
+													 update=":formTableAtvidades" class="btn btn-info" />
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+				
+				<!-- MODAL DE ATUALIZAÇÃO -->
+				<div id="modalAlterarAtividade" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="alterarTitle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<h:form id="formAlteracao" class="dialogSignup">
+								<div class="modal-header">
+									<h5 class="modal-title" id="alterarTitle">Alterar Atividade</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">x</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div id="alterarAtividade">
+										<div class="form-group">
+											<input id="dataAlt" jsf:value="#{minhaMonitoriaView.getDataForm(minhaMonitoriaView.atividadeSelecionada.data)}"
+											class="form-control" type="date" name="dataAlt" required="required" disabled="disabled"/>
+										</div>
+										
+										<div class="form-group row">
+											<div class="col-sm-12">	
+												<label>Horários</label>
+											</div>
+											<div class="col-sm-6">
+												<label>Ínicio: </label>
+												<input type="time" jsf:value="#{minhaMonitoriaView.horaInicioAlt}"
+													id="entradaAlt" name="entradaAlt" class="form-control" required="required"/>
+											</div>
+											<div class="col-sm-6">
+												<label>Fim: </label>
+												 <input type="time" jsf:value="#{minhaMonitoriaView.horaFimAlt}"
+												 id="saidaAlt" name="saidaAlt" class="form-control" required="required"/>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label>Atividade Desempenhada:</label>
+											<h:inputTextarea id="atividadeAlt" class="form-control" 
+														rows="3" value="#{minhaMonitoriaView.atividadeSelecionada.atividade}">
+											</h:inputTextarea>
+										</div>
+										
+										<div class="form-group">
+											<label>Observações:</label>
+											<h:inputTextarea id="observacaoAlt" class="form-control" 
+														rows="3" value="#{minhaMonitoriaView.atividadeSelecionada.observacao}">
+											</h:inputTextarea>
+										</div>
+										
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+									<span>  </span>
+									<h:commandButton id="alterar" value="Salvar Alterações" actionListener="#{minhaMonitoriaView.alterarAtividade()}" 
+													 update="@all :formTableAtvidades" render=":formTableAtvidades" class="btn btn-info" />
+								</div>
+							</h:form>
+						</div>
 					</div>
 				</div>
 			</h:panelGroup>
 			
-			<!-- MODAL DE CADASTRO -->
-			<div id="modalRegistroAtividade" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cadastroTitle" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<h:form id="cadastro" class="dialogSignup">
-							<div class="modal-header">
-								<h5 class="modal-title" id="cadastroTitle">Registrar Atividade</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">x</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div id="registrarAtividade">
-									<div class="form-group">
-										<input id="dataRA" class="form-control"  type="date" name="dataRA" required="required"/>
-									</div>
-									
-									<div class="form-group row">
-										<div class="col-sm-12">	
-											<label>Horários</label>
-										</div>
-										<div class="col-sm-6">
-											<label>Ínicio: </label>
-											<input type="time" id="entradaRA" name="entradaRA" class="form-control" required="required"/>
-										</div>
-										<div class="col-sm-6">
-											<label>Fim: </label>
-											 <input type="time" id="saidaRA" name="saidaRA" class="form-control" required="required"/>
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label>Atividade Desempenhada:</label>
-										<h:inputTextarea id="atividadeRA" class="form-control" 
-													rows="3" value="#{minhaMonitoriaView.novaAtividade.atividade}">
-										</h:inputTextarea>
-									</div>
-									
-									<div class="form-group">
-										<label>Observações:</label>
-										<h:inputTextarea id="observacaoRA" class="form-control" 
-													rows="3" value="#{minhaMonitoriaView.novaAtividade.observacao}">
-										</h:inputTextarea>
-									</div>
-									
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-								<span>  </span>
-								<h:commandButton id="cadastrar" value="Registrar" actionListener="#{minhaMonitoriaView.registrarAtividade()}" 
-												 update="@all" class="btn btn-info" />
-							</div>
-						</h:form>
-					</div>
-				</div>
-			</div>
-			
-			<!-- MODAL DE ATUALIZAÇÃO -->
-			<div id="modalAlterarAtividade" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="alterarTitle" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<h:form id="formAlteracao" class="dialogSignup">
-							<div class="modal-header">
-								<h5 class="modal-title" id="alterarTitle">Alterar Atividade</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">x</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div id="alterarAtividade">
-									<div class="form-group">
-										<input id="dataAlt" jsf:value="#{minhaMonitoriaView.getDataForm(minhaMonitoriaView.atividadeSelecionada.data)}"
-										class="form-control" type="date" name="dataAlt" required="required" disabled="disabled"/>
-									</div>
-									
-									<div class="form-group row">
-										<div class="col-sm-12">	
-											<label>Horários</label>
-										</div>
-										<div class="col-sm-6">
-											<label>Ínicio: </label>
-											<input type="time" jsf:value="#{minhaMonitoriaView.horaInicioAlt}"
-												id="entradaAlt" name="entradaAlt" class="form-control" required="required"/>
-										</div>
-										<div class="col-sm-6">
-											<label>Fim: </label>
-											 <input type="time" jsf:value="#{minhaMonitoriaView.horaFimAlt}"
-											 id="saidaAlt" name="saidaAlt" class="form-control" required="required"/>
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label>Atividade Desempenhada:</label>
-										<h:inputTextarea id="atividadeAlt" class="form-control" 
-													rows="3" value="#{minhaMonitoriaView.atividadeSelecionada.atividade}">
-										</h:inputTextarea>
-									</div>
-									
-									<div class="form-group">
-										<label>Observações:</label>
-										<h:inputTextarea id="observacaoAlt" class="form-control" 
-													rows="3" value="#{minhaMonitoriaView.atividadeSelecionada.observacao}">
-										</h:inputTextarea>
-									</div>
-									
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-								<span>  </span>
-								<h:commandButton id="alterar" value="Salvar Alterações" actionListener="#{minhaMonitoriaView.alterarAtividade()}" 
-												 update="@all :formTableAtvidades" render=":formTableAtvidades" class="btn btn-info" />
-							</div>
-						</h:form>
-					</div>
-				</div>
-			</div>
 		</div>
 		
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
 		<script src="../resources/libs/popper/popper.min.js"></script>
-		<script src="../resources//libs/jquery-mask/jquery.mask.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 		<script src="../aluno/minhaMonitoria.js"></script>	
 	</h:body>
 </html>

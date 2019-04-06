@@ -6,42 +6,6 @@
     version="2.2">
     
     <navigation-rule>
-        <from-view-id>/publico/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>sucesso</from-outcome>
-            <to-view-id>/comum/homepage.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>falha</from-outcome>
-            <to-view-id>/publico/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/publico/cadastroServidor.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>sucesso</from-outcome>
-            <to-view-id>/comum/homepage.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>falha</from-outcome>
-            <to-view-id>/publico/cadastroServidor.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/publico/cadastroAluno.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>sucesso</from-outcome>
-            <to-view-id>/comum/homepage.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>falha</from-outcome>
-            <to-view-id>/publico/cadastroAluno.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
@@ -101,7 +65,7 @@
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
-            <to-view-id>/publico/index.xhtml</to-view-id>
+            <to-view-id>/welcome.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>   
     
@@ -120,6 +84,15 @@
             <to-view-id>/professor/inserirNotas.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/professor/gerenciaPlanoMonitoria.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>verInscritos</from-outcome>
+            <to-view-id>/professor/verInscritos.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
     
     <navigation-rule>
         <from-view-id>/comum/homepage.xhtml</from-view-id>

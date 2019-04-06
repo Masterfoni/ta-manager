@@ -6,7 +6,7 @@ import br.edu.ifpe.monitoria.testutils.BrowserManager;
 
 public class LoginSteps {
 	public static void logar(String login, String senha) {
-		BrowserManager.openFirefox("http://localhost:8080/gem/publico/index.xhtml");
+		BrowserManager.openFirefox("http://localhost:8080/welcome.xhtml");
 		BrowserManager.esperar(5000);
 		
 		BrowserManager.driver.findElement(By.id("customBtn")).click();
@@ -25,5 +25,12 @@ public class LoginSteps {
 		BrowserManager.esperar(5000);
 		
 		BrowserManager.driver.switchTo().window(mainHandle);
+	}
+	
+	public static void deslogar() {
+	    BrowserManager.esperar(2500);
+	    BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
+		BrowserManager.driver.close();
+		BrowserManager.driver = null;
 	}
 }

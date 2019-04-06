@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
 		<link rel="stylesheet" href="../professor/gerenciaComponenteCurricular.css"></link>
@@ -15,7 +14,7 @@
 					<h1>Componentes Curriculares</h1>
 				</div>
 				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Adicionar novo componente curricular" class="btn  btn-outline-success cadastrador">
+					<h:commandButton value="Adicionar novo componente curricular" class="btn  btn-success cadastrador">
 						<f:ajax execute="@none" render="cadastraComponente" />
 					</h:commandButton>	
 				</div>
@@ -37,11 +36,13 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h:form>
-						<table class="table table-striped">
+						<table class="table table-hover">
 							<thead>
 								<th scope="col">Componente Curricular</th>
 								<th scope="col">Professor</th>
 								<th scope="col">Curso</th>
+								<th scope="col">Status</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
 							<tbody>
@@ -51,15 +52,18 @@
 										<td>#{componente.professor.nome}</td>
 										<td>#{componente.curso.nome}</td>
 										<td>
-											<div class="btn-group" role="group">
-												<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
-																 update="@form" class="btn btn-danger">
-												</h:commandButton>
-												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
-																  value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" />
-												</h:commandButton>
-											</div>
+											<span class="#{componente.ativo ? 'center badge badge-pill badge-success' : 'center badge badge-pill badge-danger'}">#{componente.ativo ? 'ATIVO' : 'INATIVO'}</span>
+										</td>
+										<td>
+											<h:commandButton actionListener="#{gerenciaComponenteCurricularView.deletarComponente(componente)}" value="Deletar"
+																update="@form" class="btn btn-danger">
+											</h:commandButton>
+										</td>
+										<td>
+											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaComponenteCurricularView.alteraComponente(componente)}" 
+																value="Alterar" class="btn btn-success alterador">
+												<f:ajax execute="@form" render=":formAtualizador :atualizaComponente" onevent="handleAjax"/>
+											</h:commandButton>
 										</td>
 									</tr>
 								</ui:repeat>
@@ -97,8 +101,10 @@
 									<div class="form-group">
 										<label>Carga Horaria</label>
 										<h:inputText class="form-control numero2" 
-														value="#{gerenciaComponenteCurricularView.componentePersistido.cargaHoraria}">
+														value="#{gerenciaComponenteCurricularView.componentePersistido.cargaHoraria}"
+														aria-describedby="chDescNew">
 										</h:inputText>
+										<small id="chDescNew" class="form-text text-muted">Apenas números</small>
 									</div>
 									<div class="form-group">
 										<label>Turno</label>
@@ -110,9 +116,11 @@
 									
 									<div class="form-group">
 										<label>Período</label>
-										<h:inputText class="form-control periodo" 
-														value="#{gerenciaComponenteCurricularView.componentePersistido.periodo}">
+										<h:inputText id="periodoNew" class="form-control periodo" 
+													 value="#{gerenciaComponenteCurricularView.componentePersistido.periodo}"
+													 aria-describedby="periodoDescNew">
 										</h:inputText>
+										<small id="periodoDescNew" class="form-text text-muted">Utilize o formato ANO/SEMESTRE: (2018/1)</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>
@@ -129,9 +137,9 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<h:commandButton value="Cadastrar" actionListener="#{gerenciaComponenteCurricularView.cadastrarComponente()}" 
-									             update="@form" class="btn btn-info" />
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<h:commandButton value="Cadastrar" actionListener="#{gerenciaComponenteCurricularView.cadastrarComponente()}" 
+									             update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -166,8 +174,10 @@
 									<div class="form-group">
 										<label>Carga Horaria</label>
 										<h:inputText class="form-control numero2" 
-														value="#{gerenciaComponenteCurricularView.componenteAtualizado.cargaHoraria}">
+														value="#{gerenciaComponenteCurricularView.componenteAtualizado.cargaHoraria}"
+														aria-describedby="chDescUp">
 										</h:inputText>
+										<small id="chDescUp" class="form-text text-muted">Apenas números</small>
 									</div>
 									<div class="form-group">
 										<label>Turno</label>
@@ -179,9 +189,11 @@
 									
 									<div class="form-group">
 										<label>Período</label>
-										<h:inputText class="form-control periodo" 
-														value="#{gerenciaComponenteCurricularView.componenteAtualizado.periodo}">
+										<h:inputText id="periodoUp" class="form-control periodo" 
+													 value="#{gerenciaComponenteCurricularView.componenteAtualizado.periodo}"
+													 aria-describedby="periodoDescUp">
 										</h:inputText>
+										<small id="periodoDescUp" class="form-text text-muted">Utilize o formato ANO/SEMESTRE: (2018/1)</small>
 									</div>
 									<div class="form-group">
 										<label>Curso</label>
@@ -200,11 +212,12 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
-								<h:commandButton value="Desativar" actionListener="#{gerenciaComponenteCurricularView.inativaComponente()}"
-												 update="@form" class="btn btn-danger" />
+								<h:commandButton value="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'Desativar' : 'Ativar'}" 
+												 actionListener="#{gerenciaComponenteCurricularView.toggleComponente()}"
+												 update="@form" class="#{gerenciaComponenteCurricularView.componenteAtualizado.ativo ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}" />
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaComponenteCurricularView.persisteAlteracao()}" 
-													update="@form" class="btn btn-info" />
+													update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -212,9 +225,7 @@
 			</div>
 		</div>
 		
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 		<script src="../professor/gerenciaComponenteCurricular.js"></script>
 	</h:body>
 </html>

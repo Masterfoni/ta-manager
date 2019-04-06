@@ -10,15 +10,18 @@
 	</h:head>
 	
 	<h:body>
+		<div class="loading-bar loading-bar--active"></div>
+		
 		<ui:include src="/comum/navbar-top.xhtml" />
+		
 		<div class="container"> 
 			<div class="row align-items-center">
 				<div class="col col-sm-6">
 					<h1>Editais</h1>
 				</div>
 				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Criar novo Edital" class="btn btn-outline-success cadastrador">
-						<f:ajax execute="@none" render="cadastraEdital" />
+					<h:commandButton value="Criar novo Edital" class="btn btn-success cadastrador">
+						<f:ajax execute="@none" render="cadastraEdital" onevent="handleAjax"/>
 					</h:commandButton>	
 				</div>
 			</div>
@@ -40,7 +43,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table table-striped">
+					<table class="table table-hover">
 						<thead>
 							<th scope="col">Numero</th>
 							<th scope="col">Vigencia</th>
@@ -60,20 +63,16 @@
 											</h:panelGroup>
 										</td>
 										<td class="right">
-											<div class="btn-group" role="group">
-												<h:commandButton actionListener="#{gerenciaEditalView.deletaEdital(edital)}"
-																	value="Deletar" update="@form" class="btn btn-danger" />
-												<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
-																	value="Alterar" class="btn btn-info alterador">
-													<f:ajax execute="@form" render=":formAtualizador :atualizaEdital" />
-												</h:commandButton>
-												<button type="button" class="btn btn-secondary colapsador"
-														jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
-													<f:ajax execute="@form" render=":collapsibleCursos :globalform"/>
-													Gerenciar Bolsas
-													<i class="fa fa-caret-down"></i>
-												</button>
-											</div>
+											<h:commandButton id="botaoUpdate" actionListener="#{gerenciaEditalView.alteraEdital(edital)}" 
+																value="Alterar" class="btn btn-info alterador mr-2">
+												<f:ajax execute="@form" render=":formAtualizador :formAtualizadorTrue :atualizaEdital" onevent="handleAjax" />
+											</h:commandButton>
+
+											<button type="button" class="btn btn-success colapsador" jsf:action="#{gerenciaEditalView.expandeEdital(edital)}">
+												<f:ajax execute="@form" render=":collapsibleCursos :globalform"/>
+												Gerenciar Bolsas
+												<i class="fa fa-caret-down"></i>
+											</button>
 										</td>
 									</tr>
 								</h:form>
@@ -102,25 +101,23 @@
 
 				<div class="col-md-12">
 					<h:form id="globalform">
-						<h:panelGroup layout="block" class="card-group">
+						<h:panelGroup layout="block" class="row">
 							<ui:repeat id="repeatEsquemas" value="#{gerenciaEditalView.esquemasEdital}" var="esquemaEdital" varStatus="myStatus">
 								<div class="col-md-4">
 									<div class="card">
 										<div id="esquemaTituloCC" class="card-body">
-											#{esquemaEdital.curso.nome}
+											<strong>Curso: </strong>#{esquemaEdital.curso.nome}<br></br>
+											<strong>Total de bolsas: </strong>#{esquemaEdital.quantidade}
 										</div>
 										<div class="card-footer">
-											<div class="input-group mb-3">
-												<div class="input-group-append">
-													<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
-														<f:convertNumber integerOnly="true"/>
-													</h:inputText>
-													<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-outline-success">
-														<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
-																listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
-													</h:commandButton>
-												</div> 
-											</div>
+											<h:inputText id="bInputter" type="number" class="form-control" value="#{esquemaEdital.quantidade}">
+												<f:convertNumber integerOnly="true"/>
+											</h:inputText>
+											<br></br>
+											<h:commandButton id="atualizaBolsasBtn" value="Atualizar Bolsas" class="btn btn-success btn-block">
+												<f:ajax execute="@form" render=":wrapperPanelErrors :globalform" 
+														listener="#{gerenciaEditalView.atualizaBolsasEsquema(esquemaEdital)}"/>
+											</h:commandButton>
 										</div>
 									</div>
 								</div>
@@ -134,7 +131,7 @@
 			<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="atualizacaoModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
-						<h:form id="formAtualizador" class="dialogSignup">
+						<h:form id="formAtualizador" class="dialogSignup"> 
 							<div class="modal-header">
 								<h5 class="modal-title" id="atualizacaoModalLabel">Atualize o Edital</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,19 +140,19 @@
 							</div>
 							<div class="modal-body">
 								<div id="atualizaEdital">
+									
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastro">Numero</label>
-											<h:inputText type="number" id="numeroCadastro" class="form-control ano" 
+											<h:inputText type="text" id="numeroCadastro" class="form-control ano" 
 														value="#{gerenciaEditalView.editalAtualizado.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastro">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastro" class="form-control ano" 
-														value="#{gerenciaEditalView.editalAtualizado.ano}">
-												<f:convertNumber integerOnly="true"/>
+											<h:inputText id="anoCadastro" class="form-control ano" 
+														 value="#{gerenciaEditalView.editalAtualizado.ano}">
 											</h:inputText>
 										</div>
 									</div>
@@ -164,14 +161,15 @@
 										<div class="col-sm-12">
 											<label>Periodo para definição dos Componentes Curriculares</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniComp" class="form-control date" 
+										<div class="col-sm-5">
+											<h:inputText id="iniComp" class="form-control date"  
 														value="#{gerenciaEditalView.editalAtualizado.inicioInscricaoComponenteCurricular}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:convertDateTime pattern="dd-MM-yyyy" /> 
 												<f:passThroughAttribute name="placeholder" value="INICIO" /> 
 											</h:inputText>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
 											<h:inputText id="fimComp" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.fimInscricaoComponenteCurricular}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
@@ -184,14 +182,15 @@
 										<div class="col-sm-12">
 											<label>Periodo para inserção dos Planos de Monitoria</label>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-5">
 											<h:inputText id="iniPM" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.inicioInsercaoPlano}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:convertDateTime pattern="dd-MM-yyyy" /> 
 												<f:passThroughAttribute name="placeholder" value="INICIO" />
 											</h:inputText>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
 											<h:inputText id="fimPM" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.fimInsercaoPlano}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
@@ -204,16 +203,38 @@
 										<div class="col-sm-12">
 											<label>Periodo de inscrição dos alunos</label>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-5">
 											<h:inputText id="iniAluno" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.inicioInscricaoEstudante}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
 												<f:passThroughAttribute name="placeholder" value="INICIO" />
 											</h:inputText>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
 											<h:inputText id="fimAluno" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.fimInscricaoEstudante}">
+												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:passThroughAttribute name="placeholder" value="FIM" /> 
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Periodo de realização de provas</label>
+										</div>
+										<div class="col-sm-5">
+											<h:inputText id="iniProva" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.inicioRealizacaoProvas}">
+												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:passThroughAttribute name="placeholder" value="INICIO" />
+											</h:inputText>
+										</div>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<h:inputText id="fimProva" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.fimRealizacaoProvas}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
 												<f:passThroughAttribute name="placeholder" value="FIM" /> 
 											</h:inputText>
@@ -224,14 +245,15 @@
 										<div class="col-sm-12">
 											<label>Periodo para inserção das notas</label>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-5">
 											<h:inputText id="iniNota" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.inicioInsercaoNota}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
 												<f:passThroughAttribute name="placeholder" value="INICIO" />
 											</h:inputText>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
 											<h:inputText id="fimNota" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.fimInsercaoNota}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
@@ -242,19 +264,46 @@
 									
 									<div class="form-group row">
 										<div class="col-sm-12">
-											<label>Periodo de Monitoria</label>
+											<label>Data para a divulgação oficial dos estudantes classificados para monitoria</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniMon" class="form-control date" 
-														value="#{gerenciaEditalView.editalAtualizado.inicioMonitoria}">
+										<div class="col-sm-5">
+											<h:inputText id="publiClass" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.publicacaoAlunosClassificados}">
 												<f:convertDateTime pattern="dd-MM-yyyy"/> 
 												<f:passThroughAttribute name="placeholder" value="INICIO" />
 											</h:inputText>
 										</div>
-										<div class="col-sm-6">
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes selecionados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<h:inputText id="publiSelec" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.publicacaoAlunosSelecionados}">
+												<f:convertDateTime pattern="dd-MM-yyyy"/> 
+												<f:passThroughAttribute name="placeholder" value="INICIO" />
+											</h:inputText>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Periodo de Monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<h:inputText id="iniMon" class="form-control date" 
+														value="#{gerenciaEditalView.editalAtualizado.inicioMonitoria}">
+												<f:convertDateTime pattern="dd-MM-yyyy" timeZone="America/Sao_Paulo"/> 
+												<f:passThroughAttribute name="placeholder" value="INICIO" />
+											</h:inputText>
+										</div>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
 											<h:inputText id="fimMon" class="form-control date" 
 														value="#{gerenciaEditalView.editalAtualizado.fimMonitoria}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/>
+												<f:convertDateTime pattern="dd-MM-yyyy" timeZone="America/Sao_Paulo"/>
 												<f:passThroughAttribute name="placeholder" value="FIM" /> 
 											</h:inputText>
 										</div>
@@ -290,7 +339,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaEditalView.persisteAlteracao()}" 
-												 id="salvarAlteracao" update="@form" class="btn btn-info" />
+									id="salvarAlteracao" update="@form" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -313,16 +362,15 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="numeroCadastroE">Numero</label>
-											<h:inputText type="number" id="numeroCadastroE" class="form-control ano" 
+											<h:inputText type="text" id="numeroCadastroE" class="form-control ano" 
 														value="#{gerenciaEditalView.editalPersistido.numero}">
 												<f:convertNumber integerOnly="true"/>
 											</h:inputText>
 										</div>
 										<div class="col-sm-6">
 											<label for="anoCadastroE">Ano</label>
-											<h:inputText type="number" min="2010" max="2100" id="anoCadastroE" class="form-control ano" 
-														value="#{gerenciaEditalView.editalPersistido.ano}">
-												<f:convertNumber integerOnly="true"/>
+											<h:inputText min="2010" max="2100" id="anoCadastroE" class="form-control ano" 
+														 value="#{gerenciaEditalView.editalPersistido.ano}">
 											</h:inputText>
 										</div>
 									</div>
@@ -331,19 +379,12 @@
 										<div class="col-sm-12">
 											<label>Periodo para definição dos Componentes Curriculares</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniCompE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.inicioInscricaoComponenteCurricular}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="INICIO" /> 
-											</h:inputText>
+										<div class="col-sm-5">
+											<input id="iniCompE" class="form-control"  type="date" name="iniCompE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="fimCompE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.fimInscricaoComponenteCurricular}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="FIM" /> 
-											</h:inputText>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<input id="fimCompE" class="form-control"  type="date" name="fimCompE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
 									
@@ -351,39 +392,38 @@
 										<div class="col-sm-12">
 											<label>Periodo para Inserção dos Planos de Monitoria</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniPME" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.inicioInsercaoPlano}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="INICIO" />
-											</h:inputText>
+										<div class="col-sm-5">
+											<input id="iniPME" class="form-control" type="date" name="iniPME" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="fimPME" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.fimInsercaoPlano}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="FIM" /> 
-											</h:inputText>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<input id="fimPME" class="form-control" type="date" name="fimPME" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<div class="col-sm-12">
 											<label>Periodo de Inscrição dos alunos</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniAlunoE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.inicioInscricaoEstudante}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="INICIO" />
-											</h:inputText>
+										<div class="col-sm-5">
+											<input id="iniAlunoE" class="form-control" type="date" name="iniAlunoE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="fimAlunoE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.fimInscricaoEstudante}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="FIM" /> 
-											</h:inputText>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<input id="fimAlunoE" class="form-control" type="date" name="fimAlunoE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Periodo de realização de provas</label>
+										</div>
+										<div class="col-sm-5">
+											<input id="iniProvaE" class="form-control" type="date" name="iniProvaE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<input id="fimProvaE" class="form-control" type="date" name="fimProvaE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
 									
@@ -391,19 +431,30 @@
 										<div class="col-sm-12">
 											<label>Periodo para Inserção das notas</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniNotaE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.inicioInsercaoNota}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="INICIO" />
-											</h:inputText>
+										<div class="col-sm-5">
+											<input id="iniNotaE" class="form-control" type="date" name="iniNotaE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="fimNotaE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.fimInsercaoNota}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="FIM" /> 
-											</h:inputText>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<input id="fimNotaE" class="form-control" type="date" name="fimNotaE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes classificados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<input id="publiClassE" class="form-control" type="date" name="publiClassE" required="required" max="2100-12-31" min="2018-11-30"/>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-12">
+											<label>Data para a divulgação oficial dos estudantes selecionados para monitoria</label>
+										</div>
+										<div class="col-sm-5">
+											<input id="publiSelecE" class="form-control" type="date" name="publiSelecE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
 									
@@ -411,19 +462,12 @@
 										<div class="col-sm-12">
 											<label>Periodo de Monitoria</label>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="iniMonE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.inicioMonitoria}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/> 
-												<f:passThroughAttribute name="placeholder" value="INICIO" />
-											</h:inputText>
+										<div class="col-sm-5">
+											 <input id="iniMonE" class="form-control" type="date" name="iniMonE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
-										<div class="col-sm-6">
-											<h:inputText id="fimMonE" class="form-control date" 
-														value="#{gerenciaEditalView.editalPersistido.fimMonitoria}">
-												<f:convertDateTime pattern="dd-MM-yyyy"/>
-												<f:passThroughAttribute name="placeholder" value="FIM" /> 
-											</h:inputText>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											 <input id="fimMonE" class="form-control" type="date" name="fimMonE" required="required" max="2100-12-31" min="2018-11-30"/>
 										</div>
 									</div>
 									
@@ -450,7 +494,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton value="Cadastrar" actionListener="#{gerenciaEditalView.cadastrarEdital()}" 
-												 id="btnCadastrar" update="@form" class="btn btn-info" />
+												 id="btnCadastrar" update="@form :navbar-top" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -458,9 +502,7 @@
 			</div>
 		</div>
 		
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="../resources//libs/jquery-mask/jquery.mask.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 		<script src="../admin/gerenciaEdital.js"></script>	
 	</h:body>
 </html>

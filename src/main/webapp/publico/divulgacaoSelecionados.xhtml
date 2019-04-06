@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"/>
+		<link rel="stylesheet" href="./divulgacaoPlanos.css"></link>
+		<link rel="stylesheet" href="captcha.css"></link>
+		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
+		<title>Monitoria - IFPE</title>
+	</h:head>
+<h:body>
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="../welcome.xhtml">
+				<img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+			</a>
+			
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav">
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../welcome.xhtml" class="btn btn-success btn-lg">Acessar o Portal</a>	
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="sticky-top float-left mt-2 ml-2">
+			<a href="/"><button class="btn btn-secondary btn-sm"><i class="fas fa-angle-left"></i> Voltar</button></a>
+		</div>
+		
+		<div class="container" >
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Divulgação de Alunos Selecionados</h2>
+				</div>
+			</div>
+			
+			
+			<h:form rendered="#{not divulgacaoSelecionadosView.captchaValidado}">
+				<div class="row justify-content-md-center">
+					<div class="g-recaptcha " data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"></div>
+				</div>
+				<div class="row justify-content-md-center mb-5">
+					<h:commandButton update="@all" id="btn" value="Acessar listagem" action="#{divulgacaoSelecionadosView.validarCaptcha}" class="btn btn-success"/>
+				</div>
+			</h:form>
+			
+			<h:panelGroup layout="block" rendered="#{divulgacaoSelecionadosView.captchaValidado}">
+				<div class="row">
+					<div class="col-md-12">
+						<ui:repeat value="#{divulgacaoSelecionadosView.editais}" var="edital" varStatus="varedital">
+							<hr></hr>
+							<h3>
+								Edital: #{edital.numeroEdital}
+							</h3>
+							
+							<ui:repeat id="repeatPlanos" value="#{divulgacaoSelecionadosView.planos.get(varedital.index)}" var="plano" varStatus="varplano">
+								<h:panelGroup rendered="#{divulgacaoSelecionadosView.monitorias.get(varedital.index).get(varplano.index).size() gt 0}">
+								<h4>
+									Componente Curricular: #{plano.cc.nome}
+								</h4>
+								<h5>Bolsistas: #{plano.bolsas}  | Voluntários: #{plano.voluntarios} </h5>
+								<table class="table table-hover mb-5 table-sm">
+									<thead>
+										<th scope="col">Aluno</th>
+										<th scope="col">Situação</th>
+										<th scope="col">Modalidade</th>
+									</thead>
+									<tbody>
+										<ui:repeat id="repeatMonitoria" value="#{divulgacaoSelecionadosView.monitorias.get(varedital.index).get(varplano.index)}" 
+												var="monitoria" varStatus="myStatus">
+											<tr>
+												<td>#{monitoria.aluno.nome}</td>
+												<td>
+													<h:outputLabel class="badge badge-success" rendered="#{monitoria.homologado}">
+														Homologado
+													</h:outputLabel>
+													<h:outputLabel class="badge badge-danger" rendered="#{not monitoria.homologado}">
+														Não homologado
+													</h:outputLabel>
+												</td>
+												<td>
+													<h:outputLabel class="badge badge-success">
+														#{monitoria.modalidade}
+													</h:outputLabel>
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+								</h:panelGroup>
+							</ui:repeat>
+						</ui:repeat>
+					</div>
+				</div>
+			</h:panelGroup>
+		</div>
+
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</h:body>
+</html>

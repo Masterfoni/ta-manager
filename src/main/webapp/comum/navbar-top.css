@@ -1,3 +1,9 @@
+.detail-text {
+  color: white;
+  margin-top: 8px;
+  margin-right: 1rem;
+}
+
 .navbar {
     background-color: #000000;
   }
@@ -37,10 +43,10 @@
   .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
   .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
     color: #faf9fa;
-    background-color: #1f9e20;
+    background-color: #28a745;
   }
   .navbar .navbar-nav .dropdown-menu .dropdown-divider {
-    border-top-color: #1f9e20;
+    border-top-color: #28a745;
   }
   .navbar .navbar-nav .nav-item.active .nav-link,
   .navbar .navbar-nav .nav-item.active .nav-link:hover,
@@ -49,14 +55,14 @@
   .navbar .navbar-nav .nav-item.show .nav-link:hover,
   .navbar .navbar-nav .nav-item.show .nav-link:focus {
     color: #faf9fa;
-    background-color: #1f9e20;
+    background-color: #28a745;
   }
   .navbar .navbar-toggle {
-    border-color: #1f9e20;
+    border-color: #28a745;
   }
   .navbar .navbar-toggle:hover,
   .navbar .navbar-toggle:focus {
-    background-color: #1f9e20;
+    background-color: #28a745;
   }
   .navbar .navbar-toggle .navbar-toggler-icon {
     color: #d1d1d1;
@@ -82,7 +88,7 @@
     }
     .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
       color: #faf9fa;
-      background-color: #1f9e20;
+      background-color: #28a745;
     }
   }
   
@@ -96,7 +102,7 @@
     }
     .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
       color: #faf9fa;
-      background-color: #1f9e20;
+      background-color: #28a745;
     }
   }
   
@@ -110,7 +116,7 @@
     }
     .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
       color: #faf9fa;
-      background-color: #1f9e20;
+      background-color: #28a745;
     }
   }
   
@@ -124,7 +130,7 @@
     }
     .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
       color: #faf9fa;
-      background-color: #1f9e20;
+      background-color: #28a745;
     }
   }
   
@@ -137,7 +143,7 @@
   }
   .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
     color: #faf9fa;
-    background-color: #1f9e20;
+    background-color: #28a745;
   }
 
   .navbar-brand {
@@ -145,9 +151,10 @@
   }
 
   .custom-toggler.navbar-toggler {
-      border-color: rgb(0,128,0);
+      border-color: #28a745;
   }
 
   .custom-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,128,0, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
   }
+

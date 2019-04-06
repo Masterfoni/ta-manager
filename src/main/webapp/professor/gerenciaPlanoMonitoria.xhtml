@@ -14,10 +14,13 @@
 				<div class="col col-sm-6">
 					<h1>Planos de Monitoria</h1>
 				</div>
-				<div class="col col-sm-6  text-right">	
-					<h:commandButton value="Cadastrar novo plano" class="btn btn-outline-success cadastrador">
+				<div class="col col-sm-6  text-right">
+					<h:form id="formCadastrar">	
+					<h:commandButton id="btnCadastrar" value="Cadastrar novo plano" class="btn btn-success cadastrador" 
+									 rendered="#{(gerenciaPlanoMonitoriaView.periodoCerto || gerenciaPlanoMonitoriaView.comissao) and not empty menuView.editalGlobal}">
 						<f:ajax execute="@none" render="cadastraPlano" />
 					</h:commandButton>	
+					</h:form>
 				</div>
 			</div>
 
@@ -46,7 +49,7 @@
 									</p>
 									<p>
 										Para o edital:
-										<strong>#{gerenciaPlanoMonitoriaView.editalSelecionado.numeroEdital}</strong>										
+										<strong>#{menuView.editalGlobal.numeroEdital}</strong>										
 									</p>
 								</h4>
 								
@@ -67,7 +70,7 @@
 									</p>
 									<p>
 										Para o edital:
-										<strong>#{gerenciaPlanoMonitoriaView.editalSelecionado.numeroEdital}</strong>										
+										<strong>#{menuView.editalGlobal.numeroEdital}</strong>										
 									</p>
 								</h4>
 								
@@ -85,16 +88,6 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h:form id="editalForm">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<div class="input-group-text">Edital</div>
-							</div>
-							<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.editalSelecionado}" converter="editalConverter">
-								<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-								<f:ajax render=":formTablePlanos :detalheCoordInfo" onevent="handleAjax"/>
-							</h:selectOneMenu>
-						</div>
-
 						<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao}">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -113,7 +106,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h:form id="formTablePlanos">
-						<table class="table table-striped">
+						<table class="table table-hover">
 							<thead>
 								<th scope="col">Curso</th>
 								<th scope="col">Componente Curricular</th>
@@ -121,6 +114,7 @@
 								<th scope="col">Status</th>
 								<th scope="col">Bolsas Solicitadas</th>
 								<th scope="col">Bolsas Disponibilizadas</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 								<th scope="col"></th>
 							</thead>
@@ -146,7 +140,7 @@
 												<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (plano.cc.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id 
 																						 and !plano.homologado)}">
 													<div class="input-group-prepend">
-														<h:commandButton id="botaoRemoveBolsas" value="-" class="btn btn-danger"
+														<h:commandButton id="botaoRemoveBolsas" value="-" class="btn gem-secondary-btn"
 																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(false, plano)}">
 															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
 														</h:commandButton>
@@ -158,7 +152,7 @@
 												<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.comissao or (plano.cc.curso.coordenador.id == gerenciaPlanoMonitoriaView.loggedServidor.id 
 																					 	 and !plano.homologado)}">
 													<div class="input-group-append">
-														<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn btn-success"
+														<h:commandButton id="botaoAdicionaBolsas" value="+" class="btn gem-secondary-btn"
 																			actionListener="#{gerenciaPlanoMonitoriaView.modificarBolsas(true, plano)}">
 															<f:ajax execute="@form" render="@form :detalheCoordInfo" onevent="handleAjax"/>
 														</h:commandButton>
@@ -167,17 +161,25 @@
 											</div>
 										</td>
 										<td class="right">
-											<h:commandButton id="botaoUpdate" value="Alterar" class="btn btn-info alterador" rendered="#{gerenciaPlanoMonitoriaView.comissao or not plano.homologado}"
+											<h:commandButton id="botaoUpdate" value="Alterar" class="btn btn-success alterador" rendered="#{gerenciaPlanoMonitoriaView.comissao or not plano.homologado}"
 															 actionListener="#{gerenciaPlanoMonitoriaView.alteraPlano(plano)}">
 												<f:ajax execute="@form" render=":formAtualizador :atualizaPlano"/>
 											</h:commandButton>
 										</td>
 										
 										<td class="right">
-											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.isProfessorDe(plano)}">
-											<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
-												class="btn btn-info inserirNotas" data-toggle="tooltip" data-placement="bottom" title="Inserir notas">
-												<span class="fas fa-clipboard-list"></span>
+											<h:panelGroup rendered="#{gerenciaPlanoMonitoriaView.comissao or (gerenciaPlanoMonitoriaView.isProfessorDe(plano) and gerenciaPlanoMonitoriaView.periodoNotas)}">
+												<button type="submit" id="botaoNotas" jsf:action="#{gerenciaPlanoMonitoriaView.lancarNotas(plano)}" 
+														class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="top" title="Inserir Notas">
+													<span class="fas fa-clipboard-list"></span>
+												</button>
+											</h:panelGroup>
+										</td>
+										<td class="right">
+											<h:panelGroup>
+											<button type="submit" id="botaoVerALunos" jsf:action="#{gerenciaPlanoMonitoriaView.verAlunos(plano)}" 
+												class="btn btn-success inserirNotas" data-toggle="tooltip" data-placement="top" title="Ver Inscritos">
+												<span class="fas fa-eye"></span>
 											</button>
 											</h:panelGroup>
 										</td>
@@ -203,16 +205,10 @@
 							<div class="modal-body">
 								<div id="atualizaPlano">
 									<div class="form-group">
-										<label>Edital</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.edital}" converter="editalConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
-										</h:selectOneMenu>
-									</div>
-									<div class="form-group">
 										<label>Componente Curricular</label>
-										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc}" converter="componenteConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.componentes}" var="comp" itemValue="#{comp}" itemLabel="#{comp.nome}"/>
-										</h:selectOneMenu>
+										<h:inputText class="form-control disable" disabled="true"
+													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.cc.nome}">
+										</h:inputText>
 									</div>
 									<div class="form-group">
 										<label>Bolsas Solicitadas</label>
@@ -228,21 +224,21 @@
 									</div>
 									<div class="form-group">
 										<label>Justificativa</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 													 value="#{gerenciaPlanoMonitoriaView.planoAtualizado.justificativa}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Objetivo</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoAtualizado.objetivo}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Lista de Atividades</label>
-										<h:inputText class="form-control" 
+										<h:inputTextarea cols="30" rows="4" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoAtualizado.listaAtividades}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 								</div>
 							</div>
@@ -251,15 +247,19 @@
 
 								<span>  </span>
 
-								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado or gerenciaPlanoMonitoriaView.comissao}">
-									<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
-													 update="@form" class="btn btn-info" />
-									<span>  </span>
+								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
+									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano(true)}"
+													 id="homologar" update="@form" class="btn btn-success"/>
+								</h:panelGroup>
+								<h:panelGroup layout="block" rendered="#{gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
+									<h:commandButton value="Indeferir" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano(false)}"
+													 id="btnIndeferir" update="@form" class="btn btn-danger"/>
 								</h:panelGroup>
 								
-								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado and (gerenciaPlanoMonitoriaView.comissao or gerenciaPlanoMonitoriaView.planoAtualizado.cc.curso.coordenador.nome == gerenciaPlanoMonitoriaView.loggedServidor.nome)}">
-									<h:commandButton value="Homologar" actionListener="#{gerenciaPlanoMonitoriaView.homologarPlano()}"
-													 id="homologar" update="@form" class="btn btn-success"/>
+								<h:panelGroup layout="block" rendered="#{!gerenciaPlanoMonitoriaView.planoAtualizado.homologado or gerenciaPlanoMonitoriaView.comissao}">
+									<h:commandButton value="Salvar Alterações" actionListener="#{gerenciaPlanoMonitoriaView.persisteAlteracao()}" 
+													 update="@form" class="btn btn-success" />
+									<span>  </span>
 								</h:panelGroup>
 							</div>
 						</h:form>
@@ -280,12 +280,15 @@
 							</div>
 							<div class="modal-body">
 								<div id="cadastraPlano">
+								
 									<div class="form-group">
-										<label>Edital</label>
-										<h:selectOneMenu id="edital" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.edital}" converter="editalConverter">
-											<f:selectItems value="#{gerenciaPlanoMonitoriaView.editais}" var="edital" itemValue="#{edital}" itemLabel="#{edital.numeroEdital}"/>
+										<label>Curso</label>
+										<h:selectOneMenu class="form-control" value="#{gerenciaPlanoMonitoriaView.cursoNovoPlano}" converter="cursoConverter">
+											<f:selectItems value="#{gerenciaPlanoMonitoriaView.cursos}" var="curso" itemValue="#{curso}" itemLabel="#{curso.nome}"/>
+											<f:ajax render="@form" onevent="handleAjax"/>
 										</h:selectOneMenu>
 									</div>
+									
 									<div class="form-group">
 										<label>Componente Curricular</label>
 										<h:selectOneMenu id="cc" class="form-control" value="#{gerenciaPlanoMonitoriaView.planoPersistido.cc}" converter="componenteConverter">
@@ -304,21 +307,21 @@
 									</div>
 									<div class="form-group">
 										<label>Justificativa</label>
-										<h:inputText id="justificativa" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="justificativa" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.justificativa}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Objetivo</label>
-										<h:inputText id="objetivo" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="objetivo" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.objetivo}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 									<div class="form-group">
 										<label>Lista de Atividades</label>
-										<h:inputText id="atividades" class="form-control" 
+										<h:inputTextarea cols="30" rows="4" id="atividades" class="form-control" 
 														value="#{gerenciaPlanoMonitoriaView.planoPersistido.listaAtividades}">
-										</h:inputText>
+										</h:inputTextarea>
 									</div>
 								</div>
 							</div>
@@ -326,7 +329,7 @@
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 								<span>  </span>
 								<h:commandButton id="cadastrar" value="Cadastrar" actionListener="#{gerenciaPlanoMonitoriaView.cadastrarPlano()}" 
-												 update="@all" class="btn btn-info" />
+												 update="@all" class="btn btn-success" />
 							</div>
 						</h:form>
 					</div>
@@ -334,10 +337,8 @@
 			</div>
 		</div>
 
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
 		<script src="../resources/libs/popper/popper.min.js"></script>
-		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 		<script src="../professor/gerenciaPlanoMonitoria.js"></script>
 	</h:body>
 </html>

@@ -12,8 +12,8 @@
 		<auth-method>FORM</auth-method>
 		<realm-name>gemRealm</realm-name>
 		<form-login-config>
-			<form-login-page>/publico/index.xhtml</form-login-page>
-			<form-error-page>/publico/index.xhtml</form-error-page>
+			<form-login-page>/welcome.xhtml</form-login-page>
+			<form-error-page>/welcome.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
 
@@ -114,22 +114,19 @@
 		<error-code>403</error-code>
 		<location>/publico/nao-autorizado.xhtml</location>
 	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/publico/falha-interna.xhtml</location>
+	</error-page>
 
 	<context-param>
 		<param-name>javax.faces.webapp.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
 	<context-param>
-		<param-name>dominio1</param-name>
-		<param-value>a.recife.ifpe.edu.br</param-value>
-	</context-param>
-	<context-param>
-		<param-name>dominio2</param-name>
-		<param-value>gmail.com</param-value>
-	</context-param>
-	<context-param>
 		<param-name>dominiosInstituncionais</param-name>
-		<param-value>a.recife.ifpe.edu.br;cabo.ifpe.edu.br;</param-value>
+		<param-value>cabo.ifpe.edu.br;a.recife.ifpe.edu.br;</param-value>
 	</context-param>
 	<context-param>
 		<param-name>dominiosAlunos</param-name>
@@ -150,16 +147,30 @@
 		<param-name>PRIVATE_CAPTCHA_KEY</param-name>
 		<param-value>6LcwZFgUAAAAAGx2Lwens72Yd4yREx5CZGMJN1GW</param-value>
 	</context-param>
+	
+	<context-param>
+        <param-name>
+            javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE
+        </param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    	<param-value>server</param-value>
+	</context-param>
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer
@@ -174,4 +185,9 @@
 		<servlet-name>Jersey REST Service</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
 </web-app>

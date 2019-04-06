@@ -6,6 +6,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_MONITORIA",
@@ -32,14 +36,16 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Monitoria.findByEdital", query = "SELECT m FROM Monitoria m WHERE m.edital = :edital"),
 	@NamedQuery(name = "Monitoria.findAtivaByAluno", query = "SELECT m FROM Monitoria m WHERE m.aluno = :aluno"),
 	@NamedQuery(name = "Monitoria.findByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano"),
+	@NamedQuery(name = "Monitoria.findClassificadosByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.classificado = TRUE"),
 	@NamedQuery(name = "Monitoria.findBySelecionadasPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE"),
-	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE AND (m.homologado = FALSE OR m.homologado IS NULL)"),
+	@NamedQuery(name = "Monitoria.findClassificadasSelecionadasByPlano", query = "SELECT m FROM Monitoria m WHERE m.planoMonitoria = :plano AND m.selecionado = TRUE AND m.classificado = TRUE ORDER BY m.aluno.nome"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
 	@NamedQuery(name = "Monitoria.findByAlunoClassificadoSelecionado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.classificado = TRUE AND m.selecionado = TRUE AND m.homologado = FALSE AND m.planoMonitoria.cc.ativo = TRUE AND m.edital.vigente = TRUE"),
-	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE AND m.edital.fimMonitoria > CURRENT_DATE")
+	@NamedQuery(name = "Monitoria.findByAlunoClassificadoHomologado", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.vigente = TRUE"),
+	@NamedQuery(name = "Monitoria.findByAlunoHomologadoeEdital", query = "SELECT m FROM Monitoria m WHERE m.aluno.id = :alunoId AND m.homologado = TRUE AND m.planoMonitoria.cc.ativo = TRUE AND m.planoMonitoria.cc.curso.ativo = TRUE AND m.edital.id = :editalId")
 })
 @Access(AccessType.FIELD)
-public class Monitoria implements Serializable{
+public class Monitoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,6 +97,13 @@ public class Monitoria implements Serializable{
 	
 	@Column (name="BOOL_BOLSISTA")
 	private boolean bolsista;
+	
+	@Column (name="BOOL_VOLUNTARIO")
+	private boolean voluntario;
+	
+	@Enumerated(EnumType.STRING)
+	@Column (name="TXT_MODALIDADE")
+	private ModalidadeMonitoria modalidade;
 	
 	public Long getId() {
 		return id;
@@ -219,6 +232,22 @@ public class Monitoria implements Serializable{
 		this.homologado = homologado;
 	}
 	
+	public boolean isVoluntario() {
+		return voluntario;
+	}
+
+	public void setVoluntario(boolean voluntario) {
+		this.voluntario = voluntario;
+	}
+
+	public ModalidadeMonitoria getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(ModalidadeMonitoria modalidade) {
+		this.modalidade = modalidade;
+	}
+
 	@Override
     public int hashCode() {
         int hash = 0;

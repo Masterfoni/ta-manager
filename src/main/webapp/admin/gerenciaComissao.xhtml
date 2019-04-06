@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<h:head>
 		<ui:include src="/comum/header-libs.xhtml"/>
@@ -46,7 +45,7 @@
 								<div class="card-footer">
 									<h:commandButton actionListener="#{gerenciaComissaoView.toggleGrupo(servidor)}"
 													 value="#{gerenciaComissaoView.checkComissao(servidor) ? 'Retirar da comisssão' : 'Adicionar à comissão'}" update="@all"
-													 class="#{gerenciaComissaoView.checkComissao(servidor) ? 'btn btn-block btn-success' : 'btn btn-block btn-danger'}">
+													 class="#{gerenciaComissaoView.checkComissao(servidor) ? 'btn btn-block btn-danger' : 'btn btn-block btn-success'}">
 									</h:commandButton>
 								</div>
 							</div>
@@ -56,7 +55,6 @@
 			</h:form>
 		</div>
 		
-		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
-		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<ui:include src="/comum/footer-scripts.xhtml"/>
 	</h:body>
 </html>

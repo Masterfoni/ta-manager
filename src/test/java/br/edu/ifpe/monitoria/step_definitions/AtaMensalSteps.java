@@ -17,10 +17,8 @@ import cucumber.api.java.pt.Quando;
 public class AtaMensalSteps {
 
 	public AtaMensalSteps() {
-		if(DbUnitUtil.ultimo_executado != Dataset.AtaMensal) {
-			 DbUnitUtil.selecionaDataset(Dataset.AtaMensal);
-	         DbUnitUtil.inserirDados();
-		}
+		 DbUnitUtil.selecionaDataset(Dataset.AtaMensal);
+         DbUnitUtil.inserirDados();
 	}
 	
 	@Dado("^que o usuario esta logado como aluno monitor de um componente$")
@@ -36,14 +34,17 @@ public class AtaMensalSteps {
 	@Quando("^clicar em registrar atividade$")
 	public void clicarEmRegistrarAtividade() throws Throwable {
 		BrowserManager.driver.findElement(By.id("registrarAtividade")).click();
+		BrowserManager.esperar(750);
 	}
 	
 	@Quando("^preencher com as informacoes da atividade$")
 	public void preencherComAsInformacoesDaAtividade() throws Throwable {
-		BrowserManager.driver.findElement(By.id("dataRA")).sendKeys("2018-02-02");
+		BrowserManager.driver.findElement(By.id("dataRA")).sendKeys("2019-02-02");
 		BrowserManager.driver.findElement(By.id("entradaRA")).sendKeys("10:00");
 		BrowserManager.driver.findElement(By.id("saidaRA")).sendKeys("12:00");
+		BrowserManager.esperar(750);
 		BrowserManager.driver.findElement(By.id("cadastro:atividadeRA")).sendKeys("MINHAS ATIVIDADES");
+		BrowserManager.esperar(750);
 		BrowserManager.driver.findElement(By.id("cadastro:observacaoRA")).sendKeys("MINHAS OBSERVACOES");
 		BrowserManager.esperar(2500);
 	}
@@ -55,12 +56,8 @@ public class AtaMensalSteps {
 	
 	@Entao("^o sistema deve registrar a atividade$")
 	public void oSistemaDeveRegistrarAAtividade() throws Throwable {
-	    assertEquals("Dia: 02/02/2018 | Hora inicial: 10:00:00 | Hora final: 12:00:00" , 
-	    		BrowserManager.driver.findElement(By.id("formTableAtvidades:repeatAtividades:0:dadosAtividade")).getText());
-	    BrowserManager.esperar(2500);
-	    BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
-		BrowserManager.driver.close();
-		BrowserManager.driver = null;
+		BrowserManager.driver.findElement(By.id("formTableAtvidades")).getText().contains("Dia: 02/02/2019");
+		LoginSteps.deslogar();
 	}
 	
 	@Quando("^preencher com uma data fora do periodo de monitoria$")
@@ -77,16 +74,13 @@ public class AtaMensalSteps {
 	public void oSistemaDeveExibirAMensagemDeDataForaDoPeriodo() throws Throwable {
 		WebElement alert = BrowserManager.driver.findElement(By.className("alert"));
 		List <WebElement> texto = alert.findElements(By.tagName("li"));
-		assertEquals("A data da atividade precisa ser no periodo da monitoria. Entre 02/02/2018 e 02/08/2018", texto.get(0).getText());
-		BrowserManager.esperar(2500);
-	    BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
-		BrowserManager.driver.close();
-		BrowserManager.driver = null;
+		assertEquals("A data da atividade precisa ser no periodo da monitoria. Entre 02/02/2019 e 02/08/2019", texto.get(0).getText());
+		LoginSteps.deslogar();
 	}
 
 	@Quando("^preencher com horas inconsistentes$")
 	public void preencherComHorasInconsistentes() throws Throwable {
-		BrowserManager.driver.findElement(By.id("dataRA")).sendKeys("2018-02-02");
+		BrowserManager.driver.findElement(By.id("dataRA")).sendKeys("2019-02-02");
 		BrowserManager.driver.findElement(By.id("entradaRA")).sendKeys("10:00");
 		BrowserManager.driver.findElement(By.id("saidaRA")).sendKeys("09:00");
 		BrowserManager.driver.findElement(By.id("cadastro:atividadeRA")).sendKeys("MINHAS ATIVIDADES");

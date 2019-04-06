@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.managedbeans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -53,7 +54,14 @@ public class DivulgacaoClassificadosView {
 
 	public List<Edital> getEditais() {
 		if(editais == null) {
-			editais = editalbean.consultaEditaisVigentes();
+			List<Edital> vigentes = editalbean.consultaEditaisVigentes();
+			editais = new ArrayList<>();
+			
+			for (Edital edital : vigentes) {
+				if(new Date().after(edital.getPublicacaoAlunosClassificados())) {
+					editais.add(edital);
+				}
+			}
 		}
 		return editais;
 	}
@@ -79,23 +87,22 @@ public class DivulgacaoClassificadosView {
 
 
 	public List<List<List<Monitoria>>> getMonitorias() {
-		List<List<Monitoria>> monitoriasPorEdital;
-		if(monitorias == null) {
-			monitorias = new ArrayList<>();
-			for(int i=0;i<editais.size();i++) {
-				monitoriasPorEdital = new ArrayList<List<Monitoria>>();
-				for (List<PlanoMonitoria> planinhos : planos) {
-					for (PlanoMonitoria planinho : planinhos) {
-						List<Monitoria> monitinha = monitoriabean.consultaMonitoriaByPlano(planinho);
-						monitinha = monitoriabean.ordenar(monitinha);
-						monitoriasPorEdital.add(monitinha);
-					}
-				}
-				monitorias.add(monitoriasPorEdital);
-			}
-		}
+		List<List<Monitoria>> planos = new ArrayList<>();
 		
-		return monitorias;
+		if (this.monitorias == null) {
+			monitorias = new ArrayList<>();
+			for (int i=0; i < this.editais.size(); i++) {
+				for (PlanoMonitoria plano : this.planos.get(i)) {
+					List<Monitoria> monitorias = monitoriabean.consultaMonitoriaSelecionadaByPlano(plano);
+					monitorias = monitoriabean.ordenar(monitorias);
+					planos.add(monitorias);
+				}
+				this.monitorias.add(planos);
+				planos = new ArrayList<>();
+			}
+			
+		}
+		return this.monitorias;
 	}
 
 

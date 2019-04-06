@@ -105,9 +105,9 @@ public class EsquemaBolsaLocalBean
 	public DelecaoRequestResult deletaEsquema(Long esquemaId)
 	{
 		DelecaoRequestResult result = new DelecaoRequestResult();
+		em.flush();
 		
 		EsquemaBolsa esquema = em.createNamedQuery("EsquemaBolsa.findById", EsquemaBolsa.class).setParameter("id", esquemaId).getSingleResult();
-
 		em.remove(esquema);
 		result.result = true;
 		

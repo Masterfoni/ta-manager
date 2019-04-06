@@ -28,11 +28,12 @@ import org.hibernate.validator.constraints.NotBlank;
 		allocationSize = 1)
 @Table(name="TB_CURSO")
 @NamedQueries({
-	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c WHERE c.ativo = TRUE"),
+	@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c ORDER BY c.nome, c.ativo"),
 	@NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id AND c.ativo = TRUE"),
-    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla AND c.ativo = TRUE"),
-    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome AND c.ativo = TRUE"),
-    @NamedQuery(name = "Curso.findByCoordenador", query = "SELECT c FROM Curso c WHERE c.coordenador.id = :coordenadorId AND c.ativo = TRUE")
+	@NamedQuery(name = "Curso.findByIdAll", query = "SELECT c FROM Curso c WHERE c.id = :id"),
+    @NamedQuery(name = "Curso.findBySigla", query = "SELECT c FROM Curso c WHERE c.sigla LIKE :sigla AND c.ativo = TRUE ORDER BY c.nome"),
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome LIKE :nome AND c.ativo = TRUE ORDER BY c.nome"),
+    @NamedQuery(name = "Curso.findByCoordenador", query = "SELECT c FROM Curso c WHERE c.coordenador.id = :coordenadorId AND c.ativo = TRUE ORDER BY c.nome")
 })
 @NamedNativeQueries({
      @NamedNativeQuery(name = "Curso.PorNomeSQL", query = "SELECT ID, TXT_NOME, TXT_SIGLA FROM TB_COORDENACAO WHERE TXT_NOME LIKE ? ORDER BY ID", resultClass = Curso.class)

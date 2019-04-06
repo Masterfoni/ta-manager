@@ -7,10 +7,10 @@ $(function () {
         $("#modalAlterarAtividade").modal();
     });
     
-    $(".excluirAtividade").tooltip();
+    jsf.ajax.addOnEvent(handleAjaxMinhaMonitoria);
 });
 
-function handleAjax(data) {
+function handleAjaxMinhaMonitoria(data) {
 	 var status = data.status;
 
 	    switch(status) {
@@ -31,7 +31,4 @@ function updateAlteradorFunction() {
 	$(".editarAtividade").click(function(e) {
 		 $("#modalAlterarAtividade").modal();
 	});
-
-	
-    $(".excluirAtividade").tooltip();
 }

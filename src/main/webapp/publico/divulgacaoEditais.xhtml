@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../resources/libs/bootstrap-4.0.0/dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"/>
+		<link rel="stylesheet" href="./divulgacaoEditais.css"></link>
+		<link rel="stylesheet" href="captcha.css"></link>
+		<link href="../resources/images/gem-logo.png" rel="shortcut icon" type="image/x-icon" />
+		<title>Monitoria - IFPE</title>
+	</h:head>
+	
+	<h:body>
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="../welcome.xhtml">
+				<img src="../resources/images/gem-logo.png" class="d-inline-block" width="20" height="20" alt="Logo do GEM"></img>
+			</a>
+			
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav">
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../welcome.xhtml" class="btn btn-success btn-lg">Acessar o Portal</a>	
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="sticky-top float-left mt-2 ml-2">
+			<a href="/"><button class="btn btn-secondary btn-sm"><i class="fas fa-angle-left"></i> Voltar</button></a>
+		</div>
+
+		<div class="container" >
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Editais Vigentes</h2>
+				</div>
+			</div>
+			
+			<h:form rendered="#{not divulgacaoEditaisView.captchaValidado}">
+				<div class="row justify-content-md-center">
+					<div class="g-recaptcha " data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"></div>
+				</div>
+				<div class="row justify-content-md-center mb-5">
+					<h:commandButton update="@all" id="btn" value="Acessar listagem" action="#{divulgacaoEditaisView.validarCaptcha}" class="btn btn-success"/>
+				</div>
+			</h:form>
+			
+			<h:panelGroup layout="block" rendered="#{divulgacaoEditaisView.captchaValidado}">
+				<div class="row">
+					<div class="col-md-12">
+						<h:panelGroup rendered="#{empty divulgacaoEditaisView.editais}">
+							<h4 class="alert alert-primary"> Não existem editais vigentes divulgados</h4>
+						</h:panelGroup>
+					</div>
+					<div class="col-md-12">
+						<ui:repeat value="#{divulgacaoEditaisView.editais}" var="edital" varStatus="varedital">
+							<hr />
+							<br />
+							<h4>
+								Edital: #{edital.numeroEdital}
+							</h4>
+							<table class="table table-hover mb-5 table-sm">
+								<thead>
+									<th scope="col" class="text-center">Atividade</th>
+									<th scope="col" class="text-center">Início</th>
+									<th scope="col" class="text-center">Fim</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Definição dos componentes curriculares: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.inicioInscricaoComponenteCurricular}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td class="text-center">
+											<h:outputText value="#{edital.fimInscricaoComponenteCurricular}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>Inserção dos planos de monitoria: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.inicioInsercaoPlano}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td class="text-center">
+											<h:outputText value="#{edital.fimInsercaoPlano}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>Inscrição dos estudantes candidatos à monitoria: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.inicioInscricaoEstudante}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td class="text-center">
+											<h:outputText value="#{edital.fimInscricaoEstudante}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>Realização das provas para seleção de Monitoria: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.inicioRealizacaoProvas}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td class="text-center">
+											<h:outputText value="#{edital.fimRealizacaoProvas}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>Inserção dos resultados/notas da seleção de monitoria: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.inicioInsercaoNota}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td class="text-center">
+											<h:outputText value="#{edital.fimInsercaoNota}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>Divulgação oficial da lista dos estudantes classificados: </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.publicacaoAlunosClassificados}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td><strong>Divulgação oficial dos estudantes selecionados </strong></td>
+										<td class="text-center">
+											<h:outputText value="#{edital.publicacaoAlunosSelecionados}">
+												<f:convertDateTime pattern="dd/MM/yyyy" /> 
+											</h:outputText>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</ui:repeat>
+					</div>
+				</div>
+			</h:panelGroup>
+		</div>
+
+		<script src="../resources/libs/jquery-3.3/jquery-3.3.1.min.js"></script>
+		<script src="../resources/libs/jquery-mask/jquery.mask.min.js"></script>
+		<script src="../resources/libs/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</h:body>
+</html>

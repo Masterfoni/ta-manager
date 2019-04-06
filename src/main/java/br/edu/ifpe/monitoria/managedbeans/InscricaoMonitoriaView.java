@@ -2,12 +2,15 @@ package br.edu.ifpe.monitoria.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -30,6 +33,13 @@ public class InscricaoMonitoriaView implements Serializable{
 	
 	private static final long serialVersionUID = -2822785320179539798L;
 	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
 	@EJB
 	private PlanoMonitoriaLocalBean planoBean;
 	
@@ -45,6 +55,8 @@ public class InscricaoMonitoriaView implements Serializable{
 	@EJB
 	private EditalLocalBean editalBean;
 	
+	private Edital editalGlobal;
+	
 	private Monitoria monitoria;
 	
 	private List<PlanoMonitoria> planos;
@@ -55,23 +67,19 @@ public class InscricaoMonitoriaView implements Serializable{
 	
 	private Aluno aluno;
 	
-	private List<Edital> editais;
-	
-	private Edital edital;
+	boolean periodoCerto;
 
 	public InscricaoMonitoriaView() {
 		planos = new ArrayList<PlanoMonitoria>();
+		periodoCerto = false;
 	}
 	
-	public void selecionarPlanoVoluntario(PlanoMonitoria plano) {	
-		salvarMonitoria(plano, false);
+	@PostConstruct
+	public void init() {		
+		editalGlobal = sharedMenuView.getEditalGlobal();
 	}
 	
-	public void selecionarPlanoComBolsa(PlanoMonitoria plano) {
-		salvarMonitoria(plano, true);
-	}
-	
-	private void salvarMonitoria(PlanoMonitoria plano, boolean bolsista) {
+	public void salvarMonitoria(PlanoMonitoria plano, boolean voluntario, boolean bolsista) {
 		boolean alteracao = true;
 		
 		if(monitoria == null) {
@@ -81,8 +89,9 @@ public class InscricaoMonitoriaView implements Serializable{
 		
 		monitoria.setPlanoMonitoria(plano);
 		monitoria.setAluno(aluno);
-		monitoria.setEdital(getEdital());
+		monitoria.setEdital(editalGlobal);
 		monitoria.setBolsista(bolsista);
+		monitoria.setVoluntario(voluntario);
 		
 		if(alteracao) {
 			monitoriaBean.atualizaMonitoria(monitoria);
@@ -96,21 +105,10 @@ public class InscricaoMonitoriaView implements Serializable{
 		alunoBean.atualizaAluno(aluno);
 	}
 	
-	public boolean temBolsa(PlanoMonitoria plano) {
-		if(plano.getBolsas() > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	public void selecionarEdital(Edital edital) {
-
-	}
-	
 	public List<PlanoMonitoria> getPlanos() {
 		planos = null;
-		if(getEdital() != null) {
-			planos = planoBean.consultaPlanosByEditaleCurso(edital, getAluno().getCurso(), true);
+		if(editalGlobal != null) {
+			planos = planoBean.consultaPlanosByEditaleCurso(editalGlobal, getCurso(), true);
 		}
 		if(planos == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -119,17 +117,13 @@ public class InscricaoMonitoriaView implements Serializable{
 		return planos;
 	}
 
-	public void setPlanos(ArrayList<PlanoMonitoria> planos) {
-		this.planos = planos;
-	}
-
 	public void setPlanos(List<PlanoMonitoria> planos) {
 		this.planos = planos;
 	}
 	
 	public Monitoria getMonitoria() {
-		if(monitoria == null && edital != null) {
-			monitoria = monitoriaBean.consultaMonitoriaByAlunoEdital(getAluno(), getEdital());
+		if(monitoria == null && editalGlobal != null) {
+			monitoria = monitoriaBean.consultaMonitoriaByAlunoEdital(getAluno(), editalGlobal);
 		}
 		return monitoria;
 	}
@@ -166,7 +160,11 @@ public class InscricaoMonitoriaView implements Serializable{
 	}
 
 	public Curso getCurso() {
-		curso = getAluno().getCurso();
+		if(curso == null) {
+			if (getCursos() != null && getCursos().size() > 0) {
+				curso = getCursos().get(0);
+			}
+		}
 		return curso;
 	}
 
@@ -174,30 +172,17 @@ public class InscricaoMonitoriaView implements Serializable{
 		this.curso = curso;
 	}
 
-	public List<Edital> getEditais() {
-		if(editais == null) {
-			List<Edital> editaisVigentes = editalBean.consultaEditaisVigentes();
-			editais = new ArrayList<Edital>();
-			Date dataAtual = new Date();
-			for (Edital ed : editaisVigentes) {
-				if(dataAtual.before(ed.getFimInscricaoEstudante()) &&
-						dataAtual.after(ed.getInicioInscricaoEstudante())) {
-					editais.add(ed);
-				}
-			}
-		}
-		return editais;
+	public boolean isPeriodoCerto() {
+		Date hoje = new Date();
+		Calendar fim = Calendar.getInstance();
+		
+		fim.setTime(editalGlobal.getFimInscricaoEstudante());
+		fim.add(Calendar.DAY_OF_MONTH, 1);
+
+		return hoje.after(editalGlobal.getInicioInscricaoEstudante()) && hoje.before(fim.getTime());
 	}
 
-	public void setEditais(List<Edital> editais) {
-		this.editais = editais;
-	}
-
-	public Edital getEdital() {
-		return edital;
-	}
-
-	public void setEdital(Edital edital) {
-		this.edital = edital;
+	public void setPeriodoCerto(boolean periodoCerto) {
+		this.periodoCerto = periodoCerto;
 	}	
 }

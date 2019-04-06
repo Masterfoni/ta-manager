@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Grupo;
+import br.edu.ifpe.monitoria.utils.AlunoRequestResult;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 
 @Stateless
@@ -51,17 +52,16 @@ public class AlunoLocalBean
 		return alunoPorId;
 	}
 	
-	public Aluno consultaAlunoByMatricula(String matricula)
-	{
-		Aluno alunoPorMatricula = null;
+	public AlunoRequestResult consultaAlunoByMatricula(String matricula) {
+		AlunoRequestResult result = new AlunoRequestResult();
 		
 		try {
-			alunoPorMatricula = em.createNamedQuery("Aluno.findByMatricula", Aluno.class).setParameter("matricula", matricula).getSingleResult();
+			result.result = em.createNamedQuery("Aluno.findByMatricula", Aluno.class).setParameter("matricula", matricula).getSingleResult();
 		} catch (NoResultException e) {
-			e.printStackTrace();
+			result.errors.add("Nenhum aluno encontrado com esta matrícula");
 		}
 		
-		return alunoPorMatricula;
+		return result;
 	}
 	
 	public List<Aluno> consultaMonitoresByComponente(Long componenteId)
@@ -77,6 +77,21 @@ public class AlunoLocalBean
 		}
 		
 		return alunosPorComponente;
+	}
+	
+	public List<Aluno> consultaMonitoresByComponenteEdital(Long componenteId, Long editalId) {
+		List<Aluno> alunosPorComponenteEdital = new ArrayList<Aluno>();
+		
+		try {
+			alunosPorComponenteEdital = em.createNamedQuery("Aluno.findMonitoresByComponenteEdital", Aluno.class)
+					.setParameter("editalId", editalId)
+					.setParameter("componenteId", componenteId)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return alunosPorComponenteEdital;
 	}
 	
 	public boolean atualizaAluno (Aluno aluno) {

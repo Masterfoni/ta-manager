@@ -7,12 +7,14 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
+import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
 import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
 
 @Stateless
@@ -21,6 +23,18 @@ public class FrequenciaLocalBean {
 	
 	@PersistenceContext(name = "monitoria", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	public Frequencia consultaFrequenciaById(Long id) {
+		Frequencia frequenciaPorId = null;
+		
+		try {
+			frequenciaPorId = em.createNamedQuery("Frequencia.findById", Frequencia.class).setParameter("id", id).getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		
+		return frequenciaPorId;
+	}
 	
 	public FrequenciaRequestResult findByAluno(Aluno aluno) {
 		FrequenciaRequestResult resultado = new FrequenciaRequestResult();
@@ -33,6 +47,21 @@ public class FrequenciaLocalBean {
 			resultado.frequencias = frequencias;
 		} else {
 			resultado.errors.add("Não existem frequencias registradas para esse aluno");
+		}
+		
+		return resultado;
+	}
+	
+	public DelecaoRequestResult deletaFrequencia(Long frequenciaId) {
+		DelecaoRequestResult resultado = new DelecaoRequestResult();
+		
+		try {
+			Frequencia singleResult = em.createNamedQuery("Frequencia.findById", Frequencia.class).setParameter("id", frequenciaId).getSingleResult();
+			em.remove(singleResult);
+			resultado.result = true;
+		} catch(Exception e) {
+			resultado.errors.add("Problemas na deleção, contate o suporte.");
+			resultado.result = false;
 		}
 		
 		return resultado;

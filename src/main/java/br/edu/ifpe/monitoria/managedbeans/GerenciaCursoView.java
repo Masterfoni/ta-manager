@@ -38,6 +38,8 @@ public class GerenciaCursoView implements Serializable {
 	
 	public Curso cursoPersistido;
 	
+	public Curso currentCurso;
+	
 	public List<Curso> getCursos() {
 		this.cursos = cursobean.consultaCursos();
 		return cursos;
@@ -80,6 +82,7 @@ public class GerenciaCursoView implements Serializable {
 	public void init() {
 		cursoAtualizado = new Curso();
 		cursoPersistido = new Curso();
+		currentCurso = new Curso();
 		cursos = new ArrayList<Curso>();
 	}
 	
@@ -116,12 +119,12 @@ public class GerenciaCursoView implements Serializable {
 		return "";
 	}
 	
-	public void toggleCursoAtivacao(Curso curso)
-	{
+	public void toggleCursoAtivacao() {
+		Curso curso = this.currentCurso;
+		
 		AtualizacaoRequestResult toggleResultado = cursobean.toggleCursoAtivacao(curso.getId(), !curso.isAtivo());
 		
-		if(toggleResultado.hasErrors())
-		{
+		if(toggleResultado.hasErrors()) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			
 			for (String erro : toggleResultado.errors) {
@@ -135,6 +138,21 @@ public class GerenciaCursoView implements Serializable {
 	}
 	
 	public void persisteAlteracao() {
+		if(cursoAtualizado.getCoordenador().getId() == -1L) {
+			cursoAtualizado.setCoordenador(null);
+		}
 		cursobean.atualizaCurso(cursoAtualizado);
+	}
+	
+	public void alteraCurrentCurso(Curso curso) {
+		this.currentCurso = curso;
+	}
+
+	public Curso getCurrentCurso() {
+		return currentCurso;
+	}
+
+	public void setCurrentCurso(Curso currentCurso) {
+		this.currentCurso = currentCurso;
 	}
 }

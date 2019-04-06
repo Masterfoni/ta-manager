@@ -7,15 +7,18 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpe.monitoria.entidades.Aluno;
 import br.edu.ifpe.monitoria.entidades.Atividade;
+import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Frequencia;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.localbean.AlunoLocalBean;
@@ -29,6 +32,13 @@ import br.edu.ifpe.monitoria.utils.FrequenciaRequestResult;
 @ManagedBean (name="minhaMonitoriaView")
 @ViewScoped
 public class MinhaMonitoriaView {
+	
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
 	
 	@EJB
 	private FrequenciaLocalBean frequenciaBean;
@@ -61,6 +71,14 @@ public class MinhaMonitoriaView {
 	private String horaInicioAlt;
 	
 	private String horaFimAlt;
+
+	private Edital editalGlobal;
+	
+	@PostConstruct
+	public void init() {
+		editalGlobal = sharedMenuView.getEditalGlobal();
+	}
+	
 	
 	public MinhaMonitoriaView() {
 		novaAtividade = new Atividade();
@@ -96,8 +114,8 @@ public class MinhaMonitoriaView {
 	}
 	
 	public void alterarAtividade() {
-		novaAtividade.setHoraInicio(converteHora(horaInicioAlt));
-		novaAtividade.setHoraFim(converteHora(horaFimAlt));
+		atividadeSelecionada.setHoraInicio(converteHora(horaInicioAlt));
+		atividadeSelecionada.setHoraFim(converteHora(horaFimAlt));
 		
 		AtualizacaoRequestResult resultado = atividadeBean.atualizarAtividade(atividadeSelecionada);
 		if(!resultado.result) { 
@@ -174,7 +192,7 @@ public class MinhaMonitoriaView {
 
 	public Monitoria getMonitoria() {
 		if(monitoria == null) {
-			monitoria =  monitoriaBean.consultaMonitoriaAtivaByAluno(getAluno());
+			monitoria =  monitoriaBean.consultaMonitoriaByAlunoEdital(getAluno(), editalGlobal);
 		}
 		return monitoria;
 	}

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @SequenceGenerator (name = "SEQUENCIA_GRUPO",
 					sequenceName = "SQ_GRUPO",
-					initialValue = 1,
+					initialValue = 2,
 					allocationSize = 1)
 @Table(name="TB_USUARIO_GRUPO")
 public class Grupo implements Serializable {

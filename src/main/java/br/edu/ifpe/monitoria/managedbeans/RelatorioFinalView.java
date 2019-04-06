@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,13 @@ public class RelatorioFinalView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@ManagedProperty(value="#{menuView}")
+	private MenuView sharedMenuView;
+	
+	public void setSharedMenuView(MenuView sharedMenuView) {
+		this.sharedMenuView = sharedMenuView;
+	}
+	
 	@EJB
 	private RelatorioFinalLocalBean relatorioFinalBean;
 	
@@ -46,12 +54,16 @@ public class RelatorioFinalView implements Serializable {
 	
 	private boolean monitor;
 
+	private Edital editalGlobal;
+
 	@PostConstruct
 	public void init() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		loggedAluno = alunoBean.consultaAlunoById((Long)session.getAttribute("id")); 
 		
-		monitor = monitoriaBean.isCurrentMonitor(loggedAluno);
+		editalGlobal = sharedMenuView.getEditalGlobal();
+		
+		monitor = monitoriaBean.isCurrentMonitor(loggedAluno, editalGlobal);
 	}
 	
 	public void salvarRelatorio() {
@@ -118,7 +130,7 @@ public class RelatorioFinalView implements Serializable {
 	}
 
 	public Monitoria getMonitoriaAtual() {
-		this.monitoriaAtual = monitoriaBean.consultaMonitoriaAtualPorAluno(loggedAluno);
+		this.monitoriaAtual = monitoriaBean.consultaMonitoriaByAlunoEdital(loggedAluno, editalGlobal);
 		return monitoriaAtual;
 	}
 

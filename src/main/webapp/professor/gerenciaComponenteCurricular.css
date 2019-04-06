@@ -1,3 +1,7 @@
 .err-m-10 {
     margin: 10px;
 }
+
+td.center {
+    text-align: center;
+}

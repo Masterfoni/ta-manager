@@ -39,8 +39,6 @@ public class PlanoMonitoriaSteps {
 
 	@Quando("^preencher o formulario de plano de monitoria com informacoes validas$")
 	public void preencherOFormularioDePlanoDeMonitoriaComInformacoesValidas() throws Throwable {
-		Select edital = new Select(BrowserManager.driver.findElement(By.id("cadastro:edital")));
-		edital.selectByValue("1");
 		Select cc = new Select(BrowserManager.driver.findElement(By.id("cadastro:cc")));
 		cc.selectByValue("1");
 		BrowserManager.driver.findElement(By.id("cadastro:nbolsistas")).sendKeys("1");

@@ -1,3 +1,8 @@
-.row-m-5 {
-    margin-bottom: 5px;
+.focus-panel {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.custom-styled {
+    padding-top: 10px;
 }

@@ -1,5 +1,7 @@
 package br.edu.ifpe.monitoria.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,14 +34,17 @@ import org.hibernate.validator.constraints.NotBlank;
 	@NamedQuery(name = "PlanoMonitoria.findAll", query = "SELECT p FROM PlanoMonitoria p ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findById", query = "SELECT p FROM PlanoMonitoria p WHERE p.id = :id"),
 	@NamedQuery(name = "PlanoMonitoria.findByServidor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.curso.coordenador.id = :servidorId OR p.cc.professor.id = :servidorId ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEditalServidor", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.professor.id = :servidorId AND p.edital.id = :editalId ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.cc.id = :id ORDER BY p.cc.curso, p.cc.nome"),
-	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
-	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.homologado = TRUE ORDER BY p.cc.curso.nome, p.cc.nome"),
+	@NamedQuery(name = "PlanoMonitoria.findByEdital", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital ORDER BY p.cc.curso.nome, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findHomologadosByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso AND p.homologado = TRUE ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalCurso", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital = :edital AND p.cc.curso.id = :curso ORDER BY p.cc.curso, p.cc.nome"),
 	@NamedQuery(name = "PlanoMonitoria.findByEditalComponente", query = "SELECT p FROM PlanoMonitoria p WHERE p.edital.id = :editalId AND p.cc.id = :ccId ORDER BY p.cc.curso, p.cc.nome")
 })
-public class PlanoMonitoria {
+public class PlanoMonitoria implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator="SEQUENCIA_PM")
@@ -53,7 +59,7 @@ public class PlanoMonitoria {
 	private Edital edital;
 	
 	@NotNull(message = "{mensagem.associacao}{tipo.cc}")
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@OneToOne (fetch = FetchType.EAGER, optional = false)
 	@JoinColumn (name = "ID_COMP_CURRICULAR", referencedColumnName = "ID")
 	private ComponenteCurricular cc;
 	
@@ -72,14 +78,17 @@ public class PlanoMonitoria {
 	@Column (name="INT_VOLUNTARIOS")
 	private Integer voluntarios;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.justificativa}")
 	@Column (name="TXT_JUSTIFICATIVA")
 	private String justificativa;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.objetivo}")
 	@Column (name="TXT_OBJETIVO")
 	private String objetivo;
 	
+	@Lob
 	@NotBlank(message = "{mensagem.notnull}{tipo.atividades}")
 	@Column (name="TXT_LISTA_ATIVIDADES")
 	private String listaAtividades;

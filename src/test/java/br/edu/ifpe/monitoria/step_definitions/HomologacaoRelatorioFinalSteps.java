@@ -44,7 +44,7 @@ public class HomologacaoRelatorioFinalSteps {
 	
 	@Entao("^o sistema deve concretizar a homologacao$")
 	public void oSistemaDeveAtualizarOUnicoRelatorioFinal() throws Throwable {
-		assertEquals("O relatório deste monitor já se encontra homologado!", BrowserManager.driver.findElement(By.id("alreadyHomologado")).getText());
+		assertEquals("O relatório final deste monitor já se encontra homologado!", BrowserManager.driver.findElement(By.id("alreadyHomologado")).getText());
 		
 		BrowserManager.driver.findElement(By.id("navbar-top:logout")).click();
 		BrowserManager.driver.close();

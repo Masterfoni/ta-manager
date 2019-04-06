@@ -55,7 +55,7 @@ public class RelatorioFrequenciaMensalSteps {
 	@Entao("^o sistema deve mostrar a situacao de entrega de frequencia dos alunos$")
 	public void oSistemaDeveMostrarASituacaoDeEntregaDeFrequenciaDosAlunos() throws Throwable {
 		List<WebElement> alunos = BrowserManager.driver.findElements(By.tagName("td"));
-		assertTrue(alunos.size() == 8);
+		assertTrue(alunos.size() == 4);
 	}
 }
 

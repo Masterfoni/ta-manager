@@ -1,5 +1,6 @@
 package br.edu.ifpe.monitoria.localbean;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -46,10 +47,14 @@ public class PlanoMonitoriaLocalBean
 				.setParameter("editalId", plano.getEdital().getId())
 				.setParameter("ccId", plano.getCc().getId()).getResultList();
 
+		Calendar fim = Calendar.getInstance();
+		fim.setTime(plano.getEdital().getFimInsercaoPlano());
+		fim.add(Calendar.DAY_OF_MONTH, 1);
+		
 		if(!planoSingleResult.isEmpty()) {
 			resultado.errors.add("Já existe um plano cadastrado para este edital e componente!");
 			resultado.result = false;
-		} else if(plano.getEdital().getFimInsercaoPlano().before(new Date())) {
+		} else if(fim.getTime().before(new Date())) {
 			resultado.errors.add("Já se passou o período de cadastro de planos de monitoria!");
 		}
 		
@@ -89,6 +94,16 @@ public class PlanoMonitoriaLocalBean
 	public List<PlanoMonitoria> consultaPlanosByServidor(Long id)
 	{
 		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByServidor", PlanoMonitoria.class).setParameter("servidorId", id).getResultList();
+		
+		return planos;
+	}
+	
+	public List<PlanoMonitoria> consultaPlanosByEditalServidor(Long servidor, Long edital)
+	{
+		List<PlanoMonitoria> planos = em.createNamedQuery("PlanoMonitoria.findByEditalServidor", PlanoMonitoria.class).
+				setParameter("servidorId", servidor).
+				setParameter("editalId", edital).
+				getResultList();
 		
 		return planos;
 	}

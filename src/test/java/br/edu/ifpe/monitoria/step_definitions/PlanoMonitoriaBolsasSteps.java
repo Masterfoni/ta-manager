@@ -1,6 +1,7 @@
 package br.edu.ifpe.monitoria.step_definitions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -36,19 +37,41 @@ public class PlanoMonitoriaBolsasSteps {
 		BrowserManager.driver.findElement(By.className("cadastrador")).click();
 		
 		BrowserManager.driver.findElement(By.id("formcadastro:numeroCadastroE")).sendKeys("2");
-		BrowserManager.driver.findElement(By.id("formcadastro:anoCadastroE")).sendKeys("2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:iniCompE")).sendKeys("02-02-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:fimCompE")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:iniPME")).sendKeys("02-02-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:fimPME")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:iniAlunoE")).sendKeys("02-02-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:fimAlunoE")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:iniNotaE")).sendKeys("02-02-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:fimNotaE")).sendKeys("02-06-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:iniMonE")).sendKeys("02-02-2018");
-		BrowserManager.driver.findElement(By.id("formcadastro:fimMonE")).sendKeys("02-06-2018");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("formcadastro:anoCadastroE")).sendKeys("2019");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniCompE")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimCompE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniPME")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimPME")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniProvaE")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimProvaE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniAlunoE")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimAlunoE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniNotaE")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimNotaE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("publiClassE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("publiSelecE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("iniMonE")).sendKeys("2019-02-02");
+		BrowserManager.esperar(750);
+		BrowserManager.driver.findElement(By.id("fimMonE")).sendKeys("2019-06-02");
+		BrowserManager.esperar(750);
 		BrowserManager.driver.findElement(By.id("formcadastro:notaSelecaoE")).sendKeys("7.0");
+		BrowserManager.esperar(750);
 		BrowserManager.driver.findElement(By.id("formcadastro:mediaComponenteE")).sendKeys("7.0");
+		BrowserManager.esperar(750);
 		BrowserManager.driver.findElement(By.id("formcadastro:btnCadastrar")).click();
 		
 		BrowserManager.esperar(5000);
@@ -83,7 +106,7 @@ public class PlanoMonitoriaBolsasSteps {
 	
 	@Quando("^ja existir um lancamento criado para determinado curso$")
 	public void jaExistirUmLancamentoCriadoParaDeterminadoCurso() throws Throwable {
-		assertEquals("Tecnologia em Análise e Desenvolvimento de Sistemas", BrowserManager.driver.findElement(By.id("esquemaTituloCC")).getText());
+		assertTrue(BrowserManager.driver.findElement(By.id("esquemaTituloCC")).getText().contains("Tecnologia em Análise e Desenvolvimento de Sistemas"));
 	}
 
 	@Quando("^escolher lancar bolsas para aquele curso$")

@@ -67,7 +67,17 @@ public class Edital implements Serializable {
 	@Column(name = "BOOL_VIGENTE")
 	private boolean vigente;
 	
-	@NotNull(message = "{mensagem.todos}{tipo.periodo.componente}{data.inicial}")
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.provas}{data.inicial}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_INI_PROVAS")
+	private Date inicioRealizacaoProvas;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.provas}{data.final}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_FIM_PROVAS")
+	private Date fimRealizacaoProvas;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.periodo.componente}{data.inicial}")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_INI_INSCRICAO_CC")
 	private Date inicioInscricaoComponenteCurricular;
@@ -106,6 +116,16 @@ public class Edital implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_FIM_INSCERCAO_NT")
 	private Date fimInsercaoNota;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.data.publicacao.classificados}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_PUB_ALUN_CLASS")
+	private Date publicacaoAlunosClassificados;
+	
+	@NotNull(message = "{mensagem.notnull}{tipo.data.publicacao.selecionados}")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DT_PUB_ALUN_SELEC")
+	private Date publicacaoAlunosSelecionados;
 	
 	@NotNull(message = "{mensagem.notnull}{tipo.periodo.monitoria}{data.inicial}")
 	@Temporal(TemporalType.DATE)
@@ -261,12 +281,48 @@ public class Edital implements Serializable {
 		return id;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public List<EsquemaBolsa> getEsquemas() {
 		return esquemas;
 	}
 
 	public void setEsquemas(List<EsquemaBolsa> esquemas) {
 		this.esquemas = esquemas;
+	}
+
+	public Date getInicioRealizacaoProvas() {
+		return inicioRealizacaoProvas;
+	}
+
+	public void setInicioRealizacaoProvas(Date inicioRealizacaoProvas) {
+		this.inicioRealizacaoProvas = inicioRealizacaoProvas;
+	}
+
+	public Date getFimRealizacaoProvas() {
+		return fimRealizacaoProvas;
+	}
+
+	public void setFimRealizacaoProvas(Date fimRealizacaoProvas) {
+		this.fimRealizacaoProvas = fimRealizacaoProvas;
+	}
+	
+	public Date getPublicacaoAlunosClassificados() {
+		return publicacaoAlunosClassificados;
+	}
+
+	public void setPublicacaoAlunosClassificados(Date publicacaoAlunosClassificados) {
+		this.publicacaoAlunosClassificados = publicacaoAlunosClassificados;
+	}
+
+	public Date getPublicacaoAlunosSelecionados() {
+		return publicacaoAlunosSelecionados;
+	}
+
+	public void setPublicacaoAlunosSelecionados(Date publicacaoAlunosSelecionados) {
+		this.publicacaoAlunosSelecionados = publicacaoAlunosSelecionados;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import br.edu.ifpe.monitoria.entidades.Edital;
 import br.edu.ifpe.monitoria.entidades.Monitoria;
 import br.edu.ifpe.monitoria.entidades.PlanoMonitoria;
 import br.edu.ifpe.monitoria.utils.DelecaoRequestResult;
+import br.edu.ifpe.monitoria.utils.ModalidadeMonitoria;
 
 @Stateless
 @LocalBean
@@ -104,13 +105,18 @@ public class MonitoriaLocalBean
 		return monitoria;
 	}
 	
-	public boolean isCurrentMonitor(Aluno aluno) {
+	public boolean isCurrentMonitor(Aluno aluno, Edital edital) {
 		List<Monitoria> monitoria = new ArrayList<Monitoria>();
-		
-		try {
-			monitoria = em.createNamedQuery("Monitoria.findByAlunoClassificadoHomologado", Monitoria.class).setParameter("alunoId", aluno.getId()).getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		if(edital != null) {
+			try {
+				monitoria = em.createNamedQuery("Monitoria.findByAlunoHomologadoeEdital", Monitoria.class).
+						setParameter("alunoId", aluno.getId()).
+						setParameter("editalId", edital.getId()).
+						getResultList();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return monitoria.size() > 0;
@@ -153,6 +159,12 @@ public class MonitoriaLocalBean
 		return monitorias;
 	}
 
+	public List<Monitoria> consultaClassificadosByPlano(PlanoMonitoria plano) {
+		List<Monitoria> monitorias = em.createNamedQuery("Monitoria.findClassificadosByPlano", Monitoria.class)
+				  .setParameter("plano", plano).getResultList();
+
+		return monitorias;
+	}
 
 	public void salvarNotas(List<Monitoria> monitorias) {
 		monitorias = verificarEmpates(monitorias);
@@ -257,32 +269,38 @@ public class MonitoriaLocalBean
 		int classificacao = 1;
 		int vagasVoluntario = monitorias.get(0).getPlanoMonitoria().getVoluntarios();
 		int vagasBolsista = monitorias.get(0).getPlanoMonitoria().getBolsas();
+		boolean selecioando;
+		ModalidadeMonitoria modalidade;
 		
 		for (Monitoria monitoria : monitorias) {
-			System.out.println(monitoria.getAluno().getNome());
+			modalidade = ModalidadeMonitoria.INVALIDADA;
+			selecioando = false;
+			
 			if(monitoria.isClassificado()) {
 				monitoria.setClassificacao(classificacao);
 				classificacao++;
 				
 				if(monitoria.isBolsista()) {
 					if(vagasBolsista > 0) {
-						monitoria.setSelecionado(true);
+						selecioando = true;
 						vagasBolsista--;
-					} else {
-						monitoria.setSelecionado(false);
+						modalidade = ModalidadeMonitoria.BOLSISTA;
 					}
-				} else {
+				} 
+				if (monitoria.isVoluntario() && !selecioando) {
 					if(vagasVoluntario > 0) {
-						monitoria.setSelecionado(true);
+						selecioando = true;
 						vagasVoluntario--;
-					} else {
-						monitoria.setSelecionado(false);
+						modalidade = ModalidadeMonitoria.VOLUNTARIO;
 					}
 				}
-			}
-			else {
+				
+				monitoria.setSelecionado(selecioando);
+				monitoria.setModalidade(modalidade);
+			} else {
 				monitoria.setClassificacao(null);
 				monitoria.setSelecionado(false);
+				monitoria.setModalidade(modalidade);
 			}
 		}
 		return monitorias;

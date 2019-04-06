@@ -6,6 +6,10 @@ html {
 	background: linear-gradient(to bottom, #213822, #68ce72);
 }
 
+#loginForm {
+	height: 0;
+}
+
 .login-block {
 	float:left;
 	width:100%;

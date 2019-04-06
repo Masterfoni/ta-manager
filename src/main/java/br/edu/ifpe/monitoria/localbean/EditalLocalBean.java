@@ -123,12 +123,15 @@ public class EditalLocalBean
 
 		List<EsquemaBolsa> esquemas = em.createNamedQuery("EsquemaBolsa.findByEdital", EsquemaBolsa.class).setParameter("idEdital", edital.getId()).getResultList();
 		
-		for(EsquemaBolsa esquema : esquemas) {
-			if(!esquema.isDistribuido()) {
-				resultado.errors.add("Você deve explicitar o número de bolsas para cada curso!");
-				break;
+		if(edital.isVigente()) {
+			for(EsquemaBolsa esquema : esquemas) {
+				if(!esquema.isDistribuido()) {
+					resultado.errors.add("Você deve explicitar o número de bolsas para cada curso!");
+					break;
+				}
 			}
 		}
+		
 		
 		if(!resultado.hasErrors())
 		{
@@ -186,6 +189,10 @@ public class EditalLocalBean
 		if (edital.getInicioInscricaoEstudante().after(edital.getFimInscricaoEstudante())) 
 		{
 			validationFailures.add("A data para o fim de Inscrição dos Alunos deve ser depois da data de início.");
+		}
+		if (edital.getInicioRealizacaoProvas().after(edital.getFimRealizacaoProvas())) 
+		{
+			validationFailures.add("A data para o fim da Realização das Provas deve ser depois da data de início.");
 		}
 		if (edital.getInicioInsercaoNota().after(edital.getFimInsercaoNota())) 
 		{
