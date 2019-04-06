@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -61,11 +62,13 @@ public class Atividade implements Serializable{
 	@Column(name="TM_HORAFIM", columnDefinition ="TIME")
 	private Date horaFim;
 	
+	@Lob
 	@NotNull(message = "{mensagem.notnull}{tipo.atividade}")
 	@NotBlank(message = "{mensagem.notnull}{tipo.atividade}")
 	@Column (name="TXT_ATIVIDADE")
 	private String atividade;
 
+	@Lob
 	@Column (name="TXT_OBSERVACAO")
 	private String observacao;
 
