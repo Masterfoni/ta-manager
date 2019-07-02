@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -34,8 +33,6 @@ public class Aluno extends Usuario implements Serializable {
 	private static final long serialVersionUID = 2L;
 
 	@NotNull(message = "{mensagem.notnull}{tipo.matricula}")
-	@Pattern(regexp = "[0-9]{5}[a-zA-Z]{1}[0-9]{1}-[a-zA-Z]{2}[0-9]{4}", message = "{mensagem.matricula}")
-	@Size (max=14)
 	@Column (name="TXT_MATRICULA", unique=true)
 	private String matricula;
 
